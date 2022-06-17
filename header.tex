@@ -1,0 +1,231 @@
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%                    %%
+%%  PROJECT-SPECIFIC  %%
+%%                    %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%
+% PACKAGES %
+%%%%%%%%%%%%
+%\usepackage[hidelinks]{hyperref}   % ATTENTION: break the bioinfo template layout
+%\usepackage[bookmarks]{hyperref}
+\usepackage{layout}
+%\usepackage[capitalize]{cleveref}
+\usepackage{xspace}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}  % \leadsto
+%\usepackage{subcaption}  % for subfigure
+\usepackage[caption=false]{subfig}  % deprecated
+\usepackage{booktabs}   % tables: toprule, midrule
+\usepackage{colortbl}
+\usepackage{dsfont} % beautiful 1
+\usepackage{float}
+%\usepackage{natbib}
+
+%\usepackage{biblatex}  % \pno for page number \ppno for pageS
+
+\usepackage[]{todonotes}  % [disable]
+\usepackage{mathtools}   % smashoperator 
+
+\usepackage{graphicx}
+\usepackage{epigraph}
+\usepackage{siunitx}  % aligning to decimal point
+
+\usepackage{svg}
+\usepackage{tikz}
+\usetikzlibrary{tikzmark,decorations.pathreplacing,calc}
+%\usepackage{tabu}% http://ctan.org/pkg/tabu
+%\usepackage{xcolor}% http://ctan.org/pkg/xcolor
+%\usepackage{tabularx}% http://ctan.org/pkg/tabularx
+
+\usepackage{multirow}   % tables
+
+\usepackage{numprint}   % tables
+\npdecimalsign{.}
+
+%\captionsetup{compatibility=false}   % gitlab compilation happy
+%\DeclareCaptionLabelSeparator{emdash}{\textemdash}  % solves a caption error
+
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\declaretheorem[name=Theorem]{thm}
+\declaretheorem[name=Proposition]{prop}
+\declaretheorem[name=Lemma]{lem}
+\declaretheorem[name=Definition]{definition}
+\declaretheorem[name=Observation]{observation}
+\declaretheorem[name=Corollary]{cor}
+\declaretheorem[name=Remark]{remark}
+% used packages
+
+%%%%%%%%%%%%
+%   MATH   %
+%%%%%%%%%%%%
+% math symbols and operations
+
+%%%%%%%%%%%%%%%
+% TEXT FORMAT %
+%%%%%%%%%%%%%%%
+% commands for text formatting
+
+%%%%%%%%%%%%
+%  OTHERS  %
+%%%%%%%%%%%%
+
+\newcommand{\A}[0]{A$^\star$\xspace}
+\newcommand{\csh}[0]{chaining seed heuristic\xspace}
+\newcommand{\Csh}[0]{Chaining seed heuristic\xspace}
+\newcommand{\CSH}[0]{CSH\xspace}
+\newcommand{\sh}[0]{seed heuristic\xspace}
+\newcommand{\Sh}[0]{Seed heuristic\xspace}
+\newcommand{\SH}[0]{SH\xspace}
+\newcommand{\mpp}[0]{multiple-path pruning\xspace}
+\newcommand{\Mpp}[0]{Multiple-path pruning\xspace}
+
+\newcommand{\lcs}[0]{\mbox{LCS}\xspace}
+\newcommand{\lcskpp}[0]{\mbox{LCSk++}\xspace}
+\newcommand{\pa}[0]{\mbox{pairwise alignment}\xspace}
+\newcommand{\ed}[0]{\mbox{ed}\xspace}
+
+\newcommand{\mysc}[1]{\textsc{#1}}
+
+% tool names
+\newcommand{\difftool}[0]{\mbox{\textsc{diff}}\xspace}
+\newcommand{\edlib}[0]{\mbox{\textsc{Edlib}}\xspace}
+\newcommand{\oldwfa}[0]{\mbox{\mysc{WFA}}\xspace}
+\newcommand{\wfa}[0]{\mbox{\mysc{BiWFA}}\xspace}
+\newcommand{\seqan}[0]{\mbox{\textsc{SeqAn}}\xspace}
+\newcommand{\parasail}[0]{\mbox{\textsc{Parasail}}\xspace}
+\newcommand{\astarpa}[0]{\mbox{\textsc{AstarPA}}\xspace}
+\newcommand{\astarix}[0]{\mbox{\textsc{AStarix}}\xspace}
+
+\newcommand{\dijkstra}[0]{\mbox{Dijkstra}\xspace}
+
+%\newcommand{\astarixseeds}[0]{\mbox{\textsc{AStarix-seeds}}\xspace}
+%\newcommand{\astarixprefix}[0]{\mbox{\textsc{AStarix-prefix}}\xspace}
+%\newcommand{\graphaligner}[0]{\mbox{\textsc{GraphAligner}}\xspace}
+%\newcommand{\vg}[0]{\mbox{\textsc{VG}}\xspace}
+%\newcommand{\pasgal}[0]{\mbox{\textsc{PaSGAL}}\xspace}
+%\newcommand{\vargas}[0]{\mbox{\textsc{Vargas}}\xspace}
+%\newcommand{\hga}[0]{\mbox{\textsc{HGA}}\xspace}
+%\newcommand{\astarixurl}[0]{\mbox{\url{https://github.com/eth-sri/astarix}}\xspace}
+%\newcommand{\astarixbiorxivurl}[0]{\mbox{\url{https://www.biorxiv.org/content/10.1101/2020.01.22.915496v1}}\xspace}
+%\newcommand{\astarixurlwithbranch}[0]{\url{https://github.com/eth-sri/astarix/tree/recomb2022}\xspace}
+
+\newcommand{\art}[0]{\mbox{\textsc{ART}}\xspace}
+\newcommand{\randomreads}[0]{\mbox{\textsc{randomreads.sh}}\xspace}
+
+% reference graph
+%\newcommand{\reference}[1]{#1_\texttt{r}}
+%\newcommand{\RG}[0]{\reference{G}}
+%\newcommand{\RGV}[0]{\reference{V}}
+%\newcommand{\RGE}[0]{\reference{E}}
+% trie
+%\newcommand{\trie}[1]{#1_\texttt{r}^\texttt{+}}
+%\newcommand{\TG}[0]{\trie{G}}
+%\newcommand{\TGV}[0]{\trie{V}}
+%\newcommand{\TGE}[0]{\trie{E}}
+%\newcommand{\trieroot}{\ensuremath{\mli{root}}}
+% edit graph
+%\newcommand{\edit}[1]{#1_\texttt{e}}
+%\newcommand{\EG}[0]{\edit{G}}
+%\newcommand{\EGV}[0]{\edit{V}}
+%\newcommand{\EGE}[0]{\edit{E}}
+
+% alignment graph
+\newcommand{\alignment}[2]{#2_\texttt{a}^{#1}}
+\newcommand{\AG}[1][q]{\alignment{#1}{G}}
+\newcommand{\AGV}[1][q]{\alignment{#1}{V}}
+\newcommand{\AGE}[1][q]{\alignment{#1}{E}}
+
+% states: $h\st{u}{i}$ produces `h<u,i>'
+\newcommand{\st}[2]{\langle #1, #2 \rangle}
+% Transformed states
+\newcommand{\tst}[2]{[ #1, #2 ]}
+
+\newcommand{\seeds}[0]{\mathit{Seeds}}
+
+% heuristic function
+%\newcommand{\h}[0]{$h$}
+
+% PARAMETERS
+\newcommand{\costcap}[0]{c}
+
+% edit distance
+\newcommand{\cedits}[0]{\delta}
+\newcommand{\cmatch}[0]{\delta_\text{match}}
+\newcommand{\cmis}[0]{\delta_\text{subst}}
+\newcommand{\cindel}[0]{\delta_\text{indel}}
+
+% paragraphs
+%\newcommand{\para}[1]{\vspace{0.8em}\noindent\textbf{#1.}}
+
+\usepackage{etoolbox}
+% TODO: put a full stop after paragraph names.
+% TODO: Tool names in smallcaps
+\patchcmd{\paragraph}{\itshape}{\bfseries\boldmath}{}{}
+
+% general math
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\mli}[1]{\mathit{#1}}
+%\newcommand{\Oh}[0]{\mathcal{O}}
+\newcommand{\Oh}[0]{O}
+\newcommand{\concat}[0]{{\cdot}}
+
+% Commands for A* functions
+\newcommand{\f}{f^*\!}
+\newcommand{\g}{g^*\!}
+\newcommand{\h}{h^*\!}
+\newcommand{\ssh}{_{\mathrm{sh}}}
+\newcommand{\scsh}{_{\mathrm{csh}}}
+\newcommand{\hsh}{h\ssh\!}
+\newcommand{\hcsh}{h\scsh\!}
+\newcommand{\hshM}{h\ssh^M\!}
+\newcommand{\hcshM}{h\scsh^M\!}
+\renewcommand{\S}{\mathcal S}
+\newcommand{\hh}{\hat h}
+%\newcommand{\hS}{\hat h^\S}
+\newcommand{\hshS}{\hat h\ssh\!}
+\newcommand{\hcshS}{\hat h\scsh\!}
+\newcommand{\hm}{h_{\textrm{match}}}
+\newcommand{\Dm}{D_{\textrm{match}}}
+
+\newcommand{\cgap}{d_{\textrm{gap}}}
+\newcommand{\seedpotential}{r}
+\newcommand{\spot}{r}
+%\newcommand{\seedpotential}{\mli{seedPotential}}
+\newcommand{\cseed}{d_{\textrm{seed}}}
+\newcommand{\ctrans}{d_{\textrm{trans}}}
+\newcommand{\cost}{\mli{cost}}
+\newcommand{\matchdiscount}{\mli{W}}
+\newcommand{\matchweight}{w}
+\newcommand{\chainweight}[3]{W_{#1}^{#2}\!(#3)}
+\newcommand{\Wm}{\widetilde W}
+\newcommand{\start}{\mli{start}}
+\newcommand{\seedend}{\mli{end}}
+\newcommand{\matchend}{\mli{end}}
+
+\newcommand{\posh}{\preceq\ssh}
+\newcommand{\pocsh}{\preceq\scsh}
+
+\newcommand{\substr}[3]{#1_{#2{\dots}#3}}
+
+\newcommand{\C}{\mathcal{C}}
+
+%\newcommand{\path}[2]{(#1{\leadsto}#2)}
+\newcommand{\alignments}[1]{T(#1)}
+\newcommand{\capcost}{\overline{\cost}}
+
+% Colors
+\definecolor{mygrey}{HTML}{777777}
+
+%\usepackage{etoolbox}
+%\patchcmd{\paragraph}{\itshape}{\bfseries\boldmath}{}{}
+
+% For definition tables
+\newcommand*{\tabindent}{ \hspace{3mm}}
+\newcommand{\U}{\overline U}
+\newcommand{\htr}{h^t}
+\newcommand{\Path}{\pi^*}
+\newcommand{\pruned}{\mli{Pruned}}

@@ -13,3 +13,13 @@ ltxpng/
 # Temps
 *.*~
 *.bak
+thesis.bbl
+thesis.bcf
+thesis.blg
+.gitignore
+thesis.fdb_latexmk
+thesis.fls
+thesis.run.xml
+.gitignore
+thesis.synctex.gz
+thesis.toc
