@@ -11,63 +11,59 @@
 \chapter*{Abstract}
 
 % Context
-Sequence alignment is a class of problems aiming at unrevealing the relationship
-between sequences. These problems are of central interest in computational
-molecular biology for more than half a century and they are routinely applied in
-evolutional biology, genome assembly, read mapping, variation detection and
-others.
-
-% Contribution overview
-Alignment algorithms involve a common tradeoff between optimality guarantees and
-performance. In this thesis, we consider a shortest path formulation of
-alignment and explore the application of the A* algorithm. Most importantly,
-this approach enables us to design heuristic functions which combine optimality
-guarantees and polynomial speed ups.
+Sequence alignment is the process of detecting similarities between biological
+sequences, such as DNA, RNA and proteins. For the last half a century,
+variations of this problem have been of central importance for molecular
+biology. Alignment is usually a building block for a wide range of applications,
+include evolutional biology, genome assembly, read mapping, variation detection
+aComputational methods are crucial for the correctness of the analyses and the
+practical applicability to the vast amounts of biological data.nd others.
 
 % Problem statement
-Depending on the the number of aligned sequences, there is pairwise alignment
-and multiple sequence alignment (MSA). Depending on the parts of the sequences
-that are aligned to each other, we differentiate global, local and various
-semi-global alignemnts. There are generalizations to sequence-to-sequence
-alignment, including aligning to nonlinear structures, such as directed acyclic
-graphs, DAGs, general graphs and others. These structures are nowadays becomming
-more present as a compressed form of representing a set of references to which a
-sequence can be aligned. Often, one best alignment is sufficient but finding
-several best (top-K) alignments.
+Biological sequences do not generally align perfectly due to biological
+differences and technical errors. Instead, the best imperfect alignment is
+desired. a similarity metric, such as \emph{edit distance}, is usually being
+optimized. Generally, an alignment algorithm is desired to compute 1) accurate
+alignments of 2) various data while 3) reducing the performance overhead. We
+study the graph search framework and argue that it satisfies these basic desires
+by providing optimality guarantees according to edit distance metric and scaling
+near-linear for similar sequences.
 
-% Accuracy and Metrics
-The number of possible alignments grow exponentially with length. The usual
-underlying question to finding ``correct'' alignments. Regarding the precision
-of alignment, one is usually interested in base-to-base (aka letter-to-letter)
-correspondence between the sequences, even though for some applications a less
-detailed solution is sufficient: only the similarity between sequences or the
-location where a read maps to a reference. Exact alignment is only useful for
-very short sequences (often kmers), and for all other cases the optimized metric
-may be hamming distance, edit distance (unit costs), Levenshtein distance,
-affine costs, convex and concave costs, general costs and others. 
+%(approximate vs probabilistic vs exact/optimal algorithm), Runtime, memory
+%usage, scaling.
+% Data variation
+%A good algorithm should be optimal, complete, performant (fast and low on
+%memory) on short and long sequences, various error rates and error models,
+%and reference complexity (topology and enthropy).
 
 % Algorithms and Asymptotics
-The classical dynamic solutions for are the so called Needleman-Wunsch.
-Currently, researchers still face the In the context of read mapping, a set of
-reads is aligned to the same reference sequence so an indexing procedure is
-often useful for the performance.
+The classical dynamic programming (DP) algorithms run in quadratic time, whereas
+the resulting alignment is only linear. This performance gap has motivated a
+numerous algorithms which are faster in the expense of accuracy. Moreover,
+theoretical analyses suggest that it is not possible to solve alignment in
+strongly subquadratic time in the worst case. In this thesis we argue that on
+real data an informed search algorithm, such as A*, can radically improve the scaling
+without sacrificing optimality guarantees. In some cases, the scaling may even
+be linear.
 
-% Data variation
-A good algorithm should be optimal, complete, performant (fast and low on
-memory) on short and long sequences, various error rates and error models,
-and reference complexity (topology and enthropy).
-
-% Goals
-%Accuracy (approximate vs probabilistic vs exact/optimal algorithm), Runtime,
-%memory usage.
+% Contribution overview
+In this thesis, we consider the alignment as a shortest path problem and explore
+its solution using the A* algorithm. Most importantly, this approach enables us
+to design heuristic functions which guarantee finding an optimal alignment while
+achieving polynomial speed ups on real data. This approach allows to find a
+base-to-base alignment that minimizes general edit distance. Our A* approach is
+applicable to various settings of the alignment problem.
 
 % A*
+Informed search. Admissibility. Seed heuristic.
 
 % Tools and Performance
 Many tools do not have a well-stated problem they optimize.
 
 % Future work
 Probabilistic approach.
+Focus on the metric.
+Extend to MSA, local, affine.
 
 \endgroup
 
