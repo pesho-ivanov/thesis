@@ -17,17 +17,20 @@ variations of this problem have been of central importance for molecular
 biology. Alignment is usually a building block for a wide range of applications,
 include evolutional biology, genome assembly, read mapping, variation detection
 aComputational methods are crucial for the correctness of the analyses and the
-practical applicability to the vast amounts of biological data.nd others.
+practical applicability to the vast amounts of biological data.
 
-% Problem statement
+% Problem
 Biological sequences do not generally align perfectly due to biological
 differences and technical errors. Instead, the best imperfect alignment is
 desired. a similarity metric, such as \emph{edit distance}, is usually being
-optimized. Generally, an alignment algorithm is desired to compute 1) accurate
-alignments of 2) various data while 3) reducing the performance overhead. We
-study the graph search framework and argue that it satisfies these basic desires
-by providing optimality guarantees according to edit distance metric and scaling
-near-linear for similar sequences.
+optimized. Generally, an alignment algorithm is desired to compute
+\textcircled{1} accurate alignments with \textcircled{2}  good performance, and
+\textcircled{3} applicability to various data. We consider a principled shortest
+path formulation of alignment and argue that the A* algorithm enables the
+desired properties. In particular, we demonstrate \textcircled{1} optimality
+guarantees according to edit distance, \textcircled{2} scaling to
+\textcircled{3} satisfies these basic desires by providing optimality guarantees
+according to edit distance metric and scaling near-linear for similar sequences.
 
 %(approximate vs probabilistic vs exact/optimal algorithm), Runtime, memory
 %usage, scaling.
@@ -60,10 +63,11 @@ Informed search. Admissibility. Seed heuristic.
 % Tools and Performance
 Many tools do not have a well-stated problem they optimize.
 
-% Future work
+% Future work and limitations
 Probabilistic approach.
 Focus on the metric.
 Extend to MSA, local, affine.
+Prorotype implementations
 
 \endgroup
 
