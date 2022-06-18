@@ -107,13 +107,17 @@
 \pgfplotsset{compat=newest}
 \usetikzlibrary{shapes.geometric}
 
-% Circled numbers
+% textcircled numbers
+%\newcommand*\textcircled[1]{
+%  \tikz[baseline=(char.base)]{
+%    \node[shape=circle,draw,inner sep=1pt,font=\footnotesize,%
+%          minimum size=0.8\baselineskip] (char) {\figureversion{lining}#1};
+%  }
+%}
+
 \newcommand*\circled[1]{
   \tikz[baseline=(char.base)]{
-    \node[shape=circle,draw,inner sep=1pt,font=\footnotesize,%
-          minimum size=0.8\baselineskip] (char) {\figureversion{lining}#1};
-  }
-}
+     \node[shape=circle,draw,inner sep=1pt,font=\footnotesize] (char) {#1};}}
 
 % \tikzexternalize
 % \tikzsetexternalprefix{externalized/}
