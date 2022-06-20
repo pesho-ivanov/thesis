@@ -20,17 +20,21 @@ aComputational methods are crucial for the correctness of the analyses and the
 practical applicability to the vast amounts of biological data.
 
 % Problem
-Biological sequences do not generally align perfectly due to biological
-differences and technical errors. Instead, the best imperfect alignment is
-desired. a similarity metric, such as \emph{edit distance}, is usually being
-optimized. Generally, an alignment algorithm is desired to compute
-\textcircled{1} accurate alignments with \textcircled{2} good performance, and
-\textcircled{3} applicability to various data. We consider a principled shortest
-path formulation of alignment and argue that the A* algorithm enables the
-desired properties. In particular, we demonstrate \textcircled{1} optimality
-guarantees according to edit distance, \textcircled{2} scaling to
-\textcircled{3} satisfies these basic desires by providing optimality guarantees
-according to edit distance metric and scaling near-linear for similar sequences.
+The usual way to represent the similarities between sequences is by a
+base-to-base correspondence between them which that minimizes general edit
+distance. Biological sequences do not generally align perfectly due to
+biological differences and technical errors. Instead, desired are the best
+imperfect alignments according to a similarity metric, such as \emph{edit
+distance}.
+
+% Goal
+A good alignment algorithm should \textcircled{1} find accurate alignments of
+\textcircled{2} a wide range of data, in \textcircled{3} little time and memory.
+We consider a principled shortest path formulation of alignment and argue that
+the A* algorithm fullfils the desired properties better than current methods. In
+particular it can \textcircled{1} provide optimality guarantees according to
+edit distance, \textcircled{2} tolerate long and noisy sequences, and
+\textcircled{3} scale subquadratically with sequence length.
 
 %(approximate vs probabilistic vs exact/optimal algorithm), Runtime, memory
 %usage, scaling.
@@ -40,22 +44,31 @@ according to edit distance metric and scaling near-linear for similar sequences.
 %and reference complexity (topology and enthropy).
 
 % Algorithms and Asymptotics
-The classical dynamic programming (DP) algorithms run in quadratic time, whereas
-the resulting alignment is only linear. This performance gap has motivated a
-numerous algorithms which are faster in the expense of accuracy. Moreover,
-theoretical analyses suggest that it is not possible to solve alignment in
-strongly subquadratic time in the worst case. In this thesis we argue that on
-real data an informed search algorithm, such as A*, can radically improve the scaling
-without sacrificing optimality guarantees. In some cases, the scaling may even
-be linear.
+The classical dynamic programming (DP) algorithms run in quadratic time, even
+though the resulting alignment is linear. This gap has motivated the development
+of various faster but approximate algorithms. Moreover, theoretical results
+suggest that it is impossible to solve any reasonable alignment problem in
+strongly subquadratic time in the worst case.
+
+In this thesis we argue that the
+A* informed search algorithm radically improving the runtime scaling (up to
+linear) in the average case while can provide optimality guarantees while. On
+real data, this approach reaches orders of magnitude of speedup compared to
+existing approaches.
 
 % Contribution overview
-In this thesis, we consider the alignment as a shortest path problem and explore
-its solution using the A* algorithm. Most importantly, this approach enables us
-to design heuristic functions which guarantee finding an optimal alignment while
-achieving polynomial speed ups on real data. This approach allows to find a
-base-to-base alignment that minimizes general edit distance. Our A* approach is
-applicable to various settings of the alignment problem.
+In this thesis, we consider the alignment as a shortest path problem that we
+approach via A*. The A* algorithm naturally encompasses the existing approaches
+but extends them with the possibility for informed search which is capable of
+using information from the whole sequences to direct the search. In practice,
+while achieving polynomial speed ups on real data. Our A* approach is applicable
+to various settings of the alignment problem.
+
+% List of contributions
+To scale to large reference sequences, we extend the graph with a
+trie index. To scale to long queries, we introduce design an admissible \emph{seed
+heuristic}, which is provably-optimal also efficient to compute. To scale to
+high error rates, we design  
 
 % A*
 Informed search. Admissibility. Seed heuristic.
@@ -68,6 +81,7 @@ Probabilistic approach.
 Focus on the metric.
 Extend to MSA, local, affine.
 Prorotype implementations
+No asymptotics.
 
 \endgroup
 
