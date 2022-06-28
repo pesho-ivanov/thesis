@@ -1,8 +1,7 @@
 \chapter{Introduction}
 \label{ch:introduction}
 
-\dictum[Immanuel Kant]{%
-  Sapere aude! Habe Mut, dich deines eigenen Verstandes zu bedienen! }%
+\dictum[Freeman Dyson]{It is better to be wrong than to be vague.}
 \vskip 1em
 
 %\begin{otherlanguage}{ngerman}
@@ -11,6 +10,8 @@
 %physikalischen Phänomene bis jetzt zur Bestimmung der Molekülgrössen nicht
 %gedient haben. \dots
 %\end{otherlanguage}
+
+
 
 % Accuracy and Metrics
 The number of possible alignments grow exponentially with length. The usual
@@ -38,3 +39,9 @@ useful for the performance.
 
 We specifically consider the mapping of a set of reads to a general graph, and
 the global pairwise alignment.
+
+Existing optimal algorithms are based on dynamic programming (DP) and
+run in quadratic time (assuming that the number of errors is proportional to the
+length)
+
+we employ the A* algorithm which is an \emph{informed} algorithm,
