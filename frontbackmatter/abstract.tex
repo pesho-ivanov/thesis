@@ -38,11 +38,13 @@ the development of various faster but approximate algorithms. Moreover,
 theoretical results suggest that it is that in general, alignment is not
 solvable in strongly subquadratic time.
 
-We consider a principled shortest path formulation of alignment and argue that
-the A* algorithm fullfils the desired properties better than current methods. In
-this thesis we argue that the A* informed search algorithm radically improving
-the runtime scaling (up to linear) in the average case while can provide
-optimality guarantees while. On real data, this approach reaches orders of
+% Shortest path formulation
+We consider a principled alignment formulation based on shortest paths and
+demonstrate that the A* shortest path algorithm can be used to outperform
+current methods. Unlike existing methods, A* enables an \emph{informed search}
+based on information from the unaligned sequence suffixes, thus radically
+improving the empyrical runtime scaling (up to linear) in the average case while
+providing optimality guarantees. On real data, this approach reaches orders of
 magnitude of speedup compared to existing approaches.
 
 % A* context 
