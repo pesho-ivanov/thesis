@@ -1,0 +1,15 @@
+Algorithmic reliability is an important aspect in many scientific and engineering fields.
+Despite the advancements in computational genetics, the focus has mostly been on performance while sacrificing the provided guarantees.
+We resolve the long-standing trade-off between optimality and performance for the read to graph mapping problem.
+Here we formally define the problem of read to graph mapping and present a provably-optimal practical solution.
+We developed Probabilistic Variant Graph (PVG) – a generative stochastic model designed for read mapping to general reference graphs.
+It completely encompasses all of the various available data sources in their probabilistic interpretation:
+	1) read quality scores, 2) edit distance alignment metric, and 3) variant likelihood statistics.
+This model captures an unprecedented level of generality while guaranteeing global seed-and-extend mapping optimality.
+Our novel heuristic precomputation allows an A* shortest path algorithm to reach a near input-size empirical complexity.
+We demonstrate that aligning using our model improves the mapping accuracy of current state of the art tools while matching the performance on both synthetic and real data.
+Because of being a generative model, we are able to optimize the alignment probability P(read|path) but also to estimate the marginal likelihood and mapping probabilisty P(path|read).
+The PVG tool is available on https://github.com/eth-sri/pvg.
+
+%\textbf{Contact:} \href{pesho@inf.ethz.ch}{pesho@inf.ethz.ch}\\
+%\textbf{Supplementary information:} Supplementary data are available at \textit{Bioinformatics} online.

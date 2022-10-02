@@ -1,0 +1,18 @@
+def f() {
+	// comment 1
+
+	/* comment 2 */
+	
+	string1 = "string1";
+
+	string2 = 'string2';
+
+	number = 123;
+
+	%marked%
+
+	int x = $\alpha$;
+	
+	return 1;
+	|\label{line:last}|
+}

@@ -1,0 +1,80 @@
+
+
+% Generate PDF version 1.7 (needed for proper integration of .eps)
+\pdfminorversion=7
+
+\documentclass{bioinfo}
+\copyrightyear{2018} \pubyear{2018}
+
+\access{Advance Access Publication Date: Day Month Year}
+\appnotes{Manuscript Category}
+
+\input{header}
+
+\begin{document}
+\firstpage{1}
+
+\subtitle{Applications note}%\IncMargin{1em}
+
+\title[\tool]{Stochastic Variant Graph: Optimal read mapping using A*}
+\author[Sample \textit{et~al}.]{
+	Rubber Duck\,$^{\text{\sfb 1,}*}$,
+%	Pesho Ivanov\,$^{\text{\sfb 1,}*}$,
+%	Benjamin Bichsel\,$^{\text{\sfb 1,}*}$,
+%	and Martin Vechev\,$^{\text{\sfb 1}}$
+}
+\address{$^{\text{\sf 1}}$Zoo Pond, Switzerland}
+%\address{$^{\text{\sf 1}}$Software Reliability Lab, ETH, Zurich 8092, Switzerland\\ % Department, Institution, City, Post Code, Country and \\
+%  $^{\text{\sf 2}}$Department of Dermatology, University Hospital Zurich 8091 Zurich, Switzerland\\
+%  $^{\text{\sf 3}}$Dermatology Clinic, Kepler University Hospital, Linz 4020, Switzerland.}
+
+\corresp{$^\ast$To whom correspondence should be addressed.}
+\history{Received on XXXXX; revised on XXXXX; accepted on XXXXX}
+\editor{Associate Editor: XXXXXXX}
+
+
+\abstract{\input{abstract}}
+
+\maketitle
+
+\input{intro}
+\input{existing_approaches}
+\input{problem_statement}
+\input{graph_model}
+\input{linear_models}
+\input{graph_model_old}
+\input{inference}
+\input{results}
+\input{discussion}
+
+% THIS MESSAGE MARKS THE END OF THE BODY (used to check if we are over the page limit)
+\message{^^JLASTBODYPAGE \thepage^^J}
+
+
+%\bibliographystyle{natbib}
+%\bibliographystyle{achemnat}
+%\bibliographystyle{plainnat}
+\bibliographystyle{abbrv}
+%\bibliographystyle{bioinformatics}
+%\bibliographystyle{plain}
+
+\bibliography{biblio}
+
+% THIS MESSAGE MARKS THE END OF THE REFERENCES (used to split the paper from the supplement)
+\message{^^JLASTREFERENCESPAGE \thepage^^J}
+
+\newpage
+\input{definitions}
+
+\newpage
+\input{supplementary}
+
+\clearpage
+\appendix
+
+\input{appendix}
+
+% THIS MESSAGE MARKS THE END OF THE DOCUMENT
+\message{^^JLASTPAGE \thepage^^J}
+
+\end{document}

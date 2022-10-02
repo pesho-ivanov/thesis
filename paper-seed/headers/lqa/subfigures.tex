@@ -1,0 +1,40 @@
+% Description: This file introduces a subfigure which correctly aligns
+% captions
+%
+% Usage:
+% - \input{headers/lqa/subfigures}
+% - You may need to comment out the usepackage command below in case of
+%   conflicts
+
+% EXAMPLE USAGE:
+%
+% \begin{figure}
+% 	\centering
+% 	\mysubfigure[0.49\linewidth]{
+% 		\centering
+% 		Content of subfigure 1
+% 	}{Caption of subfigure\label{fig:subfig1}}
+% 	\mysubfigure[0.49\linewidth]{
+% 		\centering
+% 		Content of subfigure 2
+% 	}{Caption of subfigure\label{fig:subfig2}}
+% 	\caption{An example of subfigures.}
+% 	\label{fig:subfigures}
+% \end{figure}
+
+%%%%%%%%%%%%%%
+% USEPACKAGE %
+%%%%%%%%%%%%%%
+\usepackage{subcaption}
+
+%%%%%%%%%%%
+% COMMAND %
+%%%%%%%%%%%
+
+\newcommand{\mysubfigure}[3][\linewidth]{\subcaptionbox{#3}[#1]{
+	\begin{minipage}{#1}
+		% uses minipage to prevent unexpected interactions,
+		% e.g., for align
+		#2
+	\end{minipage}
+}}

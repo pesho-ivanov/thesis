@@ -1,0 +1,18 @@
+\section{Evaluations} \label{sec:eval}
+
+In the following, we demonstrate that our approach aligns faster than existing
+optimal aligners due to its superior scaling. Specifically, we address the
+following research questions:
+\begin{enumerate}[label={\bf Q\arabic*},nolistsep,leftmargin=15mm]
+	\item What speedup can the \seedh achieve?
+    \item How does the \seedh scale with reference size?
+	\item How does the \seedh scale with read length?
+\end{enumerate}
+The modes of operation which we analyze include both short (Illumina) and long
+(HiFi) reads to be aligned on on both linear and graph references.
+
+\input{evals-astarix.tex}
+\input{evals-settings.tex}
+\input{evals-table-comparison.tex}
+\input{evals-refsize-scaling.tex}
+\input{evals-readlen-scaling.tex}

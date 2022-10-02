@@ -1,0 +1,196 @@
+\begin{algorithm}[t]
+	\caption{Seed including heuristic function.}\label{alg:precompute}
+	\begin{algorithmic}[1]
+		\State $\TG\colon$ Reference graph \label{lin:reference}
+		\State $C\colon$ Crumbs hashmap $(\mli{node}, \mli{seed}) \to \mli{cost}$
+        \State $\mli{seedlen}\colon$ Length of each seed
+		\State $\mli{max\_indels}\colon$ Maximum number of insertions and deletions
+		\State $\mli{tooHighMatchCost}\colon$ Strict cap on the seed match cost
+		\Statex
+		\Function{PutCrumbsInNode}{$(s,\st{v_\mli{seed}}{i},\mli{cost})\colon$ Match, $v_\mli{crumb}\colon$ Node}
+            \State $C(v_\mli{crumb},s)$ = $\mli{tooHighMatchCost} - \mli{cost}$
+		\EndFunction
+		\Statex
+		\Function{GenerateUniformSeeds}{$q\colon$ Read}
+            \State \Return [(0, $\mli{seedlen}$, 0), ($\mli{seedlen}$, $\mli{seedlen}$,0),
+			\State (2*$\mli{seedlen}$, $\mli{seedlen}$, 0), \dots]
+			\Comment (start, len, r)
+		\EndFunction
+		\Statex
+		\Function{MatchSeedRec}{$\alignment{s}{G}$, $s\colon$ Seed, $\mli{curr}\colon$ State, $\mli{cost}\colon$ Cost}
+			\State $M \gets \Call{Set}$
+			\If{$\mli{curr} \in \mli{final}(\alignment{s}{G})$}
+				%\State $\st{u}{i} \equiv \mli{curr}$
+				\State $\mli{assume}(u \notin \mli{TrieNodes})$
+				\Comment TODO: Unfold?
+				\State $M \gets \{ \mli{Match}(s, \mli{curr}, \mli{cost})\}$
+				\Comment End of seed relaxation
+			\Else
+				\ForAll{$(\mli{curr}, \mli{next}, l, w) \in \alignment{s}{E}$}
+					\If{$\mli{cost} + w < tooHighMatchCost$}
+					\Comment{Strict inequality}
+						\State $M \gets M \cup \Call{MatchSeedRec}{\alignment{s}{G}, s, \mli{next}, \mli{cost} + w}$
+					\EndIf
+				\EndFor
+			\EndIf
+			\State \Return $M$
+		\EndFunction
+		\Statex
+		\Function{MatchSeed}{$s\colon$ Seed}
+			\State $\alignment{s}{G} \equiv \Call{AlignmentGraph}{\TG, s}$
+			\Comment Implicit
+			\State $\mli{start} \gets \st{\mli{root}(\alignment{s}{G})}{s.i}$
+			\State \Return $\Call{MatchSeedRec}{\alignment{s}{G}, \mli{start}, 0}$
+		\EndFunction
+		\Statex
+		\Function{ProcessSeeds}{$q\colon$ Read} \label{lin:process_seeds}
+			\State $S \gets \Call{GenerateUniformSeeds}{q}$
+			\Comment Set of seeds $S$ with corresponding costs $r$
+
+			\ForAll{$s(i, \mli{len}, r) \in S$}
+            \Comment For each seed
+				\State $M_s \gets \Call{MatchSeed}{s}$
+                \Comment Matches $s$ to $\TG$ with cost $<r$
+				\ForAll{$m \equiv (s, \st{v}{i}, \mli{cost}) \in M_s$}
+                \Comment $s$ matches to $v \in \RGV$ with $\mli{cost}$
+                    \State $\Call{PutCrumbs}{m}$
+					\Comment \cref{alg:general_crumbs}
+                \EndFor
+			\EndFor
+		\EndFunction
+		\Statex
+%		\Function{SeedHeuristic}{$\langle u, i \rangle\colon$ State} \label{lin:heuristic-start}
+%			\State $d' \gets \min(d, |q|-i)$
+%			\Comment Actual length of upcoming sequence
+%			\State $s \gets q[i:i+d']$ \label{lin:s}
+%			\Comment Upcoming sequence (next $d$ letters after current)
+%			\State \Return $\Call{$h$}{u, s}$
+%			\label{lin:align-upcoming}
+%			\Comment Cost of aligning $s$ to $\EG$ starting from $u$
+%		\EndFunction \label{lin:heuristic-end}
+%		\Statex
+		\Function{$h$}{$u\colon$ Node, $s\colon$ Seed}
+		\Comment Cost of aligning $s$ starting from $u$
+			\State \Return $\sum_{s \in S} \Call{minHigherCost}{s.r} - \sum_{s \in S} C(u,s)$
+		\EndFunction
+        \Statex
+        \Function{Align}{$q\colon$ Read} \label{lin:align}
+            \State $\Call{ProcessSeeds}{q}$
+            \State $\Call{\A}{\RG, C, q, h}$
+        \EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[t]
+	\caption{Putting crumbs in a general graph.}\label{alg:general_crumbs}
+	\begin{algorithmic}[1]
+		\Function{GetReachableNodes}{$\st{v}{i}\colon$ Start state}
+		\Comment Nodes reaching $v$ by $\le i$ edges
+			\State $Q \gets \mli{queue}(\{\st{v}{i}\})$
+			\State $V \gets \emptyset$
+			\While{$!Q.empty()$}
+			\Comment BFS
+				\State $\st{v}{i} \gets Q.pop()$
+				\State $V \gets V \cup \{v\}$
+				\If{$-\mli{max\_indels} \le i-1$}
+				\Comment $i$ can be negative
+					\ForAll{$(u,v,l) \in \RGE$}
+						\If{$u \notin V$}
+							\State $Q.push(\st{u}{i-1})$
+						\EndIf
+					\EndFor
+				\EndIf
+			\EndWhile
+			\State \Return $V$
+		\EndFunction
+		\Statex
+		\Function{MarkFirstNodesInCycles}{$V_\mli{general}\colon$ Nodes, $\st{v}{i}\colon$ Start state}
+			\State $\mli{CycleStartNodes} \gets \emptyset$
+				\Comment 
+			\State $\mli{visited} \gets \mli{visited} \cup \{v\}$
+			\State $\mli{recstack} \gets \mli{recstack} \cup \{v\}$
+			\ForAll{$(u,v,l) \in \TGE$}
+				\If{$u \in V_\mli{general}$}
+					\If{$u \notin \mli{visited}$}
+						\State $C \gets \Call{MarkFirstNodesInCycles}{V_\mli{general}, \st{u}{i-1}}$
+							\Comment DFS
+						\State $\mli{CycleStartNodes} \gets \mli{CycleStartNodes} \cup C$
+					\ElsIf{$u \in \mli{recstack}$}
+						\State $\mli{CycleStartNodes} \gets \mli{CycleStartNodes} \cup \{u\}$
+					\EndIf
+				\EndIf
+			\EndFor
+			\State $\mli{recstack} \gets \mli{recstack} \setminus \{v\}$
+			\State \Return $\mli{CycleStartNodes}$
+		\EndFunction
+		\Statex
+		\Function{PropagateMarkedNode}{$V_\mli{general}\colon$ Nodes, $v\colon$ Node, $\mli{visited}\colon$}
+			\Statex \Comment Puts crumbs in nodes in and leading to $v$. Returns the remaining nodes.
+			\If{$v \notin \mli{visited}$}
+				\State $\mli{visited} \gets \mli{visited} \cup \{v\}$
+				\State $\Call{PutCrumbsInNode}{m, v}$
+					\ForAll{$(u,v,l) \in \RGE$} \Comment Excluding the trie
+						\State $\Call{PropagateMarkedNodes}{\mli{min\_i}, m, \st{u}{i-1}}$
+					\EndFor
+			\EndIf
+		\EndFunction
+		\Statex
+		\Function{PutCrumbsBeforeCycles}{$V_\mli{general}\colon$ Nodes, $\st{v}{i}\colon$ Start state}
+			\State \Comment TODO: remove $i$ (needed to climb the trie)
+			\State $\mli{CycleNodes} \gets \Call{MarkFirstNodesInCycles}{V_\mli{general}, \st{v}{i}}$
+			\State $V_\mli{cycle} = \emptyset$
+			\ForAll{$v \in \mli{CycleNodes}$}
+				\State $V_\mli{cycle} \gets V_\mli{cycle} \cup \Call{PropagateMarkedNode}{V_\mli{general}, v}$
+			\EndFor
+			\State \Return $V_\mli{general} \setminus V_\mli{cycle}$
+		\EndFunction
+		\Statex
+		\Function{PutCrumbsInDAG}{$V_\mli{DAG}\colon$ Nodes, $\st{v}{i}\colon$ Start state}
+			\State $\mli{deg} \gets \Call{CountOutgoingDegrees}{R}$
+			\State $\mli{TS} \gets \Call{TopSort}{V_\mli{DAG}}$
+			\State TODO
+		\EndFunction
+		\Statex
+		\Function{PutCrumbs}{$m \equiv (s, \st{v}{i}, \mli{cost})\colon$ Match}
+		\Comment For general graphs
+		\Comment $i$ is the position in read where $s$ ends its match
+			\State $V_\mli{general} \gets \Call{GetReachableNodes}{\st{v}{i}}$
+			\State $V_\mli{DAG} \gets \Call{PutCrumbsBeforeCycles}{V_\mli{general}, \st{v}{i}}$
+			\State $\Call{PutCrumbsInDAG}{V_\mli{DAG}, \st{v}{i}}$
+		\EndFunction
+		\Statex
+		%\Function{PutCrumbs}{$m\colon$ Match, $\st{v}{i}\colon State$}
+		%	\State $Q \gets new$ $\mli{queue <State>}$
+		%	\State $\mli{min\_i} \gets new$ $map\colon$ $<\mli{Node} \to \mli{Pos}>$
+		%	\Comment Min read pos that can align to a node
+		%	\Statex \Comment ($-\inf$ for a cycle)
+		%	\State $Q.push(\st{v}{i}))$
+  %          %\If{$v$ \gets $\TG.\mli{start}$}
+		%	\While{$!Q.empty()$}
+		%		\State $\st{v}{i} \gets Q.pop()$
+		%		%\If{$v = G.trie\_root$}
+		%		%	\State continue
+		%		%\EndIf
+		%		\If{$v \notin \mli{min\_i}$}
+		%			\State $\mli{min\_i}[v] \gets i$
+		%		\ElsIf{$i < \mli{min\_i}[v]$}
+		%			\State $\Call{PropagateCycle}{\mli{min\_i}, m, \st{v}{i}}$
+		%		\ElsIf{$i = -\inf$}
+		%			\State continue
+		%			\Comment A visited node is before a cycle
+		%		\Else
+		%			\State empty operator
+		%			\Comment A visited node is now reached in a longer path
+		%		\EndIf
+		%		\State $\Call{PutCrumbsInNode}{m, v}$
+		%		\If{$-\mli{max\_indels} >= i$}
+		%		\Comment Note that $i$ can be negative
+		%			\ForAll{$(u,v,l) \in \RGE$} \Comment Excluding the trie
+		%				\State $Q.push(\st{u}{i-1})$
+		%			\EndFor
+		%		\EndIf
+		%	\EndWhile
+		%\EndFunction
+		%\Statex
+	\end{algorithmic}
+\end{algorithm}

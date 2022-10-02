@@ -1,0 +1,75 @@
+\begin{tikzpicture}[
+		node distance=0.5cm,
+		myletter/.style={letter,scale=0.9,text width=2em,inner sep=0pt,align=center},
+		myarrow/.style={arrow}
+	]
+	% vertex positions
+	\def \vd {0.8}
+	\pgfmathsetmacro{\leftx}{3}
+	\pgfmathsetmacro{\middlex}{\leftx+4*\vd}
+	\pgfmathsetmacro{\rightx}{\leftx+7*\vd}
+
+	% GENOMES
+
+	\node[] at (0, 0.9) (g1) {$\genome_1^\gcore=$ \textcolor{my-full-blue}{$AAC$} $CCG$ \textcolor{my-full-blue}{$AAC$}};
+	\node[] at (0, 0.3) (g2) {$\genome_2^\gcore=$ \textcolor{my-full-blue}{$AAC$} $CCG$ \textcolor{my-full-purple}{$GGT$}};
+	\node[] at (0,-0.3) (g3) {$\genome_3^\gcore=$ \textcolor{my-full-purple}{$GGT$} $CCG$ \textcolor{my-full-blue}{$AAC$}};
+	\node[] at (0,-0.9) (g4) {$\genome_4^\gcore=$ \textcolor{my-full-purple}{$GGT$} $CCG$ \textcolor{my-full-purple}{$GGT$}};
+
+	% ARROW
+
+	\node[inner sep=0pt,above right,anchor=center] at (2.2,0) {\includegraphics[scale=1]{figures/arrow}};
+
+	% GRAPH-LEFT
+
+	\node[myletter] at (\leftx, 0) (left) {$v_0$};
+
+	\path (left)
+		 ++(\vd,0.6) node[myletter,my-full-blue] (left-AAC-1) {$v_1$}
+		 ++(\vd,0) node[myletter,my-full-blue] (left-AAC-2) {$v_2$}
+		 ++(\vd,0) node[myletter,my-full-blue] (left-AAC-3) {$v_3$};
+	
+	\path (left)
+		 ++(\vd,-0.6) node[myletter,my-full-purple] (left-GGT-1) {$v_4$}
+		 ++(\vd,0) node[myletter,my-full-purple] (left-GGT-2) {$v_5$}
+		 ++(\vd,0) node[myletter,my-full-purple] (left-GGT-3) {$v_6$};
+
+	% GRAPH-MIDDLE
+
+	\path (\middlex,0) node[myletter] (CCG-1) {$v_7$}
+		++(\vd,0) node[myletter] (CCG-2) {$v_8$}
+		++(\vd,0) node[myletter] (CCG-3) {$v_9$};
+	
+	% GRAPH-RIGHT
+
+	\path (\rightx, 0.6) node[myletter,my-full-blue] (right-AAC-1) {$v_{10}$}
+		   ++(\vd,0) node[myletter,my-full-blue] (right-AAC-2) {$v_{11}$}
+		   ++(\vd,0) node[myletter,my-full-blue] (right-AAC-3) {$v_{12}$};
+
+	\path (\rightx,-0.6) node[myletter,my-full-purple] (right-GGT-1) {$v_{13}$}
+		++(\vd,0) node[myletter,my-full-purple] (right-GGT-2) {$v_{14}$}
+		++(\vd,0) node[myletter,my-full-purple] (right-GGT-3) {$v_{15}$};
+	
+	% GRAPH EDGES
+
+	\draw[myarrow,my-full-blue] (left) -- node[above] {$A$} (left-AAC-1);
+	\draw[myarrow,my-full-blue] (left-AAC-1) -- node[above] {$A$} (left-AAC-2);
+	\draw[myarrow,my-full-blue] (left-AAC-2) -- node[above] {$C$} (left-AAC-3);
+
+	\draw[myarrow,my-full-purple] (left) -- node[above] {$G$} (left-GGT-1);
+	\draw[myarrow,my-full-purple] (left-GGT-1) -- node[above] {$G$} (left-GGT-2);
+	\draw[myarrow,my-full-purple] (left-GGT-2) -- node[above] {$T$} (left-GGT-3);
+
+	\draw[myarrow] (left-AAC-3) -- node[right,pos=0.3] {$C$} (CCG-1);
+	\draw[myarrow] (left-GGT-3) -- node[right,pos=0.3] {$C$} (CCG-1);
+	\draw[myarrow] (CCG-1) -- node[above] {$C$} (CCG-2);
+	\draw[myarrow] (CCG-2) -- node[above] {$G$} (CCG-3);
+
+	\draw[myarrow,my-full-blue] (CCG-3) -- node[left,pos=0.7] {$A$} (right-AAC-1);
+	\draw[myarrow,my-full-blue] (right-AAC-1) -- node[above] {$A$} (right-AAC-2);
+	\draw[myarrow,my-full-blue] (right-AAC-2) -- node[above] {$C$} (right-AAC-3);
+
+	\draw[myarrow,my-full-purple] (CCG-3) -- node[left,pos=0.7] {$G$} (right-GGT-1);
+	\draw[myarrow,my-full-purple] (right-GGT-1) -- node[above] {$G$} (right-GGT-2);
+	\draw[myarrow,my-full-purple] (right-GGT-2) -- node[above] {$T$} (right-GGT-3);
+\end{tikzpicture}

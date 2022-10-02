@@ -1,0 +1,259 @@
+\section{Graph Model} \label{sec:graph-model}
+In this section, we introduce a graph representation of the core genomes that
+enables us to efficiently solve the inference problem introduced in \cref{sec:alignment}.
+The third column in \cref{fig:models} shows the resulting generative model.
+
+Variation graphs provide a succinct encoding of all possible segments of core genomes.
+Conventional variation graphs have shown great promise in capturing large-scale variations that linear references cannot represent \cite{VGtool,paten2017genome,garrison2018variation}.
+Here, we generalize these variation graphs to our probabilistic setting.
+
+\begin{figure*}
+	\begin{minipage}{0.7\linewidth}
+		\input{figures/variation-graph}
+		\caption{Variation graph capturing genomes $\{\genome_1, \genome_2, \genome_3, \genome_4\}$.}
+		\label{fig:deterministic-variation-graph}
+	\end{minipage}\hspace{0.04\linewidth}
+	\begin{minipage}{0.25\linewidth}
+		\centering
+		\includegraphics[width=0.8\linewidth]{figures/partition}
+		\caption{Concretization of paths of length $L$.}
+		\label{fig:partition}
+	\end{minipage}
+\end{figure*}
+
+\para{Variation Graphs}
+\cref{fig:deterministic-variation-graph} shows a set of genomes $\genomes$ (left) encoded by a conventional variation graph $\graph$ (right).
+The graph $\graph=(V,E)$ consists of vertices $V$ and edges $E$ and is equipped with edge labels $\labels \colon E \to \{A,C,G,T\}$.
+Thus, each path $\graphpath=e_1,\dots, e_n$ in $\graph$ spells a genome segment by $\labels(\graphpath)=\labels(e_1) \cdots \labels(e_n)$, where $\cdot$ denotes string concatenation.
+
+In addition, $\graph$ is equipped with a position map $\position \colon E \to \mathcal{P}(\genomes \times \mathbb{N})$ which annotates each edge with a set of positions in the genomes.
+For example, $\position((v_0,v_1))=\{\genome_1\llbracket 0 \rrbracket,\genome_2\llbracket 0 \rrbracket\}$, as the edge between $v_0$ and $v_1$ represents the first letter of the first two genomes.
+In practice, we may not know the positions referred to by each vertex $v$.
+In this case, we simply annotate $v$ with basic information about its position,
+such as its approximate location in a reference genome.
+
+When given a read $\segment^\gread$, existing graph alignment tools aim to find a path $\graphpath$ in $\graph$ that spells $\segment^\gread$, or a slightly edited version of it.
+The annotations on the graph's vertices then allow us to identify the (set of) positions $\segment^\gread$ most likely originates from.
+
+\para{Concrezitation of Paths}
+Every path $\graphpath$ in $\graph$ represents one or multiple segments of genomes.
+We capture these segments by a concretization function $\gamma$ taking as argument a path $\graphpath$ consisting of edges $e_i$.
+Given $\graphpath$, $\gamma$ returns the set of all possible segments $\graphpath$ may represent, where each segment is encoded as a sequence of positions, determined by the position map $m$:
+\begin{align*}
+	\gamma(e_1, \dots, e_L) = \{p_1, \dots, p_L \mid p_i \in \position(e_i)\}
+\end{align*}
+
+\para{Compression by Variantion Graphs}
+\cref{fig:partition} visualizes the concretization of paths of length $L$.
+Green circles (\coloredcircle{my-full-green}) represent segments present in $\genomes$, while orange circles (\coloredcircle{my-full-orange}) represent spurious segments.
+\cref{fig:partition} shows that the concretization of every path of length $L$ contains at least one segment from $\genomes$.
+This is necessary when aligning reads of length $L$ since otherwise, alignment on $\graph$ may select a spurious path that does not reflect an existing genome segment.
+Likewise, \cref{fig:partition} does not show any genome segment of length $L$ that is not captured by concretizing some path.
+Otherwise, some reads of length $L$ could never be aligned correctly in $\graph$.
+
+When $\graph$ captures these two properties for every length $L'<L$, we say $\graph$ \emph{non-deterministically $L$-compresses} the set of genomes $\genomes$.
+This ensures that (i)~any path selected by alignment can be interpreted in the genomes and (ii)~any read can be aligned on $\graph$.
+The formal definition is that for all lengths $L' \leq L$:
+\begin{align}
+	\forall \graphpath \in \paths{L'}{\graph}. \exists \genome \in \genomes, \startInGenome < \abs{\genome}-L'. \genome \llbracket \startInGenome \shortcolon \startInGenome + L' \rrbracket \in \gamma(\graphpath) \label{eq:compress-non-deterministic-precise} \\
+	\forall \genome \in \genomes, \startInGenome < \abs{\genome}-L'. \exists \graphpath \in \paths{L'}{\graph}. \genome \llbracket \startInGenome \shortcolon \startInGenome + L' \rrbracket \in \gamma(\graphpath) \label{eq:compress-non-deterministic-complete}
+\end{align}
+% \begin{align} \label{eq:compress-non-deterministic}
+% \bigcup_{\pi \in \graph} \gamma(\pi) = \left\{ \genome^\gcore\llbracket i \shortcolon i+L' \rrbracket \,\middle|\,
+% \genome^\gcore \in \genomes^\gcore,
+% 0 \leq i < |\genome^\gcore|-L'
+% \right\}.
+% \end{align}
+
+% Generally, when aligning reads of length $L$ to a graph $\graph$, we need $\graph$ to $L$-compress the underlying set of core genomes.
+% If \cref{eq:compress-non-deterministic-complete} does not hold, \ie $\graph$ does not represent some core genome segments, then some reads cannot be correctly aligned.
+% If \cref{eq:compress-non-deterministic-precise} does not hold, \ie $\graph$ contains genome segments that do not occur in the core genomes, alignment on $\graph$ may select a spurious path that was only introduced in the graph model and does not reflect an existing core genome.
+
+\para{Probabilistic Variation Graphs}
+In order to account for our generative model, we generalize variation graphs to a probabilistic setting.
+To this end, we extend $\graph$ by transition probabilities $\trans \colon E \to [0,1]$ which must induce a probability distribution over all outgoing edges, \ie for all $v \in V$, $\sum_{(v,v') \in E} \trans(v,v')=1$.
+Then, the probability of selecting $\graphpath$ is given by $\trans(\graphpath)=\prod_{i=1}^{n} \trans(e_i)$.
+
+In addition, we mark a node $\startNode \in V$ as a distinguished starting node.
+Then, all paths $\graphpath=e_1,\dots,e_n$ in $\graph$ must start from $\startNode$, \ie $e_1=(\startNode,v)$ for some $v$.
+
+\para{Compression by Probabilistic Variation Graphs}
+To enable alignment on probabilistic variation graphs, it does not suffice if $\graph$ non-deterministically $L$ compresses $\genomes$.
+Instead, we must additionally ensure that $\graph$ correctly captures the distribution of $\genomeRV$.
+For example, in \cref{fig:partition}, we require that
+$$\trans(\pi_3) = \Pr{\genomeRV \llbracket \startInGenomeRV \shortcolon \startInGenomeRV+L' \rrbracket \in \{\coloredcircle[1]{my-full-green},\coloredcircle[2]{my-full-green},\coloredcircle[3]{my-full-orange}\}}.$$
+
+Formally, a probabilistic variation graph $\graph$ \emph{(probabilistically) $L$-compresses} a distribution over genomes $\genomeRV$ if the probability of every path $\graphpath$ of length $L' \leq L$ in $\graph$ matches the probability of the concretization of this path:
+\begin{align} \label{eq:compress-probabilistic}
+	\trans(\graphpath) = \Pr{\genomeRV\llbracket \startInGenomeRV \shortcolon \startInGenomeRV+L' \rrbracket \in \gamma(\graphpath)} && \forall \graphpath \in \paths{L'}{\graph}
+\end{align}
+
+\cref{lem:l-compress-generalize} states that probabilistic L-compression indeed
+generalizes deterministic L-compression to the probabilistic setting.
+
+\begin{lemma} \label{lem:l-compress-generalize}
+	Assume $\graph$ does not contain edges that may never be used, \ie assume $\forall e \in E. \trans(e)>0$. If $\graph$ probabilistically $L$-compresses a distribution over genomes $\genomeRV$, then $\graph$ non-deterministically $L$-compresses the underlying set of genomes $\genomes$.
+\end{lemma}
+\begin{proof}
+	Let $L' < L$.
+
+	Showing \cref{eq:compress-non-deterministic-precise}: Let $\graphpath = e_1,\dots,e_n \in \paths{L'}{\graph}$. Because $\trans(\graphpath) > 0$ (otherwise there would be an edge that may never be used), and due to \cref{eq:compress-probabilistic}, $\Pr{\genomeRV \llbracket \startInGenomeRV \shortcolon \startInGenomeRV+L' \rrbracket \in \gamma(\graphpath)}>0$. Therefore, there must be at least one $\genome$, $\startInGenome$ with $\genomeRV\llbracket \startInGenomeRV \shortcolon \startInGenomeRV+L' \rrbracket \in \gamma(\graphpath)$.
+
+	Showing \cref{eq:compress-non-deterministic-complete}: Due to \cref{eq:compress-probabilistic}, and because the transition probabilities $\trans$ induce a probability distribution, we have
+	\begin{align*}
+		\sum_{\pi \in \paths{L'}{\graph}} \Pr{\genomeRV\llbracket \startInGenomeRV \shortcolon \startInGenomeRV+L' \rrbracket \in \gamma(\graphpath)} = \sum_{\pi \in \paths{L'}{\graph}} \trans(\pi) = 1.
+	\end{align*}
+	Therefore, we know that all genome sequences must be covered by paths in $\graph$.
+\end{proof}
+
+\para{Approximate Compression}
+In practice, we can only approximately satisfy \cref{eq:compress-probabilistic}.
+\todo{Extend probabilistic L-compression to its approximate version}
+
+% We measure the error according to KL divergence. 
+% Concretely, we say that $\graph$ \emph{$(L,\epsilon)$-compresses} a distribution over genomes $\genomeRV$ if for all $L' \leq L$: \todo{explain more, if we are to stick with KL divergence}
+% \begin{align*}
+% 	\E[\Pi \sim \paths{L'}{\graph}]{
+% 		\frac{
+% 			\trans(\Pi)
+% 		}{
+% 			\Pr{\genomeRV\llbracket \startInGenomeRV \shortcolon \startInGenomeRV+L'\rrbracket \in \gamma(\Pi)}
+% 		}
+% 	} \leq \epsilon
+% \end{align*}
+% This essentially limits KL divergence: $\kld{\graph}{\genomeRV}\leq \epsilon$ (modulo $L$).
+
+\subsection{Generative Graph Model}
+\begin{figure}
+	\lstinputlisting[language=MyPython,caption={Code for generating a read using the graph model.},label={lst:graph-minified}]{code/graph_minified.py}
+\end{figure}
+
+In \cref{lst:graph-minified}, we show an algorithmic description of our
+generative model. It starts from an empty read (\cref{line:empty}) and extends
+it until it reaches $L$ letters (\cref{line:empty}). In each iteration, it
+samples a new edge in the graph (\cref{line:edge}), possibly mutates the letter
+associated with this edge (\cref{line:mutate}) and records the resulting action
+(\cref{line:record}). Unless the mutation (\cref{line:mutate}) results in a
+deletion, the model reads the resulting letter (\cref{line:read}) possibly
+resulting in a read error, and appends the resulting letter to the read. In
+addition, unless the mutation (\cref{line:mutate}) results in an insertion (in
+which case the next letter to be read remains the same), \cref{line:new-state}
+updates the current position in the graph.
+
+\subsection{Equivalence of Graph Model and Core Genomes Model}
+\todo{Discuss and prove}
+
+
+\section{Old Graph Model}
+
+Instead of selecting an entire core genome $\genome^\gcore$, we generate a core segment $\segment^\gcore$ of $L$ letters that follows the same distribution as (i)~sampling a core genome $\genome^\gcore$ and (ii)~emitting $L$ letters from a random starting point in $\genome^\gcore$.
+
+To select the core sequence $\seq^\gcore$, we sample from a variation graph, which provides a succinct representation of genomes in $\genomes^\gcore$.
+A variation graph $H=(V,E)$ consists of vertices $V$ and directed edges $E \subseteq V \times V$ and is equipped with edge labels $l \colon E \to \{A,C,G,T\}$, transition probabilities $p \colon E \to [0,1]$, and a distinguished starting node $\startNode \in V$.
+%
+We assume that the probabilities $p$ induce a probability distribution over all outgoing edges, \ie for all $v \in V$, $\sum_{(v,v') \in E} p(v,v')=1$.
+Starting from $\startNode$, we can sample a random walk $p=e_1,\dots,e_n$ in $H$ (where $e_1=(\startNode,v)$ for some $v$), whose probability is given by $\prod_{i=1}^{n} p(e_i)$.
+Every path $p$ spells part of a reference genome by $l(e_1) \cdots l(e_n)$, where $\cdot$ denotes string concatenation.
+%
+\cref{fig:construct-variance-graph} shows a general construction, which builds a variance graph $H$ from a set of core genomes $\genomes^\gcore$ by $|\genomes^\gcore|$ separate paths, each spelling one core genome, and a starting node that can jump to any location of any genome in $\genomes^\gcore$, as long as this location still allows spelling a sequence of length $L$.
+In practice, we will aim for a more compact representation of $H$. \todo{reference graph building section}
+
+\begin{figure}
+	\begin{tikzpicture}
+		\def \len {6}
+		\def \n {1}
+		\def \jump {4}
+		\node[letter] at (-0.5,0) (s) {$\startNode$};
+		\foreach \gen in {-\n,...,\n} {
+			\pgfmathtruncatemacro{\num}{\n-\gen}
+			% nodes
+			\foreach \pos in {1,...,\len} {
+				\node[letter] at (\pos*0.7,\gen) (genome-\pos-\gen) {};
+			}
+			\foreach \pos in {1,...,\len} {
+				% path edges
+				\ifnum \numexpr\pos > 1
+					\pgfmathtruncatemacro{\prev}{\pos-1}
+					\ifnum \numexpr\gen = -1
+						\draw[->] (genome-\prev-\gen) edge node[above] {$1$} (genome-\pos-\gen);
+					\else
+						\draw[->] (genome-\prev-\gen) edge node[below] {$1$} (genome-\pos-\gen);
+					\fi
+				\fi
+				% jump edges
+				\ifnum \numexpr\pos < \numexpr\jump+1
+					\ifthenelse{\pos = 1}{
+						\pgfmathsetmacro{\in}{180}
+					}{
+						\pgfmathsetmacro{\in}{180-\gen*30}
+					}
+					\ifthenelse{\pos = \jump}{
+						\def \prob {$\frac{p_{\num}}{\jump}$}
+					}{
+						\def \prob {}
+					}
+					\ifnum \numexpr\gen = 1
+						\draw[->] (s) edge[out=60+\pos*7,in=\in] node[above left,pos=0.2] {\prob} (genome-\pos-\gen);
+					\fi
+					\ifnum \numexpr\gen = 0
+						\draw[->] (s) edge[out=10+\pos*5,in=180-30] node[above,pos=0.2] {\prob} (genome-\pos-\gen);
+					\fi
+					\ifnum \numexpr\gen = -1
+						\draw[->] (s) edge[out=-60-\pos*7,in=\in] node[below left,pos=0.2] {\prob} (genome-\pos-\gen);
+					\fi
+				\fi
+			}
+			\node[right of=genome-\len-\gen] {$g_{\num}$};
+		}
+	\end{tikzpicture}
+	\caption{General construction of a variance graph from core genomes. Each outgoing edge of $\startNode$ jumping into the \nth{i} genome $g_i$ has transition probability $\frac{p_i}{4}$. We do not allow jumping to the end of the genomes, as we must be able to read sequences of length $L$ (here, we depict $L=3$).}
+	\label{fig:construct-variance-graph}
+\end{figure}
+
+
+To mutate the core sequence $\seq^\gcore$, we assume a process that copies $\seq^\gcore$ letter by letter, generating a mutated sequence $\seq^\gmut$.
+When the process is about to copy the \nth{i} letter of $\seq^\gcore$, it probabilistically decides to (i)~insert a new letter (insertion; with probability $\pins$), (ii)~skip this letter (deletion; $\pdel$), (iii)~copy the letter incorrectly (edit; $\ped$), or (iv)~copy the letter correctly (copy; $\pcopy=1-\pins-\pdel-\ped$).
+We assume that the new letter for edits is selected uniformly at random from all letters different from the current one, \eg copying letter $A$ yields (edited) letter $C$, $G$, or $T$ with a probability of $\frac{\ped}{3}$, respectively.
+
+Finally, to simulate the sequencing, we generate a read by copying $\seq^\gmut$ letter by letter.
+During copying, we may misread each letter, editing the \nth{i} letter of $\seq^\gmut$ with probability $\pphred{i}$, which depends on the letter's position $i$.
+
+In \cref{app:model-equivalence}, we discuss the equivalence of the Core Genomes Model with the Graph Model.
+We demonstrate that the distributions induced by both models are approximately the same, with different behavior only towards the end of the genome \todo{what happens here exactly?}.
+
+\para{Including Mutations in the Graph Model}
+The fourth column in \cref{fig:models} transforms the variant graph $H$ to a new variant graph $H'$ that directly generates mutated genome sequences.
+This is desirable, as it means that our inference algorithm does not need to handle mutations explicitly, because we may handle mutations by incorporating them into the variant graph directly.
+
+\cref{fig:enhance-variance-graph} shows this transformation, which replaces every edge $e$ in $H$ by $9$ edges ($4$ for insertions, $1$ for deletions, $3$ for edits, and $1$ for copy).
+Insertions produce a new inserted letter without reading a letter from the core genome.
+Therefore, $H'$ adds $4$ edges (each with probability $p \cdot \frac{\pins}{4}$) that allow emitting a letter without changing the current state.
+Deletions allow reading a letter from the core genome without copying it.
+Therefore, $H'$ adds an edge that does not emit a letter (it is labeled by $\epsilon$) but changes the state.
+Edits allow reading a letter from the core genome but copying a different letter.
+Therefore, $H'$ adds $3$ edges (each with probability $p \cdot \frac{\ped}{3}$) that emit a letter but change the state is if emitting the original letter.
+
+\begin{figure}
+	%\centering
+	\small
+	\begin{tikzpicture}[every text node part/.style={align=center}]
+		\node[letter] at (-1.5,0) (v) {};
+		\node[letter] at ( 1.5,0) (w) {};
+		\draw[arrow,out=0,in=180+0] (v) edge node[above] {$A \; (p)$} (w);
+
+		\node[inner sep=0pt,above right,anchor=center] at (0,-0.5) {\includegraphics[scale=1,angle=-90]{figures/arrow}};
+
+		\node[letter] at (-1.5,-2) (v') {};
+		\node[letter] at ( 1.5,-2) (w') {};
+		% copy
+		\draw[arrow,out=0,in=180+0] (v') edge node[above] {$A \; \left(p\cdot \pcopy\right)$} (w');
+		% edit
+		\draw[editarrow,out=30,in=180-30] (v') edge node[above] {$C/G/T \; \left( p\cdot \frac{\ped}{3} \right)$} (w');
+		% delete
+		\draw[editarrow,out=-30,in=180+30] (v') edge node[below] {$\epsilon \; \left(p \cdot \pdel \right)$} (w');
+		% insert
+		\draw[editarrow,in=180-40,out=180+40,looseness=12] (v') edge node[left] {$A/C/G/T$ \\ $\left( p \cdot \frac{\pins}{4} \right)$} (v');
+	\end{tikzpicture}
+	\caption{Enhancing $H$ to account for mutations. For illustration purposes, $H$ only consists of a single edge emitting letter $A$ with probability $p$. We list multiple letters to indicate multiple edges (\eg $A/C/G/T$).}
+	\label{fig:enhance-variance-graph}
+\end{figure}	

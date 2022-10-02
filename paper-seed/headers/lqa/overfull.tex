@@ -1,0 +1,11 @@
+% Description: This file enables marking overfull boxes, e.g., words that extend
+% beyond the end of the line
+%
+% Usage: Create file headers/config/showoverfull.config
+
+\IfFileExists{headers/config/showoverfull.config}{
+	%\usepackage{showframe}
+	\overfullrule=1cm
+}{
+	% no action necessary
+}

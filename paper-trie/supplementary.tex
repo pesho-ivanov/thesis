@@ -1,0 +1,192 @@
+\begin{align*}
+    score(path \mid G) &= - 10 \log_{10} P(path \mid G) \\
+		&= - 10 \log_{10} \smashoperator{\prod_{e \in edges(path)}} P_G(e) \\
+		&= \smashoperator{\sum_{e \in edges(path)}} - 10 \log_{10} P_G(e) \\
+		&= \smashoperator{\sum_{e \in edges(path)}} score_G(e) \\
+	score(spell \mid \hat{r}) &= - 10 \log_{10} P(spell \mid \hat{r}) \\
+		&= - 10 \log_{10} \left[ \smashoperator{\prod_{spell_i = \hat{r_i}}} (1-P(\hat{r_i})) \smashoperator{\prod_{\substack{spell_i != \hat{r_i}}}} \frac{1}{3} P(\hat{r_i}) \right] \\
+		&= \smashoperator{\sum_{spell_i=\hat{r_i}}} - 10 \log_{10} (1-P(\hat{r_i})) + \smashoperator{\sum_{\substack{spell_i!=\hat{r_i}}}} - 10 \log_{10} \left( \frac{1}{3} P(\hat{r_i}) \right) \\
+		&= \smashoperator{\sum_{spell_i=\hat{r_i}}} - 10 \log_{10} (1-P(\hat{r_i})) + \smashoperator{\sum_{\substack{spell_i!=\hat{r_i}}}} \frac{1}{3} phred(\hat{r_i}) \\
+	score(path \mid \hat{r}) &= - 10 \log_{10} P(path \mid \hat{r}) \\
+		&= score(path \mid G) + score(spell(path) \mid \hat{r}) \\
+		&= \bf{\smashoperator{\sum_{e \in edges(path)}} score_G(e)
+			+ \smashoperator{\sum_{spell_i=\hat{r_i}}} - 10 \log_{10} (1-P(\hat{r_i}))
+			+ \smashoperator{\sum_{\substack{spell_i!=\hat{r_i}}}} \frac{1}{3} phred(\hat{r_i}) } \\
+	\bf{map_G(\hat{r})} &\equiv \smashoperator{\argmin_{path: \lvert spell(path) \rvert = \lvert \hat{r} \rvert}} score(path | \hat{r}) \\
+\end{align*}
+
+
+% Complete model
+\begin{algorithm}[H]
+	\caption{\completem: Sequence generation from a set of genomes}\label{complete_model_sequence_generation}
+	\begin{algorithmic}[1]
+		\Function{ChooseGenome}{$P_G: Genome \to [0, 1], L: \mathit{Length}$}
+			\State $G \gets sample(P_G)$  \Comment{Pick a genome}
+			\Return $Chop(G, L)$
+		\EndFunction
+
+		\Statex
+
+		\Function{ChopSeq}{$G, L$}
+			\State $start \gets rand(1, \lvert G \rvert - L + 1)$
+			\Return $G[start : start + L - 1]$  \Comment{Return a sequence}
+		\EndFunction
+
+		\Statex
+
+		\Function{phred2prob}{$\mathit{phred}$}
+			\Return $\mathit{pow}(10, - \mathit{phred}/10)$
+		\EndFunction
+
+		\Statex
+		
+		\Function{MaybeSame}{$\mathit{letter}, \mathit{error\_prob}$}
+			\If{$\mathit{sample}(\mathit{uniform}(0, 1)) < \mathit{error\_prob}$}
+				\Return $\mathit{sample}(\mathit{uniform}(\{A, C, G, T\} \setminus \mathit{letter}))$
+			\Else
+				\Return $\mathit{letter}$
+			\EndIf
+		\EndFunction
+
+		\Function{Seq2Read}{$\mathit{seq}: \mathit{Sequence}, \mathit{phreds}: float[]$}
+			\State $read \gets [\,]$ \Comment{Read as an array of (letter, prob) elements}
+			\ForAll{$\mathit{letter}, \mathit{phred} \in zip(seq, phreads)$}
+				\State $\mathit{error\_prob} \gets \mathit{phred2prob}(\mathit{phred})$
+				\State $\mathit{new\_letter} \gets \mathit{MaybeSame}(letter, error\_prob)$
+				\State $\mathit{read.append}((\mathit{new\_letter}, \mathit{phred}))$
+			\EndFor
+			\Return $\mathit{read}$
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+% Core model
+\begin{algorithm}[H]
+	\caption{\corem: Sequence generation from a set of core genomes \fxnote{Add an automata illustrating the editing}}
+	\label{core_model_sequence_generation}
+	\begin{algorithmic}[1]
+		\Function{Edit}{$G: \mathit{Genome}, \mathit{P_{edit}}, \mathit{P_{ins}}, \mathit{P_{del}})$}
+			\State $\mathit{res} \gets [\,]$
+			\State $i \gets 1$
+			\While{$i \le \lvert G \rvert + 1$}  %ForAll{$\mathit{letter} \in G$}
+				\State $\mathit{distr} \gets \{ (\mathit{edit}, l): P_{edit}/3\, \forall l \in \{A, C, G, T\} \setminus G[i] \} \, \cup$
+				\State $\phantom{\mathit{distr} \gets} \{ (\mathit{ins}, l): P_{ins}/4\, \forall l \in \{A, C, G, T\} \, \cup$
+				\State $\phantom{\mathit{distr} \gets} \{ (\mathit{del}, \epsilon): P_{del} \} \, \cup$
+				\Statex \Comment{Assume $\epsilon$ if $G[i]$ is not defined}
+				\State $\phantom{\mathit{distr} \gets} \{ (\mathit{none}, G[i]): 1-P_{edit}-P_{ins}-P_{del} \}$ 
+				\State $\mathit{op}, \mathit{letter} \sim \mathit{distr}$
+				\If{$\mathit{letter} \neq \epsilon$}
+					\State $\mathit{res.append}(letter)$
+				\Else
+					\State $i \gets i + 1$
+				\EndIf	
+			\EndWhile
+			\Return $\mathit{res}$
+		\EndFunction
+
+		\Statex
+
+		\Function{ReadGen}{$P_G: \mathit{Genome} \to [0, 1], \mathit{phreds}: float[], \mathit{P_{edit}}, \mathit{P_{ins}}, \mathit{P_{del}}, L: \mathit{Length}$}
+			\State $\mathit{G_{core}} \gets \mathit{sample}(P_G)$  \Comment{Pick a core genome}
+			\State $G \gets \mathit{Edit}(\mathit{G_{core}}, \mathit{P_{edit}}, \mathit{P_{ins}}, \mathit{P_{del}})$  \Comment{Introduce edits}
+			\State $\mathit{seq} \gets \mathit{Chop}(G, L)$
+			\State $\mathit{read} \gets \mathit{Seq2Read}(\mathit{seq}, \mathit{phreads})$
+			\Return $\mathit{read}$
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+% Graph model
+\begin{algorithm}[H] 
+	\caption{\graphm: Sequence generation given a graph with edit edges}\label{sequence_generation}
+	\begin{algorithmic}[1]
+		\Function{SeqGen}{$G: \mathit{Graph}, L: \mathit{Length}$}
+			\State $\mathit{curr} \gets q_{start}$ \Comment{Current node}
+			\State $\mathit{seq} \gets [\,]$ \Comment{Current sequence of letters}
+			\While{$\lvert \mathit{seq} \rvert < L$}
+					\State $e \gets \mathit{sample}(\mathit{outgoing\_edges}(\mathit{curr}))$
+					\If{$l(e) \neq \epsilon$}
+							\State $\mathit{seq.append}(l(e))$
+					\EndIf
+					\State $\mathit{curr} \gets \mathit{to}(e)$ \Comment{Move through the edge}
+			\EndWhile
+			\Return $seq$
+		\EndFunction
+
+		\Statex
+
+		\Function{ReadGen}{$\mathit{G}: \mathit{Genome}, L: \mathit{Length}$}
+			\State $\mathit{seq} \gets \mathit{SeqGen}(G, L)$
+			\State $\mathit{read} \gets \mathit{Seq2Read}(\mathit{seq} \to \mathit{uniform})$
+			\Return $\mathit{read}$
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+% maybe not needed
+\begin{algorithm}[H]
+	\caption{Best path quality estimation}\label{sampling}
+	\begin{algorithmic}[1]
+		\Function{SampleOutgoingEdge}{$E: Edges$}
+			\State $\mathit{total\_score} \gets \mathit{sum}([score(e) \mathit{for} e \in E])$
+			\State $\mathit{total\_prob} \gets \mathit{phred2prob}(\mathit{total\_score})$
+			\State $\mathit{e2p} \gets \mathit{set}([e: \mathit{phred2prob}(\mathit{score}(e)) / \mathit{total\_prob} \mathit{for} e \in E])$
+			\Return $\mathit{sample}(\mathit{keys(e2p)} \to \mathit{values(e2p)})$
+		\EndFunction
+
+		\Statex
+
+		\Function{SampleOutgoingEdge}{$G: Graph, u: Vertex, \mathit{letter}$}
+			\State $\mathit{candidates} \gets \mathit{set}()$
+			\ForAll{$e \in \mathit{G.outgoing\_edges}(u)$}
+				\State $u, v, \mathit{label}, \mathit{score} \gets e$
+				\If{$\mathit{label} = \mathit{letter} \textbf{ or } \mathit{label} = \epsilon$}
+					\State $\mathit{candidates.add}(e)$
+				\EndIf
+			\EndFor
+			\Return $\mathit{SampleEdge}(\mathit{candidates})$  \Comment{$\lvert \mathit{candidates} \rvert > 0$}
+		\EndFunction
+
+		\Statex
+
+		\Function{SamplePath}{$G: \mathit{Graph}, r: \mathit{Read}$}
+			\State $\mathit{total\_score} \gets 0.0$  \Comment{Path score}
+			\State $u \gets \mathit{supersource}(G)$	
+			\State $i \gets 1$	
+			\While{$i < \lvert r \rvert$}
+				\State $\mathit{letter} \gets \mathit{MaybeSame}(r_i, \mathit{phred}(r_i))$
+				\State $u, v, \mathit{label}, \mathit{score} \gets \mathit{SampleOutgoingEdge}(u, \mathit{letter})$
+				\State $u \gets v$
+				\State $\mathit{total\_score} \gets \mathit{total\_score} + score$
+				\If{$label \neq \epsilon$}
+					\State $i \gets i + 1$
+				\EndIf
+			\EndWhile
+			\Return $\mathit{total\_score}$
+		\EndFunction
+		
+		\Statex
+
+		\Function{EstimateQuality}{$G: \mathit{Graph}, r: \mathit{Read}, N$}
+			\ForAll{$i \in \mathit{range}(N)$}
+				\State $\mathit{score} \gets \mathit{SamplePath}(G, r)$
+				\State \fxwarning{Statistics}
+			\EndFor
+		\EndFunction
+		
+		\Statex
+		
+		\Function{PhredScore}{$read\_letter, path\_letter$}
+			\Require $read\_letter \neq \epsilon \And path\_letter \neq \epsilon$
+            \If{$read\_letter = path\_letter$}
+				\Return $phred(read\_letter)$
+            \Else
+				\Return $log(1-phred2prob(phred(read\_letter)))/3$
+            \EndIf
+		\EndFunction
+
+	\end{algorithmic}
+\end{algorithm}
+
+
+

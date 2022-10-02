@@ -1,0 +1,7 @@
+# list of text that should not appear in tex files (except in the header)
+e.g. % ignore forbidden
+i.e. % ignore forbidden
+Fig. % ignore forbidden
+Sec. % ignore forbidden
+Figure % ignore forbidden
+Section % ignore forbidden

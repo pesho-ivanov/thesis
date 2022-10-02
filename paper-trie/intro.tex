@@ -1,0 +1,123 @@
+\section{Introduction}
+
+% Overview:
+% -- graph-based mapping
+% -- ad-hod problem statement vs well-defined
+% -- quantification information used in graphs: HMMs for Immunology and (Brownie)
+% -- optimal algorithms
+
+\todo{make sure to incorporate} \href{https://docs.google.com/spreadsheets/d/1_3dW1zqKXWOqUNWUOfftjB-yKd_oGRbRwgVZOk_aYj8/edit#gid=0}{Comparison of sequence to graph alignment algorithms}
+
+Overviews: A History of DNA Sequence Assembly\cite{myers2016history}, \cite{computational2016pengenomics}.
+
+%% Algorithmic reliability is an important aspect in many scientific and engineering fields. Despite the advancements in computational genetics, the focus has mostly been on performance while sacrificing the guarantees. For the read to graph mapping problem, we resolve this trade-off by superseding the existing suboptimal approaches. Here we formally define the problem of read to graph mapping and present a provably-optimal practical solution. We developed Probabilistic Variant Graph (PVG) – a generative stochastic model designed for read mapping to general reference graphs. It completely encompasses all of the various available data sources in their probabilistic interpretation: 1) read quality scores, 2) edit distance alignment metric, and 3) variant likelihood statistics. This model captures an unprecedented level of generality while guaranteeing the global seed-and-extend mapping optimality. Our novel heuristic precomputation allows an A* shortest path algorithm to reach a near input size empirical complexity. We demonstrate that aligning using our model improves the mapping accuracy of current state of the art tools while matching the performance on both synthetic and real data. The PVG tool is available on https://github.com/eth-sri/pvg.
+
+
+Finding the origin of newly sequenced genomic sequences is a routine task of bioinformatics, consisting of mapping genomic sequences (e.g. reads directly produced by a sequencing machine) onto linear reference genomes that have been precomputed and humanly curated.
+However, working with a single reference genome cannot be representative for the whole diversity of an organism and introduces a bias.
+Instead, mapping on a collection of genomes has been proposed as an extension in order to account for the whole distribution.
+This can be especially useful when dealing with microbial genomes (>100k or even 1M different reference).
+Good candidates for representing such genomic variety are the genome graphs which are already heavily used in bioinformatics for tasks like de-novo assembling.
+Here we will focus on de Bruijn Graphs (DBGs).
+Various queries need to be translated from linear to graph models (e.g., read mapping and variant calling).
+
+The common query of mapping a genomic sequence is translated as finding such a path (or sometimes several candidate paths) in the DBG that spells a string which best aligns with the query sequence.
+There are different ways to define the quality of alignment but the commonly used are exact match (which can efficiently implemented by hashing),
+  number of substitutions (Hamming distance), and edit distance (which accounts of the biologically relevant insertions and deletions).
+In practise, the more general edit distance is rarely applied to the huge number of short reads because of computational burden.
+Nevertheless, an exact algorithms with optimal worst case time complexity $O(V + mE)$ ($m$ -- query sequence length) has been recently developed for general directed graph (cycles allowed).\cite{rautiainen2017aligning}
+Such a complexity is still too slow for full-length genome graphs but is not prohibitive for smaller graphs like Ig graphs
+  (similar to the ones constructed in \cite{bonissone2015immunoglobulin} with similar complexity algorithms).
+
+The tool \emph{vg}\cite{VGtool,paten2017genome,garrison2018variation} has been developed as a practical general graph reference (both DNA and RNA).
+It heavily uses hashing for kmer mapping which is further extended.
+It ``dagifies'' a graph (unrolls and unfolds any cycles) to create a directed acyclic graph (DAGs) that are amenable to partial-order alignment.\cite{paten2017genome}
+  (This can be problematic for long reads mapped on complex cyclic graphs) The authors note that:
+
+``The current version of vg uses heuristics in place of a true probability model for its mapped reads.
+We expect that true generalizations of traditional models will be a significant advancement for the field, particularly for segregating structural variants.''
+
+``The leading linear reference-based variant calling tools in use today are all based on probabilistic models of sequencing data (Nielsen et al. 2011). This approach has several advantages. Modern sequencing technologies all attempt to quantify the uncertainty in their base calls. Probability models provide a natural framework to incorporate this uncertainty into genotype calls, and they allow algorithms to estimate uncertainty about genotype calls for downstream analyses''
+
+
+Another line of molecular genomics research involves probabilistic models to capture different kinds of uncertainty (both biological and technical) in order to reason more precisely. An example of such a query is variant calling. genotype $G (AA, AT, ...)$ with maximum the posterior probability $P(G | X)$ given the data $X$. This is done by using Bayes' formula and a direct computation of $P(X | G)$. The ratio between the most probable and the second most probable genome is used as an estimate for the inference uncertainty.\cite{nielsen2011genotype} \fxnote{include the variant calling query?}
+
+Particularly interesting use cases for a probabilistic framework are some complex genome regions that are highly variable (e.g. Ig, TCR, BCR, HLA, MHC genes).
+
+We argue that our precise inference approaches scales for many domain-specific cases. The computational complexity for read mapping is close to linear of the read length thanks to the A$^\star$/ALT optimization strategy \cite{goldberg2005computing}.
+
+In this work, we aim at extending the applicability of DBG and various genomic operations to a more general probabilistic (uncertainty) model that also captures edit operations. This task has been underlined to be of significant practical importance\cite{paten2017genome}.
+
+An alternative to MAP optimization is centroid estimation\cite{carvalho2008centroid} which may be more appropriate in cases when the MAP is not near one. It has been applied to alignment\cite{hamada2011probabilistic}.
+
+Unlike other graph-based reference approaches, \tool smooths the concept of read mapping from mapped vs not mapped to mapping with a probabilistic score.
+In other words, it will always map a read with the difference in the mapping quality.
+Or in terms of generation, even the simplest \tool can generate all possible (infinitely many) sequences.
+
+
+\section{Contibutions}
+As mentioned in different 
+
+\begin{enumerate}
+	\item problem definitions and approaches: prob.matching (seq to read) $\to$ optimal mapping on a PNFA (DP, Dijkstra, A$^\star$) $\to$ construction (from reference seqs or reads) $\to$ DBG conversion to PNFA $\to$ queries
+	\item unifying three sources of uncertainty
+	\item subsumes ED minimization (by using zero phred scores, zero supersource jumps scores, zero transition scores)
+	\item subsumes MEM maximization (by using zero phred scores, zero supersource jumps and zero supersink jumps, zero edit scores, negative constant transition scores)
+	\item jointly solving mapping and aligning tasks
+	\item implementaion (dp, dijkstra)-testing-comparisons-applications-two metrics (avg and total probability). compare Dijkstra and A$^\star$ in two regimes (+edit edges; +phread) to VG tool and Minimap2 (instead of BWA-MEM) on ecoli, VDJ data and synthetic data (get Pevzner’s VDJ graph or the HMM) for mapping and alignment accuracy and for performance
+	\item stability checking: varying parameters, abstract interpretation; how much change of edit probs is needed for a different best alignment
+	\item Get the Ig Graph from Pevzner's paper \cite{bonissone2015immunoglobulin} synthetize graphs and queries with substitution, insertion and deletion errors.	Learn the probabilities on the edges (+probabilities on indel and substitution edges) using big data over TCR/BCR. Run TraCeR to obtain sequence candidates (before TCR type annotation per nucl.) Feed the candidates to the T5 algo (implementation) to annotate them (use GAM format from VG tool; and also CIGAR) Validate the T5 annotations using IgBLAST annotations (=TraCeR annotation). Map kmers directly from the input to the graph. Compare with \cite{ralph2016consistency}. 	Compare to vg, HMM, linear state of the art. \\
+\end{enumerate}
+
+\subsection{Queries}
+
+Several successive tasks are typical for vg:
+\begin{enumerate}
+	\item Convert a reference genome or a set of sequences to a DBG (construct or msga commands in vg) -- learning an automata
+	\item Mapping reads (map) on the DBG using kmers hashing or maximal exact matches (MEMs)
+	\item Calling variants (call and genotype) -- predicting the likelihood of variation at each locus after alignment, SNP, short indels	
+	\item Drawing a string from the pDBG (most probable, random or median–minimizing the expected dist to the pDBG)
+\end{enumerate}
+
+In the context of pDBGs, the upper tasks will translate to:
+\begin{enumerate}
+	\item Construct a pDBG that captures technical noise, population variation, etc. (e.g. $p(u,v) = -log(\#reads(u,v))$)
+	\item Map reads MEMs with a threshold 
+\end{enumerate}
+
+%Comparison to the vg queries (targets in \textbf{bold}, probabilistic extensions underlined):
+%\begin{itemize}
+%	\item \textbf{construct}: graph construction -- probabilities given or assumed 1
+%	\item view: conversion (dot/protobuf/json/GFA)
+%	\item index: index features of the graph in a disk-backed key/value store
+%	\item find: use an index to find nodes, edges, kmers, or positions
+%	\item \textbf{paths}: traverse paths in the graph -- trivial
+%	\item \textbf{align}: local alignment -- can it be faster than map?
+%	\item \textbf{map}: global alignment (kmer-driven) -- DP or Dijkstra
+%	\item stats: metrics describing graph properties
+%	\item join: combine graphs (parallel)
+%	\item concat: combine graphs (serial)
+%	\item ids: id manipulation
+%	\item kmers: generate kmers from a graph
+%	\item \textbf{sim}: simulate reads by walking paths in the graph -- trivial
+%	\item mod: various transformations of the graph
+%	\item surject: force graph alignments into a linear reference space
+%	\item \textbf{msga}: construct a graph from multiple sequences -- \fxnote{tricky probabilities}
+%	\item validate: determine if graph is valid
+%	\item filter: filter reads out of an alignment
+%	\item augment: adds variation from aligned reads into the graph
+%	\item \textbf{call/genotype}: call variants from an augmented graph -- \fxnote{how?}
+%	\item support counts instead of probabilities (or other distributions)
+%\end{itemize}
+
+
+
+
+\subsection{Uncertainty sources}
+We account for three sources of uncertainty that we want to account for (we shortly call them \emph{variants}, \emph{edits} and \emph{phreds}).
+\begin{enumerate}
+	\item \textbf{variants}: distinguishing variation represented in the graph (different references): e.g. populational variation like SNPs and highly variable genomic regions (e.g. TCRs)
+	\item \textbf{edits}: variation outside the graph, produced the new genomic sequence (subst, del, ins, transpositions?), able to capture somatic variation that is not represented in the reference graph
+	\item \textbf{phreds}: technical errors while sequencing (substitution errors in the query, aka base calling), especially important when the sequencing depth is small and the error rates are high (e.g. current long read technologies with >10% error rates)
+\end{enumerate}
+

@@ -1,0 +1,24 @@
+\section{Definitions}
+\begin{itemize}
+	\item base pairs (bp) = nucleotides = characters = $\{A, C, G, T, N\}$ 
+	\item symbol = nucleotides $\cup \{\epsilon\}$ 
+	\item haploid genome --- a sequence of nucleotides
+	\item kmer --- a string with length k that occurs somewhere as a substring (usually around 20-70bp)
+	\item (single-end) read --- a sequence of pairs (nucleotide, phred) produced by a sequencer (usually around 50-200bp but may be much longer); a phred value is the certainty of a nucleotide (we distribute the remaining 1-phred probability equally to the other 3 nucleotides). a sequencer produces a set of reads
+	\item DBG (de Bruijn Graph) $GK<V, E>$ is a directed graph with a set of kmers as vertices, (kmer1, kmer2) is in E iff suffix(kmer1, k-1) == prefix(kmer2, k-1).
+	\item edge (in a pDBG) --- a tuples $(kmer1, kmer2, letter, p)$ for letter $\in$ nucleotides U $\{\epsilon\}$, and for $p \in [0,1]$; from(edge), to(edge), l(edge) and w(edge) stand for kmer1, kmer2, letter and p
+	\item pDBG (probabilistic DBG) $GK<V, E>$ is a DBG with sum of the outgoing probabilities for every vertex equal to 1 or 0 (the outgoing edges from each non-terminal vertex form a probability distribution)
+	\item edit-pDBG --- a pDBG produced by adding edges accounting for edit operations. the edit-pDBG may contain duplicated outgoing letters
+	\item path (in pDBG) --- a sequence of edges, s.t. the end of the previous edges is the beginning of the next (repeated edges are allowed); edges(path) and vertices(path) denote the sequence of visited edges and vertices by the path
+	\item path probability (in pDBG) --- the probability of following this path as in an automata given that the start is fixed at the beginning of the path
+	\item a read is a sequence of the same structure of a read but not necessarily produced by a sequencer (it can be a result of an assembly algorithm)
+	\item alignment (of a read to a path) --- a correspondence of the consecutive characters (with their phred values) of the read to the edges of a path; it is an equivalent of semi-global alignment between strings
+	\item edit distance operations\textquotesingle{} probabilities (penalties) --- the probability of an insertion, deletion and substitutions (dependent on the positions in the graph)
+	\item path probability (of a path to a PNFA) --- probability of sampling a path accounting for edit distance operations and transition probabilities
+	\item matching probability (of a read to a path) --- the probability that the path spells the read (accounting for phred values but not for edit distance operations and transition probabilities)
+	\item mapping probability (of a read to a path) --- the matching probability multiplied by the path probability
+	\item global optimal mapping (of a read to a PNFA) --- a mapping with maximal mapping probability
+	\item optimal average mapping (of a read to a PNFA) --- optimal mapping with maximal mapping probability divided by the alignment length
+	\item edit distance --- \fxnote{explain}
+	\item PNFA (Probabilistic Nondeterministic Finate Automata) --- Finate Automata with probabilities associated to each edge; every edge is labeled with a nucleotide, $\star$, or $\epsilon$
+\end{itemize}

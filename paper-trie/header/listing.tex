@@ -1,0 +1,274 @@
+% Description: This file defines a nice listing environment.
+%
+% Usage: You may need to modify the used packages below, depending on what other
+% packages you include in your project
+
+
+%%%%%%%%%
+% SETUP %
+%%%%%%%%%
+% import relevant packages
+
+% import listings package itself
+\usepackage{listings}
+
+% requires xcolor package for defining the colors of different textual elements
+\usepackage{xcolor}
+
+\usepackage{textcomp}
+
+% typically already loaded, needed for parsing UTF-8 code files
+% \usepackage[utf8]{inputenc} % enable UTF-8
+
+% typically already loaded, needed for correct display of font
+% \usepackage[T1]{fontenc}
+
+%%%%%%%%
+% FONT %
+%%%%%%%%
+% import a nice typewriter font, improves readability of code
+%
+% List of options: http://www.tug.dk/FontCatalogue/typewriterfonts.html
+
+% BERA
+%
+% Examples: http://www.tug.dk/FontCatalogue/beramono/
+%
+% Documentation: http://texdoc.net/texmf-dist/doc/fonts/bera/bera.txt
+%
+% "Bera" is a set of three PostScript Type1 font families:
+% Bera Serif (a slab-serif Roman), Bera Sans (a "Frutiger
+% descendant") and Bera Mono (monospaced/typewriter).
+%
+% - T1 and textcompanion encoding is selected
+%
+% - Bera Roman, Sans and Mono are loaded as the three 
+%   main text font families (while the math fonts remain 
+%   unchanged!)
+%
+% - the line spacing is enlarged by 5%, i.e.,
+%   \linespread{1.05}, with respect to the large x-height of
+%   the Bera typefaces;
+%
+% - the definitions of the TeX and LaTeX logos \TeX and \LaTeX
+%   are changed so as to suit BeraSerif.
+%
+% `scaled=0.8`: scales down the letters to 80% of their "natural" size.
+
+% not using bera as it does not support all font encodings
+%\usepackage[scaled=0.8]{beramono}
+
+% FIRA MONO
+%
+% Examples: http://www.tug.dk/FontCatalogue/firamono/
+% 
+% Documentation: https://ctan.org/tex-archive/fonts/fira?lang=en
+%
+% - activate Fira Mono as the monospaced text font
+% - Options scaled=<number> or scale=<number> may be used to scale the fonts
+% - Font encodings supported are OT1, T1, TS1, LY1 and LGR.
+\usepackage[scaled=0.8]{FiraMono}
+
+
+%%%%%%%%%%
+% COLORS %
+%%%%%%%%%%
+% define colors needed for syntax highlighting
+
+\definecolor{ckeyword}{HTML}{7F0055}
+\definecolor{ccomment}{HTML}{3F7F5F}
+\definecolor{cstring}{HTML}{2A0099}
+
+%%%%%%%%%%%%%%%%%%%
+% DEFINE LANGUAGE %
+%%%%%%%%%%%%%%%%%%%
+% define a default language with standard, but nice, syntax highlighting
+%
+% Full documentation available at:
+% http://texdoc.net/texmf-dist/doc/latex/listings/listings.pdf
+
+% style for displaying line numbers
+\lstdefinestyle{numbers}{
+	% display line numbers on the left
+	numbers=left,
+	%
+	% if code is framed, extend the frame to the left, to fit the line numbers
+	framexleftmargin=20pt,
+	%
+	% determines the font and size of the numbers
+	numberstyle=\tiny,
+	%
+	% `auto` lets the package choose the first number: a new listing starts with
+	% number one, a named listing continues the most recent same-named listing
+	% (named by `name=abc`), and a stand alone file begins with the number
+	% corresponding to the first input line.
+	firstnumber=auto,
+	%
+	% Distance between number and listing. Write line numbers closer to code
+	numbersep=1em,
+	%
+	% Extra margin on left, aligns line number with text
+	xleftmargin=2em
+}
+
+% style for general layouting of listings
+\lstdefinestyle{layout}{
+	% do not show frame
+	frame=none,
+	% put line on top and bottom
+	%frame=tb,
+	%
+	% position the caption at the bottom
+	captionpos=b,
+}
+
+\lstdefinestyle{comment-style}{
+	% allow comments with // comment
+	morecomment=[l]//,
+	%
+	% allow comments with /* comment */
+	morecomment=[s]{/*}{*/},
+	%
+	% determines the style of comments
+	commentstyle={\color{ccomment}\itshape},
+}
+
+\lstdefinestyle{string-style}{
+	%
+	% allow strings with "string"
+	morestring=[b]",%
+	%
+	% allow strings with 'string'
+	morestring=[b]',%
+	%
+	% determines the style of strings
+	stringstyle={\color{cstring}},
+	%
+	% do not display black spaces in strings as ␣
+	showstringspaces=false,%
+}
+
+\lstdefinestyle{keyword-style}{
+	%
+	% determines the style of keywords
+	keywordstyle={\ttfamily\bfseries},
+	%
+	% add to keywords from keyword list
+	morekeywords={
+		function,
+		constructor,
+		int,
+		bool,
+		return,
+		returns,
+		uint
+	},
+	%
+	% Add more keywords, with a special style
+	morekeywords = [2]{},
+	keywordstyle = [2]{\text},
+	%
+	% Introduce @ as a separator of keywords
+	% otherkeywords={@},
+	% morekeywords = [3]{@},
+	% keywordstyle = [3]{},
+	%
+	% keywords are case sensitive
+	sensitive=true,
+}
+
+\lstdefinestyle{input-encoding}{
+	% determines the input encoding. The usage of this key requires the
+	% `inputenc` package; nothing happens if it’s not loaded.
+	inputencoding=utf8,
+	%
+	%
+	% Allows extended characters in listings, that means (national) characters
+	% of codes  128–255. If you use extended characters, you should load
+	% `fontenc` and/or `inputenc`, for example
+	extendedchars=true,
+	%
+	% replace strings in original listings
+	%
+	% {string to replace}{replacement text}{length of replacement text; number of characters}
+	literate=
+	{ℝ}{$\reals$}1%
+	{→}{$\rightarrow$}1%
+	{α}{$\alpha$}1%
+	{β}{$\beta$}1%
+	{λ}{$\lambda$}1%
+	{θ}{$\theta$}1%
+	{ϕ}{$\phi$}1%
+	{⟦}{$\llbracket$}1%
+	{⟧}{$\rrbracket$}1%
+}
+
+\lstdefinestyle{escaping}{
+	%
+	% color everything marked by % in blue: %color this%
+	moredelim={**[is][\color{blue}]{\%}{\%}},
+	%
+	% escapes the user to LATEX: all code between two such characters is
+	% interpreted as LATEX code
+	%
+	% allow adding labels for line numbers
+	escapechar=@,
+	%
+	% Activates special behavior of the dollar sign.  If activated a dollar sign
+	% acts as TEX’s text math shift.
+	%
+	% This key is useful if you want to typeset formulas in listings
+	mathescape=true
+}
+
+\lstdefinestyle{default-style}{
+	%
+	% Style selected at the beginning of each listing
+	% ttfamily: selects a monospaced (typewriter) font family
+	% fontencoding: selects T1 fontencoding (required for correct display in combination with the `beramono` package)
+	% footnotesize: controls size of letters
+	basicstyle=\fontencoding{T1}\ttfamily\footnotesize,
+	%
+	style=numbers,
+	%
+	style=layout,
+	%
+	style=comment-style,
+	%
+	style=string-style,
+	%
+	style=keyword-style,
+	%
+	style=input-encoding,
+	%
+	style=escaping,
+	%
+	%
+	% Activates/deactivates automatic line breaking of long lines
+	breaklines=false,
+	%
+	% number of spaces to use for tabs
+	tabsize=2,
+	upquote=true
+}
+
+
+\lstdefinelanguage{BASIC}{
+	% Base language on C++
+	language=C++,
+	%
+	style=default-style
+}[keywords,comments,strings]%
+
+% set default language
+\lstset{language=BASIC}
+
+
+\lstdefinelanguage{MyPython}{
+	language=Python,
+	%
+	style=default-style
+}
+
+% set default language
+%\lstset{language=BASIC}

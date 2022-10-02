@@ -1,0 +1,7 @@
+# list of hypthenated words that should be ignored in hyphtenation consistency check
+base-calling
+comment-style
+string-style
+keyword-style
+input-encoding
+input-size

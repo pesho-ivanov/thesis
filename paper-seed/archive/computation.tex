@@ -1,0 +1,36 @@
+\input{seeds-algo.tex}
+
+\subsection{Computing the Seed heuristic} \label{sec:algo}
+%
+In order to efficiently evaluate the \seedh $h\st{v}{i}$, we must be
+able to compute the crumbs that should be associated with each vertex $v \in
+\RGV$.
+%
+To this end, \textsc{PlaceAllCrumbs} in \cref{alg:crumbs} shows an efficient
+algorithm for precomputing the crumbs $C(s_j)$.
+
+\para{Place Crumbs}
+\crefrange{lin:seeds}{lin:seeds-loop} loop over all seeds $s$.
+\cref{lin:clear-crumbs} erases the crumbs placed for seed $s$ during the
+alignment of previous reads, thus ensuring that the crumbs of previous
+alignments do not affect the current run. Then, \cref{lin:seed-starts-call}
+locates all exact matches of $s$ in $\RG$ by calling \textsc{SeedStarts}.
+\textsc{SeedStarts} proceeds in two phases.
+\crefrange{lin:match-init}{lin:match-forward-end} locate all nodes that can be
+the end point of an exact match. Then,
+\crefrange{lin:match-backward-start}{lin:match-backward-end} backtrack through
+the graph, locating all nodes that can be the starting point of an exact match.
+We note that \crefrange{lin:match-forward-start}{lin:match-forward-end} could be
+omitted without jeopardizing the correctness of \textsc{SeedStarts}, but they
+will be crucial when we introduce our trie optimization in \cref{sec:trie}.
+
+For each node $u$ that can be the start of an exact match of $s$,
+\cref{lin:place-crumbs-backwards-call} calls \textsc{PlaceCrumbsBackwards},
+which places crumbs on all nodes before $u$, up to a distance of $i{+}d$. Here,
+$i$ is the index of $s$ in $q$ (\cref{lin:start}), and $\maxdel$ is the maximum
+number of deletions we tolerate (\cref{lin:d}).
+%
+In order to avoid repeatedly placing crumbs on the same nodes,
+\textsc{PlaceCrumbsBackwards} internally uses a breath first search (BFS, see
+\cref{lin:backwards-bfs}) starting from $u$ and proceeding through reverse edges
+until depth $i + \maxdel$.

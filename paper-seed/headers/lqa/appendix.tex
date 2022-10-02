@@ -1,0 +1,34 @@
+% Description: This file controls the appendix
+% - Option 1:
+%   - Include the appendix (default)
+% - Option 2:
+%   - Do not include the appendix, but correctly display references into it
+%   - Enable this by creating file "headers/config/noappendix.config"
+%   - WARNING: References are only correct after running "make appendix-labels"
+
+
+\usepackage{etoolbox}
+
+% introduce flag
+\newbool{includeappendix}
+\setbool{includeappendix}{true} % default value
+% overwrite flag by configuration file
+\IfFileExists{headers/config/noappendix.config}{
+	\setbool{includeappendix}{false}
+}{}
+
+
+\usepackage{xr} % for \externaldocument{...}
+\usepackage{filecontents}
+
+
+\ifbool{includeappendix}{}{
+	% if appendix is not included, load its labels to enable references
+	%
+	% generate file "appendix-labels.aux" which contains all labels from the
+	% appendix
+	\input{appendix-labels-loader}
+
+	% loads appendix labels from "appendix-labels.aux"
+	\externaldocument{appendix-labels}
+}

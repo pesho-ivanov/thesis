@@ -1,0 +1,50 @@
+\section{Discussion}
+
+\subsection{Applications}
+PNFA generalizes vg with transition uncertainties and edit uncertainties. PNFA is also expressive enough to fully capture tools igGraph\cite{bonissone2015immunoglobulin}, partis \cite{ralph2016consistency} and PRG \cite{dilthey2015improved}.
+
+The PNFA can express any Markov model over any HMM with finite observed states (e.g. nucleotides).
+
+High noise scenario with long reads 
+
+The HMM from the partis tool \cite{ralph2016consistency} can be rewritten as a PNFA:
+\begin{enumerate}
+	\item The hidden states per nucleotide position that generates four output symbols translate to four vertices per symbol at that position
+	\item The HMM topology in the YAML DSL (VDJ hardcoded sequences with probabilities, filters, etc.) translate into PNFA: each allele translates to a different path; the VDJ hidden state annotations translates to vertex attributes (subsets of V/D/J genes as in \cite{bonissone2015immunoglobulin})
+	\item probabilities for allele usage, transitions and emissions translate to edge probabilities: substitution/deletion/insertion probabilities
+	\item time complexity drops
+\end{enumerate}
+
+\subsection{Future work}
+\begin{itemize}
+	\item Intro/Abstract/Discussion:
+		Fronts: 1) unifying different sources of uncertainty, 2) existing preknown variant probabilities, 3) dealing with errors (both technical and biological)
+		efficiency (how long does it take to compute the answer, how much memory does it need?)
+  		power (does it make good use of the data, or is information being wasted?)
+  		consistency (will it converge on the same answer repeatedly, if each time  given different data for the same model problem?)
+  		robustness (does it cope well with violations of the assumptions of the underlying model?)
+  		falsifiability (does it alert us when it is not good to use, i.e. when assumptions are violated?)
+	\item Evals:
+		Multiple alignment and variant calling
+	\item Algorithm:
+		time and memory efficient,
+		Seen-and-extend approach \cite{liu2016debga}, minimizers, seeds 
+	\item Construction:
+		cycles; be able to represent different genome graphs (e.g. DBGs, string graphs); independency (or at least weaker dependency) of the k parameter in DBG (because of edit distance guarantees)
+		glocal alignment in probabilistic terms?
+	\item reverse complementary: bidirected edges
+	\item Technical:
+		I/O compatible with other tools (e.g. vg),
+		translation tool from HMM for VDJ to \tool
+	\item Future:
+		Stability (e.g. under edit operation costs)\cite{gusfield1994parametric}, support long indels -- teleport supernodes;
+		affine gaps (implement by parallel layers in the graph) and more specific distributions of lengths of deletions or insertions (e.g. for VDJ);
+		capturing longer relationships in the graph (longer-range information about haplotype structure);
+		diploid paths (chromotype), discover novel variation (not present in the graph);
+		pair-end reads;
+		support different variants as listed by svaha: Deletions, Inversions, Insertions, SNPs, Duplications, Transversions, Breakpoints; RNA mapping like TopHat2
+		Chimera-resolving
+		Compressing the graph into bigger nodes
+		Centroid estimation instead of solving a MAP problem\cite{carvalho2008centroid,hamada2011probabilistic}	
+		Mapping quality invariance: mapping score, second best mapping -- invariances of the prob. metric to query distribution, to query length, to additional entries in the ref. graph, visualize it with shades according to prob.
+\end{itemize}

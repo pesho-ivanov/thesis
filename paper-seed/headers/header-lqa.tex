@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%
+%    PACKAGES     %
+%%%%%%%%%%%%%%%%%%%
+
+\usepackage[utf8]{inputenc} % enable UTF-8
+\usepackage{lipsum} % write pseudo text
+
+% images
+\usepackage{graphicx}
+
+% Why `\usepackage[T1]{fontenc}'?
+% https://tex.stackexchange.com/questions/664/why-should-i-use-usepackaget1fontenc
+% If you don't use \usepackage[T1]{fontenc},
+% - Words containing accented characters cannot be automatically hyphenated,
+% - You cannot properly copy-and-paste such words from the output (DVI/PS/PDF),
+% - Characters like the pipe sign, less than and greater sign give unexpected
+%   results in text.
+\usepackage[T1]{fontenc}
+
+
+%%%%%%%%%%%%%%%%%%%
+% REQUIRED INPUTS %
+%%%%%%%%%%%%%%%%%%%
+
+% mark overfull boxes
+\input{headers/lqa/overfull}
+
+% comments
+\input{headers/lqa/comments}
+
+% appendix
+\input{headers/lqa/appendix}
+
+%%%%%%%%%%%%%%%%%%%
+% OPTIONAL INPUTS %
+%%%%%%%%%%%%%%%%%%%
+
+% abbreviations
+% \input{headers/lqa/abbreviations}
+
+% acronyms
+\input{headers/lqa/acronyms}
+
+% subfigures
+% \input{headers/lqa/subfigures}
+
+% colors
+\input{headers/lqa/colors}
+
+% listing
+\input{headers/lqa/listing}
+
+% clever references
+%
+% should load last (e.g., after listings) to ensure correct interaction with
+% other packages
+\input{headers/lqa/references}
+
+% tikz
+% \input{headers/lqa/tikz}
+
+

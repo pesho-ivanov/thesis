@@ -1,0 +1,34 @@
+% This text will be sanitized and placed into lqa-output/abstract.txt
+%
+\begin{abstract}
+
+We present a novel \A \textit{\seedh} that enables fast and optimal
+sequence-to-graph alignment, guaranteed to minimize the edit distance of the
+alignment assuming non-negative edit costs.
+
+We phrase optimal alignment as a shortest path problem and solve it by
+instantiating the \A~algorithm with our \seedh. The \seedh first extracts
+non-overlapping substrings (\textit{seeds}) from the read, finds exact seed
+\textit{matches} in the reference, marks preceding reference positions by
+\textit{crumbs}, and uses the crumbs to direct the \A search. The key idea is to
+punish paths for the absence of foreseeable seed matches. We prove admissibility
+of the \seedh, thus guaranteeing alignment optimality.
+
+\qquad Our implementation extends the free and open source aligner and
+demonstrates that the \seedh outperforms all state-of-the-art optimal aligners
+including \graphaligner, \vargas, \pasgal, and the \prefixh previously employed
+by \astarix. Specifically, we achieve a consistent speedup of >60$\times$ on
+both short Illumina reads and long HiFi reads (up to 25kbp), on both the
+\textit{E.~coli} linear reference genome (1Mbp) and the MHC variant graph
+(5Mbp). Our speedup is enabled by the \seedh consistently skipping >99.99\% of
+the table cells that optimal aligners based on dynamic programming
+compute.\\
+
+\astarix aligner and evaluations: \astarixurl\\
+Full paper: \astarixbiorxivurl
+
+\keywords{Genome graph \and Optimal alignment \and Semi-global alignment \and
+Edit distance \and \mbox{Shortest path} \and Long reads \and \A~\mbox{algorithm}
+\and Seed heuristic}
+
+\end{abstract}

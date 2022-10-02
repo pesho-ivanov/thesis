@@ -1,0 +1,83 @@
+\subsection{Proofs} \label{app:proof}
+
+In the following, we provide proofs for \cref{the:admissible} and
+\cref{lem:trie-optimization}, restated here for convenience.
+
+\admissibility*
+
+\begin{proof}
+	Let $A$ be an optimal alignment of $q[i{:}]$ starting from $v \in \RG$. We
+	will prove that the cost of $A$ is at least $h\st{v}{i}$.
+
+	If $A$ contains at least $\maxdel$ deletions, its cost is at least $\maxdel
+	\cdot \cdel$, which is at least $|q| \cdot \cmatch + |\seeds| \cdot
+	\delta_{\mli{min}}$ by plugging in $\maxdel$ from
+	\cref{eq:maximum-deletions}. This is an upper bound for $h\st{v}{i}$, which
+	we observe after maximizing $h\st{v}{i}$ by substituting $i=1$ and
+	$\mli{misses}=|\seeds|$ into~\cref{eq:heuristic}, which concludes the proof
+	in this case.
+
+	Otherwise, $A$ contains less than $\maxdel$ deletions.
+	%
+	If we interpret $A$ as a path in $\AG$, we first observe that $A$ must spell
+	$q[i{:}]$. Thus, $A$ must in particular also contain all seeds $s_j \in
+	\seeds_{\geq i}$ as substrings. We then split $A$ into \emph{subalignments}
+	$A_{-1}, A_0, \dots, A_{p}$, selected such that $A_0, \dots, A_{p-1}$ spell
+	the seeds $s_j \in \seeds_{\geq i}$, and $A_{-1}$ and $A_p$ spell the prefix
+	and suffix of $q[i{:}]$ which do not cover any full seed.
+
+	This ensures that we can compute a lower bound on the cost of $A$ as
+	follows:
+	\begin{align}
+		\text{cost}(A) 
+		&= \sum_{j=-1}^{p} \text{cost}(A_k) \label{eq:split-cost} \\
+		&\geq \sum_{j=-1}^{p} \lvert \sigma(A_k) \rvert \cdot \cmatch + \sum_{j=0}^{p-1} \left\{ \begin{array}{ll}
+			0 & \text{ if } v \in C\!\left(s_{\left\lceil i/k \right\rceil + j}\right) \\
+			\delta_\mli{min} & \text{ if } v \notin C\!\left(s_{\left\lceil i/k \right\rceil + j}\right)
+		\end{array}\right\} \label{eq:rearrange-cost} \\
+		&= (\lvert q \rvert - i) \cdot \cmatch + \big\lvert \{v \notin C(s) \mid s \in \seeds_{\geq i}\} \big\rvert \cdot \delta_\mli{min} \label{eq:various} \\
+		&= h\st{v}{i} \label{eq:plug-in-heuristic}
+	\end{align}
+	%
+	Here, \cref{eq:split-cost} follows from our decomposition of $A$. If we
+	ignore the right-hand side in \cref{eq:rearrange-cost} (right of ``$+$''),
+	the inequality follows because matching all letters is the cheapest method
+	to align any string. The right-hand side follows from a more precise
+	analysis for subalignments $A_k$ that spell a seed $s_{\left\lceil i/k
+	\right\rceil + j}$ without a corresponding crumb in $v$. The absence of such
+	a crumb indicates that no exact match of $s_{\left\lceil i/k \right\rceil +
+	j}$ in $\RG$ can be reached within less than $i + \maxdel$ steps from $v$.
+	However, because $A$ contains less than $\maxdel$ deletions, $A_k$ must
+	start within less than $i + \maxdel$ steps from $v$. Thus, $A_k$ does not
+	align $s_{\left\lceil i/k \right\rceil + j}$ exactly, meaning that it
+	introduces a cost of at least $\delta_\mli{min}$.
+
+	\cref{eq:various} follows from observing that $A_{-1}, \dots, A_p$ have a
+	total length of $|q|-i$, and observing that the right-hand sum adds up
+	$\delta_{\mli{min}}$ for every expected but missing crumb.
+	%
+	Finally, \cref{eq:plug-in-heuristic} follows from our definition of
+	$h\st{v}{i}$, concluding the proof.
+	%
+	\qedwhite
+\end{proof}
+
+\trieOptimization*
+
+\begin{proof}
+	Consider a reference graph with a match of seed $s$ starting in node $w$.
+	Now, consider a node $v$ that cannot reach $w$ using more than $i-D-\maxins$
+	edges.
+	%
+	We can then show that a trie node $v'$ with a path to $v$ does not require a
+	crumb for the match of $s$ in node $w$.
+
+	Specifically, any path from $\trieroot$ through nodes $v'$ and $v$ to node
+	$w$ has total length greater or equal $i-\maxins$. Thus, matching $s$ at $w$
+	requires at least $\maxins$ insertions. Hence, the cost of such a path is at
+	least $\maxins \cdot \cins = |q| \cdot \cmatch + n \cdot
+	\delta_{\mli{min}}$. Observing that this is an upper bound for $h\st{v}{i}$
+	concludes the proof.
+	%
+	\qedwhite
+\end{proof}

@@ -220,6 +220,13 @@
 % Colors
 \definecolor{mygrey}{HTML}{777777}
 
+% Colored squares
+\newcommand{\bluesquare}{%
+  \begingroup\normalfont
+  \includegraphics[height=\fontcharht\font`\B]{imgs/fig3/bluesquare.pdf}%
+  \endgroup
+}
+
 %\usepackage{etoolbox}
 %\patchcmd{\paragraph}{\itshape}{\bfseries\boldmath}{}{}
 
@@ -229,3 +236,7 @@
 \newcommand{\htr}{h^t}
 \newcommand{\Path}{\pi^*}
 \newcommand{\pruned}{\mli{Pruned}}
+
+% datasets
+\newcommand{\datasetOne}{\mli{CHM13}}
+\newcommand{\datasetTwo}{\mli{NA12878}}

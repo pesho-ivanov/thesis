@@ -1,0 +1,20 @@
+\section{Acknowledgements}
+%
+We thank the anonymous reviewers for the valuable feedback. The first author is
+grateful for the Vipassana meditation which inspired the idea to punish paths
+for the absence of foreseeable seed matches. We also thank Paul Medvedev and
+Ragnar Groot Koerkamp for noting inaccuracies in the presentation of the
+algorithm.
+
+\section{Conclusion}
+%
+We have presented an optimal read aligner based on the \A~algorithm instantiated
+with a novel \seedh which guides the search by preferring crumbs on nodes that lead
+towards optimal alignments even for long reads.
+
+The memory usage is currently limiting the application of \astarix for bigger
+references due to the size of the trie index. A remaining challenge is designing
+a heuristic function able to handle not only long but also noisier reads, such
+as the uncorrected PacBio reads that may reach 20\% of mistakes. Possible
+improvements of the seed heuristic may include inexact matching of seeds,
+careful choice of seed positions, and accounting for the seeds order.

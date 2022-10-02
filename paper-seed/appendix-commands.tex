@@ -1,0 +1,51 @@
+\subsection{Versions, commands, parameters for running all evaluated approaches} \label{sec:commands}
+In the following, we provide details on how we executed the newest versions of
+the tools discussed in \cref{sec:eval}:
+
+\para{Executing \astarix} \\
+\noindent Obtained from \astarixurl \\
+\noindent
+\begin{tabular}{lp{9.5cm}}
+	\textbf{Seed heuristic} & \\
+	\quad Command & \texttt{astarix align-optimal -D 14 -a astar-seeds --seeds\_len l -f reads.fq -g graph.gfa >output} \\
+	\textbf{Prefix heuristic} & \\
+	\quad Command & \texttt{astarix align-optimal -D 14 -a astar-prefix -d 5 -f reads.fq -g graph.gfa >output} \\
+%	\textbf{\dijkstra} & \\
+%	\quad Command & \texttt{astarix align-optimal -D 14 -a dijkstra -f reads.fq -g graph.gfa >output}
+\end{tabular}
+
+For aligning Illumina reads, \texttt{astarix} is used with additional \texttt{-M
+0 -S 1 -G 5} and for HiFi reads with \texttt{-M 0 -S 1 -G 1} which better match
+the error rate profiles for these technologies.
+
+\para{Executing other tools} \\
+\noindent
+\begin{tabular}{lp{9.5cm}}
+	\textbf{\vargas} & \\
+	\quad Obtained from & \url{https://github.com/langmead-lab/vargas} (v0.2, commit \texttt{b1ad5d9}) \\
+	\quad Command & \texttt{vargas align -g graph.gdef -U reads.fq --ete} \\
+	\quad Comment & \texttt{--ete} stands for end to end alignment; default is 1 thread \\
+	\textbf{\pasgal} & \\
+	\quad Obtained from & \url{https://github.com/ParBLiSS/PaSGAL} (commit \texttt{9948629}) \\	
+	\quad Command & \texttt{PaSGAL -q reads.fq -r graph.vg -m vg -o output -t 1} \\
+	\quad Comment & Compiled with AVX2.\\
+	\textbf{\graphaligner} & \\
+	\quad Obtained from &
+	\url{https://github.com/maickrau/GraphAligner}
+	(v1.0.13, commit \texttt{02c8e26}) \\
+	\quad Command & \texttt{GraphAligner --seeds-first-full-rows 64 -b 10000 -t 1 -f reads.fq -g graph.gfa -a alignments.gaf >output} (commit \texttt{9948629})\\
+	\quad Comment & \texttt{--seeds-first-full-rows} forces the search from all
+	possible reference positions instead of using seeds; \texttt{-b 10000} sets
+	a high alignment bandwidth; these two parameters are necessary for an
+	optimal alignment according to the author and developer of the tool.\\
+\end{tabular}\\
+
+\para{Simulating reads}\\
+\noindent
+\begin{tabular}{lp{9.5cm}}
+	\textbf{Illumina} & \\
+	\quad & \texttt{art\_illumina -ss MSv3 -sam -i graph.fasta -c N -l 200 -o dir --rnd\_seed 42} \\
+	\textbf{HiFi} & \\
+	\quad & \texttt{randomreads.sh -Xmx1g build=1 ow=t seed=1 ref=graph.fa illuminanames=t addslash=t pacbio=t pbmin=0.003 pbmax=0.003 paired=f gaussianlength=t minlength=5000 midlength=13000 maxlen=25000 out=reads.fq}\\
+	\quad Comment & \texttt{BBMapcoverage}, \url{https://github.com/BioInfoTools/BBMap/blob/master/sh/randomreads.sh} (commit: a9ceda0) \\
+\end{tabular}\\

@@ -1,0 +1,90 @@
+\subsection{Problem statement: Alignment as shortest path} \label{sec:task}
+%
+In the following, we formalize the task of optimally aligning a read to a
+reference graph in terms of finding a shortest path in an \emph{alignment
+graph}. Our discussion closely follows~\citep[\secref{2}]{ivanov2020astarix} and
+is in line with~\citep{rautiainen_aligning_2017}.
+
+\para{Reference graph}
+%
+A reference graph $\RG=(\RGV,\RGE)$ encodes a collection of references to be
+considered when aligning a read. Its directed edges $\RGE \subseteq \RGV \times
+\RGV \times \Sigma$ are labeled by nucleotide letters from $\Sigma =
+\{\texttt{A},\texttt{C},\texttt{G},\texttt{T}\}$, hence any walk
+$\reference{\pi}$ in $\RG$ spells a string $\sigma(\reference{\pi}) \in
+\Sigma^*$.
+
+An alignment of a read $q \in \Sigma^*$ to a reference graph $\RG$ consists of
+(i)~a walk $\reference{\pi}$ in $\RG$ and (ii)~a sequence of edits (matches,
+substitutions, deletions, and insertions) that transform
+$\sigma(\reference{\pi})$ to $q$. An alignment is \emph{optimal} if it minimizes
+the sum of edit costs for a given real-valued cost model $\cedits = (\cmatch,
+\csubst,\cdel, \cins)$.
+%
+Throughout this work, we assume that edit costs are non-negative---a
+pre-requisite for the correctness of \A. Further, we assume that $\cmatch \leq
+\csubst, \cins, \cdel$---a prerequisite for the correctness of our heuristic.
+
+We note that our approach naturally works for cyclic reference graphs.
+
+\begin{figure}[t]
+	\begin{alignat*}{20}
+		(
+			&\langle&& u &,& i   &\rangle&,
+			&\langle&  v &,& i+1 &\rangle&,
+			&&q[i],
+			&&\cmatch
+		&)&\in \AGE
+		&& \quad \text{ if } (u,v,\ell) \in \RGE, \ell = q[i] & \qquad \text{(match)}\\
+		%
+		(
+			&\langle&& u &,& i   &\rangle&,
+			&\langle&  v &,& i+1 &\rangle&,
+			&&q[i],
+			&&\csubst
+		&) &\in \AGE
+		&& \quad \text{ if } (u,v,\ell) \in \RGE, \ell \neq q[i] & \qquad \text{(substitution)}\\
+		%
+		(
+			&\langle&& u &,& i &\rangle&,
+			&\langle&  v &,& i &\rangle&,
+			&&\varepsilon,
+			&&\cdel
+		&) &\in \AGE
+		&& \quad \text{ if } (u,v,\ell) \in \RGE & \qquad \text{(deletion)}\\
+		%
+		(
+			&\langle&& u &,& i   &\rangle&,
+			&\langle&  u &,& i+1 &\rangle&,
+			&&q[i],
+			&&\cins
+		&) &\in \AGE
+		&& \quad & \qquad \text{(insertion)},
+	\end{alignat*}
+	\caption{Formal definition of alignment graph edges $\AGE \subseteq \AGV[q]
+	\times \AGV[q] \times \Sigma_\varepsilon \times \mathbb{R}_{\geq 0}$. Here,
+	$u,v \in \RGV$, $0 \leq i < |q|$, $\ell \in \Sigma$, and $\varepsilon$
+	represents the empty string, indicating that letter $\ell$ was deleted.}
+	\label{fig:graph-edges}
+\end{figure}
+
+\para{Alignment graph}
+%
+In order to formalize optimal alignment as a shortest path finding problem, we
+rely on an \emph{alignment graph} $\AG[q]=(\AGV[q],\AGE[q])$.
+%
+Its nodes $\AGV[q]$ are \emph{states} of the form $\langle v, i \rangle$, where
+$v \in \RGV$ is a node in the reference graph and $i \in \{0, \dots, |q|\}$
+corresponds to a position in the read $q$.
+%
+Its edges $\AGE[q]$ are selected such that any path $\alignment{}{\pi}$ in
+$\AG[q]$ from $\langle u, 0 \rangle$ to $\langle v, i \rangle$ corresponds to an
+alignment of the first $i$ letters of $q$ to $\RG$.
+%
+Further, the edges are weighted, which allows us to define an \emph{optimal
+alignment} of a read $q \in \Sigma^*$ as a shortest path $\alignment{}{\pi}$ in
+$\AG[q]$ from $\langle u, 0 \rangle$ to $\langle v, |q| \rangle$, for any $u, v
+\in \RGV$.
+%
+\cref{fig:graph-edges} formally defines the edges $\AGE$.
+

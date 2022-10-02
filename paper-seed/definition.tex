@@ -1,0 +1,112 @@
+\subsection{Formal definition} \label{sec:definition}
+%
+Next, we formally define the \seedh function $h\st{v}{i}$. Overall, we want to
+ensure that $h\st{v}{i}$ is admissible, i.e., that it is a lower bound on the
+cost of a shortest path from $\st{v}{i}$ to some $\st{w}{|q|}$ in $\AG$.
+
+\para{Seeds}
+%
+We split read $q \in \Sigma^*$ into a set $\seeds$ of non-overlapping seeds
+$s_0, \dots, s_{|\seeds|-1} \in \Sigma^*$.
+%
+For simplicity, in this work we ensure that all seeds have the same length and
+are consecutive, i.e., we split $q$ into substrings $s_0 \cdot s_1 \cdots
+s_{|\seeds|-1} \cdot t$, where all $s_j$ are seeds of length $k$ and we ignore
+the suffix $t$ of $q$, which is shorter than~$k$.
+%
+We note that our approach could be trivially generalized to seeds of different
+lengths or non-consecutive seeds as long as they do not overlap. An interesting
+future work item is investigating how different choices of seeds affect the
+performance of our approach, and selecting seeds accordingly.
+
+\para{Matches}
+%
+For each seed $s \in \seeds$, we locate all nodes $u \in M(s)$ in the reference
+graph that can be the start of an exact match of $s$:
+%
+\begin{align*}
+	M(s) := \{u \in \RGV \mid \exists \text{walk } \pi \text{ starting from } u \in \RG \text{ and spelling } \sigma(\pi) = s \}.
+\end{align*}
+%
+To compute $M(s)$ efficiently, we leverage the trie introduced in
+\cref{sec:trie}.
+
+\para{Crumbs}
+For seed $s_j$ starting at position $i$ in $q$, we place crumbs on all nodes $u
+\in \RGV$ which can reach a node $v \in M(s_j)$ using less than $i+\maxdel$
+edges:
+%
+\begin{align*}
+	C(s) := \{u \in \RGV \mid & \exists v \in M(s)\colon \mli{dist}(u, v) < i + \maxdel \},\\
+	\text{where }\mli{dist}(u, v) &\text{ is the length of a shortest walk from } u \text{ to } v.
+\end{align*}
+
+Later in this section, we will select $\maxdel$ to ensure that if an alignment
+uses more than $\maxdel$ deletions, its cost must be so high that the heuristic
+function is trivially admissible.
+
+To compute $C(s)$ efficiently, we can traverse the reference graph backwards
+from each $v \in M(s)$ by a backward breadth-first-search (BFS).
+
+% Crumbs should be placed before each exact match so that any alignment that may
+% reach the match sees a crumb. For each seed we calculate the maximal distance
+% to a match that has to be covered by crumbs. More specifically, we compute
+% this distance as $i{+}d$, where $i$ is the position of the seed in the read
+% (seeds towards the end need more crumbs so that the beginning of the alignment
+% can also see them), and $d$ is the maximal number of deletions (since a
+% deletion in the read may require a longer alignment in the reference grap)
+% after which the \seedh is anyway capped.\todo{explain better} Note that
+% putting crumbs in all nodes that can potentially lead to an exact match is
+% crucial for the optimality guarantees of the \seedh, while putting unnecessary
+% crumbs may only make the heuristic less precise so more state may be explored.
+% So in~\cref{the:admissible} we prove that all necessary crumbs are placed and
+% the heuristic is admissible.
+
+\para{Heuristic}
+%
+Let $\seeds_{\ge i}$ be the set of seeds that start at or after position $i$ of
+the read, formally defined by $\seeds_{\ge i} := \{s_{j} \mid \lceil i / k
+\rceil \leq j < |\seeds|  \}$.
+%
+This allows us to define the number of expected but missing crumbs in state
+$\st{v}{i}$ as $\mli{misses}\st{v}{i} := \big\lvert \left\{  s
+\in \seeds_{\ge i} \mid v \notin C(s) \right \} \big\rvert$.
+%
+Finally, we define the \seedh as
+\begin{align} \label{eq:heuristic}
+	h\st{v}{i} &= (\lvert q \rvert - i) \cdot \cmatch + \mli{misses}\st{v}{i} \cdot \delta_\mli{min},\\
+	\text{for } &\delta_\mli{min} = \min(\csubst - \cmatch,\cdel,\cins - \cmatch), \label{eq:delta}
+\end{align}
+%
+Intuitively, \cref{eq:heuristic} reflects that the cost of aligning each
+remaining letter from $q[i{:}]$ is at least $\cmatch$. In addition, every
+inexact alignment of a seed induces an additional cost of at least
+$\delta_\mli{min}$. 
+%
+Specifically, every substitution costs $\csubst$ but requires one less match;
+every deletion costs $\cdel$; and every insertion costs $\cins$ but also
+requires one less match.
+
+We note that $h\st{v}{i}$ implicitly also depends on the reference graph $\RG$,
+the read $q$, the set of seeds, and the edit costs $\cedits$.
+
+In order for an alignment with at least $\maxdel$ deletions to have a cost so
+high that the heuristic function is trivially admissible, we ensure $\maxdel
+\cdot \cdel \geq h\st{v}{i}$ by defining
+\begin{align} \label{eq:maximum-deletions}
+	\maxdel := \left\lceil \frac{\lvert q \rvert \cdot \cmatch + |\seeds| \cdot \delta_{\mli{min}}}{\cdel} \right\rceil.
+\end{align}
+%
+In \cref{the:admissible}, we show that $h\st{v}{i}$ is admissible, ensuring that
+our heuristic yields optimal alignments.
+
+
+\begin{restatable}[Admissibility]{thm}{admissibility}
+	\label{the:admissible}
+	The \seedh $h\st{v}{i}$ is admissible.
+\end{restatable}
+\begin{proof}
+	We provide a proof for \cref{the:admissible} in \cref{app:proof}.
+	%
+	\qedwhite
+\end{proof}

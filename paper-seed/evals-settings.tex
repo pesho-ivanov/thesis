@@ -1,0 +1,96 @@
+\subsection{Setting}
+%
+All experiments were executed on a commodity machine with an Intel Core i7-6700
+CPU @ 3.40GHz processor, using a memory limit of 20 GB and a single thread.
+%
+We note that while multiple tools support parallelization when aligning a single
+read, all tools can be trivially parallelized to align multiple reads in
+parallel.
+
+\para{Compared aligners}
+%
+We compare the novel \seedh to \prefixh (both heuristics are implemented in
+\astarix), \graphaligner, \pasgal, and \vargas. We provide the versions and
+commands used to run all aligners and read simulators in~\cref{sec:commands}. 
+%
+We note that we do not compare to \vg~\citep{garrison_variation_2018} and
+\hga~\citep{feng2021accelerating} since the optimal alignment functionality of
+\vg is meant for debugging purposes and has been shown to be inferior to other
+aligners~\citep[Tab.~4]{feng2021accelerating}, and \hga makes use of
+parallelization and a GPU but has been shown to be superseded in the single CPU
+regime~\citep[Fig.~9]{feng2021accelerating}. \pasgal and \vargas are compiled
+with AVX2 support. We execute the \prefixh with the default lookup depth $d=5$.
+
+\para{Seed heuristic parameters}
+%
+The choice of parameters for the \seedh influences its performance.
+%
+Increasing the trie depth increases its number of nodes, but decreases the
+average out-degree of its leaves. We set the trie depth for all experiments to
+$D=14 \approx \log_4 N$.
+
+Shorter seeds are more likely to be matched perfectly by an optimal alignment,
+as they contain less letters that could be subject to edits. Thus, shorter seeds
+can tolerate higher error rate, but at the cost of slower precomputation due to
+a higher total number of matches, and slower alignment due to more off-track
+matches.
+%
+In our experiments, we use seed lengths of $k=25$ for Illumina reads and $k=150$
+for HiFi reads.
+
+\para{Data}
+%
+We aligned reads to two different reference graphs: a linear \textit{E.~coli}
+genome (strain: K-12 substr. MG1655, ASM584v2)~\citep{howe2019ensembl}, with
+length of \numprint{4641652}bp (approx. 4.7Mbp), and a variant graph with the
+Major Histocompatibility Complex (MHC), of size \numprint{5318019}bp (approx.
+5Mbp), taken from the evaluations of \pasgal~\citep{jain_accelerating_2019}.
+%\footnote{\url{\url{https://alurulab.cc.gatech.edu/sites/all/projectFiles/PaSGAL_Chirag}}}
+%
+Additionally, we extracted a path from MHC in order to create a linear reference
+MHC-linear of length \numprint{4956648}bp which covers approx. 93\% of the
+original graph. Because of input graph format restrictions, we execute
+\graphaligner, \vargas and \pasgal only on linear references in FASTA format
+(\textit{E.~coli} and the MHC-linear), while we execute the \seedh and the
+\prefixh on the original references (\textit{E.~coli} and MHC). This yields an
+underestimation of the speedup of the \seedh, as we expect the performance on
+MHC-linear to be strictly better than on the whole MHC graph.
+
+To generate both short Illumina and long HiFi reads, we relied on two tools. We
+generated short single-end 200bp Illumina MSv3 reads using \art
+simulator~\citep{huang2011art}. We generated long HiFi reads using the script
+\randomreads\footnote{\url{\url{https://github.com/BioInfoTools/BBMap/blob/master/sh/randomreads.sh}}}
+with sequencing lengths \mbox{5--25kbp} and error rates 0.3\%, which are typical
+for HiFi reads.
+
+\para{Edit costs}
+We execute \astarix with edit costs typical to the corresponding sequencing
+technology: $\cedits=(0,1,5,5)$ for Illumina reads and $\cedits=(0,1,1,1)$ for
+HiFi reads. As the performance of DP-based tools is independent of edit costs,
+we are using the respective default edits costs when executing \graphaligner,
+\pasgal and \vargas.
+
+
+\para{Metrics}
+%
+We report the performance of aligners in terms of runtime per one thousand
+aligned base pairs~[s/kbp]. Since we measured runtime end-to-end (including
+loading reference graphs and reads from disk, and building the trie index for
+\astarix), we ensured that alignment time dominates the total runtime by
+providing sufficiently many reads to each aligner. In order to prevent excessive
+runtimes for slower tools, we used a different number of reads for each tool
+and explicitly report them for each experiment.
+
+Since shortest path approaches skip considerable parts of the computation
+performed by aligners based on dynamic programming, the commonly used Giga Cell
+Updates Per Second (GCUPS) metric is not adequate for measuring performance in
+our context. 
+
+We measured used memory by \texttt{max\_rss} (Maximum Resident Set Size) from
+Snakemake\footnote{\url{https://snakemake.readthedocs.io/en/stable/}}.
+
+We do not report accuracy or number of unaligned reads, as all evaluated
+tools align all reads with guaranteed optimality according to edit distance. 
+%
+We note that \vargas reports a warning that some of its alignments are not
+optimal---we ignore this warning and focus on its performance.

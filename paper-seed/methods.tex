@@ -1,0 +1,16 @@
+\section{Seed heuristic} \label{sec:seed_heuristic}
+%
+We instantiate the \A algorithm with a novel, domain-specific \textit{\seedh}
+which allows to quickly align reads to a general reference graph.
+%
+We first intuitively explain the seed heuristic and showcase it on a simple
+example (\cref{sec:overview}). Then, we formally define the heuristic and prove
+its admissibility (\cref{sec:definition}).
+%
+Finally, we adapt our approach to rely on a trie, which leads to a critical
+speedup (\cref{sec:trie}).
+
+\input{overview}
+\input{definition}
+%\input{computation}
+\input{trie}

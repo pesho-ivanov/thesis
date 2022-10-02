@@ -1,0 +1,47 @@
+// 4 equivalent methods to work out the variance of the number of letters produced while reading a specific letter
+
+p_del := 0.1;
+p_copy := 0.7;
+p_ins := 0.1;
+p_edit := 0.1;
+
+p_del_no_ins := p_del / (p_copy + p_edit + p_ins);
+
+def main() {
+	return (var1(), var2(), var3(), var4());
+}
+
+def n_successes_until_failure(p) {
+	return geometric(1-p)-1;
+}
+
+def var1() {
+	ret := 0;
+	if flip(p_del_no_ins){
+		ret = n_successes_until_failure(p_ins);
+	}else{
+		ret = 1+n_successes_until_failure(p_ins);
+	}
+	return Expectation(ret^2)-Expectation(ret)^2;
+}
+
+def var2() {
+	geom := n_successes_until_failure(p_ins);
+	bern := flip(1-p_del_no_ins);
+	ret := geom + bern;
+	return Expectation(ret^2)-Expectation(ret)^2;
+}
+
+def var3() {
+	geom := n_successes_until_failure(p_ins);
+	var_geom := Expectation(geom^2)-Expectation(geom)^2;
+	bern := flip(1-p_del_no_ins);
+	var_bern := Expectation(bern^2)-Expectation(bern)^2;
+	return var_geom + var_bern;
+}
+
+def var4() {
+	var_geom := p_ins/(1-p_ins)^2;
+	var_bern := p_del_no_ins*(1-p_del_no_ins);
+	return var_geom + var_bern;
+}

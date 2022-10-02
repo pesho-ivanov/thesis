@@ -1,0 +1,23 @@
+% Description: This file defines commands for comments
+%
+% Usage: \input{headers/lqa/comments}
+%
+% Requires packages (already included in template):
+% - \usepackage[usenames, dvipsnames]{color}
+
+% TODO markers
+% the optional argument indicates the person who created the TODO
+\newcommand{\todo}[2][]{
+	\write16{^^JTODO on page \thepage: #2^^J}
+	\textcolor{red}{\textbf{TODO #1:} #2}
+}
+
+%% >>> BEGIN NO PARSE
+\newenvironment{commentlist}{
+\color{gray}
+\begin{itemize}
+}
+{
+\end{itemize}
+}
+%% >>> END NO PARSE
