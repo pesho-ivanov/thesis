@@ -12,7 +12,8 @@
 \reserveinserts{10}
 
 \input{preamble/general}
-%\input{header}
+\input{header}
+%\input{paper-global/paper/header}
 \usepackage[final]{pdfpages}
 
 % Bibliography
@@ -27,26 +28,7 @@
 \pagenumbering{roman}
 \pagestyle{scrplain}
 
-%
-% Cover
-%
-% Uncomment and adapt these lines if you want to include a cover PDF.
-%
-\includepdf[pages={1,{}}]{cover/crop/cover_front.pdf}
-\cleardoublepage\setcounter{page}{1}
-
-%
-% Frontmatter
-%
-
-\include{frontbackmatter/dirtytitlepage}
-\include{frontbackmatter/titlepage}
-\include{frontbackmatter/titleback}
-\cleardoublepage\include{frontbackmatter/dedication}
-\cleardoublepage\include{frontbackmatter/abstract}
-\cleardoublepage\include{frontbackmatter/acknowledgments}
-\pagestyle{scrheadings}
-\cleardoublepage\include{frontbackmatter/contents}
+\input{front}
 
 %
 % Mainmatter
@@ -58,6 +40,18 @@
 \cleardoublepage%
 \def\dir{chapters/sample-chapter}
 \include{\dir/main}
+
+%\cleardoublepage%
+%\def\dir{paper-global/}
+%\include{\dir/main}
+
+%\cleardoublepage%
+%\def\dir{paper-trie/}
+%\include{\dir/main}
+
+%\cleardoublepage%
+%\def\dir{paper-seed/}
+%\include{\dir/main}
 
 % Include some blind text
 %\Blinddocument
