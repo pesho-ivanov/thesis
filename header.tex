@@ -12,12 +12,14 @@
 % PACKAGES %
 %%%%%%%%%%%%
 %https://tex.stackexchange.com/questions/5293/how-to-patch-a-package
-\let\href\undefined
+%\let\href\undefined
 %\usepackage{layout}
 %\usepackage[capitalize]{cleveref}
 \usepackage{xspace}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{amsthm}
+
 \usepackage{latexsym}  % \leadsto
 %\usepackage{subcaption}  % for subfigure
 %\usepackage[caption=false]{subfig}  % deprecated
@@ -36,7 +38,7 @@
 
 \usepackage{graphicx}
 \usepackage{epigraph}
-\usepackage{siunitx}  % aligning to decimal point
+%\usepackage{siunitx}  % aligning to decimal point
 
 \usepackage{svg}
 \usepackage{tikz}
@@ -179,7 +181,12 @@
 %\newcommand{\kbp}{\unit{\,kbp}}
 \newcommand{\bp}{\,bp}
 \newcommand{\kbp}{\,kbp}
+% TODO: remove \qty and \unit in favor of siunitx
+\newcommand{\qty}[2]{#1\ #2}
+\newcommand{\unit}[1]{#1} 
 
 % datasets
 \newcommand{\datasetOne}{CHM13}
 \newcommand{\datasetTwo}{NA12878}
+
+%\newenvironment{proof}{\paragraph{Proof:}}{\hfill$\square$}
