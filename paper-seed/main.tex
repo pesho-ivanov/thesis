@@ -1,98 +1,16 @@
-% Generate PDF version 1.7 (needed for proper integration of .eps)
-% Prevents this warning: "PDF inclusion: found PDF version <1.7> [...]"
-\pdfminorversion=7
-
-\RequirePackage{amsmath}
-\documentclass[runningheads]{llncs}
-%\documentclass[runningheads,12pt]{llncs}
-
-%\usepackage[letterpaper, margin=1in]{geometry}
-
-%%%%%%%%%%
-% HEADER %
-%%%%%%%%%%
-
-\usepackage{algorithm}
-\usepackage[noend]{algpseudocode}  % layout for algorithmicx
+%\usepackage{algorithm}
+%\usepackage[noend]{algpseudocode}  % layout for algorithmicx
 
 % commonly used packages, commands, etc.
-\input{headers/header-lqa}
+%\input{headers/header-lqa}
 
 % project-specific packages, commands, etc.
-\input{headers/header}
 
-%\title{Fast and Optimal Sequence-to-Graph Alignment\\of Long Reads using Seed Heuristics}
-\title{Fast and optimal sequence-to-graph alignment\\ guided by seeds}
-% Seed Heuristic: Faster and Optimal\\ Sequence-to-Graph Alignment
-\author{
-	Pesho Ivanov \and %\orcidID{0000-0002-8119-3849} \and 
-    Benjamin Bichsel \and %\orcidID{0000-0003-3283-7908} \and
-    Martin Vechev %\orcidID{0000-0002-0054-9568}
-}
-%\authorrunning{P. Ivanov et al.}
-\titlerunning{Fast and optimal sequence-to-graph alignment guided by seeds}
-
-\institute{
-Department of Computer Science,\\
-ETH Zurich, Switzerland \\
-%Universit\"{a}tstr. 6, 8092 Z\"{u}rich, Switzerland \\
-\email{\{firstname.lastname\}@inf.ethz.ch}\\
-}
-
-\begin{document}
-
-\maketitle
-
-%%%%%%%%
-% BODY %
-%%%%%%%%
-
-% make sure the abstract is in a separate file (abstract.tex). This file will be
-% used to generate a markdown version of your abstract
-\input{abstract}
-\input{intro}
-\input{prereq}
-\input{methods}
-%\input{generalizations}
-\input{evals}
-\input{conclusion}
-
-% a simple test section that may be deleted
-%\input{test-section}
-
-%%%%%%%%%%%%%%
-% BODY - END %
-%%%%%%%%%%%%%%
-% this message marks the end of the body (used to check if we are over the page
-% limit)
-\message{^^JLASTBODYPAGE \thepage^^J}
-
-%%%%%%%%%%%%%%%%
-% BIBLIOGRAPHY %
-%%%%%%%%%%%%%%%%
-% may be replaced by new bibliography
-\clearpage
-\bibliography{references}
-%\bibliographystyle{genres}  % Genome Research
-%\bibliographystyle{rusnat}  % Genome Research
-\bibliographystyle{ieeetr}  % RECOMB
-
-%%%%%%%%%%%%%%%%%%%%
-% BIBLIOGRAPHY END %
-%%%%%%%%%%%%%%%%%%%%
-% this message marks the end of the bibliography (used to split the paper from
-% the supplement)
-\message{^^JLASTREFERENCESPAGE \thepage^^J}
-
-%%%%%%%%%%%%
-% APPENDIX %
-%%%%%%%%%%%%
-
-% may decide to not include appendix (see "./headers/config/omitappendix.sty")
-\ifbool{includeappendix}{%
-	\clearpage
-	\appendix
-	\include{appendix}
-}{}
-
-\end{document}
+\input{\dir/abstract}
+\input{\dir/intro}
+\input{\dir/prereq}
+\input{\dir/methods}
+%\input{\dir/generalizations}
+\input{\dir/evals}
+\input{\dir/conclusion}
+\input{\dir/appendix}

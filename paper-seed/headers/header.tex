@@ -15,7 +15,7 @@
 \usepackage{subcaption}  % for subfigure
 \usepackage{booktabs}   % tables: toprule, midrule
 \usepackage{colortbl}
-\usepackage[square,sort,comma,numbers]{natbib}
+%\usepackage[square,sort,comma,numbers]{natbib}
 
 %\usepackage[doublespacing]{setspace}
 
@@ -36,8 +36,8 @@
 
 \usepackage{thmtools}
 \usepackage{thm-restate}
-\declaretheorem[name=Theorem]{thm}
-\declaretheorem[name=Lemma]{lem}
+%\declaretheorem[name=Theorem]{thm}
+%\declaretheorem[name=Lemma]{lem}
 
 %%%%%%%%%%%%
 %   MATH   %
@@ -52,85 +52,85 @@
 % TEXT FORMAT %
 %%%%%%%%%%%%%%%
 % tools and algorithms
-\newcommand{\A}[0]{A$^\star$\xspace}
+%\newcommand{\A}[0]{A$^\star$\xspace}
 \newcommand{\seedh}[0]{\mbox{seed heuristic}\xspace}
 \newcommand{\prefixh}[0]{\mbox{prefix heuristic}\xspace}
 
-\newcommand{\dijkstra}[0]{\mbox{\textsc{Dijkstra}}\xspace}
-\newcommand{\astarix}[0]{\mbox{\textsc{AStarix}}\xspace}
+%\newcommand{\dijkstra}[0]{\mbox{\textsc{Dijkstra}}\xspace}
+%\newcommand{\astarix}[0]{\mbox{\textsc{AStarix}}\xspace}
 \newcommand{\astarixseeds}[0]{\mbox{\textsc{AStarix-seeds}}\xspace}
 \newcommand{\astarixprefix}[0]{\mbox{\textsc{AStarix-prefix}}\xspace}
-\newcommand{\graphaligner}[0]{\mbox{\textsc{GraphAligner}}\xspace}
-\newcommand{\vg}[0]{\mbox{\textsc{VG}}\xspace}
-\newcommand{\pasgal}[0]{\mbox{\textsc{PaSGAL}}\xspace}
+%\newcommand{\graphaligner}[0]{\mbox{\textsc{GraphAligner}}\xspace}
+%\newcommand{\vg}[0]{\mbox{\textsc{VG}}\xspace}
+%\newcommand{\pasgal}[0]{\mbox{\textsc{PaSGAL}}\xspace}
 \newcommand{\vargas}[0]{\mbox{\textsc{Vargas}}\xspace}
 \newcommand{\hga}[0]{\mbox{\textsc{HGA}}\xspace}
-\newcommand{\astarixurl}[0]{\mbox{\url{https://github.com/eth-sri/astarix}}\xspace}
+%\newcommand{\astarixurl}[0]{\mbox{\url{https://github.com/eth-sri/astarix}}\xspace}
 \newcommand{\astarixbiorxivurl}[0]{\mbox{\url{https://www.biorxiv.org/content/10.1101/2021.11.05.467453}}\xspace}
-\newcommand{\astarixurlwithbranch}[0]{\url{https://github.com/eth-sri/astarix/tree/recomb2022}\xspace}
+%\newcommand{\astarixurlwithbranch}[0]{\url{https://github.com/eth-sri/astarix/tree/recomb2022}\xspace}
 
 \newcommand{\art}[0]{\mbox{\textsc{ART}}\xspace}
 \newcommand{\randomreads}[0]{\mbox{\textsc{randomreads.sh}}\xspace}
 
 % reference graph
-\newcommand{\reference}[1]{#1_\texttt{r}}
-\newcommand{\RG}[0]{\reference{G}}
-\newcommand{\RGV}[0]{\reference{V}}
-\newcommand{\RGE}[0]{\reference{E}}
+%\newcommand{\reference}[1]{#1_\texttt{r}}
+%\newcommand{\RG}[0]{\reference{G}}
+%\newcommand{\RGV}[0]{\reference{V}}
+%\newcommand{\RGE}[0]{\reference{E}}
 % trie
-\newcommand{\trie}[1]{#1_\texttt{r}^\texttt{+}}
-\newcommand{\TG}[0]{\trie{G}}
-\newcommand{\TGV}[0]{\trie{V}}
-\newcommand{\TGE}[0]{\trie{E}}
+%\newcommand{\trie}[1]{#1_\texttt{r}^\texttt{+}}
+%\newcommand{\TG}[0]{\trie{G}}
+%\newcommand{\TGV}[0]{\trie{V}}
+%\newcommand{\TGE}[0]{\trie{E}}
 \newcommand{\trieroot}{\ensuremath{\mli{root}}}
 % edit graph
-\newcommand{\edit}[1]{#1_\texttt{e}}
-\newcommand{\EG}[0]{\edit{G}}
-\newcommand{\EGV}[0]{\edit{V}}
-\newcommand{\EGE}[0]{\edit{E}}
+%\newcommand{\edit}[1]{#1_\texttt{e}}
+%\newcommand{\EG}[0]{\edit{G}}
+%\newcommand{\EGV}[0]{\edit{V}}
+%\newcommand{\EGE}[0]{\edit{E}}
 % alignment graph
-\newcommand{\alignment}[2]{#2_\texttt{a}^{#1}}
-\newcommand{\AG}[1][q]{\alignment{#1}{G}}
-\newcommand{\AGV}[1][q]{\alignment{#1}{V}}
-\newcommand{\AGE}[1][q]{\alignment{#1}{E}}
+%\newcommand{\alignment}[2]{#2_\texttt{a}^{#1}}
+%\newcommand{\AG}[1][q]{\alignment{#1}{G}}
+%\newcommand{\AGV}[1][q]{\alignment{#1}{V}}
+%\newcommand{\AGE}[1][q]{\alignment{#1}{E}}
 
 % states: $h\st{u}{i}$ produces `h<u,i>'
-\newcommand{\st}[2]{\langle #1, #2 \rangle}
+%\newcommand{\st}[2]{\langle #1, #2 \rangle}
 
-\newcommand{\seeds}[0]{\mathit{Seeds}}
+%\newcommand{\seeds}[0]{\mathit{Seeds}}
 
 % heuristic function
 %\newcommand{\h}[0]{$h$}
 
 % cost
-\newcommand{\cost}[1]{\text{cost}(#1)}
+%\newcommand{\cost}[1]{\text{cost}(#1)}
 \newcommand{\Costs}[0]{\mathbb{R}_{\geq 0}}
 
 % PARAMETERS
 % c
-\newcommand{\costcap}[0]{c}
+%\newcommand{\costcap}[0]{c}
 
 % edit distance
 \newcommand{\cedits}[0]{\Delta}
-\newcommand{\cmatch}[0]{\Delta_\text{match}}
-\newcommand{\csubst}[0]{\Delta_\text{subst}}
-\newcommand{\cins}[0]{\Delta_\text{ins}}
-\newcommand{\cdel}[0]{\Delta_\text{del}}
-\newcommand{\dist}[0]{\mli{ED_\Delta}}
+%\newcommand{\cmatch}[0]{\Delta_\text{match}}
+%\newcommand{\csubst}[0]{\Delta_\text{subst}}
+%\newcommand{\cins}[0]{\Delta_\text{ins}}
+%\newcommand{\cdel}[0]{\Delta_\text{del}}
+%\newcommand{\dist}[0]{\mli{ED_\Delta}}
 
 % bounds
 \newcommand{\maxdel}[0]{n_\text{del}}
 \newcommand{\maxins}[0]{n_\text{ins}}
 
 % paragraphs
-\newcommand{\para}[1]{\vspace{0.8em}\noindent\textbf{#1.}}
+%\newcommand{\para}[1]{\vspace{0.8em}\noindent\textbf{#1.}}
 
 % general math
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}
-\newcommand{\mli}[1]{\mathit{#1}}
-\newcommand{\Oh}[0]{\mathcal{O}}
-\newcommand{\concat}[0]{{\cdot}}
+%\DeclareMathOperator*{\argmax}{arg\,max}
+%\DeclareMathOperator*{\argmin}{arg\,min}
+%\newcommand{\mli}[1]{\mathit{#1}}
+%\newcommand{\Oh}[0]{\mathcal{O}}
+%\newcommand{\concat}[0]{{\cdot}}
 
 %%%%%%%%%%%%
 %  OTHERS  %
@@ -168,3 +168,21 @@
 }
 
 \newcommand{\qedwhite}{\hfill \ensuremath{\Box}}
+
+%% COLORS
+
+%\usepackage[usenames, dvipsnames]{color} % for textcolor
+\usepackage{xcolor} % for definecolor
+
+\definecolor{green-highlight}{HTML}{caff97}
+\definecolor{pink-highlight}{HTML}{f8e2e2}
+
+\definecolor{light-blue}{HTML}{dae8fc}
+\definecolor{light-yellow}{HTML}{ffe6cc}
+\definecolor{light-violet}{HTML}{e1d5e7}
+\definecolor{light-green}{HTML}{d5e8d4}
+
+\definecolor{dark-green}{HTML}{82b366}
+\definecolor{dark-red}{HTML}{ea6b66}
+
+\definecolor{mygrey}{HTML}{777777}

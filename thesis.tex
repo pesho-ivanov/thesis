@@ -14,6 +14,7 @@
 \input{preamble/general}
 \input{header} % from paper-global/paper/header
 \input{paper-trie/header}
+\input{paper-seed/headers/header}
 \usepackage[final]{pdfpages}
 
 % Bibliography
@@ -21,6 +22,7 @@
 \addbibresource{bibliography.bib}
 \addbibresource{paper-global/paper/biblio.bib}
 \addbibresource{paper-trie/biblio.bib}
+\addbibresource{paper-seed/references.bib}
 
 \begin{document}
 \frenchspacing
@@ -50,9 +52,9 @@
 \def\dir{paper-trie/}
 \include{\dir/main}
 
-%\cleardoublepage%
-%\def\dir{paper-seed/}
-%\include{\dir/main}
+\cleardoublepage%
+\def\dir{paper-seed/}
+\include{\dir/main}
 
 % Include some blind text
 %\Blinddocument
