@@ -1,0 +1,68 @@
+\input{astarix-algo}
+
+\input{astarix-general-astar}
+
+\subsection{\astarix: Instantiating \A} \label{subsec:astarix-heuristic}
+\cref{alg:astarix} shows an unoptimized version of \astarix and its heuristic
+function.
+%
+\astarix expects a reference graph (\cref{lin:reference}) and a query
+(\cref{lin:astarix}) as input, and returns an optimal alignment (\cref{lin:ret})
+by searching for a shortest path from $S$ to $T$ in the alignment graph $\AG$.
+It is parameterized by hyper-parameters ($d$ in \cref{lin:d}, more in
+\cref{sec:optimizations}) and edit costs (implicitly provided).
+
+The function \textsc{Heuristic}
+(\crefrange{lin:heuristic-start}{lin:heuristic-end}) computes a lower bound on
+the remaining cost of a best alignment: the minimum cost $h(u,s)$ of aligning
+the \emph{upcoming sequence} $s$ (where $\lvert s \rvert \leq d$) starting from
+node $u$. Importantly, $s$ is limited to the next $d' \leq d$ letters of $q$,
+starting from query position $i$. Thus, computing $h(u,s)$ is substantially
+cheaper than aligning all remaining letters of $q$.
+
+To compute $h(u,s)$ we leverage a simple branch-and-bound algorithm, provided in
+\cref{app:recursive-align}. In the following, for convenience, we refer to the
+heuristic as $h$ (which is parameterized by $(u,s)$) instead of
+\textsc{Heuristic} (which is parameterized by $\langle u, i \rangle$). Further,
+we say that $h$ is optimistic if $h(u,s)$ is a lower bound on the cost for
+aligning all remaining letters (i.e., $q[i:|q|]$) starting from node $u$ (note
+that $s$ is a prefix of $q[i:|q|]$).
+
+\begin{samepage}
+\begin{theorem} \label{thm:optimistic}
+	$h$ is optimistic.
+\end{theorem}
+\begin{proof}
+$h$ only considers the next $d'$ letters of $q$ instead of all
+remaining letters. Since all costs are non-negative, the theorem follows.
+\end{proof}
+\end{samepage}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.9\columnwidth]{./figs/heuristic}
+	\caption{The benefit of using our heuristic over \dijkstra. Alignment graph
+	$\AG[``\texttt{ATAA}"]$ (right) is based on reference graph $\RG$ (left),
+	but omits insertion and deletion edges for simplicity. The pink boxes $g+h$
+	indicate the distance from the sources $S=\{\langle u,0 \rangle, \langle v,0
+	\rangle \}$ (in $g$) and the cost of aligning the next $d=2$ letters (in
+	$h$). \dijkstra (resp. \A) expands states circled in
+	\textcolor{my-full-blue}{blue} (resp.
+	\textcolor{my-full-red}{dashed red}).}
+	\label{fig:heuristic-benefit}
+\end{figure}
+
+\para{Benefit of \A Heuristic over \dijkstra} \label{para:heuristic-benefits}
+\cref{fig:heuristic-benefit} shows the benefit of using our heuristic function
+compared to \dijkstra. Here, \dijkstra expands states based on their distance
+$g$ from the origin nodes $\st{u}{0}$ and $\st{v}{0}$. Hence, depending on
+tie-breaking, \dijkstra may expand all states with $h \leq 1$, as shown in
+\cref{fig:heuristic-benefit}. By contrast, \A chooses the next state to expand
+by the sum of the distance from the origin $g$ and the heuristic $h$, expanding
+only states with $g+h \leq 1$.
+
+\para{Memoization} \label{para:memoization}
+Recall that the return value of $h$ in \cref{lin:heuristic-start} only depends
+on $u$ and the upcoming sequence $s$ (which in turn depends on $i$ and $d$).
+Thus, $h(u,s)$ can be reused for different positions across different queries in
+$\Oh(1)$ time, if it was computed for a previous query.

@@ -1,158 +1,160 @@
-%%%%%%%%%%%%%%%%%%%
-% COMMON PACKAGES %
-%%%%%%%%%%%%%%%%%%%
+\RequirePackage{amsmath}
+\documentclass[runningheads]{llncs}
 
-% \usepackage[utf8]{inputenc} % enable UTF-8
+%\usepackage{geometry}
+%\geometry{
+  %a4paper,         % or letterpaper
+  %textwidth=15cm,  % llncs has 12.2cm
+  %textheight=24cm, % llncs has 19.3cm
+  %heightrounded,   % integer number of lines
+  %hratio=1:1,      % horizontally centered
+  %vratio=2:3,      % not vertically centered
+  %margin=1.0in
+%}
 
-% Why `\usepackage[T1]{fontenc}'?
-% https://tex.stackexchange.com/questions/664/why-should-i-use-usepackaget1fontenc
-% If you don't use \usepackage[T1]{fontenc},
-% - Words containing accented characters cannot be automatically hyphenated,
-% - You cannot properly copy-and-paste such words from the output (DVI/PS/PDF),
-% - Characters like the pipe sign, less than and greater sign give unexpected
-%   results in text.
-%
-% In addition:
-% - Code in lstlisting may not be displayed correctly
-% \usepackage[T1]{fontenc}
+%\setlength{\textwidth}{15.2cm}
 
-%\usepackage[usenames, dvipsnames]{color} % for textcolor
-\usepackage{xcolor} % for definecolor
+\raggedbottom
+%\setlength{\textfloatsep}{5pt}
+%\setlength{\abovecaptionskip}{5pt plus 3pt minus 2pt} % Chosen fairly arbitrarily
+\usepackage{graphicx}     % Used for displaying a sample figure. If possible,figure files should be included in EPS format.
+
+\usepackage{wrapfig}
+\usepackage[T1]{fontenc}  %% for small caps \textsc
+%\usepackage{hyperref}     %% TODO: remove
 \usepackage{xspace}
-\usepackage{float}
-\usepackage[hidelinks]{hyperref}
-\usepackage{booktabs}
-\usepackage{chapterbib}  % without adding this package the references disappear from the middle (before the supplementaries)
-
-\usepackage{acro} % for \ac
-
-\usepackage{mathtools}
-%\usepackage{biblatex}  % for the second biblio
 \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{booktabs}
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+
+\usepackage{multirow}
+\usepackage{xr}  % for importing external .aux (for the appendix)
+\usepackage{filecontents}  % for embedding the .aux into .tex
+
+\usepackage{numprint}
+\npdecimalsign{.}
+
+% add qed to all proofs
+\let\oldProof\proof
+\let\oldEndProof\endproof
+
+\renewenvironment{proof}
+{\oldProof}
+{\qed \oldEndProof}
+
+
+\usepackage{subcaption}  % for subfigures 
+\captionsetup{compatibility=false}  % a workaround for "The `subcaption' package does not work correctly in compatibility mode."
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% ALGORITHM DEFINITIONS %
+%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{algorithm}
-\usepackage[noend]{algpseudocode}
-\usepackage{graphicx} % for resizebox
-\usepackage{stmaryrd} % for llbracket, rrbracket
+%\usepackage{algorithmicx}
+\usepackage[noend]{algpseudocode}  % layout for algorithmicx
+\algdef{SE}[SUBALG]{Indent}{EndIndent}{}{\algorithmicend\ }%
+\algtext*{Indent}
+\algtext*{EndIndent}
 
-\usepackage{pifont}
-\newcommand{\y}{\ding{51}}
-%\newcommand{\n}{\ding{55}}
-\newcommand{\n}{-\xspace}
-\newcommand{\specialcell}[2][c]{% newline in table cells with \\
-  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+%\usepackage{minted}
 
-
-\let\oldReturn\Return
-\renewcommand{\Return}{\State\oldReturn}
-%\algloopdefx{Continue}{\textbf{continue}}
-
-%%%%%%%%%%%%%%%%%
-% MORE PACKAGES %
-%%%%%%%%%%%%%%%%%
-
-%\usepackage{fixme}
-\usepackage[draft,inline,nomargin]{fixme}
-\fxsetup{theme=color}
-\usepackage{bbding} % scissors
+\usepackage[dvipsnames]{xcolor}
 \usepackage{fontawesome}
+\usepackage[clock]{ifsym}  % special symbols
+%%\usepackage[linesnumbered,ruled,vlined,algo2e]{algorithm2e}
 
+% temporary (for debugging)
+\usepackage[]{todonotes}  % [disable]
 
-%%%%%%%%%%%%%%%%%
-%OVERFULL BOXES %
-%%%%%%%%%%%%%%%%%
+\usepackage{standalone}
+\usepackage[hidelinks]{hyperref}
 
-% ALLOW TO MARK OVERFULL BOXES
-\ifdefined\isoverfull
-	%\usepackage{showframe}
-	\overfullrule=1cm
-\else
-	% no action necessary
-\fi
+\input{header-references}
 
-%%%%%%%%
-% TIKZ %
-%%%%%%%%
+% If you use the hyperref package, please uncomment the following line
+% to display URLs in blue roman font according to Springer's eBook style:
+\renewcommand\UrlFont{\color{blue}\rmfamily}
 
-\usepackage{tikz}
-\usetikzlibrary{calc,decorations.pathmorphing,shapes}
-\usetikzlibrary{positioning,shapes,fit,arrows}
-\usetikzlibrary{decorations.markings}
-\usetikzlibrary{shapes,shapes.geometric}
-\usetikzlibrary{shadows,patterns}
-\usetikzlibrary{backgrounds,decorations.pathreplacing,automata}
-\usetikzlibrary{shapes.multipart}
+%% custom names
+\newcommand{\astarix}[0]{\textsc{AStarix}\xspace}
+\newcommand{\astarixurl}[0]{\url{https://github.com/eth-sri/astarix}\xspace}
+\newcommand{\astarixurlwithbranch}[0]{\url{https://github.com/eth-sri/astarix/tree/recomb2020}\xspace}
 
-\tikzset{arrow/.style={->}}
+\newcommand{\dijkstra}[0]{\textsc{Dijkstra}\xspace}
+\newcommand{\graphaligner}[0]{\textsc{GraphAligner}\xspace}
+\newcommand{\bitparallel}[0]{\textsc{BitParallel}\xspace}
+%\newcommand{\cellwise}[0]{\textsc{Cellwise}\xspace}  % from GraphAligner's paper
+\newcommand{\brownie}[0]{\textsc{BrownieAligner}\xspace}
+\newcommand{\pasgal}[0]{\textsc{PaSGAL}\xspace}
+\newcommand{\vg}[0]{\textsc{VG}\xspace}
+\newcommand{\valigntool}[0]{\textsc{V-ALIGN}\xspace}
 
-\tikzset{editarrow/.style={arrow,densely dotted,text=gray}}
+\newcommand{\BF}[0]{BF$^\star$\xspace}
+\newcommand{\A}[0]{A$^\star$\xspace}
+\newcommand{\K}[0]{K$^\star$\xspace}
+\newcommand{\suf}[0]{\text{suff}}
+\newcommand{\impl}[0]{\textbf{(implemented)}}
 
-% From Drawing Finite State Machines 2018: https://www3.nd.edu/~dchiang/teaching/theory/2018/www/tikz_tutorial.pdf
-%\tikzset{node distance=2.5cm, % Minimum distance between two nodes. Change if necessary.
-%	every state/.style={ % Sets the properties for each state
-%		semithick,
-%		fill=gray!10},
-%	initial text={}, % No label on start arrow
-%	double distance=2pt, % Adjust appearance of accept states
-%	every edge/.style={ % Sets the properties for each transition
-%		draw,
-%		->,>=stealth’, % Makes edges directed with bold arrowheads
-%		auto,
-%	semithick}}
+% reference graph
+\newcommand{\reference}[1]{#1_\texttt{r}}
+\newcommand{\RG}[0]{\reference{G}}
+\newcommand{\RGV}[0]{\reference{V}}
+\newcommand{\RGE}[0]{\reference{E}}
+% trie
+\newcommand{\trie}[1]{#1_\texttt{r}^\texttt{+}}
+\newcommand{\TG}[0]{\trie{G}}
+\newcommand{\TGV}[0]{\trie{V}}
+\newcommand{\TGE}[0]{\trie{E}}
+% edit graph
+\newcommand{\edit}[1]{#1_\texttt{e}}
+\newcommand{\EG}[0]{\edit{G}}
+\newcommand{\EGV}[0]{\edit{V}}
+\newcommand{\EGE}[0]{\edit{E}}
+% alignment graph
+\newcommand{\alignment}[2][q]{#2_\texttt{a}^{#1}}
+\newcommand{\AG}[1][q]{\alignment[#1]{G}}
+\newcommand{\AGV}[1][q]{\alignment[#1]{V}}
+\newcommand{\AGE}[1][q]{\alignment[#1]{E}}
 
-\tikzset{letter/.style={draw,circle}}
+% stats
+\newcommand{\st}[2]{\langle #1, #2 \rangle}
 
-\newcommand*\coloredcircle[2][]{%
-	\raisebox{-1.2pt}{
-	\tikz[]{
-		\node[shape=circle,draw,#2,fill=#2,inner sep=0pt,minimum size=1em] (char) {\small\textcolor{white}{#1}};
-	}
-	}%
-}
+% cost
+\newcommand{\cost}[1]{\text{cost}(#1)}
 
-%%%%%%%%%%%%
-% COMMENTS %
-%%%%%%%%%%%%
+% PARAMETERS
+% c
+\newcommand{\costcap}[0]{c}
 
-% TODO markers
-\newcommand{\todo}[1]{
-	\message{^^JTODO on page \thepage: #1^^J}
-	\textcolor{red}{\fxerror{#1}}
-}
+% edit distance
+%\newcommand{\cedits}[0]{\Delta}
+\newcommand{\cmatch}[0]{\Delta_\text{match}}
+\newcommand{\csubst}[0]{\Delta_\text{subst}}
+\newcommand{\cins}[0]{\Delta_\text{ins}}
+\newcommand{\cdel}[0]{\Delta_\text{del}}
+\newcommand{\dist}[0]{\mli{ED_\Delta}}
 
-\newenvironment{commentlist}
-    {
-	\color{gray}
-	\begin{itemize}
-    }
-    { 
-    \end{itemize}
-	}
+% paragraphs
+\newcommand{\para}[1]{\vspace{0.8em}\noindent\textbf{#1.}}
 
-%%%%%%%%%%%%%%
-% REFERENCES %
-%%%%%%%%%%%%%%
+% general math
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\mli}[1]{\mathit{#1}}
+\newcommand{\Oh}[0]{\mathcal{O}}
+\newcommand{\concat}[0]{{\cdot}}
 
-\newcommand{\fig}[1]{Fig.~#1}
-\newcommand{\sect}[1]{\S#1}
-\newcommand{\thm}[1]{Thm.~#1}
-\newcommand{\defn}[1]{Def.~#1}
-\newcommand{\lst}[1]{Listing~#1}
-\newcommand{\eq}[1]{Eq.~(#1)}
-\newcommand{\app}[1]{App.~#1}
-\newcommand{\lin}[1]{Line~#1}
-\newcommand{\alg}[1]{Alg.~#1}
-\newcommand{\tab}[1]{Tab.~#1}
-
-%%%%%%%%%%%%%%%%%
-% ABBREVIATIONS %
-%%%%%%%%%%%%%%%%%
-
-\newcommand{\eg}{e.g., }
-\newcommand{\ie}{i.e., }
-\newcommand{\etc}{etc.}
-\newcommand{\cp}{cp.}
-\newcommand{\nth}[1]{$#1^\text{th}$}
-\newcommand{\wrt}{w.r.t. }
+% efficiency icons
+%\newcommand{\muchfaster}[0]{\begingroup\color{green}\StopWatchEnd\endgroup\,}
+%\newcommand{\muchslower}[0]{\begingroup\color{red}\StopWatchEnd\endgroup\,}
+%\newcommand{\littlefaster}[0]{\begingroup\color{green}\textsuperscript{\StopWatchEnd}\endgroup\,}
+%\newcommand{\littleslower}[0]{\begingroup\color{red}\textsuperscript{\StopWatchEnd}\endgroup\,}
+%\newcommand{\muchsmaller}[0]{\begingroup\color{green}\faDatabase\endgroup\,}
+%\newcommand{\muchbigger}[0]{\begingroup\color{red}\faDatabase\endgroup\,}
+%\newcommand{\littlesmaller}[0]{\begingroup\color{green}\textsuperscript{\faDatabase}\endgroup\,}
+%\newcommand{\littlebigger}[0]{\begingroup\color{red}\textsuperscript{\faDatabase}\endgroup\,}
 
 %%%%%%%%%%
 % COLORS %
@@ -184,139 +186,3 @@
 \colorlet{my-green}{my-full-green!30}
 \colorlet{my-red}{my-full-red!30}
 \colorlet{my-purple}{my-full-purple!30}
-
-%%%%%%%%%%%%
-% THEOREMS %
-%%%%%%%%%%%%
-
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{hyp}{Hypothesis}
-\newtheorem{lemma}[theorem]{Lemma}
-
-%%%%%%%%
-% MATH %
-%%%%%%%%
-
-\let\epsilon\varepsilon
-\let\PrOnly\Pr
-\renewcommand{\Pr}[2][]{\PrOnly_{#1}\left[#2\right]}
-\newcommand{\E}[2][]{\mathbb{E}_{#1}\left[#2\right]}
-\newcommand{\pocc}[1]{p\left(#1\right)}
-\DeclareMathOperator*{\argmin}{arg\,min}
-\DeclareMathOperator*{\argmax}{arg\,max}
-
-% KL-divergence
-%   \kld{p}{q}
-\DeclarePairedDelimiterX{\infdivx}[2]{(}{)}{%
-	#1\;\delimsize|\delimsize|\;#2%
-}
-\newcommand{\kld}[2]{\ensuremath{D_{KL}\infdivx{#1}{#2}}\xspace}
-\newcommand{\vardist}[2]{\delta(#1,#2)}
-
-\newcommand{\uar}[0]{\in_{\text{u.a.r}}}
-
-\newcommand{\abs}[1]{\left| #1 \right|}
-
-\newcommand{\shortcolon}[0]{{:}}
-
-\newcommand{\pins}[0]{p_\text{ins}}
-\newcommand{\pdel}[0]{p_\text{del}}
-\newcommand{\ped}[0]{p_\text{ed}}
-\newcommand{\pcopy}[0]{p_\text{copy}}
-
-\newcommand{\tol}[1]{\xrightarrow{#1}}
-\newcommand{\tcopy}[1]{\xrightarrow{\text{copy},#1}}
-\newcommand{\tedit}[1]{\xrightarrow{\text{edit},#1}}
-\newcommand{\tdelete}[0]{\xrightarrow{\text{del}}}
-\newcommand{\tinsert}[1]{\xrightarrow{\text{ins},#1}}
-
-%%%%%%%%%%%%
-% ACRONYMS %
-%%%%%%%%%%%%
-
-\DeclareAcronym{map} {
-    short = MAP,
-    long = Maximum a Posteriori Probability,
-    class = abbrev
-}
-
-%%%%%%%%%
-% GRAPH %
-%%%%%%%%%
-\newcommand{\paths}[2]{\text{Paths}_{#1}(#2)}
-
-%%%%%%%%%%%
-% GENOMES %
-%%%%%%%%%%%
-\newcommand{\genomes}[0]{\mathcal{G}}
-\newcommand{\genomeRV}[0]{G}
-\newcommand{\genome}[0]{g}
-
-\newcommand{\segments}[0]{\mathcal{S}}
-\newcommand{\segmentRV}[0]{S}
-\newcommand{\segment}[0]{s}
-
-\newcommand{\alignments}[0]{\mathcal{A}}
-\newcommand{\alignmentRV}[0]{A}
-\newcommand{\alignment}[0]{a}
-
-\newcommand{\startInGenomeRV}[0]{B}
-\newcommand{\startInGenome}[0]{b}
-
-\newcommand{\graph}[0]{\mathbb{G}}
-
-\newcommand{\position}[0]{m}
-\newcommand{\labels}[0]{\ell}
-\newcommand{\trans}[0]{p}
-\newcommand{\graphpath}[0]{\pi}
-\newcommand{\startNode}[0]{b}
-
-
-% picked from http://tug.ctan.org/info/symbols/comprehensive/symbols-a4.pdf
-\newcommand{\gmut}[0]{\text{\faWrench}}
-% \newcommand{\gchop}[0]{\text{\ScissorRight}}
-\newcommand{\gread}[0]{{\hspace{0.4pt}\text{\faEye}}}
-\newcommand{\gcore}[0]{{\hspace{0.4pt}\text{\faDotCircleO}}}
-
-%\newcommand{\fmut}[1]{\text{mut}(#1)}
-%\newcommand{\fchop}[1]{\text{chop}(#1)}
-%\newcommand{\fread}[1]{\text{read}(#1)}
-
-% outdated
-\newcommand{\seq}[0]{S}
-
-\newcommand{\pphred}[1]{\text{phred}_{#1}}
-
-\newcommand{\vg}[1]{\text{VG}(#1)}
-
-%%%%%%%%%%%
-% TEXTUAL %
-%%%%%%%%%%%
-
-\newcommand{\tool}[0]{\textsc{pVG}\xspace}
-\newcommand{\completem}[0]{Complete Genomes Model\xspace}
-\newcommand{\corem}[0]{Core Genomes Model\xspace}
-\newcommand{\graphm}[0]{Graph Model\xspace}
-\newcommand{\para}[1]{\paragraph{\textbf{#1}.}}
-
-\newcommand{\fullline}[0]{%
-\vspace{0.3em}%
-\rule{\linewidth}{0.4pt}%
-\vspace{0.3em}%
-}
-
-
-%%%%%%%%
-% CODE %
-%%%%%%%%
-\input{header/listing}
-
-
-%%%%%%%%
-% CREF %
-%%%%%%%%
-\usepackage[capitalize]{cleveref}
-\crefformat{section}{\S#2#1#3}
-\crefname{listing}{Lst.}{listings}
-\crefname{line}{Lin.}{Lin.}
-\newcommand{\crefrangeconjunction}{--}

@@ -1,0 +1,61 @@
+\subsection{Notations} \label{sec:notation}
+
+\cref{tab:notation} summarizes the notational conventions used in this work.
+
+\begin{table}
+	\centering
+	\caption{Notational conventions.}\label{tab:notation}
+	\begin{tabular}{ll}
+	\hline
+	\textbf{Object}	         & \textbf{Notation}\\
+	\hline
+	\textbf{Queries}  & $Q = \{ q_i \vert q_i \in \Sigma^m \}$ \\
+	\,\, Query            & $q \in Q$ \\
+	\,\, Length     & $m := \lvert q \rvert\in \mathbb{N}$\\
+	\,\, Position in query & $q[i] \in \Sigma$, $i \in \{1,\dots,m\}$\\	
+	\hline
+	\textbf{Reference graph}& $\RG=(\RGV,\RGE)$\\
+	\,\, Size& $\lvert \RG \rvert := \lvert \RGV \rvert + \lvert \RGE \rvert \in \mathbb{N}$\\
+	\,\, Nodes& $u, v \in \RGV$, $n := \lvert \RGV \rvert \in \mathbb{N}$\\
+	\,\, Edges& $e \in \RGE := \RGV \times \RGV \times \Sigma$\\
+	\,\, Edge letter& $\ell \in \Sigma$\\
+	\textbf{Reference graph with a trie} & $\TG = (\TGV, \TGE)$ \\
+	\,\, Trie depth  & $D \in \mathbb{N}_{>0}$\\
+	\hline
+	\textbf{Edit graph}& $\EG=(\EGV,\EGE)$\\
+	\,\, Edit costs& $0 \leq \cmatch \leq \csubst, \cins, \cdel$\\
+	\,\, Alignment& $\pi \in \EGE^*$ and $\sigma(\pi)=q$ \\
+	\,\, Optimal alignment& $\dot{\pi} \in \EGE^*$\\
+	\,\, Alignment cost& $\cost{\pi} \in \mathbb{R}_{\geq 0}$\\
+	\hline
+	\textbf{Alignment graph}& $\AG=(\AGV,\AGE)$\\
+	\,\, Size& $N := \lvert \AGV \rvert \in \mathbb{N}$\\
+	\,\, State& $\langle u,i \rangle \in \AGV := V \times \{0,\dots,m\}$\\
+	\,\, Edges& $(\langle u,i \rangle, \langle v,j \rangle,\ell,w) \in \AGE
+	\subseteq \AGV \times \AGV \times \Sigma_{\epsilon}	\times \mathbb{R}_{\geq 0}$\\
+	\,\, Edge cost& $w \in \mathbb{R}_{\geq 0}$\\
+	\hline
+	\textbf{In all graphs}& $G(V,E) \in \{ \RG, \EG, \AG \}$ \\
+	\,\, Walk& $\pi \in G: \pi \in E^*$\\
+	\,\, Walk spelling& $\sigma(\pi) \in \Sigma^*$\\
+	\,\, Walk begin and end nodes& $\mli{begin}(\pi), \mli{end}(\pi) \in V$\\
+	\,\, Path& a walk without repeating nodes\\
+	\hline
+	\textbf{\astarix} & $A^\star(G,S,T,h)$\\
+	\,\, Graph& $G=(V,E)$\\
+	\,\, Nodes& $u,v \in V$\\
+	\,\, Edges& $e \in E \subseteq V \times V \times \mathbb{R}_{\geq 0}$\\ 
+	\,\, Source states& $S \subseteq V$\\
+	\,\, Target states& $T \subseteq V$\\
+	\,\, Upcoming sequence& $s \in \Sigma^k$\\
+	\,\, Cost cap& $\costcap \in \mathbb{R}_{\geq 0}$\\
+	\,\, Depth cap& $d=|s|$\\
+	\,\, Heuristic function& $h(u, s) \colon V \to \mathbb{R}_{[0; \infty]}, \lvert s \rvert \leq d$\\
+	\,\, Minimum cost to a target& $h^*(u,s)$\\
+	\,\, Cost of the cheapest path from $u$ to $v$& $k(u,v), u, v \in G$\\
+	\,\, Optimistic& $h(u,s) \leq \min_\pi \cost{\pi}, \pi \colon \pi \text{ starts from } u, \sigma(\pi)=s $\\
+	\,\, Explored state & A state pushed to the queue of \cref{alg:generic-alignment}\\
+	\,\, Expanded state & A state popped from the queue of \cref{alg:generic-alignment}\\
+	\hline
+\end{tabular}
+\end{table}

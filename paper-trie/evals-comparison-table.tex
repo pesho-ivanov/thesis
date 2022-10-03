@@ -1,0 +1,27 @@
+\begin{table}[t]
+\centering
+%\ra{1.2}
+\caption{Performance of optimal aligners for different reference graphs.}\label{tab:results}
+\sffamily
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+                && \phantom{a} & \multicolumn{4}{ c }{\textbf{Runtime} and \textbf{Memory}}\\
+                \cmidrule{4-7}
+\textbf{Genome graph} & \textbf{Size} & \phantom{a} & \astarix & \dijkstra & \pasgal & \bitparallel\\
+\midrule
+\multirow{2}{*}{\textit{E. coli} (linear)} & \multirow{2}{*}{$\sim$4.7 Mbp} &&\numprint{33} sec	 &\numprint{73} sec
+&\numprint{3272} sec &\numprint{4906} sec\\
+                          &          &&\numprint{0.66} GB   &\numprint{0.66} GB
+                          &\numprint{0.55} GB   &\numprint{0.43} GB \\\cmidrule{1-7}
+						  \multirow{2}{*}{LCR (variant)} & \multirow{2}{*}{$\sim$1 Mbp}   &&\numprint{437}
+                          sec &\numprint{940} sec	 &\numprint{1614} sec &\multirow{2}{*}{SegFault}
+                          \\
+                          &          &&\numprint{1.12} GB   &\numprint{1.09} GB
+                          &\numprint{0.30} GB   & 		\\\cmidrule{1-7}
+                          \multirow{2}{*}{MHC1 (variant)} & \multirow{2}{*}{$\sim$5 Mbp} &&\numprint{1282}
+                          sec &\numprint{1588} sec & >\numprint{7200}
+              sec            &\multirow{2}{*}{SegFault}\\
+                          &          &&\numprint{4.35} GB   &\numprint{1.21} GB    &  \numprint{0.87} GB         		&\\
+\bottomrule
+\end{tabular}
+\end{table}

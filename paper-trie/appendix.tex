@@ -1,81 +1,12 @@
-% \section{Algorithms for Generative Model}
+\clearpage
+\appendix
 
-% In this section, we present runnable Python implementations of our generative model.
-
-% \begin{figure*}
-% 	\lstinputlisting[language=MyPython,caption={Full Python code for mutating a core genome. Utilities are shown in \cref{lst:utilities}.},label={lst:mutate-full}]{code/mutate_full.py}
-% \end{figure*}
-
-% \begin{figure*}
-% 	\lstinputlisting[language=MyPython,caption={Full Python code for reading a segment. Utilities are shown in \cref{lst:utilities}.},label={lst:read-full}]{code/read_full.py}
-% \end{figure*}
-
-% \begin{figure*}
-% 	\lstinputlisting[language=MyPython,caption={Utilities.},label={lst:utilities}]{code/utilities.py}
-% \end{figure*}
-
-
-\section{Equivalence of Core Genomes Model and Graph Model} \label{app:model-equivalence}
-In this section, we discuss why the distributions induced by the Core Genome Model and the Graph Model are approximately equal.
-To this end, we investigate why picking a random starting point in the core genome and only consider mutations from this starting point is approximately equivalent to picking a random starting point in the mutated genome (\cref{lem:ignore-early-mutations}).
-The approximation is quite close; the behavior of the two processes is different in less than $1/|\genome^\gcore|$ of all cases.
-
-\cref{lem:ignore-early-mutations} does not take into account that we must read $L$ letters from $\genome^\gmut$, starting from $\startInGenome^\gmut$.
-Instead, it considers a process reading all letters starting from $\startInGenome^\gmut$.
-However, it is straightforward to extend \cref{lem:ignore-early-mutations} (and its proof) to take this into account.
-In this case, the two models (the Core Genome Model and the Graph Model) differ in less than $(L+1)/|\genome^\gcore|$ of all cases.
-
-\para{Ignoring Mutations Before the Start of a Read}
-The following lemma states that instead of mutating a whole core genome and picking a starting point in the mutated genome, it suffices to mutate only the part after a randomly chosen starting point in the core genome.
-\begin{lemma}[] \label{lem:ignore-early-mutations}
-	When starting from a fixed core genome $\genome^\gcore$, the following processes approximately induce the same output distributions:
-	\begin{itemize}
-		\item Sample $\genome^\gmut$ according to mutations $M$
-		\item Uniformly sample starting point $\startInGenome^\gmut$
-		\item Return $\genome^\gmut[\startInGenome^\gmut:]$ and $M[\startInGenome^\gmut:]$
-	\end{itemize}
-	and
-	\begin{itemize}
-		\item Uniformly sample starting point $\startInGenome'^\gcore$ in $\genome^\gcore$
-		\item Sample $\seq'^\gmut$ according to mutations $M'$ on $\genome^\gcore[\startInGenome'^\gcore:]$, assuming $M'$ does not start with a deletion
-		\item Return $\seq'^\gmut$ and $M'$
-	\end{itemize}
-	Here, $\genome^\gmut[\startInGenome^\gmut:]$ ignores all letters before the $\startInGenome^\gmut$-th letter and $M[\startInGenome^\gmut:]$ ignores all mutations that occurred before producing the $\startInGenome^\gmut$-th letter from $\genome^\gmut$.
-\end{lemma}
-\begin{proof}
-	As stated in \cref{lem:uniform-position}, picking $\startInGenome^\gmut$ in $\genome^\gmut$ is equivalent to picking $\startInGenome'^\gcore$ in $\genome^\gcore$, unless $\startInGenome'^\gcore = |\genome^\gcore|+1$.
-	As the latter happens very rarely (with a probability of less than $1/|\genome^\gcore|$), we can safely ignore this case.
-
-	Therefore, there is a one-to-one correspondence between the mutations $M[\startInGenome^\gmut:]$ and $M'$ (here, it is crucial that $M'$ does not start with a deletion). Hence, their respective distributions are the same.
-	As a consequence, the distribution of $\genome^\gmut[\startInGenome^\gmut:]$ and $\seq'^\gmut$ is also the same, as they are deterministically derived from their respective mutations.
-\end{proof}
-
-\para{Uniform Position in $\genome^\gcore$}
-The following lemma states that picking a uniform point in the mutated genome $\genome^\gmut$ is equivalent to picking a uniform point in the core genome $\genome^\gcore$.
-
-It assumes one-based indexing for $\startInGenome^\gcore$ and $\startInGenome^\gmut$. 
-\begin{lemma}[] \label{lem:uniform-position}
-	Picking a uniform point $\startInGenome^\gmut \uar \{1,\dots,|\genome^\gmut|\}$ and determining its origin $\startInGenome^\gcore$ yields a uniformly picked $\startInGenome^\gcore \uar \{1,\dots,|\genome^\gcore|\}$, given that $\startInGenome^\gcore \neq |\genome^\gcore|+1$.
-\end{lemma}
-\begin{proof}
-	We prove this lemma by induction over the number of insertions ($n$) and deletions ($m$), always assuming that $\startInGenome^\gcore < |\genome^\gcore| + 1$
-	Then, as the statement is true for any fixed number of insertions and deletions, it is also true for arbitrary numbers.
-	We do not consider edits, as they are irrelevant for the selection of $\startInGenome^\gcore$ and $\startInGenome^\gmut$.
-
-	\para{Base Case}
-	The base case holds because for $n=0$ and $m=0$, picking $\startInGenome^\gmut$ is analogous to picking $\startInGenome^\gcore$.
-
-	\para{Induction Step (insertions)}
-	For the induction step where we add one insertion, recall that the mutations $M$ describe all operations when copying $\genome^\gcore$.
-
-	We observe that the distribution of $M$ for $n+1$ insertions and $m$ deletions equals the distribution resulting from adding an insertion to the distribution of $M'$ for $n$ insertions and $m$ deletions, where we sample the position of the new insertion uniformly over all possible positions in $M'$.
-	This is because due to symmetry, all locations for the new insertion are equally likely.
-
-	Given $M$, assuming that we do not select the newly inserted position, $\startInGenome^\gcore$ is distributed uniformly, according to the induction hypothesis.
-	Otherwise, as every position is equally likely to be selected for the insertion,$\startInGenome^\gcore$ is also uniformly distributed.
-	Here, it is important that $\startInGenome^\gcore \neq |\genome^\gcore|+1$, as adding a new insertion to the end increases the probability that $\startInGenome^\gcore$ lies at the end (\ie that $\startInGenome^\gcore = |\genome^\gcore|+1$).
-
-	\para{Induction Step (deletions)}
-	For the induction step where we add one deletion, the distribution of $M$ for $n$ insertions and $m+1$ deletions equals the distribution resulting from replacing one copy transition by a deletion transition in $M'$ ($M'$ again consists of $n$ insertions and $m$ deletions).
-	Since every copy transition has the same probability of being replaced by a deletion, the distribution of $\startInGenome^\gcore$ remains uniform.
-\end{proof}
+\section{Appendix} \label{sec:appendix}
+\input{appendix-astar}           %% HIGHER PRIORITY
+\newpage
+\input{appendix-heuristic}       %% HIGHER PRIORITY
+%\newpage
+\input{evals-parameters-analysis}
+%\newpage
+\input{appendix-commands}        %% LOWEST PRIORITY 
+\input{appendix-notation}        %% LOWER PRIORITY

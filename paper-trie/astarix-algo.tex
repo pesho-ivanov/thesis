@@ -1,0 +1,36 @@
+\begin{algorithm}[t]
+	\caption{\astarix including heuristic function.}\label{alg:astarix}
+	\begin{algorithmic}[1]
+		\State $\RG$: Reference graph \label{lin:reference}
+		\Comment Global variables
+		\State $d$: Upcoming sequence length \label{lin:d}
+		\Statex
+		\Function{AStarix}{$q\colon \text{Query}$} \label{lin:astarix}
+			\State $\AG \gets \Call{DefineAlignmentGraph}{\RG, q}$
+			\Comment Following \cref{sec:task}
+			\State $S \gets \{\langle v,i \rangle \in \AGV \mid i=0 \}$ \label{lin:starts}
+			\Comment Sources: no letter matched
+			\State $T \gets \{\langle v,i \rangle \in \AGV \mid i=|q| \}$
+			\Comment Targets: all letters matched
+			\State \Return $\Call{\A}{\AG, S, T, \textsc{Heuristic}}$
+			\Comment \A provided in \cref{app:astar} \label{lin:ret}
+		\EndFunction
+		\Statex
+		\Function{Heuristic}{$\langle u, i \rangle\colon \text{State}$} \label{lin:heuristic-start}
+		\Comment Heuristic: Cost of upcoming sequence
+			\State $d' \gets \min(d, |q|-i)$
+			\Comment Actual length of upcoming sequence
+			\State $s \gets q[i:i+d']$ \label{lin:s}
+			\Comment Upcoming sequence (next $d$ letters after current)
+			\State \Return $\Call{$h$}{u, s}$
+			\label{lin:align-upcoming}
+			\Comment Cost of aligning $s$ to $\EG$ starting from $u$
+		\EndFunction \label{lin:heuristic-end}
+		\Statex
+		\Function{$h$}{$u, s$}
+		\Comment Cost of aligning $s$ starting from $u$
+			\State \Return $\Call{RecursiveAlign}{u, s, 0.0, \infty}$
+			\Comment Simple branch-and-bound \label{lin:recursive-align}
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}

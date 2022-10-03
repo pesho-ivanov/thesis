@@ -1,0 +1,118 @@
+\section{\astarix Algorithm: Optimizations} \label{sec:optimizations}
+We now discuss several optimizations we developed to speed up \astarix while
+preserving its optimality. These optimizations reduce preprocessing and
+alignment runtime as well as memory footprint (in particular for memoization).
+
+\input{astarix-trie}
+
+\subsection{Greedy Match Optimization} \label{subsec:greedy}
+We also employ an optimization originally developed for computing the edit
+distance between two strings~\cite{sellers_algorithm_1974,allison_lazy_1992}, but
+which has also been used in the context of string to graph
+alignment~\cite{dox2018efficient}. We omit the correctness proof of this
+optimization, which is already covered
+in~\cite{sellers_algorithm_1974}, and only explain the intuition behind it.
+
+Suppose there is only one outgoing edge $e = (u, v, \ell) \in \RGE$ from a node
+$u \in \RGV$. Suppose also that while aligning a query $q$, we explore state
+$\st{u}{i}$ for which the next query letter $q[i]$ matches the label $\ell$. In
+this case, we do not need to consider the edit outgoing edges, because
+any edit at this point can be postponed without additional cost, as $\cmatch
+\leq \min(\csubst, \cins, \cdel)$. Thus, we can greedily explore state
+$\st{v}{i+1}$, aligning $q[i+1]$ to $e$ by using the edge $(\st{u}{i},
+\st{v}{i+1}, \ell, \cmatch)$ before continuing with the \A search.
+We note that this optimization is only applicable when aligning in non-branching
+regions of the reference graph. In particular, it is not applicable for most
+trie nodes (\cref{subsec:trie}).
+
+\subsection{Speeding Up Evaluation of Heuristic} \label{subsec:speedup-heuristic}
+In the following, we show how to reduce the runtime of evaluating the heuristic
+$h(u,s)$, by introducing two separate optimizations that compose naturally.
+
+\para{Capping Cost} We cap $h(u,s)$ at $\costcap$, replacing it by
+$h_{\costcap}(u,s):=\min(h(u,s),\costcap)$. To achieve this, we allow
+\textsc{RecursiveAlign} to ignore paths costing more than $\costcap$.
+%
+For large enough $\costcap$, this speeds up computation without significantly
+decreasing the benefit of the heuristic, since nodes associated with a high
+heuristic value are typically not explored anyways. We investigate the effect of
+$\costcap$ in \cref{subsec:parameter_estimation}.
+
+\begin{samepage}
+	\begin{theorem} \label{thm:hbar_optimistic}
+		$h_{\costcap}$ is optimistic.
+	\end{theorem}
+	\begin{proof}
+		We have $h_\costcap(u,s) \leq h(u,s)$ and that $h(u,s)$ is
+		optimistic (\cref{thm:optimistic}).
+	\end{proof}
+	\end{samepage}
+
+\para{Capping Depth}
+We reduce the number of nodes that need to be considered by $h(u,s)$. To this
+end, we define a modified heuristic $h_d(u,s)$ that only considers nodes $R_u
+\subseteq \EGV$ at distance at most $d$ from $u$ (cp. \cref{lin:d} in
+\cref{alg:astarix}):
+$
+R_u := \{ v \in \RGV \mid \exists \; \text{path } \pi \in \EG \text{ from } u \text{ to } v \text{ with } \lvert \pi \rvert \leq d \}
+$.
+
+If an alignment of $s$ reaches the boundary of $R_u$, defined as $$B(R_u) := \{v
+\in R_u \mid \exists (v,v',\ell) \in \EGE \text{ with } v' \notin R_u \},$$ it is
+allowed to only spell a prefix of $s$, and the remaining unaligned letters of
+$s$ are considered aligned with zero cost:
+\begin{gather*}
+h_d(u,s) := \min_{\pi \in \Pi} \cost{\pi}, \text{ where } \\
+\Pi := \left\{ \pi \in \RG \;\middle|\; \begin{array}{c}
+\mli{start}(\pi)=u, 
+\sigma(\pi)=s \lor \big(\mli{end}(\pi)\in B(R_u) \land \exists i. \sigma(\pi)=s[1..i] \big)
+\end{array}
+\right\}
+\end{gather*}
+
+\begin{samepage}
+\begin{theorem} \label{thm:hbar_optimistic}
+	$h_d$ is optimistic.
+\end{theorem}
+\begin{proof}
+It suffices to show $h_d(u,s) \leq h(u, s)$ since $h(u, s)$ is optimistic. In
+the case where all of $s$ is aligned, $h_d(u,s) = h(u, s)$. Otherwise, the
+unaligned letters of $s$ are not penalized, so $h_d(u,s) \leq h(u, s)$.
+\end{proof}
+\end{samepage}
+
+
+\subsection{Partitioning Nodes into Equivalence Classes} \label{subsec:partition}
+We have shown in \cref{para:memoization} how to reuse an already computed
+$h(u,s)$ for repeating $s$ across different queries and query positions. In the
+following, we additionally aim to reuse $h(u,s)$ across different nodes $u$, so
+that $h(u,s)$ does not need to be computed for all nodes $u$. Intuitively, we
+want to assign two nodes $u$ and $v$ to the same equivalence class when the
+\emph{graph region} considered by $h(u,s)$ is equivalent to the graph region
+considered by $h(v,s)$, up to renaming of nodes.
+
+Thus, $h(u,s)=h(v,s)$ if $u$ and $v$ are from the same equivalence class.
+Therefore, we can (arbitrarily) choose a representative node $r \in \RGV$ for
+every equivalence class, and evaluate $h(r,s)$ instead of $h(u,s)$, where $r$ is
+the representative of the equivalence class of $u$. To look up representative
+nodes in $\Oh(1)$, we define a helper array $\mli{repr}$ with $\mli{repr[u]} =
+r$.
+
+\para{Identifying Equivalence Classes}
+To identify the nodes belonging to the same equivalence class, we assume the
+optimization from \cref{subsec:speedup-heuristic}, i.e., that our heuristic only
+considers nodes up to a distance $d$ from~$u$.
+%
+Moreover, for performance reasons, our implementation detects only the
+equivalence classes of nodes $u$ with a single outgoing path of length at least
+$d$.
+%
+In this case, $u$ and $u'$ are in the same equivalence class if their outgoing
+paths spell the same sequence.
+%
+In contrast, we leave nodes with forking paths in separate equivalence classes.
+
+Note that for smaller $d$, the number of equivalence classes gets smaller, the
+reuse of the heuristic gets higher, and the memoization table has a lower memory
+footprint. At the same time, however, the heuristic $h_d(u,s)$ is less
+informative.

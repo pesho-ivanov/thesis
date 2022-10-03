@@ -1,80 +1,50 @@
-
-
-% Generate PDF version 1.7 (needed for proper integration of .eps)
-\pdfminorversion=7
-
-\documentclass{bioinfo}
-\copyrightyear{2018} \pubyear{2018}
-
-\access{Advance Access Publication Date: Day Month Year}
-\appnotes{Manuscript Category}
+% This is samplepaper.tex, a sample chapter demonstrating the
+% LLNCS macro package for Springer Computer Science proceedings;
+% Version 2.20 of 2017/10/04
 
 \input{header}
 
+%\input{appendix-references}                 % simulates appendix-references-aux.aux from embedded into .tex
+%\externaldocument{appendix-references-aux}  % loads appendix-references-aux.aux which is pregenerated for references
+
 \begin{document}
-\firstpage{1}
 
-\subtitle{Applications note}%\IncMargin{1em}
+\title{\astarix: Fast and Optimal \\Sequence-to-Graph Alignment}
 
-\title[\tool]{Stochastic Variant Graph: Optimal read mapping using A*}
-\author[Sample \textit{et~al}.]{
-	Rubber Duck\,$^{\text{\sfb 1,}*}$,
-%	Pesho Ivanov\,$^{\text{\sfb 1,}*}$,
-%	Benjamin Bichsel\,$^{\text{\sfb 1,}*}$,
-%	and Martin Vechev\,$^{\text{\sfb 1}}$
+\author{
+    Pesho Ivanov \and %\orcidID{0000-0002-8119-3849} \and 
+    Benjamin Bichsel \and %\orcidID{0000-0003-3283-7908} \and
+    Harun Mustafa \and \\ %\orcidID{0000-0002-2125-6086} \and
+    Andr\'e Kahles \and %\orcidID{0000-0002-3411-0692} \and
+    Gunnar R{\"a}tsch \and %\orcidID{0000-0001-5486-8532} \and 
+    Martin Vechev %\orcidID{0000-0002-0054-9568}
 }
-\address{$^{\text{\sf 1}}$Zoo Pond, Switzerland}
-%\address{$^{\text{\sf 1}}$Software Reliability Lab, ETH, Zurich 8092, Switzerland\\ % Department, Institution, City, Post Code, Country and \\
-%  $^{\text{\sf 2}}$Department of Dermatology, University Hospital Zurich 8091 Zurich, Switzerland\\
-%  $^{\text{\sf 3}}$Dermatology Clinic, Kepler University Hospital, Linz 4020, Switzerland.}
 
-\corresp{$^\ast$To whom correspondence should be addressed.}
-\history{Received on XXXXX; revised on XXXXX; accepted on XXXXX}
-\editor{Associate Editor: XXXXXXX}
+\authorrunning{P. Ivanov et al.}
 
+\institute{
+Department of Computer Science,\\
+ETH Zurich, Switzerland \\
+%Universit\"{a}tstr. 6, 8092 Z\"{u}rich, Switzerland \\
+\email{\{firstname.lastname\}@inf.ethz.ch}\\
+}
 
-\abstract{\input{abstract}}
+\maketitle              
 
-\maketitle
-
+\input{abstract}
 \input{intro}
-\input{existing_approaches}
-\input{problem_statement}
-\input{graph_model}
-\input{linear_models}
-\input{graph_model_old}
-\input{inference}
-\input{results}
-\input{discussion}
+\input{task}
+\input{astarix}
+\input{evals}
+\input{conclusion}
 
-% THIS MESSAGE MARKS THE END OF THE BODY (used to check if we are over the page limit)
-\message{^^JLASTBODYPAGE \thepage^^J}
-
-
-%\bibliographystyle{natbib}
-%\bibliographystyle{achemnat}
-%\bibliographystyle{plainnat}
-\bibliographystyle{abbrv}
-%\bibliographystyle{bioinformatics}
-%\bibliographystyle{plain}
-
+\bibliographystyle{splncs04}
 \bibliography{biblio}
 
-% THIS MESSAGE MARKS THE END OF THE REFERENCES (used to split the paper from the supplement)
-\message{^^JLASTREFERENCESPAGE \thepage^^J}
+%%% -- 16pgs to here --  %%
 
-\newpage
-\input{definitions}
-
-\newpage
-\input{supplementary}
-
-\clearpage
-\appendix
-
-\input{appendix}
-
-% THIS MESSAGE MARKS THE END OF THE DOCUMENT
-\message{^^JLASTPAGE \thepage^^J}
+% DO NOT UNCOMMENT THE APPENDIX
+% appendix.aux is already pregenerated which is needed for referencing it
+\include{appendix}
 
 \end{document}

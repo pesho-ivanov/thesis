@@ -1,0 +1,37 @@
+\subsection{Comparison of Optimal Aligners}
+
+\para{Different Reference Graphs}
+\cref{tab:results} shows the performance of optimal aligners across various
+references. On all references, \astarix is consistently faster than \dijkstra,
+which is consistently faster than \pasgal and \bitparallel. The memory usage of
+\dijkstra is within a factor of 3 compared to \pasgal and \bitparallel. Due to
+the heuristic memoization, the memory usage of \astarix can grow several times
+compared to \dijkstra.
+
+\input{evals-comparison-table}
+
+\para{Scaling with Reference Graph Size}
+\cref{fig:scaling_with_graphsize} compares the performance of existing optimal
+aligners. \bitparallel and \pasgal always explore all states, thus their
+average-case reaches the worst-case complexity of $\Oh(\lvert \AG \rvert) =
+\Oh(m \concat \RG)$. Due to the trie indexing, the runtime of \astarix and
+\dijkstra scales in the reference size with a polynomial of power around $0.2$
+versus the expected linear dependency of \bitparallel and \pasgal.
+
+The heuristic function of \astarix demonstrates a 2-fold speed-up over
+\dijkstra. This is possible due to the highly branching trie structure, which
+allows skipping the explicit exploration for the majority of starting nodes. 
+
+\begin{figure}[t]
+  \begin{subfigure}{.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figs/cmp/performance_vs_genomesize-head_Mbpxs.pdf}
+  \end{subfigure}
+  \begin{subfigure}{.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figs/cmp/memory_vs_genomesize-headxmax_rss.pdf}
+  \end{subfigure}
+  \caption{Comparison of overall runtime and memory usage of optimal aligners
+     with increasing prefixes of E. coli as references.}
+  \label{fig:scaling_with_graphsize}
+\end{figure}

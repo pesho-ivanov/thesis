@@ -1,0 +1,50 @@
+\subsection{Setting}
+All evaluations were executed singled-threaded on an Intel Core i7-6700 CPU running
+at 3.40GHz.
+
+\para{Reference Graphs and Reads}
+We designed three experiments utilizing three different reference graphs (in
+\cref{tab:results}). The first is a linear graph without variation based on the
+\textit{E.~coli} reference genome (strain: K-12 substr. MG1655,
+ASM584v2~\cite{howe2019ensembl}). The other two are variation graphs taken from
+the \pasgal evaluations~\cite{jain_accelerating_2019}: they are based on the
+Leukocyte Receptor Complex (LRC, with \numprint{1099856} nodes and
+\numprint{1144498} edges), and the Major Histocompatibility Complex (MHC1, with
+\numprint{5138362} nodes and \numprint{5318019} edges).
+%
+We note that we do not evaluate on de Brujin graphs, since \pasgal does not
+support cyclic graphs.
+
+%\para{Reads}
+For the \textit{E.~coli} dataset we used the ART tool~\cite{huang_art_2012} to simulate an
+Illumina single-end read set with \numprint{10000} reads of length 100. For the LCR and
+MHC1 datasets, we sampled \numprint{20000} single-end reads of length 100 from the already
+generated sets in~\cite{jain_accelerating_2019} using the
+Mason2~\cite{holtgrewe_mason_2010} simulator.
+
+For \dijkstra and \astarix, the runtime complexity depends not only on the data
+size, but also on the data content, including edit costs. More accurate
+heuristics lead to better \A performance~\cite{pearl_discovery_1983}, which is
+why we evaluate \astarix with costs corresponding more closely to Illumina error
+profiles: $\Delta=(0,1,5,5)$.
+
+\para{Metrics}
+As all aligners evaluated in this work are provably optimal, we are mostly
+interested in their performance.
+%
+To study the end-to-end performance of the optimal aligners, we use the
+Snakemake~\cite{koster_snakemakescalable_2012} pipeline framework to measure the
+execution time of every aligner (including the time spent on reading and
+indexing the reference graph input and outputting the resulting alignments). We
+note that the alignment phase dominates for all tools and experiments.
+
+To judge the potential of heuristic functions, we measure not only the runtime
+but also the number of states explored by \astarix and \dijkstra. This number
+reflects the quality of the heuristic function rather than the speed of
+computation of the heuristic, the implementation and the system parameters.
+%"Fig. 3" (it also discusses explored states)}.
+%The number of explored states is a more direct indicator for the algorithm's performance
+%than the number of expanded states since the algorithm has to generate and consider
+%all the neighbors of the states it expands.
+%\todo{Harun: this argument only really works
+%if computation of the heuristic is not a bottleneck. maybe make that more clear?}

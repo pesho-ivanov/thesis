@@ -1,0 +1,10 @@
+\section{\astarix: Finding Optimal Alignments Using \A} \label{sec:astarix-algo}
+In this section, we first introduce the general \A algorithm for finding
+shortest paths, and the notion of an optimistic heuristic, a sufficient
+condition for instantiations of \A to be correct (i.e., to indeed find shortest
+paths). Then we instantiate \A with our domain-specific heuristic that accounts
+for upcoming subsequences to be aligned, and prove that this heuristic is
+optimistic.
+
+\input{astarix-heuristic}
+\input{astarix-optimizations}

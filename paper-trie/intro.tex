@@ -1,123 +1,155 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Overview:
-% -- graph-based mapping
-% -- ad-hod problem statement vs well-defined
-% -- quantification information used in graphs: HMMs for Immunology and (Brownie)
-% -- optimal algorithms
+% Sequencing and variant calling
+The analysis and understanding of genetic variation encoded in the genome of an
+organism lies at the center of computational biology and medicine. Variation is
+usually identified through matching sequences obtained from DNA/RNA-sequencing
+back to a reference (genome) sequence in the process of \emph{variant calling},
+making the alignment task a core problem in sequence bioinformatics.
 
-\todo{make sure to incorporate} \href{https://docs.google.com/spreadsheets/d/1_3dW1zqKXWOqUNWUOfftjB-yKd_oGRbRwgVZOk_aYj8/edit#gid=0}{Comparison of sequence to graph alignment algorithms}
+% The benefit from genome graphs
+Historically, a single linear reference sequence has been used to represent the
+most common variants in a population. While providing a working abstraction for
+most cases, rare or sub-population specific variation is especially hard to
+model in this setting, creating a reference allele
+bias~\cite{stevenson_sources_2013,brandt_mapping_2015}. Consequently, in the
+last few years, the field has shifted first towards using sets of reference
+sequences, and more recently to graph data structures (so-called {\em genome
+graphs}), to represent many genomes or haplotypes
+simultaneously~\cite{dilthey_improved_2015,paten_genome_2017,garrison_variation_2018}.
 
-Overviews: A History of DNA Sequence Assembly\cite{myers2016history}, \cite{computational2016pengenomics}.
+% Heuristics for alignment
+Both for sequence-to-sequence alignment and sequence-to-graph alignment,
+heuristics are employed to keep alignment
+tractable~\cite{altschul_basic_1990,langmead_fast_2012,garrison_variation_2018},
+especially for large populations of human-sized genomes.
+%
+% Importance of optimal alignment
+While such heuristics find the correct alignment for simple references, they
+often perform poorly in regions of very high complexity, such as in the human
+major histocompatibility complex (MHC)~\cite{dilthey_improved_2015}, in complex
+but rare genotypes arising from somatic-subclones in tumor sequencing
+data~\cite{harismendy_detection_2011}, or in the presence of frequent sequencing
+errors~\cite{salmela_lordec_2014}.
+%
+Importantly, these cases can be of specific clinical or biological interest, and
+incorrect alignment can cause severe biases for downstream analyses. For
+instance, the combination of high variability of MHC sequences in humans and
+small differences between alleles~\cite{buhler_hla_2011} leads to a risk of
+misclassifications due to suboptimal alignment. Guaranteeing optimal alignment
+against all variations represented in a graph is a major step towards
+alleviating those biases.
 
-%% Algorithmic reliability is an important aspect in many scientific and engineering fields. Despite the advancements in computational genetics, the focus has mostly been on performance while sacrificing the guarantees. For the read to graph mapping problem, we resolve this trade-off by superseding the existing suboptimal approaches. Here we formally define the problem of read to graph mapping and present a provably-optimal practical solution. We developed Probabilistic Variant Graph (PVG) – a generative stochastic model designed for read mapping to general reference graphs. It completely encompasses all of the various available data sources in their probabilistic interpretation: 1) read quality scores, 2) edit distance alignment metric, and 3) variant likelihood statistics. This model captures an unprecedented level of generality while guaranteeing the global seed-and-extend mapping optimality. Our novel heuristic precomputation allows an A* shortest path algorithm to reach a near input size empirical complexity. We demonstrate that aligning using our model improves the mapping accuracy of current state of the art tools while matching the performance on both synthetic and real data. The PVG tool is available on https://github.com/eth-sri/pvg.
-
-
-Finding the origin of newly sequenced genomic sequences is a routine task of bioinformatics, consisting of mapping genomic sequences (e.g. reads directly produced by a sequencing machine) onto linear reference genomes that have been precomputed and humanly curated.
-However, working with a single reference genome cannot be representative for the whole diversity of an organism and introduces a bias.
-Instead, mapping on a collection of genomes has been proposed as an extension in order to account for the whole distribution.
-This can be especially useful when dealing with microbial genomes (>100k or even 1M different reference).
-Good candidates for representing such genomic variety are the genome graphs which are already heavily used in bioinformatics for tasks like de-novo assembling.
-Here we will focus on de Bruijn Graphs (DBGs).
-Various queries need to be translated from linear to graph models (e.g., read mapping and variant calling).
-
-The common query of mapping a genomic sequence is translated as finding such a path (or sometimes several candidate paths) in the DBG that spells a string which best aligns with the query sequence.
-There are different ways to define the quality of alignment but the commonly used are exact match (which can efficiently implemented by hashing),
-  number of substitutions (Hamming distance), and edit distance (which accounts of the biologically relevant insertions and deletions).
-In practise, the more general edit distance is rarely applied to the huge number of short reads because of computational burden.
-Nevertheless, an exact algorithms with optimal worst case time complexity $O(V + mE)$ ($m$ -- query sequence length) has been recently developed for general directed graph (cycles allowed).\cite{rautiainen2017aligning}
-Such a complexity is still too slow for full-length genome graphs but is not prohibitive for smaller graphs like Ig graphs
-  (similar to the ones constructed in \cite{bonissone2015immunoglobulin} with similar complexity algorithms).
-
-The tool \emph{vg}\cite{VGtool,paten2017genome,garrison2018variation} has been developed as a practical general graph reference (both DNA and RNA).
-It heavily uses hashing for kmer mapping which is further extended.
-It ``dagifies'' a graph (unrolls and unfolds any cycles) to create a directed acyclic graph (DAGs) that are amenable to partial-order alignment.\cite{paten2017genome}
-  (This can be problematic for long reads mapped on complex cyclic graphs) The authors note that:
-
-``The current version of vg uses heuristics in place of a true probability model for its mapped reads.
-We expect that true generalizations of traditional models will be a significant advancement for the field, particularly for segregating structural variants.''
-
-``The leading linear reference-based variant calling tools in use today are all based on probabilistic models of sequencing data (Nielsen et al. 2011). This approach has several advantages. Modern sequencing technologies all attempt to quantify the uncertainty in their base calls. Probability models provide a natural framework to incorporate this uncertainty into genotype calls, and they allow algorithms to estimate uncertainty about genotype calls for downstream analyses''
-
-
-Another line of molecular genomics research involves probabilistic models to capture different kinds of uncertainty (both biological and technical) in order to reason more precisely. An example of such a query is variant calling. genotype $G (AA, AT, ...)$ with maximum the posterior probability $P(G | X)$ given the data $X$. This is done by using Bayes' formula and a direct computation of $P(X | G)$. The ratio between the most probable and the second most probable genome is used as an estimate for the inference uncertainty.\cite{nielsen2011genotype} \fxnote{include the variant calling query?}
-
-Particularly interesting use cases for a probabilistic framework are some complex genome regions that are highly variable (e.g. Ig, TCR, BCR, HLA, MHC genes).
-
-We argue that our precise inference approaches scales for many domain-specific cases. The computational complexity for read mapping is close to linear of the read length thanks to the A$^\star$/ALT optimization strategy \cite{goldberg2005computing}.
-
-In this work, we aim at extending the applicability of DBG and various genomic operations to a more general probabilistic (uncertainty) model that also captures edit operations. This task has been underlined to be of significant practical importance\cite{paten2017genome}.
-
-An alternative to MAP optimization is centroid estimation\cite{carvalho2008centroid} which may be more appropriate in cases when the MAP is not near one. It has been applied to alignment\cite{hamada2011probabilistic}.
-
-Unlike other graph-based reference approaches, \tool smooths the concept of read mapping from mapped vs not mapped to mapping with a probabilistic score.
-In other words, it will always map a read with the difference in the mapping quality.
-Or in terms of generation, even the simplest \tool can generate all possible (infinitely many) sequences.
+% Our scope
+Formally, we consider the optimal \textit{sequence-to-graph alignment} problem, the task of finding an optimal base-to-base correspondence between a query sequence and a (possibly cyclic) walk in the graph.
+Related alignment problems have already been formulated as graph shortest path
+problems~\cite{antipov_hybridspades_2016,jain_complexity_2019}.
 
 
-\section{Contibutions}
-As mentioned in different 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Related Work}
+% seed-and-extend approach to semi-global alignment
+\para{Seed-and-Extend}
+Since optimal alignment is often intractable, many aligners use heuristics, most
+commonly the \emph{seed-and-extend}
+paradigm~\cite{altschul_basic_1990,langmead_fast_2012,li_fast_2009}. In this
+approach, alignment initiation sites (\emph{seeds}) are determined, which are
+then \emph{extended} to form the \emph{alignments} of the query sequence. The
+fundamental issue with this approach, however, is that the seeding and extension
+phases are mostly decoupled during alignment. Thus, an algorithm with a provably
+optimal extension phase may not result in optimal alignments due to the
+selection of a suboptimal seed in the first phase. In cases of high sequence
+variability, the seeding phase may even fail to find an appropriate seed from
+which to extend.
 
+
+% Accounting for variation
+\para{Accounting for Variation}
+First attempts to include variation into the reference data structure were made
+by augmenting the local alignment method to consider alternative walks during the
+extend step~\cite{schneeberger_simultaneous_2009,palmapper}. This approach has
+since been extended from the linear reference case to graph references. To
+represent non-reference variation of multiple references during the seeding
+stage, HISAT2 uses generalized compressed suffix
+arrays~\cite{siren_indexing_2014} to index walks in an augmented reference
+sequence, forming a local genome graph~\cite{kim_graphbased_2019}.
+VG~\cite{garrison_variation_2018} uses a similar
+technique~\cite{siren_indexing_2017} to index variation graphs representing a
+population of references.
+
+% Brownie aligner
+BrownieAligner, another recent work developed for local alignment of sequences
+to {\it de Bruijn} graph representations of genomic variation, features an
+optimal extension phase using a branch-and-bound-based early cutoff, while
+employing a heuristic maximal-exact-match approach for
+seeding~\cite{heydari_browniealigner_2018}.
+
+% Optimal DP-based approaches
+\para{Optimal Alignment}
+Current optimal alignment algorithms reach the impractical $\Oh(nm)$ runtime
+that has been shown to be a lower bound for the worst-case edit distance
+computation~\cite{backurs2015edit}. In this light, approaches for improving the
+efficiency of optimal alignment have taken advantage of specialized features of
+modern CPUs to improve the practical runtime of the Smith-Waterman dynamic
+programming (DP) algorithm~\cite{smith_comparison_1981} considering all possible
+starting nodes. These use modern SIMD instructions (e.g.
+\vg~\cite{garrison_variation_2018} and \pasgal~\cite{jain_accelerating_2019}) or
+reformulations of edit distance computation to allow for bit-parallel
+computations in \graphaligner \footnote{We refer as \bitparallel to to the
+bit-parallel DP algorithm implemented in \graphaligner tool
+\cite{rautiainen_bitparallel_2019}.}~\cite{rautiainen_bitparallel_2019}. Many of
+these, however, are designed only for specific types of genome graphs, such as
+{\it de Bruijn}
+graphs~\cite{liu_debga_2016,heydari_browniealigner_2018,limasset2019toward} and
+variation graphs~\cite{garrison_variation_2018}. A compromise often made when
+aligning sequences to cyclic graphs using algorithms reliant on directed acyclic
+graphs involves the computationally expensive ``DAG-ification'' of graph
+regions~\cite{kavya_sequence_2019,garrison_variation_2018}.
+
+\para{\A algorithm}
+We aim to guarantee optimal alignment while optimizing the average runtime
+to not reach its worst-case complexity. While \dijkstra is an algorithm that
+explores graph nodes in the order of their distance from the start, \A is a
+generalization of \dijkstra that also accounts for their distance from the
+target. \A prioritizes the exploration of nodes that seem to be closer to the
+target nodes. This way, \A can sometimes dramatically improve on the performance
+of \dijkstra while remaining optimal.
+
+There has been one attempt to apply \A for optimal
+alignment~\cite{dox2018efficient} which uses a heuristic function that accounts
+only for the length of the remaining query sequence to be aligned. However, it
+does not significantly outperform \dijkstra (in fact, it is equivalent for
+a zero matching cost).
+%
+In contrast, the heuristic function we introduce is more informative and
+consistently outperforms \dijkstra.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Main Contributions}
+We introduce a novel approach, called \astarix, for optimal sequence-to-graph alignment based on \A. As with any \A instantiation, the core difficulty lies in developing an accurate domain-specific heuristic which is fast to compute.
+We design a heuristic that accounts for the content of the upcoming query letters to be aligned, which more effectively guides the search.
+Our proposed heuristic has two advantages: (i)~it is correctness-preserving, that is, it preserves the fact that \astarix finds the best alignment, yet (ii)~it is practically effective in that the algorithm performs a near-optimal number of steps. Overall, this heuristic enables \astarix to compute the best alignment while also scaling to larger reference graph sizes when compared to existing state-of-the-art optimal aligners.
+
+\begin{samepage}
+Our main contributions\footnote{The appendix with algorithms and evalution
+details is included in the full version of this paper:
+\url{https://www.biorxiv.org/content/10.1101/2020.01.22.915496v1}} include:
+	
 \begin{enumerate}
-	\item problem definitions and approaches: prob.matching (seq to read) $\to$ optimal mapping on a PNFA (DP, Dijkstra, A$^\star$) $\to$ construction (from reference seqs or reads) $\to$ DBG conversion to PNFA $\to$ queries
-	\item unifying three sources of uncertainty
-	\item subsumes ED minimization (by using zero phred scores, zero supersource jumps scores, zero transition scores)
-	\item subsumes MEM maximization (by using zero phred scores, zero supersource jumps and zero supersink jumps, zero edit scores, negative constant transition scores)
-	\item jointly solving mapping and aligning tasks
-	\item implementaion (dp, dijkstra)-testing-comparisons-applications-two metrics (avg and total probability). compare Dijkstra and A$^\star$ in two regimes (+edit edges; +phread) to VG tool and Minimap2 (instead of BWA-MEM) on ecoli, VDJ data and synthetic data (get Pevzner’s VDJ graph or the HMM) for mapping and alignment accuracy and for performance
-	\item stability checking: varying parameters, abstract interpretation; how much change of edit probs is needed for a different best alignment
-	\item Get the Ig Graph from Pevzner's paper \cite{bonissone2015immunoglobulin} synthetize graphs and queries with substitution, insertion and deletion errors.	Learn the probabilities on the edges (+probabilities on indel and substitution edges) using big data over TCR/BCR. Run TraCeR to obtain sequence candidates (before TCR type annotation per nucl.) Feed the candidates to the T5 algo (implementation) to annotate them (use GAM format from VG tool; and also CIGAR) Validate the T5 annotations using IgBLAST annotations (=TraCeR annotation). Map kmers directly from the input to the graph. Compare with \cite{ralph2016consistency}. 	Compare to vg, HMM, linear state of the art. \\
+	\item \textbf{\astarix.} An algorithm for optimal sequence-to-graph
+	alignment based on a novel instantiation of \A with an accurate
+	domain-specific heuristic that accounts for the upcoming query letters to be
+	aligned (\cref{sec:astarix-algo}).
+	\item \textbf{Algorithmic optimizations.}
+	To ensure that \astarix is practical, we introduce a number of algorithmic
+	optimizations which increase performance and decrease memory footprint
+	(\cref{sec:optimizations}). We also prove that all optimizations are
+	correctness-preserving.
+	\item \textbf{Thorough experimental evaluation of \astarix.}
+	We demonstrate that \astarix is up to 2 orders of magnitude faster than
+	other optimal aligners on various reference graphs (\cref{sec:eval}).
 \end{enumerate}
-
-\subsection{Queries}
-
-Several successive tasks are typical for vg:
-\begin{enumerate}
-	\item Convert a reference genome or a set of sequences to a DBG (construct or msga commands in vg) -- learning an automata
-	\item Mapping reads (map) on the DBG using kmers hashing or maximal exact matches (MEMs)
-	\item Calling variants (call and genotype) -- predicting the likelihood of variation at each locus after alignment, SNP, short indels	
-	\item Drawing a string from the pDBG (most probable, random or median–minimizing the expected dist to the pDBG)
-\end{enumerate}
-
-In the context of pDBGs, the upper tasks will translate to:
-\begin{enumerate}
-	\item Construct a pDBG that captures technical noise, population variation, etc. (e.g. $p(u,v) = -log(\#reads(u,v))$)
-	\item Map reads MEMs with a threshold 
-\end{enumerate}
-
-%Comparison to the vg queries (targets in \textbf{bold}, probabilistic extensions underlined):
-%\begin{itemize}
-%	\item \textbf{construct}: graph construction -- probabilities given or assumed 1
-%	\item view: conversion (dot/protobuf/json/GFA)
-%	\item index: index features of the graph in a disk-backed key/value store
-%	\item find: use an index to find nodes, edges, kmers, or positions
-%	\item \textbf{paths}: traverse paths in the graph -- trivial
-%	\item \textbf{align}: local alignment -- can it be faster than map?
-%	\item \textbf{map}: global alignment (kmer-driven) -- DP or Dijkstra
-%	\item stats: metrics describing graph properties
-%	\item join: combine graphs (parallel)
-%	\item concat: combine graphs (serial)
-%	\item ids: id manipulation
-%	\item kmers: generate kmers from a graph
-%	\item \textbf{sim}: simulate reads by walking paths in the graph -- trivial
-%	\item mod: various transformations of the graph
-%	\item surject: force graph alignments into a linear reference space
-%	\item \textbf{msga}: construct a graph from multiple sequences -- \fxnote{tricky probabilities}
-%	\item validate: determine if graph is valid
-%	\item filter: filter reads out of an alignment
-%	\item augment: adds variation from aligned reads into the graph
-%	\item \textbf{call/genotype}: call variants from an augmented graph -- \fxnote{how?}
-%	\item support counts instead of probabilities (or other distributions)
-%\end{itemize}
-
-
-
-
-\subsection{Uncertainty sources}
-We account for three sources of uncertainty that we want to account for (we shortly call them \emph{variants}, \emph{edits} and \emph{phreds}).
-\begin{enumerate}
-	\item \textbf{variants}: distinguishing variation represented in the graph (different references): e.g. populational variation like SNPs and highly variable genomic regions (e.g. TCRs)
-	\item \textbf{edits}: variation outside the graph, produced the new genomic sequence (subst, del, ins, transpositions?), able to capture somatic variation that is not represented in the reference graph
-	\item \textbf{phreds}: technical errors while sequencing (substitution errors in the query, aka base calling), especially important when the sequencing depth is small and the error rates are high (e.g. current long read technologies with >10% error rates)
-\end{enumerate}
-
+\end{samepage}
