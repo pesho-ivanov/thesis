@@ -3,7 +3,7 @@ We now discuss several optimizations we developed to speed up \astarix while
 preserving its optimality. These optimizations reduce preprocessing and
 alignment runtime as well as memory footprint (in particular for memoization).
 
-\input{astarix-trie}
+\input{\dir/astarix-trie}
 
 \subsection{Greedy Match Optimization} \label{subsec:greedy}
 We also employ an optimization originally developed for computing the edit
@@ -39,9 +39,9 @@ heuristic value are typically not explored anyways. We investigate the effect of
 $\costcap$ in \cref{subsec:parameter_estimation}.
 
 \begin{samepage}
-	\begin{theorem} \label{thm:hbar_optimistic}
+	\begin{thm} \label{thm:hbar_optimistic}
 		$h_{\costcap}$ is optimistic.
-	\end{theorem}
+	\end{thm}
 	\begin{proof}
 		We have $h_\costcap(u,s) \leq h(u,s)$ and that $h(u,s)$ is
 		optimistic (\cref{thm:optimistic}).
@@ -71,9 +71,9 @@ h_d(u,s) := \min_{\pi \in \Pi} \cost{\pi}, \text{ where } \\
 \end{gather*}
 
 \begin{samepage}
-\begin{theorem} \label{thm:hbar_optimistic}
+\begin{thm} \label{thm:hbar_optimistic}
 	$h_d$ is optimistic.
-\end{theorem}
+\end{thm}
 \begin{proof}
 It suffices to show $h_d(u,s) \leq h(u, s)$ since $h(u, s)$ is optimistic. In
 the case where all of $s$ is aligned, $h_d(u,s) = h(u, s)$. Otherwise, the

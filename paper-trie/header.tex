@@ -1,5 +1,5 @@
-\RequirePackage{amsmath}
-\documentclass[runningheads]{llncs}
+%\RequirePackage{amsmath}
+%\documentclass[runningheads]{llncs}
 
 %\usepackage{geometry}
 %\geometry{
@@ -14,7 +14,7 @@
 
 %\setlength{\textwidth}{15.2cm}
 
-\raggedbottom
+%\raggedbottom
 %\setlength{\textfloatsep}{5pt}
 %\setlength{\abovecaptionskip}{5pt plus 3pt minus 2pt} % Chosen fairly arbitrarily
 \usepackage{graphicx}     % Used for displaying a sample figure. If possible,figure files should be included in EPS format.
@@ -44,7 +44,6 @@
 {\oldProof}
 {\qed \oldEndProof}
 
-
 \usepackage{subcaption}  % for subfigures 
 \captionsetup{compatibility=false}  % a workaround for "The `subcaption' package does not work correctly in compatibility mode."
 
@@ -69,20 +68,20 @@
 \usepackage[]{todonotes}  % [disable]
 
 \usepackage{standalone}
-\usepackage[hidelinks]{hyperref}
+%\usepackage[hidelinks]{hyperref}
 
-\input{header-references}
+\input{paper-trie/header-references}
 
 % If you use the hyperref package, please uncomment the following line
 % to display URLs in blue roman font according to Springer's eBook style:
 \renewcommand\UrlFont{\color{blue}\rmfamily}
 
 %% custom names
-\newcommand{\astarix}[0]{\textsc{AStarix}\xspace}
+%\newcommand{\astarix}[0]{\textsc{AStarix}\xspace}
 \newcommand{\astarixurl}[0]{\url{https://github.com/eth-sri/astarix}\xspace}
 \newcommand{\astarixurlwithbranch}[0]{\url{https://github.com/eth-sri/astarix/tree/recomb2020}\xspace}
 
-\newcommand{\dijkstra}[0]{\textsc{Dijkstra}\xspace}
+%\newcommand{\dijkstra}[0]{\textsc{Dijkstra}\xspace}
 \newcommand{\graphaligner}[0]{\textsc{GraphAligner}\xspace}
 \newcommand{\bitparallel}[0]{\textsc{BitParallel}\xspace}
 %\newcommand{\cellwise}[0]{\textsc{Cellwise}\xspace}  % from GraphAligner's paper
@@ -92,7 +91,7 @@
 \newcommand{\valigntool}[0]{\textsc{V-ALIGN}\xspace}
 
 \newcommand{\BF}[0]{BF$^\star$\xspace}
-\newcommand{\A}[0]{A$^\star$\xspace}
+%\newcommand{\A}[0]{A$^\star$\xspace}
 \newcommand{\K}[0]{K$^\star$\xspace}
 \newcommand{\suf}[0]{\text{suff}}
 \newcommand{\impl}[0]{\textbf{(implemented)}}
@@ -119,10 +118,10 @@
 \newcommand{\AGE}[1][q]{\alignment[#1]{E}}
 
 % stats
-\newcommand{\st}[2]{\langle #1, #2 \rangle}
+%\newcommand{\st}[2]{\langle #1, #2 \rangle}
 
 % cost
-\newcommand{\cost}[1]{\text{cost}(#1)}
+%\newcommand{\cost}[1]{\text{cost}(#1)}
 
 % PARAMETERS
 % c
@@ -143,7 +142,7 @@
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \newcommand{\mli}[1]{\mathit{#1}}
-\newcommand{\Oh}[0]{\mathcal{O}}
+%\newcommand{\Oh}[0]{\mathcal{O}}
 \newcommand{\concat}[0]{{\cdot}}
 
 % efficiency icons

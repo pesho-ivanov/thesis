@@ -1,6 +1,5 @@
-\input{astarix-algo}
-
-\input{astarix-general-astar}
+\input{\dir/astarix-algo}
+\input{\dir/astarix-general-astar}
 
 \subsection{\astarix: Instantiating \A} \label{subsec:astarix-heuristic}
 \cref{alg:astarix} shows an unoptimized version of \astarix and its heuristic
@@ -29,9 +28,9 @@ aligning all remaining letters (i.e., $q[i:|q|]$) starting from node $u$ (note
 that $s$ is a prefix of $q[i:|q|]$).
 
 \begin{samepage}
-\begin{theorem} \label{thm:optimistic}
+\begin{thm} \label{thm:optimistic}
 	$h$ is optimistic.
-\end{theorem}
+\end{thm}
 \begin{proof}
 $h$ only considers the next $d'$ letters of $q$ instead of all
 remaining letters. Since all costs are non-negative, the theorem follows.

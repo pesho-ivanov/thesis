@@ -12,14 +12,13 @@
 \reserveinserts{10}
 
 \input{preamble/general}
-\input{header}
-%\input{paper-global/paper/header}
+\input{header} % from paper-global/paper/header
+\input{paper-trie/header}
 \usepackage[final]{pdfpages}
 
 % Bibliography
 \addbibresource[label=ownpubs]{ownpubs.bib}
 \addbibresource{bibliography.bib}
-%\addbibresource{misc.bib}
 \addbibresource{paper-global/paper/biblio.bib}
 \addbibresource{paper-trie/biblio.bib}
 
@@ -31,8 +30,6 @@
 \pagestyle{scrplain}
 
 \input{front}
-
-Maxwell\cite{Maxwell1865}
 
 %
 % Mainmatter
@@ -49,9 +46,9 @@ Maxwell\cite{Maxwell1865}
 \def\dir{paper-global}
 \include{\dir/main}
 
-%\cleardoublepage%
-%\def\dir{paper-trie/}
-%\include{\dir/main}
+\cleardoublepage%
+\def\dir{paper-trie/}
+\include{\dir/main}
 
 %\cleardoublepage%
 %\def\dir{paper-seed/}
