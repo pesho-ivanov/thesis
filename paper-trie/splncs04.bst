@@ -7,7 +7,7 @@
 %% file will not work for author-year style citations.
 %%
 %% Use \documentclass{llncs} and \bibliographystyle{splncs03}, and cite
-%% a reference with (e.g.) \cite{smith77} to get a "[1]" in the text.
+%% a reference with (\eg) \cite{smith77} to get a "[1]" in the text.
 %%
 %% This file comes to you courtesy of Maurizio "Titto" Patrignani of
 %% Dipartimento di Informatica e Automazione Universita' Roma Tre

@@ -16,39 +16,39 @@
 % appear in the sentence, writing Theorem 1 and Equation 3 (as opposed to
 % theorem 1 and equation 3)
 %
-% noabbrev:  avoid abbreviations (e.g. use Figure instead of Fig.). Note: To
+% noabbrev:  avoid abbreviations (\eg use Figure instead of Fig.). Note: To
 % avoid all abbreviations, you must also check all manually defined reference
 % names in this file.
 
 \usepackage[capitalize]{cleveref}
 
 % required for proper hyperrefs into algorithm lines
-% use "renewcommand" instead of "newcommand" if e.g. the document class already defines this
+% use "renewcommand" instead of "newcommand" if \eg the document class already defines this
 \makeatletter
 \newcommand\theHALG@line{\thealgorithm.\arabic{ALG@line}}
 \makeatother
 
 % OVERRIDE CREF FORMAT:
 %
-% Override the cref format, e.g., for sections to: §1.2
+% Override the cref format, \eg, for sections to: §1.2
 %
 % #1: formatted version of the label counter
 %
 % #2, #3: beginning and end of the part of the cross-reference that forms the
 % hyperlink
 %
-% Example: Override the cref format for equations to, e.g., Eq.~(1)
+% Example: Override the cref format for equations to, \eg, Eq.~(1)
 %
 % \crefformat{equation}{Eq.~(#2#1#3)}
 
 \crefformat{section}{\S#2#1#3}
 
-% referencing sections without labels (e.g., from citations)
+% referencing sections without labels (\eg, from citations)
 \newcommand{\secref}[1]{\S#1}
 
 % OVERRIDE CREF FORMAT FOR RANGES:
 %
-% override the cref format for ranges of sections, e.g.: §1.2 to §1.3
+% override the cref format for ranges of sections, \eg: §1.2 to §1.3
 %
 % #1, #2: formatted versions of the two label counters defining the reference
 % range
@@ -60,7 +60,7 @@
 
 % OVERRIDE CREF FORMAT FOR LISTS:
 %
-% override the cref format for multiple sections, e.g.,:
+% override the cref format for multiple sections, \eg,:
 %
 % Argument 1: the cross-reference type
 %
@@ -75,7 +75,7 @@
 
 % ADAPT CONJUNCTION
 %
-% Adapt the conjunction used in a reference range, to, e.g.: Figs. 1-2
+% Adapt the conjunction used in a reference range, to, \eg: Figs. 1-2
 \newcommand{\crefrangeconjunction}{--}
 
 % CUSTOMIZE/ADD REFERENCE NAME
@@ -102,7 +102,7 @@
 \crefname{line}{Lin.}{Lin.}
 \crefname{appendix}{App.}{App.}
 
-% references without labels (e.g., from citations)
+% references without labels (\eg, from citations)
 % \newcommand{\thmref}[1]{Thm.~#1}
 % \newcommand{\lemref}[1]{Lem.~#1}
 % \newcommand{\appref}[1]{App.~#1}
