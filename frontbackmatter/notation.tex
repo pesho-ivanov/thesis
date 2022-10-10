@@ -28,5 +28,130 @@ $c$ & speed of light in vacuum, $c=\u{299792458}{\metre\per\second}$ \\
     \sisetup{separate-uncertainty=true}
 \endgroup
 
-\input{paper-trie/appendix-notation}
-\input{paper-global/paper/app-notation}
+%\input{paper-trie/appendix-notation}
+%\input{paper-global/paper/app-notation}
+
+%\subsection{Notation} \label{sec:notation}
+
+%\cref{tab:notation} summarizes the notation used in this work.
+
+\newcommand*{\tabindent}{\hspace{3mm}}
+\begin{table}[h]
+  \centering
+  \caption{Notation used in this paper.} \label{tab:notation}
+  \begin{tabular}{ll}
+	\hline
+	\textbf{Object}	         & \textbf{Notation}\\
+	\hline
+	\textbf{Sequences}  & \\
+	\tabindent Alphabet            	& $\Sigma = \{A,C,G,T\}$ \\
+	\tabindent Sequences            &
+									  $A = \overline{a_0a_1 \dots a_i \dots a_{n-1}}\in \Sigma^*$\\
+							 & $B = \overline{b_0b_1 \dots b_j \dots b_{m-1}} \in \Sigma^*$ \\
+	\tabindent Subsequence          & $a_{i..i'} := a_ia_{i+1}\dots a_{i'-1}$\\
+	\tabindent Edit distance        & $ed(A,B)$\\
+	\hline
+	\textbf{Edit graph} & \\
+	\tabindent Graph& $G=(V,E)$\\
+	\tabindent Vertices (states) & $u,v \in V=\{\st ij\, |\, 0\leq i\leq n, 0\leq j
+								   \leq m\}$\\
+	\tabindent Edges& match/substitution $\st ij \to \st {i+1}{j+1}$\\
+							 & deletion $\st ij \to \st {i+1}{j}$\\
+							 & insertion $\st ij \to \st {i}{j+1}$\\
+	\tabindent Distance & $d(u, v)$\\
+	\tabindent Path, alignment & $\pi: \path uv$\\
+	\tabindent Shortest path & $\pi^*$\\
+	\tabindent Cost & $\cost(\pi)$\\
+	\tabindent Preceding & $u \preceq v$, $m_1\preceq m_2$ \\
+	\hline
+	\textbf{A*} & \\
+	\tabindent Start and target state& $v_s, v_t \in V$\\
+	\tabindent Distance from $v_s$ & $\g = d(v_s, \cdot)$\\
+	\tabindent Distance to $v_t$& $\h = d(\cdot, v_t)$\\
+	% \tabindent Distance $v_s$ to $v_t$ via $u$& $\f = \g + \h$\\
+	\tabindent Heuristic & $h$\\
+	\tabindent Best distance from start & $g$  \\
+	\tabindent Estimated distance & $f = g + h$\\
+	\tabindent Admissible heuristic & $h \leq \h$\\
+	\tabindent Consistent heuristic & $h(u) \leq d(u,v) + h(v)$\\
+	\hline
+	\multicolumn{2}{l}{\textbf{Seeds and matches}} \\
+	\tabindent Seed length and potential & $k$, $r$ \\
+	\tabindent Seeds & $s\in \seeds$, $s_l = A_{l \cdot k..(l+1)\cdot k}$ \\
+	\tabindent Seeds in suffix & $\seeds_{\geq i}$ \\
+	\tabindent Matches (per seed)& $m \in \matches$, $\matches_s$\\
+	\tabindent Cost of match & $0 \leq \cost(m) < r$\\
+	\tabindent Score of match & $0 < \matchscore(m) = r - \cost(m) \leq r$\\
+	\tabindent Score of seed & $\seedscore(s) = \max_{m\in \matches_s} \matchscore(m)$\\
+	\hline
+	\multicolumn{2}{l}{\textbf{\Sh and \csh}} \\
+	\tabindent Potential & $P\st ij  = r \cdot |\seeds_{\geq i}|$ \\
+	\tabindent State score (sh) &
+							 $\shscore \st ij = \sum_{s\in \seeds_{\geq i}} \seedscore(s)$ \\
+	\tabindent Chain score & $\chainscore(m) = \max_{m\preceq m_1 \preceq \dots} \sum_i \matchscore(m_i)$\\
+	\tabindent State score (csh) & $\cshscore(u) = \max_{u\preceq m} \chainscore(m)$\\
+	\tabindent \Sh & $\hshM(u) = P(u) - \shscore(u)$\\
+	\tabindent \Csh & $\hcshM(u) = P(u) - \cshscore(u)$\\
+	\tabindent Layer & $\layer_\ell = \{u\, | \, \cshscore(u) \geq \ell\}$
+  \end{tabular}
+\end{table}
+
+%\subsection{Notations} \label{sec:notation}
+%\cref{tab:notation} summarizes the notational conventions used in this work.
+
+\begin{table}[!h]
+	\centering
+	\caption{Notational conventions.}\label{tab:notation}
+	\begin{tabular}{ll}
+	\hline
+	\textbf{Object}	         & \textbf{Notation}\\
+	\hline
+	\textbf{Queries}  & $Q = \{ q_i \vert q_i \in \Sigma^m \}$ \\
+	\,\, Read            & $q \in Q$ \\
+	\,\, Length     & $m := \lvert q \rvert\in \mathbb{N}$\\
+	\,\, Position in read & $q[i] \in \Sigma$, $i \in \{0,\dots,m-1\}$\\	
+	\hline
+	\textbf{Reference graph}& $\RG=(\RGV,\RGE)$\\
+	\,\, Size& $\lvert \RG \rvert := \lvert \RGV \rvert + \lvert \RGE \rvert \in \mathbb{N}$\\
+	\,\, Nodes& $u, v \in \RGV$\\
+	\,\, Number of nodes& $N := \lvert \RGV \rvert \in \mathbb{N}$\\
+	\,\, Edges& $e \in \RGE := \RGV \times \RGV \times \Sigma$\\
+	\,\, Edge letter& $\ell \in \Sigma$\\
+	\textbf{Reference graph with a trie} & $\TG = (\TGV, \TGE)$ \\
+	\,\, Trie depth  & $D \in \mathbb{N}_{>0}$\\
+	\hline
+	\textbf{Alignment graph}& $\AG=(\AGV,\AGE)$\\
+	\,\, State& $\langle u,i \rangle \in \AGV := V \times \{0,\dots,m\}$\\
+	\,\, Edges& $(\langle u,i \rangle, \langle v,j \rangle,\ell,w) \in \AGE
+	\subseteq \AGV \times \AGV \times \Sigma_{\varepsilon} \times
+	\mathbb{R}_{\geq 0}$, $\Sigma_{\varepsilon} = \Sigma \cup \{\varepsilon\}$\\
+	\,\, Edge cost& $w \in \mathbb{R}_{\geq 0}$\\
+	\,\, Alignment& $\pi \in \EGE^*$ and $\sigma(\pi)=q$ \\
+	\,\, Alignment cost& $\cost{\pi} \in \mathbb{R}_{\geq 0}$\\
+	\hline
+	\textbf{Seed heuristic}& $h\st{u}{i}$\\
+	\,\, State& $\st{u}{i}$\\
+	\,\, Seed length& $k$\\
+	\,\, Maximum number of deletions& $\maxdel$\\
+	\,\, Maximum number of insertions& $\maxins$\\
+	\hline
+	\textbf{In all graphs}& $G = (V,E) \in \{ \RG, \EG, \AG \}$ \\
+	\,\, Walk& $\pi \in G: \pi \in E^*$\\
+	\,\, Walk spelling& $\sigma(\pi) \in \Sigma^*$\\
+%	\,\, Walk begin and end nodes& $\mli{begin}(\pi), \mli{end}(\pi) \in V$\\
+	\,\, Path& A walk without repeating nodes\\
+	\hline
+	\textbf{\A} & $A^\star(G,S,T,h)$\\
+	\,\, Graph& $G=(V,E)$\\
+	\,\, Nodes& $u,v \in V$\\
+	\,\, Edges& $e \in E \subseteq V \times V \times \Costs$\\ 
+	\,\, Source states& $S \subseteq V$\\
+	\,\, Target states& $T \subseteq V$\\
+	\,\, Heuristic function& $h \colon V \to \Costs$\\
+	\,\, Minimum cost to a target& $h^*(u)$\\
+	%\,\, Optimistic& $h(u) \leq \min_\pi \cost{\pi}, \pi \colon \pi \text{ starts from } u$\\
+	\,\, Explored state & A state pushed to the queue of \cref{alg:astar}\\
+	\,\, Expanded state & A state popped from the queue of \cref{alg:astar}\\
+	\hline
+\end{tabular}
+\end{table}
