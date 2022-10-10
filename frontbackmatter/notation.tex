@@ -1,0 +1,32 @@
+    % Notation
+    \refstepcounter{dummy}
+    \pdfbookmark[1]{Notation}{notation}
+    \markboth{\spacedlowsmallcaps{Notation}}{\spacedlowsmallcaps{Notation}}
+    \chapter*{Notation}
+
+    \section*{Frequently used symbols}%
+    \vskip -2em
+    \begin{tabularx}{\textwidth}{lX}
+      %\toprule%
+      %\tableheadline{Symbol} & \tableheadline{Meaning} \\
+      %\midrule%
+      $E$ & energy \\
+      $m$ & rest mass \\
+      $p$ & impulse \\
+      %\bottomrule
+    \end{tabularx}
+
+    \section*{Physical constants}
+    \sisetup{separate-uncertainty=false}
+    \vskip -2em
+    \begin{tabularx}{\textwidth}{lX}
+$c$ & speed of light in vacuum, $c=\u{299792458}{\metre\per\second}$ \\
+    \end{tabularx}
+    \begin{flushright}
+    (CODATA 2014~\cite{codata})
+    \end{flushright}
+    \sisetup{separate-uncertainty=true}
+\endgroup
+
+\input{paper-trie/appendix-notation}
+\input{paper-global/paper/app-notation}
