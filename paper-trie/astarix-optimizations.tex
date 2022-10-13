@@ -1,11 +1,11 @@
-\section{\astarix Algorithm: Optimizations} \label{sec:optimizations}
+\section{\astarix Algorithm: Optimizations} \label{TRIEsec:optimizations}
 We now discuss several optimizations we developed to speed up \astarix while
 preserving its optimality. These optimizations reduce preprocessing and
 alignment runtime as well as memory footprint (in particular for memoization).
 
 \input{\dir/astarix-trie}
 
-\subsection{Greedy Match Optimization} \label{subsec:greedy}
+\subsection{Greedy Match Optimization} \label{TRIEsubsec:greedy}
 We also employ an optimization originally developed for computing the edit
 distance between two strings~\cite{sellers_algorithm_1974,allison_lazy_1992}, but
 which has also been used in the context of string to graph
@@ -23,9 +23,9 @@ $\st{v}{i+1}$, aligning $q[i+1]$ to $e$ by using the edge $(\st{u}{i},
 \st{v}{i+1}, \ell, \cmatch)$ before continuing with the \A search.
 We note that this optimization is only applicable when aligning in non-branching
 regions of the reference graph. In particular, it is not applicable for most
-trie nodes (\cref{subsec:trie}).
+trie nodes (\cref{TRIEsubsec:trie}).
 
-\subsection{Speeding Up Evaluation of Heuristic} \label{subsec:speedup-heuristic}
+\subsection{Speeding Up Evaluation of Heuristic} \label{TRIEsubsec:speedup-heuristic}
 In the following, we show how to reduce the runtime of evaluating the heuristic
 $h(u,s)$, by introducing two separate optimizations that compose naturally.
 
@@ -36,23 +36,23 @@ $h_{\costcap}(u,s):=\min(h(u,s),\costcap)$. To achieve this, we allow
 For large enough $\costcap$, this speeds up computation without significantly
 decreasing the benefit of the heuristic, since nodes associated with a high
 heuristic value are typically not explored anyways. We investigate the effect of
-$\costcap$ in \cref{subsec:parameter_estimation}.
+$\costcap$ in \cref{TRIEsubsec:parameter_estimation}.
 
 \begin{samepage}
-	\begin{thm} \label{thm:hbar_optimistic}
+	\begin{thm} \label{TRIEthm:hbar_optimistic}
 		$h_{\costcap}$ is optimistic.
 	\end{thm}
 	\begin{proof}
 		We have $h_\costcap(u,s) \leq h(u,s)$ and that $h(u,s)$ is
-		optimistic (\cref{thm:optimistic}).
+		optimistic (\cref{TRIEthm:optimistic}).
 	\end{proof}
 	\end{samepage}
 
 \para{Capping Depth}
 We reduce the number of nodes that need to be considered by $h(u,s)$. To this
 end, we define a modified heuristic $h_d(u,s)$ that only considers nodes $R_u
-\subseteq \EGV$ at distance at most $d$ from $u$ (cp. \cref{lin:d} in
-\cref{alg:astarix}):
+\subseteq \EGV$ at distance at most $d$ from $u$ (cp. \cref{TRIElin:d} in
+\cref{TRIEalg:astarix}):
 $
 R_u := \{ v \in \RGV \mid \exists \; \text{path } \pi \in \EG \text{ from } u \text{ to } v \text{ with } \lvert \pi \rvert \leq d \}
 $.
@@ -71,7 +71,7 @@ h_d(u,s) := \min_{\pi \in \Pi} \cost{\pi}, \text{ where } \\
 \end{gather*}
 
 \begin{samepage}
-\begin{thm} \label{thm:hbar_optimistic}
+\begin{thm} \label{TRIEthm:hbar_optimistic}
 	$h_d$ is optimistic.
 \end{thm}
 \begin{proof}
@@ -82,8 +82,8 @@ unaligned letters of $s$ are not penalized, so $h_d(u,s) \leq h(u, s)$.
 \end{samepage}
 
 
-\subsection{Partitioning Nodes into Equivalence Classes} \label{subsec:partition}
-We have shown in \cref{para:memoization} how to reuse an already computed
+\subsection{Partitioning Nodes into Equivalence Classes} \label{TRIEsubsec:partition}
+We have shown in \cref{TRIEpara:memoization} how to reuse an already computed
 $h(u,s)$ for repeating $s$ across different queries and query positions. In the
 following, we additionally aim to reuse $h(u,s)$ across different nodes $u$, so
 that $h(u,s)$ does not need to be computed for all nodes $u$. Intuitively, we
@@ -100,7 +100,7 @@ r$.
 
 \para{Identifying Equivalence Classes}
 To identify the nodes belonging to the same equivalence class, we assume the
-optimization from \cref{subsec:speedup-heuristic}, \ie, that our heuristic only
+optimization from \cref{TRIEsubsec:speedup-heuristic}, \ie, that our heuristic only
 considers nodes up to a distance $d$ from~$u$.
 %
 Moreover, for performance reasons, our implementation detects only the

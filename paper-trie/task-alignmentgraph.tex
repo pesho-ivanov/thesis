@@ -15,7 +15,7 @@ letters from the query.
 %
 We note that the alignment graph explicitly depends on the query $q$. In
 particular, the example alignment graph $\AG[``\texttt{A}"]$ in
-~\cref{fig:graph-constructions} lacks substitution edges from $\EG$, as their
+~\cref{TRIEfig:graph-constructions} lacks substitution edges from $\EG$, as their
 labels ($\texttt{C}$, $\texttt{G}$, $\texttt{T}$) do not match the query
 $q=``A"$.
 
@@ -43,17 +43,17 @@ whose label matches the next query letter:
 \begin{alignat}{10}
 	(u,v,\ell,w) &\in \EGE \implies (&\langle u, i \rangle, &\langle v, i+1
 		&&\rangle,\ell,w) \in \AGE \quad \text{ for } 0 \leq i < |q| \text{ with }
-		q[i]=\ell \label{eq:alignment-edges-nondeletions} \\
+		q[i]=\ell \label{TRIEeq:alignment-edges-nondeletions} \\
 	(u,v,\epsilon,w) &\in\EGE \implies (&\langle u, i \rangle, &\langle v, i
-		&&\rangle,\epsilon,w) \in \AGE \quad \text{ for } 0 \leq i < |q| \label{eq:alignment-edges-deletions}
+		&&\rangle,\epsilon,w) \in \AGE \quad \text{ for } 0 \leq i < |q| \label{TRIEeq:alignment-edges-deletions}
 \end{alignat}
 }%
 \end{samepage}
 %
 Here, assuming $0$-indexing, $q[i]$ is the next letter to be matched after
-matching $i$ letters. Then, \cref{eq:alignment-edges-nondeletions} represents
+matching $i$ letters. Then, \cref{TRIEeq:alignment-edges-nondeletions} represents
 matches, substitutions, and insertions (which advance the position in the query
-by $1$), while \cref{eq:alignment-edges-deletions} represents deletions (which do
+by $1$), while \cref{TRIEeq:alignment-edges-deletions} represents deletions (which do
 not advance the position in the query).
 
 \para{Dynamic Construction}

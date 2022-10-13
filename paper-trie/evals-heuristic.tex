@@ -1,11 +1,11 @@
 \subsection{\A Speedup}
 To measure the speedup caused by the heuristic function, we compare the number
 of not only the expanded, but also of explored states (the latter number is
-never smaller, see~\cref{subsec:general-astar} and the example
-in~\cref{fig:heuristic-benefit}) between \astarix and \dijkstra on the MHC1
+never smaller, see~\cref{TRIEsubsec:general-astar} and the example
+in~\cref{TRIEfig:heuristic-benefit}) between \astarix and \dijkstra on the MHC1
 dataset.
 
-\cref{fig:scaling_with_errors} demonstrates the benefit of the heuristic
+\cref{TRIEfig:scaling_with_errors} demonstrates the benefit of the heuristic
 function in terms of both alignment time and number of explored states. Most
 importantly, \astarix scales much better with increasing number of errors in the
 read, compared to \dijkstra. More specifically, the number of states explored by
@@ -14,7 +14,7 @@ around 10, whereas the base for \astarix is around 3 (the empirical complexity i
 estimated as a best exponential fit \mbox{$\mli{exploredStates} \sim a \cdot
 \mli{score}^b$}).
 
-The horizontal black line in \cref{fig:scaling_with_errors} denotes the total
+The horizontal black line in \cref{TRIEfig:scaling_with_errors} denotes the total
 number of states $\lvert \RG \rvert \cdot \lvert q \rvert$, which is always
 explored by \bitparallel and \pasgal. On the other hand, any aligner must
 explore at least $m = \lvert q \rvert$ states, which we show as a horizontal
@@ -31,5 +31,5 @@ on a best alignment need to be explored.
     \includegraphics[width=\linewidth]{figs/cmp/heuristic_MHC1_cost-explored_states.pdf}
   \end{subfigure}%
   \caption{Comparison of \A and \dijkstra in terms of mean alignment runtime per read and mean explored states depending on the best alignment cost on MHC1.}
-  \label{fig:scaling_with_errors}
+  \label{TRIEfig:scaling_with_errors}
 \end{figure}

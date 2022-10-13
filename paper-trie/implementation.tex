@@ -10,7 +10,7 @@ connected in the opposite direction, and labeled with complementary nucleotides
 %
 %\para{Default Parameters}
 We do not limit the number of memoized heuristic function values
-(\cref{para:memoization}), but note we could do so by resetting the memoization
+(\cref{TRIEpara:memoization}), but note we could do so by resetting the memoization
 table periodically.
 %
 Our implementation of \dijkstra reuses the same \astarix codebase except the
@@ -18,13 +18,13 @@ use of a heuristic function (\ie, with $h \equiv 0$).
 
 %\para{Optimizations}
 We apply all described optimizations to \astarix and \dijkstra, except
-\cref{subsec:speedup-heuristic,subsec:partition} which are applicable only to
+\cref{TRIEsubsec:speedup-heuristic,subsec:partition} which are applicable only to
 \astarix.
 
 % AStarix
 %\para{Parameters}
 While the optimality of \astarix is not affected by its parameters, its
-performance is (see \cref{subsec:parameter_estimation} for analysis). To compare
+performance is (see \cref{TRIEsubsec:parameter_estimation} for analysis). To compare
 with other aligners, we use values \mbox{$d=5$}, \mbox{$\costcap=5$}, \mbox{$D =
 \lfloor \log_\Sigma \lvert \RG \rvert \rfloor$}.
 

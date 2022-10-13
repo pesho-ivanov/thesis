@@ -1,7 +1,7 @@
 \subsection{Comparison of Optimal Aligners}
 
 \para{Different Reference Graphs}
-\cref{tab:results} shows the performance of optimal aligners across various
+\cref{TRIEtab:results} shows the performance of optimal aligners across various
 references. On all references, \astarix is consistently faster than \dijkstra,
 which is consistently faster than \pasgal and \bitparallel. The memory usage of
 \dijkstra is within a factor of 3 compared to \pasgal and \bitparallel. Due to
@@ -11,7 +11,7 @@ compared to \dijkstra.
 \input{\dir/evals-comparison-table}
 
 \para{Scaling with Reference Graph Size}
-\cref{fig:scaling_with_graphsize} compares the performance of existing optimal
+\cref{TRIEfig:scaling_with_graphsize} compares the performance of existing optimal
 aligners. \bitparallel and \pasgal always explore all states, thus their
 average-case reaches the worst-case complexity of $\Oh(\lvert \AG \rvert) =
 \Oh(m \concat \RG)$. Due to the trie indexing, the runtime of \astarix and
@@ -33,5 +33,5 @@ allows skipping the explicit exploration for the majority of starting nodes.
   \end{subfigure}
   \caption{Comparison of overall runtime and memory usage of optimal aligners
      with increasing prefixes of E. coli as references.}
-  \label{fig:scaling_with_graphsize}
+  \label{TRIEfig:scaling_with_graphsize}
 \end{figure}

@@ -95,7 +95,7 @@
 
 % Alias a counter to a different cross-reference type.
 %
-% Example: Write Fig.~5 for \cref{sec:abc}
+% Example: Write Fig.~5 for \cref{TRIEsec:abc}
 %
 % \crefalias{section}{figure}
 
@@ -104,8 +104,8 @@
 %%%%%%%%%%%%
 
 \newcommand{\app}[1]{%
-	\ifbool{includeappendix}{\cref{#1}}{the appendix}%
+	\ifbool{includeappendix}{\cref{TRIE#1}}{the appendix}%
 }
 \newcommand{\App}[1]{%
-	\ifbool{includeappendix}{\cref{#1}}{The appendix}%
+	\ifbool{includeappendix}{\cref{TRIE#1}}{The appendix}%
 }
