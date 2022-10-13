@@ -32,7 +32,7 @@ Use the commands defined in the `headers/` folder to
 
 Use [cleveref](http://tug.ctan.org/tex-archive/macros/latex/contrib/cleveref/cleveref.pdf) to ensure a consistent handling of references:
 
-- Write `\cref` instead of `\ref`
+- Write `\cref` instead of `\cref`
 
 ## Capitalization
 
