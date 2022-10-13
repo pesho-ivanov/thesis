@@ -1,4 +1,4 @@
-\subsection{Formal definition} \label{sec:definition}
+\subsection{Formal definition} \label{SEEDsec:definition}
 %
 Next, we formally define the \seedh function $h\st{v}{i}$. Overall, we want to
 ensure that $h\st{v}{i}$ is admissible, \ie, that it is a lower bound on the
@@ -29,7 +29,7 @@ graph that can be the start of an exact match of $s$:
 \end{align*}
 %
 To compute $M(s)$ efficiently, we leverage the trie introduced in
-\cref{sec:trie}.
+\cref{SEEDsec:trie}.
 
 \para{Crumbs}
 For seed $s_j$ starting at position $i$ in $q$, we place crumbs on all nodes $u
@@ -59,7 +59,7 @@ from each $v \in M(s)$ by a backward breadth-first-search (BFS).
 % putting crumbs in all nodes that can potentially lead to an exact match is
 % crucial for the optimality guarantees of the \seedh, while putting unnecessary
 % crumbs may only make the heuristic less precise so more state may be explored.
-% So in~\cref{the:admissible} we prove that all necessary crumbs are placed and
+% So in~\cref{SEEDthe:admissible} we prove that all necessary crumbs are placed and
 % the heuristic is admissible.
 
 \para{Heuristic}
@@ -73,12 +73,12 @@ $\st{v}{i}$ as $\mli{misses}\st{v}{i} := \big\lvert \left\{  s
 \in \seeds_{\ge i} \mid v \notin C(s) \right \} \big\rvert$.
 %
 Finally, we define the \seedh as
-\begin{align} \label{eq:heuristic}
+\begin{align} \label{SEEDeq:heuristic}
 	h\st{v}{i} &= (\lvert q \rvert - i) \cdot \cmatch + \mli{misses}\st{v}{i} \cdot \delta_\mli{min},\\
-	\text{for } &\delta_\mli{min} = \min(\csubst - \cmatch,\cdel,\cins - \cmatch), \label{eq:delta}
+	\text{for } &\delta_\mli{min} = \min(\csubst - \cmatch,\cdel,\cins - \cmatch), \label{SEEDeq:delta}
 \end{align}
 %
-Intuitively, \cref{eq:heuristic} reflects that the cost of aligning each
+Intuitively, \cref{SEEDeq:heuristic} reflects that the cost of aligning each
 remaining letter from $q[i{:}]$ is at least $\cmatch$. In addition, every
 inexact alignment of a seed induces an additional cost of at least
 $\delta_\mli{min}$. 
@@ -93,20 +93,20 @@ the read $q$, the set of seeds, and the edit costs $\cedits$.
 In order for an alignment with at least $\maxdel$ deletions to have a cost so
 high that the heuristic function is trivially admissible, we ensure $\maxdel
 \cdot \cdel \geq h\st{v}{i}$ by defining
-\begin{align} \label{eq:maximum-deletions}
+\begin{align} \label{SEEDeq:maximum-deletions}
 	\maxdel := \left\lceil \frac{\lvert q \rvert \cdot \cmatch + |\seeds| \cdot \delta_{\mli{min}}}{\cdel} \right\rceil.
 \end{align}
 %
-In \cref{the:admissible}, we show that $h\st{v}{i}$ is admissible, ensuring that
+In \cref{SEEDthe:admissible}, we show that $h\st{v}{i}$ is admissible, ensuring that
 our heuristic yields optimal alignments.
 
 
 \begin{restatable}[Admissibility]{thm}{admissibility}
-	\label{the:admissible}
+	\label{SEEDthe:admissible}
 	The \seedh $h\st{v}{i}$ is admissible.
 \end{restatable}
 \begin{proof}
-	We provide a proof for \cref{the:admissible} in \cref{app:proof}.
+	We provide a proof for \cref{SEEDthe:admissible} in \cref{SEEDapp:proof}.
 	%
 	\qedwhite
 \end{proof}

@@ -14,5 +14,5 @@ def f() {
 	int x = $\alpha$;
 	
 	return 1;
-	|\label{line:last}|
+	|\label{SEEDline:last}|
 }

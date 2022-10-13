@@ -1,23 +1,23 @@
 \begin{algorithm}[H]
 	\caption{For each seed: find all its exact matches in the reference graph
-	and put corresponding crumbs backwards from the match. \todo{make the code not exponential like SeedStarts} \todo{SeedStarts in $O(n^2)$}}\label{alg:crumbs}
+	and put corresponding crumbs backwards from the match. \todo{make the code not exponential like SeedStarts} \todo{SeedStarts in $O(n^2)$}}\label{SEEDalg:crumbs}
 	\begin{algorithmic}[1]
-		\State \makebox[0.4in][r]{$\RG\colon$} Reference graph \label{lin:reference}
+		\State \makebox[0.4in][r]{$\RG\colon$} Reference graph \label{SEEDlin:reference}
         \State \makebox[0.4in][r]{$l\colon$} Length of each seed
 		\State \makebox[0.4in][r]{$C(s)\colon$} Set of nodes with a crumb for seed $s$
-        \State \makebox[0.4in][r]{$\maxdel\colon$} Maximum number of deletions\label{lin:d}
-		\Comment{defined in \cref{eq:maximum-deletions}}
+        \State \makebox[0.4in][r]{$\maxdel\colon$} Maximum number of deletions\label{SEEDlin:d}
+		\Comment{defined in \cref{SEEDeq:maximum-deletions}}
 		\Statex
 		\Function{PlaceAllCrumbs}{$q\colon$ Read}
 			\State $S \gets \{\, q[kl {:} kl+l] \mid k \in \mathbb{N}, kl+l \leq \lvert q \rvert \}$
-            \Comment{Split $q$ into seeds} \label{lin:seeds}
-			\ForAll{$s \in S$} \label{lin:seeds-loop}
-				\State $C(s) \gets \emptyset$ \label{lin:clear-crumbs}
-				\ForAll{$u \in \Call{SeedStarts}{s}$} \label{lin:seed-starts-call}
+            \Comment{Split $q$ into seeds} \label{SEEDlin:seeds}
+			\ForAll{$s \in S$} \label{SEEDlin:seeds-loop}
+				\State $C(s) \gets \emptyset$ \label{SEEDlin:clear-crumbs}
+				\ForAll{$u \in \Call{SeedStarts}{s}$} \label{SEEDlin:seed-starts-call}
 					\State $i \gets \mli{start}(s)$
-					\Comment{Starting position of $s$ in $q$} \label{lin:start}
+					\Comment{Starting position of $s$ in $q$} \label{SEEDlin:start}
 					\State $\Call{PlaceCrumbsBackwards}{s, u, i + \maxdel}$
-					\Comment{Crumbs on nodes before $u$} \label{lin:place-crumbs-backwards-call}
+					\Comment{Crumbs on nodes before $u$} \label{SEEDlin:place-crumbs-backwards-call}
 				\EndFor
 			\EndFor
 		\EndFunction
@@ -25,30 +25,30 @@
 		\Function{SeedStarts}{$s\colon$ Seed}
 			\State $T \gets \RGV$
 			\Comment{Start from all nodes}
-			\label{lin:match-init}
+			\label{SEEDlin:match-init}
         	\ForAll{$k \in [0, \dots, l-1 ]$}
 			\Comment{Match seed letters forward}
-			\label{lin:match-forward-start}
+			\label{SEEDlin:match-forward-start}
 				\State $T \gets \{w \mid v \in T, (v, w, s[k]) \in \RGE\}$
 				\Comment{Follow edges matching $s[k]$ (forward)}
-			\EndFor \label{lin:match-forward-end}
+			\EndFor \label{SEEDlin:match-forward-end}
         		\ForAll{$k \in [l-1, \dots, 0 ]$}
 				\Comment{Match seed letters backward}
-				\label{lin:match-backward-start}
+				\label{SEEDlin:match-backward-start}
 					\State $T \gets \{u \mid v \in T, (u,v,s[k]) \in \RGE \}$
 					\Comment{Follow edges matching $s[k]$ (backward)}
-			\EndFor \label{lin:match-backward-end}
+			\EndFor \label{SEEDlin:match-backward-end}
 			\State $M(s) \gets T$
 			\State \Return{$M(s)$}
 		\EndFunction
 		\Statex
 		\Function{PlaceCrumbsBackwards}{$s \colon$Seed, $u \colon $Node, $k \colon $Number of
-		edges} \label{lin:place-crumbs-backwards-start}
+		edges} \label{SEEDlin:place-crumbs-backwards-start}
 			\ForAll{$t \in \Call{BackwardsBFS}{u, k}$}
 				\Comment Nodes $t$ reaching $u$ within $k$ edges
-				\label{lin:backwards-bfs}
+				\label{SEEDlin:backwards-bfs}
 				\State $C(s) \gets C(s) \cup \{t\}$
-				\Comment Add a crumb for seed $s$ to node $t$ \label{lin:place-crumbs-backwards-end}
+				\Comment Add a crumb for seed $s$ to node $t$ \label{SEEDlin:place-crumbs-backwards-end}
 			\EndFor
 		\EndFunction
 	\end{algorithmic}

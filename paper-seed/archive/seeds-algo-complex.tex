@@ -1,7 +1,7 @@
 \begin{algorithm}[t]
-	\caption{Seed including heuristic function.}\label{alg:precompute}
+	\caption{Seed including heuristic function.}\label{SEEDalg:precompute}
 	\begin{algorithmic}[1]
-		\State $\TG\colon$ Reference graph \label{lin:reference}
+		\State $\TG\colon$ Reference graph \label{SEEDlin:reference}
 		\State $C\colon$ Crumbs hashmap $(\mli{node}, \mli{seed}) \to \mli{cost}$
         \State $\mli{seedlen}\colon$ Length of each seed
 		\State $\mli{max\_indels}\colon$ Maximum number of insertions and deletions
@@ -43,7 +43,7 @@
 			\State \Return $\Call{MatchSeedRec}{\alignment{s}{G}, \mli{start}, 0}$
 		\EndFunction
 		\Statex
-		\Function{ProcessSeeds}{$q\colon$ Read} \label{lin:process_seeds}
+		\Function{ProcessSeeds}{$q\colon$ Read} \label{SEEDlin:process_seeds}
 			\State $S \gets \Call{GenerateUniformSeeds}{q}$
 			\Comment Set of seeds $S$ with corresponding costs $r$
 
@@ -54,27 +54,27 @@
 				\ForAll{$m \equiv (s, \st{v}{i}, \mli{cost}) \in M_s$}
                 \Comment $s$ matches to $v \in \RGV$ with $\mli{cost}$
                     \State $\Call{PutCrumbs}{m}$
-					\Comment \cref{alg:general_crumbs}
+					\Comment \cref{SEEDalg:general_crumbs}
                 \EndFor
 			\EndFor
 		\EndFunction
 		\Statex
-%		\Function{SeedHeuristic}{$\langle u, i \rangle\colon$ State} \label{lin:heuristic-start}
+%		\Function{SeedHeuristic}{$\langle u, i \rangle\colon$ State} \label{SEEDlin:heuristic-start}
 %			\State $d' \gets \min(d, |q|-i)$
 %			\Comment Actual length of upcoming sequence
-%			\State $s \gets q[i:i+d']$ \label{lin:s}
+%			\State $s \gets q[i:i+d']$ \label{SEEDlin:s}
 %			\Comment Upcoming sequence (next $d$ letters after current)
 %			\State \Return $\Call{$h$}{u, s}$
-%			\label{lin:align-upcoming}
+%			\label{SEEDlin:align-upcoming}
 %			\Comment Cost of aligning $s$ to $\EG$ starting from $u$
-%		\EndFunction \label{lin:heuristic-end}
+%		\EndFunction \label{SEEDlin:heuristic-end}
 %		\Statex
 		\Function{$h$}{$u\colon$ Node, $s\colon$ Seed}
 		\Comment Cost of aligning $s$ starting from $u$
 			\State \Return $\sum_{s \in S} \Call{minHigherCost}{s.r} - \sum_{s \in S} C(u,s)$
 		\EndFunction
         \Statex
-        \Function{Align}{$q\colon$ Read} \label{lin:align}
+        \Function{Align}{$q\colon$ Read} \label{SEEDlin:align}
             \State $\Call{ProcessSeeds}{q}$
             \State $\Call{\A}{\RG, C, q, h}$
         \EndFunction
@@ -82,7 +82,7 @@
 \end{algorithm}
 
 \begin{algorithm}[t]
-	\caption{Putting crumbs in a general graph.}\label{alg:general_crumbs}
+	\caption{Putting crumbs in a general graph.}\label{SEEDalg:general_crumbs}
 	\begin{algorithmic}[1]
 		\Function{GetReachableNodes}{$\st{v}{i}\colon$ Start state}
 		\Comment Nodes reaching $v$ by $\le i$ edges

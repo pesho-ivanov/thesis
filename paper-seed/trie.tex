@@ -1,6 +1,6 @@
 \input{\dir/figures/trie-figure.tex}
 
-\subsection{Trie index} \label{sec:trie}
+\subsection{Trie index} \label{SEEDsec:trie}
 %
 Considering all nodes $v \in \RGV$ as possible starting points for the alignment
 means that the \A~algorithm would explore all states of the form $\st{v}{0}$,
@@ -20,9 +20,9 @@ graph and also from its reverse-complement.
 
 \para{Intuition}
 %
-\cref{fig:trie} extends the reference graph $\RG$ from \cref{fig:overview} with
+\cref{SEEDfig:trie} extends the reference graph $\RG$ from \cref{SEEDfig:overview} with
 a trie. Here, any path in the reference graph uniquely corresponds to a path
-starting from the trie \trieroot{} (the top-most node in \cref{fig:trie}). Thus,
+starting from the trie \trieroot{} (the top-most node in \cref{SEEDfig:trie}). Thus,
 in order to find an optimal alignment, it suffices to consider paths starting
 from the trie \trieroot{}, by using state $\st{\trieroot}{0}$ as the only source
 for the \A~algorithm.
@@ -34,12 +34,12 @@ small, as $\log_4N$.
 
 For a more thorough introduction to the trie and its construction,
 see~\citep{ivanov2020astarix}. Importantly, our placement of
-crumbs~(\cref{sec:definition}) generalizes directly to reference graphs extended
-with a trie (see also \cref{fig:trie}).
+crumbs~(\cref{SEEDsec:definition}) generalizes directly to reference graphs extended
+with a trie (see also \cref{SEEDfig:trie}).
 
 % This leads to the effect that the crumbs in a trie node correspond to the
 % union of the crumbs of its descendents (with the exception when crumbs are
-% skipped for propagating to the trie \cref{para}).
+% skipped for propagating to the trie \cref{SEEDpara}).
 
 \para{Reusing the trie to find seed matches}
 %
@@ -54,14 +54,14 @@ is not shorter than the trie depth $D$, so that matching all letters in
 $\bar{s}$ ensures that we eventually transition from a trie leaf to the
 reference graph.
 
-% Analogously, our computation of crumbs (\cref{sec:algo} and \cref{alg:crumbs})
+% Analogously, our computation of crumbs (\cref{SEEDsec:algo} and \cref{SEEDalg:crumbs})
 % generalizes directly to reference graphs extended by a trie.
 % %
 % However, assuming that we select the depth of the trie to be the same as the
 % length of each seed ($D=k$) allows us to speed up the computation by only
 % starting the search for matches of a seed in~$\varepsilon$.
 % %
-% Specifically, in \cref{alg:crumbs}, we can replace \cref{lin:match-init} by $T
+% Specifically, in \cref{SEEDalg:crumbs}, we can replace \cref{SEEDlin:match-init} by $T
 % \gets \{\varepsilon\}$. This is because
 % \crefrange{lin:match-forward-start}{lin:match-forward-end} will locate all nodes
 % in the original reference graph which can be the end point of a seed match.
@@ -69,7 +69,7 @@ reference graph.
 % backtrack both in the reference graph as well as in the trie, thus ensuring that
 % $M(s)$ is computed correctly.
 
-\para{Optimization: skip crumbs on the trie} \label{par:skip_crumbs}
+\para{Optimization: skip crumbs on the trie} \label{SEEDpar:skip_crumbs}
 %
 Generally, we aim to place as few crumbs as possible, in order to both reduce
 precomputation time and avoid misleading the \A~algorithm by unnecessary crumbs.
@@ -84,7 +84,7 @@ leads from the trie to the reference.
 %
 Assuming $s$ starts at position $i$ in the read, we have already established
 that we can only consider nodes $u$ that can reach $w$ with less than
-$i+\maxdel$ edges (see \cref{sec:definition}).
+$i+\maxdel$ edges (see \cref{SEEDsec:definition}).
 %
 Here, we observe that it is sufficient to only climb into the trie from nodes
 $u$ that can reach $w$ using more than~$i-\maxins-D$ edges, for
@@ -97,15 +97,15 @@ will induce a cost that is always higher than $h\st{u}{i}$. We note that we can
 only avoid climbing into the trie if all paths from $u$ to $w$ are too short, in
 particular the longest one.
 
-The following \cref{lem:trie-optimization} shows that this optimization
+The following \cref{SEEDlem:trie-optimization} shows that this optimization
 preserves optimality.
 
 \begin{restatable}[Admissibility when skipping crumbs]{lem}{trieOptimization}
-	\label{lem:trie-optimization}
+	\label{SEEDlem:trie-optimization}
 	The \seedh remains admissible when crumbs are skipped in the trie.
 \end{restatable}
 \begin{proof}
-	We provide a proof for \cref{lem:trie-optimization} in \cref{app:proof}.
+	We provide a proof for \cref{SEEDlem:trie-optimization} in \cref{SEEDapp:proof}.
 	%
 	\qedwhite
 \end{proof}

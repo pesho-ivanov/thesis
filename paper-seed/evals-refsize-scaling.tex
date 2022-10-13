@@ -1,4 +1,4 @@
-\subsection{Q2: Scaling with reference size} \label{sec:eval-refsize}
+\subsection{Q2: Scaling with reference size} \label{SEEDsec:eval-refsize}
 
 \begin{figure}[t]
   \begin{subfigure}{.5\textwidth}
@@ -11,7 +11,7 @@
   \end{subfigure}~\hspace{1em} \caption{Performance degradation with reference
   size for \textbf{Illumina reads}. Log-log plots of total alignment time (left)
   and memory usage (right) show the scaling difference between aligners.}
-  \label{fig:illumina_scaling_with_genomesize}
+  \label{SEEDfig:illumina_scaling_with_genomesize}
 \end{figure}
 
 \begin{figure}[t]
@@ -26,7 +26,7 @@
   size for \textbf{HiFi reads}. Log-log plots of total alignment time (left) and
   memory usage (right) show the scaling difference between aligners. Linear best
   fits correspond to polynomials of varying degree.}
-  \label{fig:hifi_scaling_with_genomesize}
+  \label{SEEDfig:hifi_scaling_with_genomesize}
 \end{figure}
 
 In order to study the scaling of the aligners in terms of the reference size, we
@@ -35,7 +35,7 @@ from each prefix, and ran all tools on all prefixes with the corresponding
 reads.
 
 \para{Illumina reads}
-\cref{fig:illumina_scaling_with_genomesize} shows the runtime scaling and memory
+\cref{SEEDfig:illumina_scaling_with_genomesize} shows the runtime scaling and memory
 usage for Illumina reads. The \seedh was provided with 10k reads, while other
 tools were provided with 1k reads.
 %
@@ -47,7 +47,7 @@ the \prefixh is substantially worse than the \seedh since the 200bp reads are
 outside of its operational capabilities.
 
 \para{HiFi reads}
-\cref{fig:hifi_scaling_with_genomesize} shows the runtime scaling and memory
+\cref{SEEDfig:hifi_scaling_with_genomesize} shows the runtime scaling and memory
 usage for HiFi reads. The respective total lengths of all aligned reads are 5Mbp
 for the \seedh, 500kbp for \graphaligner, and 100kbp for \vargas and \pasgal. We
 do not show the \prefixh, since it explores too many states and runs out of

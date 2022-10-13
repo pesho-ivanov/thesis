@@ -117,10 +117,10 @@
 %%%%%%%%%%%%
 
 \newcommand{\appref}[1]{%
-	\ifbool{includeappendix}{\cref{#1}}{the appendix}%
+	\ifbool{includeappendix}{\cref{SEED#1}}{the appendix}%
 }
 \newcommand{\Appref}[1]{%
-	\ifbool{includeappendix}{\cref{#1}}{The appendix}%
+	\ifbool{includeappendix}{\cref{SEED#1}}{The appendix}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -129,6 +129,6 @@
 
 % Alias a counter to a different cross-reference type.
 %
-% Example: Write Fig.~5 for \cref{sec:abc}
+% Example: Write Fig.~5 for \cref{SEEDsec:abc}
 %
 % \crefalias{section}{figure}

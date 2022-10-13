@@ -1,13 +1,13 @@
 \input{\dir/figures/overview-figure.tex}
 
-\subsection{Overview} \label{sec:overview}
+\subsection{Overview} \label{SEEDsec:overview}
 % Task
-\cref{fig:overview} showcases the \seedh on an overview example. It shows a
+\cref{SEEDfig:overview} showcases the \seedh on an overview example. It shows a
 read~$q$ to be aligned to a reference graph~$\RG$. Our goal is to find an
 optimal alignment starting from an arbitrary node $v \in \RG$.
 %
 For simplicity of the exposition, we assume unit edit costs $\cedits =
-(0,1,1,1)$, which we generalize in~\cref{sec:definition}.
+(0,1,1,1)$, which we generalize in~\cref{SEEDsec:definition}.
 
 \para{Intuition}
 The \A search requires us to provide a lower bound of the remaining path cost
@@ -34,7 +34,7 @@ from $v$ by simply returning the number of missing expected crumbs in $v$.
 
 \para{Crumbs precomputation example}
 %
-\cref{fig:overview} shows four seeds as colored sections of length $2$ each, and
+\cref{SEEDfig:overview} shows four seeds as colored sections of length $2$ each, and
 represents their corresponding crumbs as \bluecrumb{}, \yellowcrumb{},
 \violetcrumb{} and \greencrumb{}, respectively. Four crumbs are expected if we
 start at $v_2$, but \bluecrumb{} is missing, so $h\st{v_2}{0}=1$. Analogously,
@@ -42,7 +42,7 @@ if we reach $v_2$ after aligning one letter from the read, we expect 3 crumbs
 (except \bluecrumb{}), and we find them all in $v_2$, so $h\st{v_2}{1}=0$.
 %
 To precompute the crumbs for each seed, we first find all positions in $\RG$
-from which the seed aligns exactly. \cref{fig:overview} shows these exact
+from which the seed aligns exactly. \cref{SEEDfig:overview} shows these exact
 matches as colored sections of $\RG$. Then, from each match we traverse $\RG$
 backwards and add crumbs to nodes that could lead to these matches.
 %
@@ -78,16 +78,16 @@ number of seeds.
 
 \para{Guiding the search example}
 %
-\cref{fig:exploration-table} demonstrates how $h\st{v}{i}$ guides the
+\cref{SEEDfig:exploration-table} demonstrates how $h\st{v}{i}$ guides the
 \A~algorithm towards the shortest path by showing which states may be
 \colorbox{pink-highlight}{expanded} when using the \seedh.
 %
-Specifically, the unique optimal alignment in \cref{fig:overview} starts from
+Specifically, the unique optimal alignment in \cref{SEEDfig:overview} starts from
 node $v_{1}$, continues to $v_{2}$, and then proceeds through node $v_{10}$
 (instead of~$v_{3}$).
 
 While the \seedh initially explores all states of the form $\st{v}{0}$ (we
-discuss in \cref{sec:trie} how to avoid this by using a trie), it skips
+discuss in \cref{SEEDsec:trie} how to avoid this by using a trie), it skips
 expanding any state that involves nodes $v_{3}$--$v_{8}$. This improvement is
 possible because all these explored states are penalized by the \seedh by at
 least $3$, while the shortest path of cost $2$ will be found before considering

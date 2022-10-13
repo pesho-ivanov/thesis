@@ -9,18 +9,18 @@
 	\end{subfigure}~\hspace{1em} \caption{Performance degradation with HiFi read
 	 length. Log-log plots of total alignment time (left) and memory usage (right)
 	 show the scaling difference between aligners.}
-	\label{fig:hifi_scaling_with_readlen}
+	\label{SEEDfig:hifi_scaling_with_readlen}
   \end{figure}
 
 \subsection{Q3: Scaling with read length}
 
-\cref{fig:hifi_scaling_with_readlen} shows the runtime and memory scaling with
+\cref{SEEDfig:hifi_scaling_with_readlen} shows the runtime and memory scaling with
 increasing length of aligned HiFi reads on MHC reference. Here we used reads
 with a total length of 100Mbp for the \seedh and 2Mbp for all other aligners.
 
 The scaling of the \seedh in terms of read length is slightly worse than that of
 other aligners. However, this is compensated by its superior scaling in terms of
-reference size (see \cref{sec:eval-refsize}), leading to an overall better
+reference size (see \cref{SEEDsec:eval-refsize}), leading to an overall better
 absolute runtime. We note that the memory usage of the \seedh does not heavily
 depend on the read length and for reads longer than 10kbp, it is superior to
 \graphaligner and \vargas.
