@@ -33,9 +33,6 @@
 
 \input{front}
 
-%
-% Mainmatter
-%
 \cleardoublepage\pagenumbering{arabic}%
 \def\dir{chapters/introduction}
 \include{\dir/main}
@@ -45,15 +42,15 @@
 %\include{\dir/main}
 
 \cleardoublepage%
-\def\dir{paper-global}
-\include{\dir/main}
-
-\cleardoublepage%
 \def\dir{paper-trie/}
 \include{\dir/main}
 
 \cleardoublepage%
 \def\dir{paper-seed/}
+\include{\dir/main}
+
+\cleardoublepage%
+\def\dir{paper-global}
 \include{\dir/main}
 
 % Include some blind text
