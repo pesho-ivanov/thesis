@@ -1,69 +1,3 @@
-@article{hart1968formal,
-  title={A formal basis for the heuristic determination of minimum cost paths},
-  author={Hart, Peter E and Nilsson, Nils J and Raphael, Bertram},
-  journal={IEEE transactions on Systems Science and Cybernetics},
-  volume={4},
-  number={2},
-  pages={100--107},
-  year={1968},
-  publisher={IEEE}
-}
-
-@article{kucherov2019evolution,
-  title={Evolution of biosequence search algorithms: a brief survey},
-  author={Kucherov, Gregory},
-  journal={Bioinformatics},
-  volume={35},
-  number={19},
-  pages={3547--3552},
-  year={2019},
-  publisher={Oxford University Press}
-}
-
-@article{howe2019ensembl,
-	title = {Ensembl {Genomes} 2020--enabling non-vertebrate genomic research},
-	issn = {0305-1048, 1362-4962},
-	doiNOTSHOWN = {10.1093/nar/gkz890},
-	abstract = {Abstract
-            Ensembl Genomes (http://www.ensemblgenomes.org) is an integrating
-            resource for genome-scale data from non-vertebrate species,
-            complementing the resources for vertebrate genomics developed in the
-            context of the Ensembl project (http://www.ensembl.org). Together,
-            the two resources provide a consistent set of interfaces to genomic
-            data across the tree of life, including reference genome sequence,
-            gene models, transcriptional data, genetic variation and comparative
-            analysis. Data may be accessed via our website, online tools
-            platform and programmatic interfaces, with updates made four times
-            per year (in synchrony with Ensembl). Here, we provide an overview
-            of Ensembl Genomes, with a focus on recent developments. These
-            include the continued growth, more robust and reproducible sets of
-            orthologues and paralogues, and enriched views of gene expression
-            and gene function in plants. Finally, we report on our continued
-            deeper integration with the Ensembl project, which forms a key part
-            of our future strategy for dealing with the increasing quantity of
-            available genome-scale data across the tree of life.},
-	language = {en},
-	urldate = {2020-01-19},
-	journal = {Nucleic Acids Research},
-	author = {Howe, Kevin L and Contreras-Moreira, Bruno and De Silva, Nishadi
-	and Maslen, Gareth and Akanni, Wasiu and Allen, James and Alvarez-Jarreta,
-	Jorge and Barba, Matthieu and Bolser, Dan M and Cambell, Lahcen and others},
-	monthNOTSHOWN = jan,
-	year = {2020}
-}
-
-@article{rautiainen_bitparallel_2019,
-	title = {Bit-parallel sequence-to-graph alignment},
-	issn = {1367-4803},
-	doiNOTSHOWN = {10.1093/bioinformatics/btz162},
-	abstract = {AbstractMotivation.  Graphs are commonly used to represent sets of sequences. Either edges or nodes can be labeled by sequences, so that each path in the graph},
-	language = {en},
-	urldate = {2020-01-15},
-	journal = {Bioinformatics},
-	author = {Rautiainen, Mikko and M\"akinen, Veli and Marschall, Tobias},
-	monthNOTSHOWN = oct,
-	year = {2019}
-}
 
 @article{darby2020vargas,
   title={{Vargas}: heuristic-free alignment for assessing linear and graph read aligners},
@@ -75,18 +9,6 @@
   year={2020},
   publisher={Oxford University Press},
   annote = {Vargas}
-}
-
-@inproceedings{jain_accelerating_2019,
-	title = {Accelerating {Sequence} {Alignment} to {Graphs}},
-	doiNOTSHOWN = {10.1109/IPDPS.2019.00055},
-	abstract = {Aligning DNA sequences to an annotated reference is a key step for genotyping in biology. Recent scientific studies have demonstrated improved inference by aligning reads to a variation graph, \ie, a reference sequence augmented with known genetic variations. Given a variation graph in the form of a directed acyclic string graph, the sequence to graph alignment problem seeks to find the best matching path in the graph for an input query sequence. Solving this problem exactly using a sequential dynamic programming algorithm takes quadratic time in terms of the graph size and query length, making it difficult to scale to high throughput DNA sequencing data. In this work, we propose the first parallel algorithm for computing sequence to graph alignments that leverages multiple cores and single-instruction multiple-data (SIMD) operations. We take advantage of the available inter-task parallelism, and provide a novel blocked approach to compute the score matrix while ensuring high memory locality. Using a 48-core Intel Xeon Skylake processor, the proposed algorithm achieves peak performance of 317 billion cell updates per second (GCUPS), and demonstrates near linear weak and strong scaling on up to 48 cores. It delivers significant performance gains compared to existing algorithms, and results in run-time reduction from multiple days to three hours for the problem of optimally aligning high coverage long (PacBio/ONT) or short (Illumina) DNA reads to an MHC human variation graph containing 10 million vertices.},
-	booktitle = {{International} {Parallel} and {Distributed} {Processing} {Symposium} ({IPDPS})},
-	author = {Jain, Chirag and Misra, Sanchit and Zhang, Haowen and Dilthey, Alexander and Aluru, Srinivas},
-	year = {2019},
-	note = {ISSN: 1530-2075},
-	keywords = {48-core Intel Xeon Skylake processor, architecture-aware optimization, bioinformatics, directed acyclic string graph, directed graphs, DNA, DNA sequences, DNA sequencing data, dynamic programming, genetic variations, genomics, graph alignment problem, graph alignments, input query sequence, inter-task parallelism, MHC human variation graph, parallel algorithm, parallel algorithms, query processing, sequence alignment, sequential dynamic programming algorithm, single-instruction multiple-data operations, variation graphs},
-	annote = {PaSGAL}
 }
 
 @article{hon2020highly,
@@ -108,52 +30,6 @@
   year={2021}
 }
 
-@mastersthesis{dox2018efficient,
-  title={Efficient algorithms for pairwise sequence alignment on graphs},
-  author={Dox, Gerwin and Fostier, Jan},
-  school={Ghent university},
-  year={2018}
-}
-
-@article{garrison_variation_2018,
-	title = {Variation graph toolkit improves read mapping by representing genetic variation in the reference},
-	copyright = {2018 Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved.},
-	issn = {1546-1696},
-	doiNOTSHOWN = {10.1038/nbt.4227},
-	abstract = {Reducing read mapping bias and improving complex variant detection with a highly scalable computational toolkit that implements variation graphs.},
-	language = {en},
-	urldate = {2020-01-15},
-	journal = {Nature Biotechnology},
-	author = {Garrison, Erik and Sir\'en, Jouni and Novak, Adam M. and Hickey, Glenn and Eizenga, Jordan M. and Dawson, Eric T. and Jones, William and Garg, Shilpa and Markello, Charles and Lin, Michael F. and Paten, Benedict and Durbin, Richard},
-	monthNOTSHOWN = oct,
-	year = {2018}
-}
-
-@inproceedings{ivanov2020astarix,
-	title = {{AStarix}: {F}ast and {O}ptimal {S}equence-to-{G}raph {A}lignment},
-  author = {Ivanov, Pesho and Bichsel, Benjamin and Mustafa, Harun and Kahles, Andr{\'e} and R{\"a}tsch, Gunnar and Vechev, Martin T},
-  booktitle = {RECOMB 2020},
-	doiNOTSHOWN = {10.1101/2020.01.22.915496},
-	abstract = {We present an algorithm for the optimal alignment of sequences to genome graphs. It works by phrasing the edit distance minimization task as finding a shortest path on an implicit alignment graph. To find a shortest path, we instantiate the A* paradigm with a novel domain-specific heuristic function that accounts for the upcoming sub-sequence in the read to be aligned, resulting in a provably optimal alignment algorithm called AStarix.Experimental evaluation of AStarix shows that it is 1{\textendash}2 orders of magnitude faster than state-of-the-art optimal algorithms on the task of aligning Illumina reads to reference genome graphs. Implementations and evaluations are available at https://github.com/eth-sri/astarix.},
-  year = {2020}
-}
-
-@inproceedings{backurs2015edit,
-  title={Edit distance cannot be computed in strongly subquadratic time (unless {SETH} is false)},
-  author={Backurs, Arturs and Indyk, Piotr},
-  booktitle={Proceedings of the forty-seventh annual ACM symposium on Theory of computing},
-  pages={51--58},
-  year={2015}
-}
-
-@inproceedings{equi2019complexity,
-  title={On the complexity of string matching for graphs},
-  author={Equi, Massimo and Grossi, Roberto and M{\"a}kinen, Veli and Tomescu, Alexandru and others},
-  booktitle={46th International Colloquium on Automata, Languages, and Programming (ICALP 2019)},
-  year={2019},
-  organization={Schloss Dagstuhl-Leibniz-Zentrum f{\"u}r Informatik}
-}
-
 @article{huang2011art,
   title={{ART}: a next-generation sequencing read simulator},
   author={Huang, Weichun and Li, Leping and Myers, Jason R and Marth, Gabor T},
@@ -165,100 +41,10 @@
   publisher={Oxford University Press}
 }
 
-@article{dechter_generalized_1985,
-	title = {Generalized best-first search strategies and the optimality of {A}*},
-	issn = {00045411},
-	doiNOTSHOWN = {10.1145/3828.3830},
-	urldate = {2020-01-15},
-	journal = {Journal of the ACM},
-	author = {Dechter, Rina and Pearl, Judea},
-	monthNOTSHOWN = jul,
-	year = {1985}
-}
-
-@techreport{rautiainen_aligning_2017,
-	type = {preprint},
-	title = {Aligning sequences to general graphs in \textit{{O}}(\textit{{V}}+\textit{{mE}}) time},
-	url = {http://biorxiv.org/lookup/doi/10.1101/216127},
-	abstract = {Graphs are commonly used to represent sets of sequences. Either edges or nodes can be labeled by sequences, so that each path in the graph spells a concatenated sequence. Examples include graphs to represent genome assemblies, such as string graphs and de Bruijn graphs, and graphs to represent a pan-genome and hence the genetic variation present in a population. Being able to align sequencing reads to such graphs is a key step for many analyses and its applications include genome assembly, read error correction, and variant calling with respect to a variation graph. Given the wide range of applications of this basic problem, it is surprising that algorithms with optimal runtime are, to the best of our knowledge, yet unknown. In particular, aligning sequences to cyclic graphs currently represents a challenge both in theory and practice. Here, we introduce an algorithm to compute the minimum edit distance of a sequence of length
-            m
-            to any path in a node-labeled directed graph (
-            V, E
-            ) in
-            O
-            (
-            {\textbar}V {\textbar}
-            +
-            m
-            {\textbar}
-            E
-            {\textbar}) time and
-            O
-            (
-            {\textbar}V {\textbar}
-            ) space. The corresponding alignment can be obtained in the same runtime using
-            
-              
-                
-              
-            
-            space. The time complexity depends only on the length of the sequence and the size of the graph. In particular, it does not depend on the cyclicity of the graph, or any other topological features.},
-	language = {en},
-	urldate = {2020-01-15},
-	institution = {Bioinformatics},
-	author = {Rautiainen, Mikko and Marschall, Tobias},
-	month = nov,
-	year = {2017},
-	doi = {10.1101/216127},
-	file = {Rautiainen_Marschall_2017_Aligning sequences to general graphs in iO-i ( iV-i + imE-i ) time.pdf:/home/beni/Dropbox/zotero/Rautiainen_Marschall_2017_Aligning sequences to general graphs in iO-i ( iV-i + imE-i ) time.pdf:application/pdf},
-}
-
 @inproceedings{goldsmith2007measuring,
   title={Measuring empirical computational complexity},
   author={Goldsmith, Simon F and Aiken, Alex S and Wilkerson, Daniel S},
   booktitle={Proceedings of the the 6th joint meeting of the European software engineering conference and the ACM SIGSOFT symposium on The foundations of software engineering},
   pages={395--404},
   year={2007}
-}
-
-@article{altschul_basic_1990,
-	title = {Basic local alignment search tool},
-	issn = {0022-2836},
-	doiNOTSHOWN = {10.1016/S0022-2836(05)80360-2},
-	abstract = {A new approach to rapid sequence comparison, basic local alignment search tool (BLAST), directly approximates alignments that optimize a measure of local similarity, the maximal segment pair (MSP) score. Recent mathematical results on the stochastic properties of MSP scores allow an analysis of the performance of this method as well as the statistical significance of alignments it generates. The basic algorithm is simple and robust; it can be implemented in a number of ways and applied in a variety of contexts including straightforward DNA and protein sequence database searches, motif searches, gene identification searches, and in the analysis of multiple regions of similarity in long DNA sequences. In addition to its flexibility and tractability to mathematical analysis, BLAST is an order of magnitude faster than existing sequence comparison tools of comparable sensitivity.},
-	language = {eng},
-	journal = {Journal of Molecular Biology},
-	author = {Altschul, S. F. and Gish, W. and Miller, W. and Myers, E. W. and Lipman, D. J.},
-	monthNOTSHOWN = oct,
-	year = {1990},
-	pmid = {2231712},
-	keywords = {Algorithms, Amino Acid Sequence, Base Sequence, Databases, Factual, Mutation, Sensitivity and Specificity, Sequence Homology, Nucleic Acid, Software}
-}
-
-@article{langmead_fast_2012,
-	title = {Fast gapped-read alignment with {Bowtie} 2},
-	copyright = {2012 Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved.},
-	issn = {1548-7105},
-	doiNOTSHOWN = {10.1038/nmeth.1923},
-	abstract = {The Bowtie 2 software achieves fast, sensitive, accurate and memory-efficient gapped alignment of sequencing reads using the full-text minute index and hardware-accelerated dynamic programming algorithms.},
-	language = {en},
-	urldate = {2020-01-15},
-	journal = {Nature Methods},
-	author = {Langmead, Ben and Salzberg, Steven L.},
-	monthNOTSHOWN = apr,
-	year = {2012}
-}
-
-@article{li_fast_2009,
-	title = {Fast and accurate short read alignment with {Burrows}--{Wheeler} transform},
-	issn = {1367-4803},
-	doiNOTSHOWN = {10.1093/bioinformatics/btp324},
-	abstract = {Motivation: The enormous amount of short reads generated by the new DNA sequencing technologies call for the development of fast and accurate read alignment programs. A first generation of hash table-based methods has been developed, including MAQ, which is accurate, feature rich and fast enough to align short reads from a single individual. However, MAQ does not support gapped alignment for single-end reads, which makes it unsuitable for alignment of longer reads where indels may occur frequently. The speed of MAQ is also a concern when the alignment is scaled up to the resequencing of hundreds of individuals., Results: We implemented Burrows-Wheeler Alignment tool (BWA), a new read alignment package that is based on backward search with Burrows–Wheeler Transform (BWT), to efficiently align short sequencing reads against a large reference sequence such as the human genome, allowing mismatches and gaps. BWA supports both base space reads, \eg from Illumina sequencing machines, and color space reads from AB SOLiD machines. Evaluations on both simulated and real data suggest that BWA is ∼10–20× faster than MAQ, while achieving similar accuracy. In addition, BWA outputs alignment in the new standard SAM (Sequence Alignment/Map) format. Variant calling and other downstream analyses after the alignment can be achieved with the open source SAMtools software package., Availability: http://maq.sourceforge.net, Contact: rd@sanger.ac.uk},
-	urldate = {2020-01-15},
-	journal = {Bioinformatics (Oxford, England)},
-	author = {Li, Heng and Durbin, Richard},
-	monthNOTSHOWN = jul,
-	year = {2009},
-	pmid = {19451168},
-	pmcid = {PMC2705234}
 }
