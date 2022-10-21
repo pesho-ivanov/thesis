@@ -1,12 +1,13 @@
 \begin{table}[t]
 	\centering
-	%\ra{1.2}
-	\caption{Runtime and memory comparison of optimal aligners. Simulated
-	Illumina and HiFi reads are aligned to linear \textit{E.~coli} and graph MHC
-	references. The runtime of the \seedh is expressed as absolute time per
-	aligned kbp, while the other aligners are compared to the \seedh at a fold
-	change. Additionally, the fraction of explored states is shown for the
-	\seedh and the \prefixh.}
+	\ra{0.7}
+	\caption[Performance comparison for the seed heuristic (short and long
+	reads; linear and graph references)]{Runtime and memory comparison of
+	optimal aligners. Simulated Illumina and HiFi reads are aligned to linear
+	\textit{E.~coli} and graph MHC references. The runtime of the \seedh is
+	expressed as absolute time per aligned kbp, while the other aligners are
+	compared to the \seedh at a fold change. Additionally, the fraction of
+	explored states is shown for the \seedh and the \prefixh.}
 	\label{SEEDtab:illumina table}
 	\sffamily
 	
@@ -21,7 +22,7 @@
         \textit{E.~coli} & MHC &\\
 \cmidrule{1-7}
 \mbox{\textbf{Seeds heuristic}}\xspace &&0.019 &0.041 &&0.001 &0.002 & \,s/kbp\\
-\quad\textit{(this work)}&&\color{mygrey}{2.4} &\color{mygrey}{2.6}
+&&\color{mygrey}{2.4} &\color{mygrey}{2.6}
 &&\color{mygrey}{2.4} &\color{mygrey}{1.7} & \,\color{mygrey}{GB (max used)}\\
 %\quad&&\color{mygrey}{1:250k} &\color{mygrey}{1:53k} &&\color{mygrey}{1:91k} &\color{mygrey}{1:61k} &\,\color{mygrey}{explored states} \\
 \quad&&\color{mygrey}{99.9996} &\color{mygrey}{99.9981} &&\color{mygrey}{99.9989} &\color{mygrey}{99.9984} &\,\color{mygrey}{\% skipped states} \\
