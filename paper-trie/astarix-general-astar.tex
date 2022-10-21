@@ -2,13 +2,13 @@
 Given a weighted graph $G=(V,E)$ with $E \subseteq V \times V \times
 \mathbb{R}_{\geq 0}$, the \A algorithm (abbreviated as \A) searches for the
 shortest path from sources $S \subseteq V$ to targets $T \subseteq V$. It is an
-extension of Dijkstra's algorithm that additionally leverages a \emph{heuristic
+extension of \dijkstra's algorithm that additionally leverages a \emph{heuristic
 function} $h \colon V \to \mathbb{R}_{\geq 0}$ to decide which paths to explore
 first.
 %
-If $h(u) \equiv 0$, \A is equivalent to Dijkstra's algorithm.
+If $h(u) \equiv 0$, \A is equivalent to \dijkstra's algorithm.
 %
-We provide an implementation of \A and Dijkstra in \cref{TRIEapp:astar}, but do not
+You can refer to the \A and \dijkstra algorithms in \cref{alg:astar}, but do not
 assume knowledge of either algorithm in the following.
 %
 At a high level, \A maintains the set of all \emph{explored} states, initialized
