@@ -50,13 +50,13 @@ the best path found so far.
 
 In the following, for convenience, we refer to the heuristic as $h$ (which is
 parameterized by $(u,s)$) instead of \textsc{Heuristic} (which is parameterized
-by $\langle u, i \rangle$). Further, we say that $h$ is optimistic if $h(u,s)$
+by $\langle u, i \rangle$). Further, we say that $h$ is admissible if $h(u,s)$
 is a lower bound on the cost for aligning all remaining letters (\ie,
 $q[i:|q|]$) starting from node $u$ (note that $s$ is a prefix of $q[i:|q|]$).
 
 \begin{samepage}
-\begin{thm} \label{TRIEthm:optimistic}
-	$h$ is optimistic.
+\begin{thm} \label{TRIEthm:admissible}
+	$h$ is admissible.
 \end{thm}
 \begin{proof}
 $h$ only considers the next $d'$ letters of $q$ instead of all

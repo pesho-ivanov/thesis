@@ -23,13 +23,14 @@ cost $h^*(u)$ of a shortest path in $G$ from $u$ to a target $t \in T$. Intuitiv
 good heuristic correlates well with the distance from $u$ to $t$.
 
 To ensure that \A indeed finds the shortest path, $h$ should be
-\emph{optimistic}:
+\emph{admissible}:
 
-\begin{definition}[Optimistic heuristic] A heuristic $h$ is \textit{optimistic}
-    if it provides a lower bound on the distance to the closest target: $\forall u. h(u) \leq h^*(u)$.
+\begin{definition}[Admissible heuristic] A heuristic $h$ is \textit{admissible}
+    if it provides a lower bound on the distance to the closest target: $\forall
+    u. h(u) \leq h^*(u)$.
 \end{definition}
 
-While any optimistic $h$ ensures that \A finds optimal
+While any admissible $h$ ensures that \A finds optimal
 alignments~\cite{dechter_generalized_1985}, the specific choice of $h$
 is critical for performance. In particular, decreasing the error $\delta(u) =
 h^*(u)-h(u)$ can only improve the performance of
