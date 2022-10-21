@@ -1,15 +1,15 @@
-\subsection{Generic Algorithms: \A and \dijkstra} \label{TRIEapp:astar}
+\section{\dijkstra and \A algorithm shortest path algorithms} \label{sec:astar}
 
-\cref{TRIEalg:generic-alignment} shows a generic implementation of the \A algorithm,
+\cref{alg:generic-alignment} shows a generic implementation of the \A algorithm,
 roughly following~\cite{dechter_generalized_1985}.
 We do not implement the reconstruction of the best alignment in order to simplify the presentation.
 The procedure \mbox{\textsc{BacktrackPath}} traces the best alignment back to the $source$, based on remembered edges used to optimize $f$ for each alignment state.
 %
-\cref{TRIEalg:generic-alignment} also shows a simple implementation of Dijkstra in
+\cref{alg:generic-alignment} also shows a simple implementation of Dijkstra in
 terms of \A.
 
 \begin{algorithm}[H]
-	\caption{\A algorithm (generalizes Dijkstra)}\label{TRIEalg:generic-alignment}
+	\caption{\A algorithm (generalizes Dijkstra)}\label{alg:generic-alignment}
 	\begin{algorithmic}[1]
 				
 		\Function{\A}{$G\colon \text{Graph}$,
