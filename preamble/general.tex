@@ -242,12 +242,21 @@
 \usepackage{thm-restate}
 \usepackage{etoolbox}
 \declaretheorem[name=Theorem]{thm}
-\declaretheorem[name=Proposition]{prop}
+%\declaretheorem[name=Proposition]{prop}
 \declaretheorem[name=Lemma]{lem}
 \declaretheorem[name=Definition]{definition}
-\declaretheorem[name=Observation]{observation}
+%\declaretheorem[name=Observation]{observation}
 \declaretheorem[name=Corollary]{cor}
 \declaretheorem[name=Remark]{remark}
+
+\crefname{thm}{theorem}{theorems}
+\Crefname{thm}{Theorem}{Theorems}
+\crefname{lem}{lemma}{lemmas}
+\Crefname{lem}{Lemma}{Lemmas}
+\crefname{cor}{corollary}{corollaries}
+\Crefname{cor}{Corollary}{Corollaries}
+\crefname{remark}{remark}{remarks}
+\Crefname{remark}{Remark}{Remarks}
 
 \newcommand{\A}[0]{A$^\star$\xspace}
 \newcommand{\csh}[0]{chaining seed heuristic\xspace}
