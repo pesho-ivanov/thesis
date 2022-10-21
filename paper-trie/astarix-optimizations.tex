@@ -39,12 +39,12 @@ heuristic value are typically not explored anyways. We investigate the effect of
 $\costcap$ in \cref{TRIEsubsec:parameter_estimation}.
 
 \begin{samepage}
-	\begin{thm} \label{TRIEthm:hbar_admissible}
+	\begin{thm} \label{TRIEthm:hcostcap_admissible}
 		$h_{\costcap}$ is admissible.
 	\end{thm}
 	\begin{proof}
-		We have $h_\costcap(u,s) \leq h(u,s)$ and that $h(u,s)$ is
-		admissible (\cref{TRIEthm:admissible}).
+		Follows from $h_\costcap(u,s) \leq h(u,s)$ and $h(u,s)$ being admissible
+		(\cref{TRIEthm:admissible}).
 	\end{proof}
 	\end{samepage}
 
@@ -75,9 +75,9 @@ h_d(u,s) := \min_{\pi \in \Pi} \cost{\pi}, \text{ where } \\
 	$h_d$ is admissible.
 \end{thm}
 \begin{proof}
-It suffices to show $h_d(u,s) \leq h(u, s)$ since $h(u, s)$ is admissible. In
-the case where all of $s$ is aligned, $h_d(u,s) = h(u, s)$. Otherwise, the
-unaligned letters of $s$ are not penalized, so $h_d(u,s) \leq h(u, s)$.
+	It suffices to show $h_d(u,s) \leq h(u, s)$ since $h(u, s)$ is admissible.
+	In the case where all of $s$ is aligned, $h_d(u,s) = h(u, s)$. Otherwise,
+	the unaligned letters of $s$ are not penalized, so $h_d(u,s) \leq h(u, s)$.
 \end{proof}
 \end{samepage}
 
