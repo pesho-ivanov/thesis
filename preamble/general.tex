@@ -19,23 +19,17 @@
   a5paper,%
 }{classicthesis}
 
-% Meta
 \input{preamble/meta}
-
-% Hyphenation
 \input{preamble/hyphenation}
 
-% Finetuning
 \newcounter{dummy}
 \newlength{\abcd}
 
-% Common abbreviations
 \newcommand{\ie}{i.\,e.\xspace}
 \newcommand{\Ie}{I.\,e.\xspace}
 \newcommand{\eg}{e.\,g.\xspace}
 \newcommand{\Eg}{E.\,g.\xspace}
 
-% Handy packages
 \usepackage{csquotes}  % smart quotes
 \usepackage[T1]{fontenc}
 \usepackage{xspace}
@@ -46,14 +40,11 @@
 % Biblatex
 \input{preamble/biblatex}
 
-% Redefine cite command to include space before
-% <http://tex.stackexchange.com/questions/11602/>
 \let\origcite\cite%
 \def\cite#1{\unskip~\origcite{#1}}
 
 % Math stuff
 \usepackage{amsmath}
-%\usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{isomath}
 
@@ -69,10 +60,8 @@
 \usepackage{subcaption}
 \captionsetup[sub]{margin=0pt,font=small,labelfont={rm}}
 
-% Blind text
 \usepackage{blindtext}
 
-% Hyperref
 \usepackage[dvipsnames]{xcolor}
 \usepackage[%
   hyperfootnotes=false,%
@@ -107,22 +96,10 @@
 \pgfplotsset{compat=newest}
 \usetikzlibrary{shapes.geometric}
 
-% textcircled numbers
-%\newcommand*\textcircled[1]{
-%  \tikz[baseline=(char.base)]{
-%    \node[shape=circle,draw,inner sep=1pt,font=\footnotesize,%
-%          minimum size=0.8\baselineskip] (char) {\figureversion{lining}#1};
-%  }
-%}
-
 \newcommand*\circled[1]{
   \tikz[baseline=(char.base)]{
      \node[shape=circle,draw,inner sep=1pt,font=\footnotesize] (char) {#1};}}
 
-% \tikzexternalize
-% \tikzsetexternalprefix{externalized/}
-
-% Autoreferences
 \renewcommand*{\figureautorefname}{Figure}
 \renewcommand*{\tableautorefname}{Table}
 \renewcommand*{\partautorefname}{Part}
@@ -133,23 +110,16 @@
 \providecommand{\subfigureautorefname}{\figureautorefname}%
 \usepackage[capitalize]{cleveref}
 
-% Acronyms
 \PassOptionsToPackage{printonlyused}{acronym}
 \usepackage{acronym}
 
-% List items
 \usepackage{enumitem}
 
-% Load classicthesis style
 \usepackage{scrhack}
 \usepackage{classicthesis}
 
-% Customize text width and length
-
 \KOMAoptions{headinclude=true,footinclude=false}
-%\setlength{\textwidth}{10.5cm} % 9 pt font
 \setlength{\textwidth}{11.6cm} % 10 pt font
-% text height set by golden ratio
 \areaset[current]{\textwidth}{1.618034\textwidth}
 
 % Page numbers in plain style (chapter titles)
@@ -158,27 +128,9 @@
 % Adjust distance to footer (default is too large)
 \setlength{\footskip}{19pt}
 
-%
-% Font setup
-%
-
-% Micro-typographic extensions
-%\usepackage[protrusion=true,expansion=true]{microtype}
-
-% Use Minion Pro
-%\usepackage[
-%  mathlf, % lining figures
-%]{MinionPro}
-%\linespread{1.06}
-
-%
-% Customize colors
-%
 \definecolor{chapter-color}{cmyk}{1, 0.50, 0, 0.25}
 \definecolor{link-color}{cmyk}{1, 0.50, 0, 0.25}
 \definecolor{cite-color}{cmyk}{0, 0.7, 0.9, 0.2}
-
-%\usepackage{hyperref}
 
 % Hyperref
 \usepackage{bookmark}
@@ -192,9 +144,7 @@
 % Chapter font
 \let\chapterNumber\undefined%
 \newfont{\chapterNumber}{eurb10 scaled 5500}
-%\newfont{\chapterNumber}{MinionPro-Regular-lf-t1 scaled 5500}
 
-% SI units
 \usepackage{siunitx}
 \sisetup{
   separate-uncertainty,
@@ -205,7 +155,6 @@
 \DeclareSIUnit\au{a.u.}
 \let\u=\SI%
 
-% Product type codes
 \newcommand{\productcode}[1]{\figureversion{lining}#1}
 
 % TOC
@@ -236,7 +185,6 @@
 \renewcommand*\dictumauthorformat[1]{--- #1}
 
 % Subfigure labels (manual)
-%\newcommand{\subfig}[1]{#1)}
 \newcommand{\subfig}[1]{(#1)}
 
 % CV
@@ -259,57 +207,34 @@
 \widowpenalty = 10000
 %\displaywidowpenalty = 10000
 
-
-%%%% global
-
 \renewcommand{\sfdefault}{phv}
 
-%%%%%%%%%%%%
-% PACKAGES %
-%%%%%%%%%%%%
-%https://tex.stackexchange.com/questions/5293/how-to-patch-a-package
-%\let\href\undefined
-%\usepackage{layout}
-%\usepackage[capitalize]{cleveref}
-\usepackage{xspace}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
 
 \usepackage{latexsym}  % \leadsto
-%\usepackage{subcaption}  % for subfigure
-%\usepackage[caption=false]{subfig}  % deprecated
 
 \usepackage{booktabs}   % tables: toprule, midrule
 \usepackage{colortbl}
 \usepackage{dsfont} % beautiful 1
 \usepackage{float}
 \usepackage{ragged2e}
-%\usepackage{natbib}
-
-%\usepackage{biblatex}  % \pno for page number \ppno for pageS
 
 \usepackage[]{todonotes}  % [disable]
 \usepackage{mathtools}   % smashoperator 
 
 \usepackage{graphicx}
 \usepackage{epigraph}
-%\usepackage{siunitx}  % aligning to decimal point
 
 \usepackage{svg}
 \usepackage{tikz}
 \usetikzlibrary{tikzmark,decorations.pathreplacing,calc}
-%\usepackage{tabu}% http://ctan.org/pkg/tabu
-%\usepackage{xcolor}% http://ctan.org/pkg/xcolor
-%\usepackage{tabularx}% http://ctan.org/pkg/tabularx
 
 \usepackage{multirow}   % tables
 
 \usepackage{numprint}   % tables
 \npdecimalsign{.}
-
-%\captionsetup{compatibility=false}   % gitlab compilation happy
-%\DeclareCaptionLabelSeparator{emdash}{\textemdash}  % solves a caption error
 
 \setcounter{tocdepth}{3}
 
@@ -323,21 +248,6 @@
 \declaretheorem[name=Observation]{observation}
 \declaretheorem[name=Corollary]{cor}
 \declaretheorem[name=Remark]{remark}
-% used packages
-
-%%%%%%%%%%%%
-%   MATH   %
-%%%%%%%%%%%%
-% math symbols and operations
-
-%%%%%%%%%%%%%%%
-% TEXT FORMAT %
-%%%%%%%%%%%%%%%
-% commands for text formatting
-
-%%%%%%%%%%%%
-%  OTHERS  %
-%%%%%%%%%%%%
 
 \newcommand{\A}[0]{A$^\star$\xspace}
 \newcommand{\csh}[0]{chaining seed heuristic\xspace}
@@ -346,8 +256,6 @@
 \newcommand{\sh}[0]{seed heuristic\xspace}
 \newcommand{\Sh}[0]{Seed heuristic\xspace}
 \newcommand{\SH}[0]{SH\xspace}
-%\newcommand{\mpp}[0]{multiple-path pruning\xspace}
-%\newcommand{\Mpp}[0]{Multiple-path pruning\xspace}
 
 \newcommand{\lcs}[0]{\mbox{LCS}\xspace}
 \newcommand{\lcskpp}[0]{\mbox{LCSk++}\xspace}
@@ -365,12 +273,10 @@
 \newcommand{\astarix}[0]{\mbox{\textsc{AStarix}}\xspace}
 \newcommand{\dijkstra}[0]{\mbox{Dijkstra}\xspace}
 
-
 \patchcmd{\paragraph}{\itshape}{\bfseries\boldmath}{}{}
 
 \setlength{\abovecaptionskip}{5pt plus 0pt minus 0pt}
 
-% general math
 \newcommand{\Oh}[0]{O}
 
 \newcommand{\seeds}{\mathcal S}
@@ -445,8 +351,6 @@
 \newcommand{\datasetOne}{CHM13}
 \newcommand{\datasetTwo}{NA12878}
 
-%\newenvironment{proof}{\paragraph{Proof:}}{\hfill$\square$}
-
 % paper-trie
 
 \usepackage{graphicx}     % Used for displaying a sample figure. If possible,figure files should be included in EPS format.
@@ -454,7 +358,6 @@
 \usepackage{wrapfig}
 \usepackage[T1]{fontenc}  %% for small caps \textsc
 \usepackage{libertine}
-%\usepackage{hyperref}     %% TODO: remove
 \usepackage{xspace}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -484,33 +387,23 @@
 % ALGORITHM DEFINITIONS %
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{algorithm}
-%\usepackage{algorithmicx}
 \usepackage[noend]{algpseudocode}  % layout for algorithmicx
 \algdef{SE}[SUBALG]{Indent}{EndIndent}{}{\algorithmicend\ }%
 \algtext*{Indent}
 \algtext*{EndIndent}
 
-%\usepackage{minted}
-
-\usepackage[dvipsnames]{xcolor}
 \usepackage{fontawesome}
 \usepackage[clock]{ifsym}  % special symbols
-%%\usepackage[linesnumbered,ruled,vlined,algo2e]{algorithm2e}
 
 % temporary (for debugging)
 \usepackage[]{todonotes}  % [disable]
 
 \usepackage{standalone}
-%\usepackage[hidelinks]{hyperref}
 
 \input{paper-trie/header-references}
 
-% If you use the hyperref package, please uncomment the following line
-% to display URLs in blue roman font according to Springer's eBook style:
 \renewcommand\UrlFont{\color{blue}\rmfamily}
 
-%% custom names
-%\newcommand{\astarix}[0]{\textsc{AStarix}\xspace}
 \newcommand{\astarixurl}[0]{\url{https://github.com/eth-sri/astarix}\xspace}
 \newcommand{\astarixurlwithbranch}[0]{\url{https://github.com/eth-sri/astarix/tree/recomb2020}\xspace}
 
@@ -550,14 +443,6 @@
 \newcommand{\AGV}[1][q]{\alignment[#1]{V}}
 \newcommand{\AGE}[1][q]{\alignment[#1]{E}}
 
-% stats
-%\newcommand{\st}[2]{\langle #1, #2 \rangle}
-
-% cost
-%\newcommand{\cost}[1]{\text{cost}(#1)}
-
-% PARAMETERS
-% c
 \newcommand{\costcap}[0]{c}
 
 % edit distance
@@ -578,39 +463,11 @@
 %\newcommand{\Oh}[0]{\mathcal{O}}
 \newcommand{\concat}[0]{{\cdot}}
 
-% efficiency icons
-%\newcommand{\muchfaster}[0]{\begingroup\color{green}\StopWatchEnd\endgroup\,}
-%\newcommand{\muchslower}[0]{\begingroup\color{red}\StopWatchEnd\endgroup\,}
-%\newcommand{\littlefaster}[0]{\begingroup\color{green}\textsuperscript{\StopWatchEnd}\endgroup\,}
-%\newcommand{\littleslower}[0]{\begingroup\color{red}\textsuperscript{\StopWatchEnd}\endgroup\,}
-%\newcommand{\muchsmaller}[0]{\begingroup\color{green}\faDatabase\endgroup\,}
-%\newcommand{\muchbigger}[0]{\begingroup\color{red}\faDatabase\endgroup\,}
-%\newcommand{\littlesmaller}[0]{\begingroup\color{green}\textsuperscript{\faDatabase}\endgroup\,}
-%\newcommand{\littlebigger}[0]{\begingroup\color{red}\textsuperscript{\faDatabase}\endgroup\,}
-
-%%%%%%%%%%
-% COLORS %
-%%%%%%%%%%
-
-% blue
 \definecolor{my-full-blue}{HTML}{1F77B4}
-%\definecolor{blue}{RGB}{31,119,180} 
-
-% orange
 \definecolor{my-full-orange}{HTML}{FF7F0E}
-%\definecolor{orange}{RGB}{255,127,14}
-
-% green
 \definecolor{my-full-green}{HTML}{2CA02C}
-%\definecolor{green}{RGB}{44,160,44}
-
-% red
 \definecolor{my-full-red}{HTML}{d62728}
-%\definecolor{red}{RGB}{214,39,40}
-
-% purple
 \definecolor{my-full-purple}{HTML}{9467bd}
-%\definecolor{purple}{RGB}{148,103,189}
 
 % lighter shades
 \colorlet{my-blue}{my-full-blue!30}
@@ -623,22 +480,14 @@
 \usepackage{xspace}
 \usepackage{amsmath}
 \usepackage{amssymb}
-%\usepackage[hidelinks]{hyperref}
 \usepackage{subcaption}  % for subfigure
 \usepackage{booktabs}   % tables: toprule, midrule
 \usepackage{colortbl}
-%\usepackage[square,sort,comma,numbers]{natbib}
-
-%\usepackage[doublespacing]{setspace}
 
 \usepackage{tikz}
 \usetikzlibrary{tikzmark,decorations.pathreplacing,calc}
-%\usepackage{tabu}% http://ctan.org/pkg/tabu
-%\usepackage{xcolor}% http://ctan.org/pkg/xcolor
-%\usepackage{tabularx}% http://ctan.org/pkg/tabularx
 
 \usepackage{multirow}   % tables
-
 \usepackage{numprint}   % tables
 \npdecimalsign{.}
 
@@ -648,107 +497,27 @@
 
 \usepackage{thmtools}
 \usepackage{thm-restate}
-%\declaretheorem[name=Theorem]{thm}
-%\declaretheorem[name=Lemma]{lem}
 
-%%%%%%%%%%%%
-%   MATH   %
-%%%%%%%%%%%%
-% math symbols and operations
-
-% If you use the hyperref package, please uncomment the following line
-% to display URLs in blue roman font according to Springer's eBook style:
-%\renewcommand\UrlFont{\color{blue}\rmfamily}
-
-%%%%%%%%%%%%%%%
-% TEXT FORMAT %
-%%%%%%%%%%%%%%%
-% tools and algorithms
-%\newcommand{\A}[0]{A$^\star$\xspace}
 \newcommand{\seedh}[0]{\mbox{seed heuristic}\xspace}
 \newcommand{\prefixh}[0]{\mbox{prefix heuristic}\xspace}
 
-%\newcommand{\dijkstra}[0]{\mbox{\textsc{\dijkstra}}\xspace}
-%\newcommand{\astarix}[0]{\mbox{\textsc{AStarix}}\xspace}
 \newcommand{\astarixseeds}[0]{\mbox{\textsc{AStarix-seeds}}\xspace}
 \newcommand{\astarixprefix}[0]{\mbox{\textsc{AStarix-prefix}}\xspace}
-%\newcommand{\graphaligner}[0]{\mbox{\textsc{GraphAligner}}\xspace}
-%\newcommand{\vg}[0]{\mbox{\textsc{VG}}\xspace}
-%\newcommand{\pasgal}[0]{\mbox{\textsc{PaSGAL}}\xspace}
 \newcommand{\vargas}[0]{\mbox{\textsc{Vargas}}\xspace}
 \newcommand{\hga}[0]{\mbox{\textsc{HGA}}\xspace}
-%\newcommand{\astarixurl}[0]{\mbox{\url{https://github.com/eth-sri/astarix}}\xspace}
 \newcommand{\astarixbiorxivurl}[0]{\mbox{\url{https://www.biorxiv.org/content/10.1101/2021.11.05.467453}}\xspace}
-%\newcommand{\astarixurlwithbranch}[0]{\url{https://github.com/eth-sri/astarix/tree/recomb2022}\xspace}
 
 \newcommand{\art}[0]{\mbox{\textsc{ART}}\xspace}
 \newcommand{\randomreads}[0]{\mbox{\textsc{randomreads.sh}}\xspace}
 
-% reference graph
-%\newcommand{\reference}[1]{#1_\texttt{r}}
-%\newcommand{\RG}[0]{\reference{G}}
-%\newcommand{\RGV}[0]{\reference{V}}
-%\newcommand{\RGE}[0]{\reference{E}}
-% trie
-%\newcommand{\trie}[1]{#1_\texttt{r}^\texttt{+}}
-%\newcommand{\TG}[0]{\trie{G}}
-%\newcommand{\TGV}[0]{\trie{V}}
-%\newcommand{\TGE}[0]{\trie{E}}
 \newcommand{\trieroot}{\ensuremath{\mli{root}}}
-% edit graph
-%\newcommand{\edit}[1]{#1_\texttt{e}}
-%\newcommand{\EG}[0]{\edit{G}}
-%\newcommand{\EGV}[0]{\edit{V}}
-%\newcommand{\EGE}[0]{\edit{E}}
-% alignment graph
-%\newcommand{\alignment}[2]{#2_\texttt{a}^{#1}}
-%\newcommand{\AG}[1][q]{\alignment{#1}{G}}
-%\newcommand{\AGV}[1][q]{\alignment{#1}{V}}
-%\newcommand{\AGE}[1][q]{\alignment{#1}{E}}
 
-% states: $h\st{u}{i}$ produces `h<u,i>'
-%\newcommand{\st}[2]{\langle #1, #2 \rangle}
-
-%\newcommand{\seeds}[0]{\mathit{Seeds}}
-
-% heuristic function
-%\newcommand{\h}[0]{$h$}
-
-% cost
-%\newcommand{\cost}[1]{\text{cost}(#1)}
 \newcommand{\Costs}[0]{\mathbb{R}_{\geq 0}}
 
-% PARAMETERS
-% c
-%\newcommand{\costcap}[0]{c}
-
-% edit distance
 \newcommand{\cedits}[0]{\Delta}
-%\newcommand{\cmatch}[0]{\Delta_\text{match}}
-%\newcommand{\csubst}[0]{\Delta_\text{subst}}
-%\newcommand{\cins}[0]{\Delta_\text{ins}}
-%\newcommand{\cdel}[0]{\Delta_\text{del}}
-%\newcommand{\dist}[0]{\mli{ED_\Delta}}
 
-% bounds
 \newcommand{\maxdel}[0]{n_\text{del}}
 \newcommand{\maxins}[0]{n_\text{ins}}
-
-% paragraphs
-%\newcommand{\para}[1]{\vspace{0.8em}\noindent\textbf{#1.}}
-
-% general math
-%\DeclareMathOperator*{\argmax}{arg\,max}
-%\DeclareMathOperator*{\argmin}{arg\,min}
-%\newcommand{\mli}[1]{\mathit{#1}}
-%\newcommand{\Oh}[0]{\mathcal{O}}
-%\newcommand{\concat}[0]{{\cdot}}
-
-%%%%%%%%%%%%
-%  OTHERS  %
-%%%%%%%%%%%%
-
-%\newcommand{\S}[0]{S}   % Set of seeds
 
 % crumbs icons
 \newcommand{\bluecrumb}{%
@@ -782,9 +551,6 @@
 \newcommand{\qedwhite}{\hfill \ensuremath{\Box}}
 
 %% COLORS
-
-%\usepackage[usenames, dvipsnames]{color} % for textcolor
-\usepackage{xcolor} % for definecolor
 
 \definecolor{green-highlight}{HTML}{caff97}
 \definecolor{pink-highlight}{HTML}{f8e2e2}
