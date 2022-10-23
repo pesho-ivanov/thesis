@@ -2,13 +2,120 @@
 
 \graphicspath{{\dir/}}
 
+Sequence alignment is a class of combinatorial problems that is of primary
+importance for analysis of genetic data. Algorithms and tools for alignment have
+been thoroughly developed and routinely used for genome assembly, RNA
+quantification, detecting splicing, oncology, multiple sequence alignment (MSA),
+and evolutionary biology. Types of sequence alignment include global alignment,
+semi-global alignment, mapping, local alignment, and others. For each type, a
+common tradeoff that had to be done is between the alignment accuracy and the
+performance to find it. An additional difficulty is the fact that in the
+upcoming pangenomic era, these algorithms must be also applicable to complex
+graph structures. For more than 60 years, a linear sequence has been extremely
+useful as a representation of a single genome. The affordability of sequencing
+technologies enables not only to sequence genomes deeper but also to sequence
+many genomes (e.g. of organisms or single cells), building a pangenome (an
+abstracted genome that represents the genetic variation of a whole clade). The
+shift towards population studies in the last decade motivates the adoption of
+graph data structures which serve as compressed representations of collections
+of related genomes (genomes are paths in the graph). During my PhD program, we
+initiated a new direction of sequence alignment based on the informed shortest
+path algorithms A* that we have shown to be both provably optimal, practically
+scalable and more performant than existing aligners in certain cases. The
+objective of this project is to develop our work on A* for sequence alignment
+from prototypical to practical, which includes the development of algorithms,
+formal proofs and software development. Our specific aim is to use the already
+constructed base for the development of AStarix as an industrial-scale mapper
+handling human-scale graph references, long and noisy reads, while being
+competitive in runtime and memory even to suboptimal aligners. In order to
+fulfill this aim, work in several directions will be needed: 1) rigorous
+development of the seed heuristic theory, 2) theoretical analysis of the
+expected runtime, 3) implementation optimized for runtime, memory,
+parallelization and use-cases. Our vision is that A* could become the default
+approach for sequence alignment, useful to the computational biology,
+bioinformatics and the more general algorithmic community.
+
 \label{ch:introduction}
 
-\section{Research goals and scope}
-\paragraph{Problem statement}
-\paragraph{Problem domain}
+%\section{Research goals and scope}
+%\paragraph{Problem statement}
+%\paragraph{Problem domain}
 
 \section{Preliminaries}
+
+fjdlkfjdsl fjasfjdaslf kajf ladjfl ad jfasdlfjsadlj fsalf jsadl jfsad fjsafj
+asdl fajsl fjafj dsl faj fjal fjasl  jfldsfjlads jajf lad fjlal j
+
+%\begin{figure}
+%  \raggedleft
+%  \begin{minipage}{5cm}
+%    \includegraphics[width=5cm]{alignment-types}
+%    \caption{Some caption that spans more than a line and some additional text}
+%  \end{minipage}
+%\end{figure}
+
+%\begin{figure}
+%    \includegraphics[width=.6\textwidth,left]{alignment-types}
+%    \caption{left aligned image}
+%\end{figure}
+
+%\begin{landscape}
+%    \vspace*{1cm}
+%    \hspace*{2cm}\includegraphics[width = 0.4 \linewidth]{alignment-types}\hspace*{-2cm}
+%\end{landscape}
+
+%\begin{minipage}{0.3\linewidth}
+%	\includegraphics[width=\linewidth]{alignment-types}
+%\end{minipage}\hfil
+
+%\begin{figure} %{r}{0.48\linewidth}
+%	\centering
+%	\includegraphics[width=\linewidth]{alignment-types}
+%	\caption[Alignment types]{Alignment types.}
+%	\label{fig:alignment_types}
+%\end{figure}
+
+\section{Current state of research in the field}
+
+Comparing one sequence to another is a basic combinatorial problem that has
+several variations (shown on the right), each applicable in computational
+biology. Needleman-Wunsch (1970)  and Smith-Waterman (1981) are dynamic
+programming (DP) algorithms that serve as base solutions for global (or
+computing edit distance of two strings) and semi-global alignments (or mapping
+when a set of sequences is being aligned). Given that there is both biological
+and technical variation in the data, a biologically plausible alignment is one
+that minimizes the corresponding differences (e.g. insertions, deletions and
+substitutions), so metrics based on edit distance are usually used. Backurs and
+Indyk (2015) showed that even calculating the edit distance between two
+sequences (without finding an alignment), is not generally solvable in
+strongly-subquadratic time. Moreover, even for related sequences of lengths n
+and m and edit distance s, the fastest optimal global (Marco-Sola et al., 2021;
+Šošic and Šikic, 2017)) and semi-global aligners (Rautiainen et al., 2017) scale
+quadratically when the edit distance increases with the length, which is the
+case for sequencing errors and biological variation: O(s*min(n,m))=O(enm) and
+O(nm), respectively, where e is the error rate (Navarro, 2001). In the age of
+big data and long reads (e.g. PacBio, ONP), this quadratic scaling with length
+is prohibitive, so the algorithms with practical usage (e.g. minimap2, bwt,
+kallisto) do not guarantee optimality but run in subquadratic time (Kucherov,
+2019). The gap between fast and optimal global alignment has been recognized but
+no optimal algorithms are known that run subquadratically for related sequences
+(Medvedev, 2022a). The interest towards genome graphs keeps increasing with the
+first International Genome Graph Symposium being held this year in Ascona,
+Switzerland (2022). The benefits of using graph references representing
+biological variation has been demonstrated to increase the alignment quality
+(Garrison et al., 2018). The transition towards graph references only aggravates
+the computational issues owing to the potentially complex graph topology (Equi
+et al., 2019). The optimal algorithms used in computational biology explore the
+search space of possible alignments in an uninformed fashion: by aligning a
+prefix of one sequence to a prefix of the other. This contrasts with the
+informed search algorithms such as the algorithm by Hunt and Szymanski (1977)
+solving the longest common subsequence (LCS) problem (a special case of the edit
+distance alignment). Sequence alignment can naturally be formulated as a
+shortest path problem solvable by Dijkstra’s algorithm (Ukkonen, 1985). A* is an
+informed generalization of Dijkstra’s algorithm (Hart, 1968) but it has not been
+successfully applied to sequence alignment. A* may be the missing piece in the
+“a major open problem to implement an algorithm with linear-like empirical
+scaling on inputs where the edit distance is linear in n” (Medvedev, 2022a).
 
 \section{Global and semi-global alignment}
 
