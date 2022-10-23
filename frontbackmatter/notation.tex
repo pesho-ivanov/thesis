@@ -7,72 +7,49 @@
     \section*{Frequently used terms}%
     \vskip -2em
     \begin{tabularx}{\textwidth}{lX}
-      %\toprule%
-      %\tableheadline{Symbol} & \tableheadline{Meaning} \\
-      %\midrule%
-      Alignment & Any kind of alignment (\eg semi-global, global)\\
-      Mapping & Assuming multiple alignments on the same reference\\
-      Performance & Includes runtime and memory footprint\\
-      %\bottomrule
+    	%\toprule%
+    	%\tableheadline{Symbol} & \tableheadline{Meaning} \\
+    	%\midrule%
+    	alignment 			& letter-to-letter correspondence (\eg semi-global, global) \\
+    	mapping 			& same as alignment but for multiple same reference \\
+    	performance 		& Includes runtime and memory footprint \\
+		admissible heuristic& Lower bound on the remaining distance ($h \leq \h$) \\
+    	%Edit distance 	& Minimal (weighted) number of insertional Includes runtime and memory footprint \\
+    	%\bottomrule
     \end{tabularx}
-
 
     \section*{Frequently used symbols}%
     \vskip -2em
     \begin{tabularx}{\textwidth}{lX}
-      %\toprule%
-      %\tableheadline{Symbol} & \tableheadline{Meaning} \\
-      %\midrule%
-      $E$ & energy \\
-      $m$ & rest mass \\
-      $p$ & impulse \\
-      %\bottomrule
+		$\Sigma = \{A,C,G,T\}$ 			& alphabet \\
+		$A, B \in \Sigma^*$				& sequences \\
+		$ed(A,B)$						& edit distance \\
+		$\langle u,i \rangle$ 			& state after aligning  \\
+		$h$ 							& heuristic function \\
+		$g$								& best distance from start \\
+		$f = g + h$						& estimated total distance \\
     \end{tabularx}
 
-    \section*{Physical constants}
-    \sisetup{separate-uncertainty=false}
-    \vskip -2em
-    \begin{tabularx}{\textwidth}{lX}
-$c$ & speed of light in vacuum, $c=\u{299792458}{\metre\per\second}$ \\
-    \end{tabularx}
-    \begin{flushright}
-    (CODATA 2014) 
-    \end{flushright}
-    \sisetup{separate-uncertainty=true}
 \endgroup
 
-%\input{paper-trie/appendix-notation}
-%\input{paper-global/paper/app-notation}
 %\subsection{Notation}
 
 \newcommand*{\tabindent}{\hspace{3mm}}
 \begin{table}[h]
   \centering
-  \caption{Notation used in this paper.}
   \begin{tabular}{ll}
-	\hline
-	\textbf{Object}	         & \textbf{Notation}\\
-	\hline
-	\textbf{Sequences}  & \\
-	\tabindent Alphabet            	& $\Sigma = \{A,C,G,T\}$ \\
-	\tabindent Sequences            &
-									  $A = \overline{a_0a_1 \dots a_i \dots a_{n-1}}\in \Sigma^*$\\
-							 & $B = \overline{b_0b_1 \dots b_j \dots b_{m-1}} \in \Sigma^*$ \\
-	\tabindent Subsequence          & $a_{i..i'} := a_ia_{i+1}\dots a_{i'-1}$\\
-	\tabindent Edit distance        & $ed(A,B)$\\
-	\hline
-	\textbf{Edit graph} & \\
-	\tabindent Graph& $G=(V,E)$\\
-	\tabindent Vertices (states) & $u,v \in V=\{\st ij\, |\, 0\leq i\leq n, 0\leq j
-								   \leq m\}$\\
-	\tabindent Edges& match/substitution $\st ij \to \st {i+1}{j+1}$\\
-							 & deletion $\st ij \to \st {i+1}{j}$\\
-							 & insertion $\st ij \to \st {i}{j+1}$\\
-	\tabindent Distance & $d(u, v)$\\
-	\tabindent Path, alignment & $\pi: \path uv$\\
-	\tabindent Shortest path & $\pi^*$\\
-	\tabindent Cost & $\cost(\pi)$\\
-	\tabindent Preceding & $u \preceq v$, $m_1\preceq m_2$ \\
+%	\textbf{Edit graph} & \\
+%	\tabindent Graph& $G=(V,E)$\\
+%	\tabindent Vertices (states) & $u,v \in V=\{\st ij\, |\, 0\leq i\leq n, 0\leq j
+%								   \leq m\}$\\
+%	\tabindent Edges& match/substitution $\st ij \to \st {i+1}{j+1}$\\
+%							 & deletion $\st ij \to \st {i+1}{j}$\\
+%							 & insertion $\st ij \to \st {i}{j+1}$\\
+%	\tabindent Distance & $d(u, v)$\\
+%	\tabindent Path, alignment & $\pi: \path uv$\\
+%	\tabindent Shortest path & $\pi^*$\\
+%	\tabindent Cost & $\cost(\pi)$\\
+%	\tabindent Preceding & $u \preceq v$, $m_1\preceq m_2$ \\
 	\hline
 	\textbf{A*} & \\
 	\tabindent Start and target state& $v_s, v_t \in V$\\
@@ -81,9 +58,9 @@ $c$ & speed of light in vacuum, $c=\u{299792458}{\metre\per\second}$ \\
 	% \tabindent Distance $v_s$ to $v_t$ via $u$& $\f = \g + \h$\\
 	\tabindent Heuristic & $h$\\
 	\tabindent Best distance from start & $g$  \\
-	\tabindent Estimated distance & $f = g + h$\\
+	\tabindent Estimated total distance & $f = g + h$\\
 	\tabindent Admissible heuristic & $h \leq \h$\\
-	\tabindent Consistent heuristic & $h(u) \leq d(u,v) + h(v)$\\
+%	\tabindent Consistent heuristic & $h(u) \leq d(u,v) + h(v)$\\
 	\hline
 	\multicolumn{2}{l}{\textbf{Seeds and matches}} \\
 	\tabindent Seed length and potential & $k$, $r$ \\
@@ -108,7 +85,6 @@ $c$ & speed of light in vacuum, $c=\u{299792458}{\metre\per\second}$ \\
 
 \begin{table}[!h]
 	\centering
-	\caption{Notational conventions.}
 	\begin{tabular}{ll}
 	\hline
 	\textbf{Object}	         & \textbf{Notation}\\
@@ -118,15 +94,15 @@ $c$ & speed of light in vacuum, $c=\u{299792458}{\metre\per\second}$ \\
 	\,\, Length     & $m := \lvert q \rvert\in \mathbb{N}$\\
 	\,\, Position in read & $q[i] \in \Sigma$, $i \in \{0,\dots,m-1\}$\\	
 	\hline
-	\textbf{Reference graph}& $\RG=(\RGV,\RGE)$\\
-	\,\, Size& $\lvert \RG \rvert := \lvert \RGV \rvert + \lvert \RGE \rvert \in \mathbb{N}$\\
-	\,\, Nodes& $u, v \in \RGV$\\
-	\,\, Number of nodes& $N := \lvert \RGV \rvert \in \mathbb{N}$\\
-	\,\, Edges& $e \in \RGE := \RGV \times \RGV \times \Sigma$\\
-	\,\, Edge letter& $\ell \in \Sigma$\\
-	\textbf{Reference graph with a trie} & $\TG = (\TGV, \TGE)$ \\
-	\,\, Trie depth  & $D \in \mathbb{N}_{>0}$\\
-	\hline
+%	\textbf{Reference graph}& $\RG=(\RGV,\RGE)$\\
+%	\,\, Size& $\lvert \RG \rvert := \lvert \RGV \rvert + \lvert \RGE \rvert \in \mathbb{N}$\\
+%	\,\, Nodes& $u, v \in \RGV$\\
+%	\,\, Number of nodes& $N := \lvert \RGV \rvert \in \mathbb{N}$\\
+%	\,\, Edges& $e \in \RGE := \RGV \times \RGV \times \Sigma$\\
+%	\,\, Edge letter& $\ell \in \Sigma$\\
+%	\textbf{Reference graph with a trie} & $\TG = (\TGV, \TGE)$ \\
+%	\,\, Trie depth  & $D \in \mathbb{N}_{>0}$\\
+%	\hline
 	\textbf{Alignment graph}& $\AG=(\AGV,\AGE)$\\
 	\,\, State& $\langle u,i \rangle \in \AGV := V \times \{0,\dots,m\}$\\
 	\,\, Edges& $(\langle u,i \rangle, \langle v,j \rangle,\ell,w) \in \AGE
@@ -141,12 +117,12 @@ $c$ & speed of light in vacuum, $c=\u{299792458}{\metre\per\second}$ \\
 	\,\, Seed length& $k$\\
 	\,\, Maximum number of deletions& $\maxdel$\\
 	\,\, Maximum number of insertions& $\maxins$\\
-	\hline
-	\textbf{In all graphs}& $G = (V,E) \in \{ \RG, \EG, \AG \}$ \\
-	\,\, Walk& $\pi \in G: \pi \in E^*$\\
-	\,\, Walk spelling& $\sigma(\pi) \in \Sigma^*$\\
-%	\,\, Walk begin and end nodes& $\mli{begin}(\pi), \mli{end}(\pi) \in V$\\
-	\,\, Path& A walk without repeating nodes\\
+%	\hline
+%	\textbf{In all graphs}& $G = (V,E) \in \{ \RG, \EG, \AG \}$ \\
+%	\,\, Walk& $\pi \in G: \pi \in E^*$\\
+%	\,\, Walk spelling& $\sigma(\pi) \in \Sigma^*$\\
+%%	\,\, Walk begin and end nodes& $\mli{begin}(\pi), \mli{end}(\pi) \in V$\\
+%	\,\, Path& A walk without repeating nodes\\
 	\hline
 	\textbf{\A} & $A^\star(G,S,T,h)$\\
 	\,\, Graph& $G=(V,E)$\\

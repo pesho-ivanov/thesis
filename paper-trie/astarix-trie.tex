@@ -24,14 +24,12 @@ from the source $\epsilon$. In particular, each alignment on $\TG$ can
 be translated into an alignment on $\RG$ (we omit this translation
 here).
 
-\begin{wrapfigure}{r}{0.48\linewidth}
-	%\vspace{-20pt}
-	\centering
-	\includegraphics[width=\linewidth]{figs/tree}
+\begin{floatingfigure}[l]{0.5\textwidth}
+	\includegraphics[width=0.5\linewidth]{figs/tree}
 	\caption[Indexing the reference with a trie]{$\TG$ enables semi-global alignment by extending $\RG$ with a trie.}
 	\label{TRIEfig:trie}
-	%\vspace{-25pt}
-\end{wrapfigure}
+\end{floatingfigure}
+
 \cref{TRIEfig:trie} shows an example trie. To construct it, we first associate with
 every node $v \in \RGV$ the set $\mathcal{S}_v$ of its $D$-mers (orange boxes in
 \cref{TRIEfig:trie}): spells of paths ending in $v$ and of length $D$. Our goal is
