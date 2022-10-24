@@ -1,4 +1,4 @@
-    % Notation
+	\newpage
     \refstepcounter{dummy}
     \pdfbookmark[1]{Notation}{notation}
     \markboth{\spacedlowsmallcaps{Notation}}{\spacedlowsmallcaps{Notation}}
@@ -7,147 +7,48 @@
     \section*{Frequently used terms}%
     \vskip -2em
     \begin{tabularx}{\textwidth}{lX}
-    	%\toprule%
-    	%\tableheadline{Symbol} & \tableheadline{Meaning} \\
-    	%\midrule%
-    	edit operation		& insertion, deletion or substitution of a single letter \\
-    	edit distance		& minimal weighted number of edits between two sequences \\
+    	edit distance		& minimal cost to edit one sequence to another \\
     	alignment~(\cref{fig:alignment-types}) & correspondence between letters of two sequences \\
 		\,$\sbullet$ global 			& fully aligning two sequences to each other \\
 		\,$\sbullet$ semi-global		& fully aligning a query somewhere in a reference \\
 		\,$\sbullet$ mapping 		& multiple semi-global alignments to the same reference \\[5pt]
     	dynamic programming & optimization technique by reusing partial results \\
-    	graph reference		& a compressed representation of multiple references \\
-    	alignment graph &  \\
-    	\,$\sbullet$ state&  \\
+    	\,$\sbullet$ explored state&  \\
     	\,$\sbullet$ expanded state&  \\
-    	trie index 			& tree structure with short reference subsequences \\
-		\dijkstra & uninfomred shortest path algorithm \\
+		\dijkstra's algorithm & uninfomred shortest path algorithm \\
     	\A algorithm 		& generalization of \dijkstra, informed by a heuristic \\
 		\,$\sbullet$ admissible heuristic		& lower bound on the remaining shortest distance \\
-		%estimation of the remaining distance \\
-		%\,$\sbullet$ admissible		&  \\
+    	graph reference		& a compressed representation of multiple references \\
+    	trie index 			& tree structure with short reference subsequences \\
     	performance 		& runtime and memory footprint \\
-    	%\bottomrule
+    	seed heuristic		& runtime and memory footprint \\
+		\,$\sbullet$ chaining & \\
+		\,$\sbullet$ inexact matching & \\[5pt]
+		\,$\sbullet$ potential & maximal edits that the seeds can ``compensate'' for \\
     \end{tabularx}
 
+	\newpage
     \section*{Frequently used symbols}%
     \vskip -2em
     \begin{tabularx}{\textwidth}{lX}
 		$\Sigma = \{A,C,G,T\}$ 			& alphabet \\
 		$A, B \in \Sigma^*$				& sequences \\
+		$q \in \Sigma^m$				& query/read \\
+%    	edit operation		& insertion, deletion or substitution of a single letter \\
+		$\cmatch, \csubst, \cins, \cdel \geq 0$ & edit costs for match, insertion, deletion or substitution of a single letter \\[5pt]
 		$ed(A,B)$						& edit distance \\
-		$\langle u,i \rangle$ 			& state after aligning  \\
-		$h$ 							& heuristic function \\
+		$\RG=(\RGV,\RGE)$               & reference graph \\[5pt]
+	Position in read & $q[i] \in \Sigma$, $i \in \{0,\dots,m-1\}$\\	
+		$\st{u}{i}$ 					& state (subalignment of A)state heuristic function \\
+		$\AG=(\AGV,\AGE)$ 				& alignment graph on states $\AGV$\\
 		$g$								& best distance from start \\
+		$h\colon V \to \Costs$ 			& heuristic function \\
 		$f = g + h$						& estimated total distance \\
+		$h\st{u}{i}$					& seed heuristic \\
+		$s\in \seeds$					& seeds \\
+		$m \in \matches_s$				& matches of seed $s$ \\
+		$\bluecrumb{}, \yellowcrumb{}, \violetcrumb{}, \greencrumb{}$ & crumbs on nodes for match $m$ \\
+		$k, r$ 							& seed length, potential \\
+		$D$								& Trie depth \\
     \end{tabularx}
-
 \endgroup
-
-%\subsection{Notation}
-
-\newcommand*{\tabindent}{\hspace{3mm}}
-\begin{table}[h]
-  \centering
-  \begin{tabular}{ll}
-%	\textbf{Edit graph} & \\
-%	\tabindent Graph& $G=(V,E)$\\
-%	\tabindent Vertices (states) & $u,v \in V=\{\st ij\, |\, 0\leq i\leq n, 0\leq j
-%								   \leq m\}$\\
-%	\tabindent Edges& match/substitution $\st ij \to \st {i+1}{j+1}$\\
-%							 & deletion $\st ij \to \st {i+1}{j}$\\
-%							 & insertion $\st ij \to \st {i}{j+1}$\\
-%	\tabindent Distance & $d(u, v)$\\
-%	\tabindent Path, alignment & $\pi: \path uv$\\
-%	\tabindent Shortest path & $\pi^*$\\
-%	\tabindent Cost & $\cost(\pi)$\\
-%	\tabindent Preceding & $u \preceq v$, $m_1\preceq m_2$ \\
-%	\hline
-%	\textbf{A*} & \\
-%	\tabindent Start and target state& $v_s, v_t \in V$\\
-%	\tabindent Distance from $v_s$ & $\g = d(v_s, \cdot)$\\
-%	\tabindent Distance to $v_t$& $\h = d(\cdot, v_t)$\\
-%	% \tabindent Distance $v_s$ to $v_t$ via $u$& $\f = \g + \h$\\
-%	\tabindent Heuristic & $h$\\
-%	\tabindent Best distance from start & $g$  \\
-%	\tabindent Estimated total distance & $f = g + h$\\
-%	\tabindent Admissible heuristic & $h \leq \h$\\
-%	\tabindent Consistent heuristic & $h(u) \leq d(u,v) + h(v)$\\
-	\hline
-	\multicolumn{2}{l}{\textbf{Seeds and matches}} \\
-	\tabindent Seed length and potential & $k$, $r$ \\
-	\tabindent Seeds & $s\in \seeds$, $s_l = A_{l \cdot k..(l+1)\cdot k}$ \\
-	\tabindent Seeds in suffix & $\seeds_{\geq i}$ \\
-	\tabindent Matches (per seed)& $m \in \matches$, $\matches_s$\\
-	\tabindent Cost of match & $0 \leq \cost(m) < r$\\
-	\tabindent Score of match & $0 < \matchscore(m) = r - \cost(m) \leq r$\\
-	\tabindent Score of seed & $\seedscore(s) = \max_{m\in \matches_s} \matchscore(m)$\\
-	\hline
-	\multicolumn{2}{l}{\textbf{\Sh and \csh}} \\
-	\tabindent Potential & $P\st ij  = r \cdot |\seeds_{\geq i}|$ \\
-	\tabindent State score (sh) &
-							 $\shscore \st ij = \sum_{s\in \seeds_{\geq i}} \seedscore(s)$ \\
-	\tabindent Chain score & $\chainscore(m) = \max_{m\preceq m_1 \preceq \dots} \sum_i \matchscore(m_i)$\\
-	\tabindent State score (csh) & $\cshscore(u) = \max_{u\preceq m} \chainscore(m)$\\
-	\tabindent \Sh & $\hshM(u) = P(u) - \shscore(u)$\\
-	\tabindent \Csh & $\hcshM(u) = P(u) - \cshscore(u)$\\
-	\tabindent Layer & $\layer_\ell = \{u\, | \, \cshscore(u) \geq \ell\}$
-  \end{tabular}
-\end{table}
-
-\begin{table}[!h]
-	\centering
-	\begin{tabular}{ll}
-	\hline
-	\textbf{Object}	         & \textbf{Notation}\\
-	\hline
-	\textbf{Queries}  & $Q = \{ q_i \vert q_i \in \Sigma^m \}$ \\
-	\,\, Read            & $q \in Q$ \\
-	\,\, Length     & $m := \lvert q \rvert\in \mathbb{N}$\\
-	\,\, Position in read & $q[i] \in \Sigma$, $i \in \{0,\dots,m-1\}$\\	
-	\hline
-%	\textbf{Reference graph}& $\RG=(\RGV,\RGE)$\\
-%	\,\, Size& $\lvert \RG \rvert := \lvert \RGV \rvert + \lvert \RGE \rvert \in \mathbb{N}$\\
-%	\,\, Nodes& $u, v \in \RGV$\\
-%	\,\, Number of nodes& $N := \lvert \RGV \rvert \in \mathbb{N}$\\
-%	\,\, Edges& $e \in \RGE := \RGV \times \RGV \times \Sigma$\\
-%	\,\, Edge letter& $\ell \in \Sigma$\\
-%	\textbf{Reference graph with a trie} & $\TG = (\TGV, \TGE)$ \\
-%	\,\, Trie depth  & $D \in \mathbb{N}_{>0}$\\
-%	\hline
-	\textbf{Alignment graph}& $\AG=(\AGV,\AGE)$\\
-	\,\, State& $\langle u,i \rangle \in \AGV := V \times \{0,\dots,m\}$\\
-	\,\, Edges& $(\langle u,i \rangle, \langle v,j \rangle,\ell,w) \in \AGE
-	\subseteq \AGV \times \AGV \times \Sigma_{\varepsilon} \times
-	\mathbb{R}_{\geq 0}$, $\Sigma_{\varepsilon} = \Sigma \cup \{\varepsilon\}$\\
-	\,\, Edge cost& $w \in \mathbb{R}_{\geq 0}$\\
-	\,\, Alignment& $\pi \in \EGE^*$ and $\sigma(\pi)=q$ \\
-	\,\, Alignment cost& $\cost{\pi} \in \mathbb{R}_{\geq 0}$\\
-	\hline
-	\textbf{Seed heuristic}& $h\st{u}{i}$\\
-	\,\, State& $\st{u}{i}$\\
-	\,\, Seed length& $k$\\
-	\,\, Maximum number of deletions& $\maxdel$\\
-	\,\, Maximum number of insertions& $\maxins$\\
-%	\hline
-%	\textbf{In all graphs}& $G = (V,E) \in \{ \RG, \EG, \AG \}$ \\
-%	\,\, Walk& $\pi \in G: \pi \in E^*$\\
-%	\,\, Walk spelling& $\sigma(\pi) \in \Sigma^*$\\
-%%	\,\, Walk begin and end nodes& $\mli{begin}(\pi), \mli{end}(\pi) \in V$\\
-%	\,\, Path& A walk without repeating nodes\\
-	\hline
-	\textbf{\A} & $A^\star(G,S,T,h)$\\
-	\,\, Graph& $G=(V,E)$\\
-	\,\, Nodes& $u,v \in V$\\
-	\,\, Edges& $e \in E \subseteq V \times V \times \Costs$\\ 
-	\,\, Source states& $S \subseteq V$\\
-	\,\, Target states& $T \subseteq V$\\
-	\,\, Heuristic function& $h \colon V \to \Costs$\\
-	\,\, Minimum cost to a target& $h^*(u)$\\
-	%\,\, Admissible& $h(u) \leq \min_\pi \cost{\pi}, \pi \colon \pi \text{ starts from } u$\\
-	\,\, Explored state & A state pushed to the queue of \cref{alg:astar}\\
-	\,\, Expanded state & A state popped from the queue of \cref{alg:astar}\\
-	\hline
-\end{tabular}
-\end{table}
