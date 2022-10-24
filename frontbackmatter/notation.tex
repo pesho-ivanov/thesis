@@ -10,11 +10,24 @@
     	%\toprule%
     	%\tableheadline{Symbol} & \tableheadline{Meaning} \\
     	%\midrule%
-    	alignment 			& letter-to-letter correspondence (\eg semi-global, global) \\
-    	mapping 			& same as alignment but for multiple same reference \\
-    	performance 		& Includes runtime and memory footprint \\
-		admissible heuristic& Lower bound on the remaining distance ($h \leq \h$) \\
-    	%Edit distance 	& Minimal (weighted) number of insertional Includes runtime and memory footprint \\
+    	edit operation		& insertion, deletion or substitution of a single letter \\
+    	edit distance		& minimal weighted number of edits between two sequences \\
+    	alignment~(\cref{fig:alignment-types}) & correspondence between letters of two sequences \\
+		\,$\sbullet$ global 			& fully aligning two sequences to each other \\
+		\,$\sbullet$ semi-global		& fully aligning a query somewhere in a reference \\
+		\,$\sbullet$ mapping 		& multiple semi-global alignments to the same reference \\[5pt]
+    	dynamic programming & optimization technique by reusing partial results \\
+    	graph reference		& a compressed representation of multiple references \\
+    	alignment graph &  \\
+    	\,$\sbullet$ state&  \\
+    	\,$\sbullet$ expanded state&  \\
+    	trie index 			& tree structure with short reference subsequences \\
+		\dijkstra & uninfomred shortest path algorithm \\
+    	\A algorithm 		& generalization of \dijkstra, informed by a heuristic \\
+		\,$\sbullet$ admissible heuristic		& lower bound on the remaining shortest distance \\
+		%estimation of the remaining distance \\
+		%\,$\sbullet$ admissible		&  \\
+    	performance 		& runtime and memory footprint \\
     	%\bottomrule
     \end{tabularx}
 
@@ -50,16 +63,16 @@
 %	\tabindent Shortest path & $\pi^*$\\
 %	\tabindent Cost & $\cost(\pi)$\\
 %	\tabindent Preceding & $u \preceq v$, $m_1\preceq m_2$ \\
-	\hline
-	\textbf{A*} & \\
-	\tabindent Start and target state& $v_s, v_t \in V$\\
-	\tabindent Distance from $v_s$ & $\g = d(v_s, \cdot)$\\
-	\tabindent Distance to $v_t$& $\h = d(\cdot, v_t)$\\
-	% \tabindent Distance $v_s$ to $v_t$ via $u$& $\f = \g + \h$\\
-	\tabindent Heuristic & $h$\\
-	\tabindent Best distance from start & $g$  \\
-	\tabindent Estimated total distance & $f = g + h$\\
-	\tabindent Admissible heuristic & $h \leq \h$\\
+%	\hline
+%	\textbf{A*} & \\
+%	\tabindent Start and target state& $v_s, v_t \in V$\\
+%	\tabindent Distance from $v_s$ & $\g = d(v_s, \cdot)$\\
+%	\tabindent Distance to $v_t$& $\h = d(\cdot, v_t)$\\
+%	% \tabindent Distance $v_s$ to $v_t$ via $u$& $\f = \g + \h$\\
+%	\tabindent Heuristic & $h$\\
+%	\tabindent Best distance from start & $g$  \\
+%	\tabindent Estimated total distance & $f = g + h$\\
+%	\tabindent Admissible heuristic & $h \leq \h$\\
 %	\tabindent Consistent heuristic & $h(u) \leq d(u,v) + h(v)$\\
 	\hline
 	\multicolumn{2}{l}{\textbf{Seeds and matches}} \\
