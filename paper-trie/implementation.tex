@@ -29,16 +29,16 @@ performance is. To compare with other aligners, we use values \mbox{$d=5$},
 Follows an investigation of the influence of different parameters ($\costcap$,
 $d$, $D$) on the runtime and memory usage.
 
-\begin{figure}[b]
+\begin{figure}[t]
 	\centering
-	\begin{minipage}{0.48\linewidth}
+	\begin{minipage}{0.45\linewidth}
 		\centering
 		\includegraphics[width=\linewidth]{figs/trie/MHC1-trie-vs-D.pdf}
 		\caption[Performance for various trie depths and heuristic parameters]{Left: Effect of the trie depth $D$ on the performance of \astarix (MHC1 experiment). The dashed line shows our choice of $D$. Right: Runtime of \astarix depending on $d$ and $\costcap$ (MHC1 experiment).}
 		%\label{TRIEsubfig:MHC1-trie_vs_D}
 		\label{TRIEfig:trie_vs_D}
-	\end{minipage}~\hspace{0.7em}
-	\begin{minipage}{0.49\linewidth}
+	\end{minipage}%~\hspace{0.7em}
+	\begin{minipage}{0.45\linewidth}
 		\centering
 		\includegraphics[width=0.8\linewidth]{figs/heuristic/MHC1-heatmap-c_vs_d-align_sec.pdf}
 		%\caption{Runtime of \astarix depending on $d$ and $\costcap$ (MHC1 experiment).}
