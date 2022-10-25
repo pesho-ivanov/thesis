@@ -49,22 +49,22 @@
          given={Gunnar},
          giveni={G\bibinitperiod},
       }}%
-      {{hash=VMT}{%
+      {{hash=VM}{%
          family={Vechev},
          familyi={V\bibinitperiod},
-         given={Martin\bibnamedelima T},
-         giveni={M\bibinitperiod\bibinitdelim T\bibinitperiod},
+         given={Martin},
+         giveni={M\bibinitperiod},
       }}%
     }
     \strng{namehash}{IP+1}
-    \strng{fullhash}{IPBBMHKARGVMT1}
+    \strng{fullhash}{IPBBMHKARGVM1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
     \field{addendum}{\\\emph{--- Suggests \A for alignment and uses a trie
   index to scale with reference size.}}
     \field{booktitle}{RECOMB}
-    \field{title}{{AStarix}: {F}ast and {O}ptimal {S}equence-to-{G}raph
-  {A}lignment}
+    \field{title}{\textbf{{AStarix}: {F}ast and {O}ptimal {S}equence-to-{G}raph
+  {A}lignment}}
     \field{year}{2020}
   \endentry
 
@@ -104,13 +104,13 @@
   \entry{koerkamp2022exact}{article}{}
     \name{author}{2}{}{%
       {{hash=GKR}{%
-         family={Groot\bibnamedelima Koerkamp},
+         family={Groot\bibnamedelima Koerkamp$^\dagger$},
          familyi={G\bibinitperiod\bibinitdelim K\bibinitperiod},
          given={Ragnar},
          giveni={R\bibinitperiod},
       }}%
       {{hash=IP}{%
-         family={Ivanov},
+         family={Ivanov$^\dagger$},
          familyi={I\bibinitperiod},
          given={Pesho},
          giveni={P\bibinitperiod},
