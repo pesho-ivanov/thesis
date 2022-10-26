@@ -1,4 +1,4 @@
-\subsection{Formal definition} \label{SEEDsec:definition}
+\subsection{Formal definition of the seed heuristic with crumbs} \label{SEEDsec:definition}
 %
 Next, we formally define the \seedh function $h\st{v}{i}$. Overall, we want to
 ensure that $h\st{v}{i}$ is admissible, \ie, that it is a lower bound on the
@@ -9,8 +9,8 @@ cost of a shortest path from $\st{v}{i}$ to some $\st{w}{|q|}$ in $\AG$.
 We split read $q \in \Sigma^*$ into a set $\seeds$ of non-overlapping seeds
 $s_0, \dots, s_{|\seeds|-1} \in \Sigma^*$.
 %
-For simplicity, in this work we ensure that all seeds have the same length and
-are consecutive, \ie, we split $q$ into substrings $s_0 \cdot s_1 \cdots
+For simplicity, we assume that all seeds have the same length and are
+consecutive, \ie, we split $q$ into substrings $s_0 \cdot s_1 \cdots
 s_{|\seeds|-1} \cdot t$, where all $s_j$ are seeds of length $k$ and we ignore
 the suffix $t$ of $q$, which is shorter than~$k$.
 %

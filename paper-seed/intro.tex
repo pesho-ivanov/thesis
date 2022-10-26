@@ -32,8 +32,8 @@ While such a heuristic may produce acceptable alignments in many cases, it
 fundamentally does not provide quality guarantees, resulting in suboptimal
 alignment accuracy.
 %
-In contrast, we demonstrate in this work that seeds can benefit optimal
-alignment as well.
+In contrast, here we demonstrate that seeds can benefit optimal alignment as
+well.
 
 \para{Key challenges in optimal alignment}
 %
@@ -61,9 +61,9 @@ Unlike DP-based algorithms, this \prefixh allows scaling sublinearly with the
 reference size, substantially increasing performance on large genomes. However,
 it can only efficiently align reads of limited length.
 
-\para{This work: Optimal alignment for short and long reads}
+\para{Contributions}
 %
-In this work, we address the key challenge of scaling to long HiFi reads, while
+Here we address the key challenge of scaling to long HiFi reads, while
 retaining the superior scaling of \astarix in the size of the reference graph.
 %
 To this end, we instantiate the \A algorithm with a novel \seedh, which
@@ -73,7 +73,7 @@ Specifically, the \seedh utilizes information from the whole read to narrowly
 direct the \A search by placing \emph{crumbs} on graph nodes which lead up to a
 \emph{seed match}, \ie, an exact match of a substring of the read.
 
-Overall, the contributions presented in this work are:
+Overall, the contributions presented next include:
 %
 \begin{enumerate}
     \item A novel \A~\seedh that exploits information from the whole read to

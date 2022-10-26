@@ -51,8 +51,18 @@ The search for the best local alignment is being reset when the current score be
 For semi-global and global alignments, the whole query is being aligned, which is a useful property for the admissibility of the seed heuristic, since each seed is guaranteed to be aligned eventually. In the case of local alignment, some seeds may not be aligned. Possible workarounds have to be explored.
 A solution to local alignment may as well be applicable to the split alignment mode when “teleportations” are allowed. Another application of local alignment is to align reads without trimming their ends from adapters first.
 
-P5: Explore the applications of machine learning to generating better admissible heuristics
-Tuning parameters is generally hard and it has been problematic for the seed heuristic as well. One potential place for runtime improvement is to carefully choose the seed heuristic parameters: seed length and allowed number of errors per match. Usually machine learning methods do not provide correctness guarantees about the produced results. Nevertheless, since the parametrization of the seed heuristics influences only its performance and not its admissibility and optimality of the results. Additionally, the seed heuristic parameters could be chosen or modified dynamically, during the A* search. Reinforcement learning may provide a reasonable method to tuning the parameters in real-time. My expected visit to Prof. Šikić group may result in substantial progress on this work package.
+P5: Explore the applications of machine learning to generating better admissible
+heuristics Tuning parameters is generally hard and it has been problematic for
+the seed heuristic as well. One potential place for runtime improvement is to
+carefully choose the seed heuristic parameters: seed length and allowed number
+of errors per match. Usually machine learning methods do not provide correctness
+guarantees about the produced results. Nevertheless, since the parametrization
+of the seed heuristics influences only its performance and not its admissibility
+and optimality of the results. Additionally, the seed heuristic parameters could
+be chosen or modified dynamically, during the A* search. Reinforcement learning
+may provide a reasonable method to tuning the parameters in real-time. My
+expected visit to Prof. Šikić group may result in substantial progress on this
+work package.
 
 P6. Explore the applications of finding K-best alignments which is trivially achievable in A* framework. 
 A natural extension of the shortest path algorithms is to find not one shortest path, but K-shortest paths. One application of the K-best alignments is the computation of the MAPQ mapping score which is based on the alignment costs of the K-best alignments and provides an estimation on the certainty of the best alignment. Potentially, there may be other applications.
