@@ -3,6 +3,23 @@
 multiple paths
 outside of biology
 general framework for optimization
+MSA
+
+% paper-trie; Scaling difficulties.
+We expect that \astarix can be scaled further, to both (i)~bigger graphs and
+(ii)~longer and noisier reads. Scaling \astarix may require a combination of
+(i)~the development of more clever heuristic functions (by leveraging existing
+work on \A and edit distance) and (ii)~algorithmic optimizations. We note that
+if desired, a (sub-optimal) seeding step could speed up \astarix by
+pre-filtering the starting positions, analogously to other practical aligners.
+
+% paper-seed
+The memory usage is currently limiting the application of \astarix for bigger
+references due to the size of the trie index. A remaining challenge is designing
+a heuristic function able to handle not only long but also noisier reads, such
+as the uncorrected PacBio reads that may reach 20\% of mistakes. Possible
+improvements of the seed heuristic may include inexact matching of seeds,
+careful choice of seed positions, and accounting for the seeds order.
 
 P1: Develop the AStarix sequence-to-graph mapper from prototype to production
 As our previous work demonstrates, scaling optimal A* alignment to long sequences and high error rates relies on various non-trivial algorithms, data structures and optimizations. In order for AStarix to become of practical importance, it must be comparable to not only optimal mappers but to approximate ones as well – this includes tolerating more errors, lowering the runtime and memory consumption, and supporting features.

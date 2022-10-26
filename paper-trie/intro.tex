@@ -1,137 +1,47 @@
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Sequencing and variant calling
-The analysis and understanding of genetic variation encoded in the genome of an
-organism lies at the center of computational biology and medicine. Variation is
-usually identified through matching sequences obtained from DNA/RNA-sequencing
-back to a reference (genome) sequence in the process of \emph{variant calling},
-making the alignment task a core problem in sequence bioinformatics.
-
-% The benefit from genome graphs
-Historically, a single linear reference sequence has been used to represent the
-most common variants in a population. While providing a working abstraction for
-most cases, rare or sub-population specific variation is especially hard to
-model in this setting, creating a reference allele
-bias~\cite{stevenson_sources_2013,brandt_mapping_2015}. Consequently, in the
-last few years, the field has shifted first towards using sets of reference
-sequences, and more recently to graph data structures (so-called {\em genome
-graphs}), to represent many genomes or haplotypes
-simultaneously~\cite{dilthey_improved_2015,paten_genome_2017,garrison_variation_2018}.
-
-% Heuristics for alignment
-Both for sequence-to-sequence alignment and sequence-to-graph alignment,
-heuristics are employed to keep alignment
-tractable~\cite{altschul_basic_1990,langmead_fast_2012,garrison_variation_2018},
-especially for large populations of human-sized genomes.
-%
-% Importance of optimal alignment
-While such heuristics find the correct alignment for simple references, they
-often perform poorly in regions of very high complexity, such as in the human
-major histocompatibility complex (MHC)~\cite{dilthey_improved_2015}, in complex
-but rare genotypes arising from somatic-subclones in tumor sequencing
-data~\cite{harismendy_detection_2011}, or in the presence of frequent sequencing
-errors~\cite{salmela_lordec_2014}.
-%
-Importantly, these cases can be of specific clinical or biological interest, and
-incorrect alignment can cause severe biases for downstream analyses. For
-instance, the combination of high variability of MHC sequences in humans and
-small differences between alleles~\cite{buhler_hla_2011} leads to a risk of
-misclassifications due to suboptimal alignment. Guaranteeing optimal alignment
-against all variations represented in a graph is a major step towards
-alleviating those biases.
-
 % Our scope
-Formally, we consider the optimal \textit{sequence-to-graph alignment} problem, the task of finding an optimal base-to-base correspondence between a query sequence and a (possibly cyclic) walk in the graph.
-Related alignment problems have already been formulated as graph shortest path
-problems~\cite{antipov_hybridspades_2016,jain_complexity_2019}.
+Formally, we consider the optimal \textit{sequence-to-graph alignment} problem,
+the task of finding an optimal base-to-base correspondence between a query
+sequence and a (possibly cyclic) walk in the graph. Related alignment problems
+have already been formulated as graph shortest path
+problems~\cite{jain_complexity_2019}.
 
+% from abstract
+Motivation: all optimal algorithms have to iterate over the whole reference for
+each query. We should be able to optimize this by precomputation.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Related work}
-% seed-and-extend approach to semi-global alignment
-\para{Seed-and-Extend}
-Since optimal alignment is often intractable, many aligners use heuristics, most
-commonly the \emph{seed-and-extend}
-paradigm~\cite{altschul_basic_1990,langmead_fast_2012,li_fast_2009}. In this
-approach, alignment initiation sites (\emph{seeds}) are determined, which are
-then \emph{extended} to form the \emph{alignments} of the query sequence. The
-fundamental issue with this approach, however, is that the seeding and extension
-phases are mostly decoupled during alignment. Thus, an algorithm with a provably
-optimal extension phase may not result in optimal alignments due to the
-selection of a suboptimal seed in the first phase. In cases of high sequence
-variability, the seeding phase may even fail to find an appropriate seed from
-which to extend.
+We present an algorithm for the \emph{optimal alignment} of sequences to
+\emph{genome graphs}. It works by phrasing the edit distance minimization
+task as finding a shortest path on an implicit alignment graph. To find a
+shortest path, we instantiate the \A paradigm with a novel domain-specific
+heuristic function that accounts for the upcoming subsequence in the query
+to be aligned, resulting in a provably optimal alignment algorithm called
+\astarix.
 
+\quad \quad Experimental evaluation of \astarix shows that it is 1--2
+orders of magnitude faster than state-of-the-art optimal algorithms on the
+task of aligning Illumina reads to reference genome graphs. Implementations
+and evaluations are available at \mbox{\astarixurl}.
 
-% Accounting for variation
-\para{Accounting for Variation}
-First attempts to include variation into the reference data structure were made
-by augmenting the local alignment method to consider alternative walks during the
-extend step~\cite{schneeberger_simultaneous_2009,palmapper}. This approach has
-since been extended from the linear reference case to graph references. To
-represent non-reference variation of multiple references during the seeding
-stage, HISAT2 uses generalized compressed suffix
-arrays~\cite{siren_indexing_2014} to index walks in an augmented reference
-sequence, forming a local genome graph~\cite{kim_graphbased_2019}.
-VG~\cite{garrison_variation_2018} uses a similar
-technique~\cite{siren_indexing_2017} to index variation graphs representing a
-population of references.
-
-% Brownie aligner
-BrownieAligner, another recent work developed for local alignment of sequences
-to {\itshape de Bruijn} graph representations of genomic variation, features an
-optimal extension phase using a branch-and-bound-based early cutoff, while
-employing a heuristic maximal-exact-match approach for
-seeding~\cite{heydari_browniealigner_2018}.
-
-% Optimal DP-based approaches
-\para{Optimal Alignment}
-Current optimal alignment algorithms reach the impractical $\Oh(nm)$ runtime
-that has been shown to be a lower bound for the worst-case edit distance
-computation~\cite{backurs2015edit}. In this light, approaches for improving the
-efficiency of optimal alignment have taken advantage of specialized features of
-modern CPUs to improve the practical runtime of the Smith-Waterman dynamic
-programming (DP) algorithm~\cite{smith_comparison_1981} considering all possible
-starting nodes. These use modern SIMD instructions (\eg
-\vg~\cite{garrison_variation_2018} and \pasgal~\cite{jain_accelerating_2019}) or
-reformulations of edit distance computation to allow for bit-parallel
-computations in \graphaligner \footnote{We refer as \bitparallel to to the
-bit-parallel DP algorithm implemented in \graphaligner tool
-\cite{rautiainen_bitparallel_2019}.}~\cite{rautiainen_bitparallel_2019}. Many of
-these, however, are designed only for specific types of genome graphs, such as
-{\itshape de Bruijn}
-graphs~\cite{liu_debga_2016,heydari_browniealigner_2018,limasset2019toward} and
-variation graphs~\cite{garrison_variation_2018}. A compromise often made when
-aligning sequences to cyclic graphs using algorithms reliant on directed acyclic
-graphs involves the computationally expensive ``DAG-ification'' of graph
-regions~\cite{kavya_sequence_2019,garrison_variation_2018}.
-
-\para{\A algorithm}
-We aim to guarantee optimal alignment while optimizing the average runtime
-to not reach its worst-case complexity. While \dijkstra is an algorithm that
-explores graph nodes in the order of their distance from the start, \A is a
-generalization of \dijkstra that also accounts for their distance from the
-target. \A prioritizes the exploration of nodes that seem to be closer to the
-target nodes. This way, \A can sometimes dramatically improve on the performance
-of \dijkstra while remaining optimal.
-
-There has been one attempt to apply \A for optimal
-alignment~\cite{dox2018efficient} which uses a heuristic function that accounts
-only for the length of the remaining query sequence to be aligned. However, it
-does not significantly outperform \dijkstra (in fact, it is equivalent for
-a zero matching cost).
-%
-In contrast, the heuristic function we introduce is more informative and
-consistently outperforms \dijkstra.
+keywords: Next-generation sequencing, Optimal alignment, Genome graph,
+Shortest path, \A algorithm
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Main Contributions}
-We introduce a novel approach, called \astarix, for optimal sequence-to-graph alignment based on \A. As with any \A instantiation, the core difficulty lies in developing an accurate domain-specific heuristic which is fast to compute.
-We design a heuristic that accounts for the content of the upcoming query letters to be aligned, which more effectively guides the search.
-Our proposed heuristic has two advantages: (i)~it is correctness-preserving, that is, it preserves the fact that \astarix finds the best alignment, yet (ii)~it is practically effective in that the algorithm performs a near-optimal number of steps. Overall, this heuristic enables \astarix to compute the best alignment while also scaling to larger reference graph sizes when compared to existing state-of-the-art optimal aligners.
+We introduce a novel approach, called \astarix, for optimal sequence-to-graph
+alignment based on \A. As with any \A instantiation, the core difficulty lies in
+developing an accurate domain-specific heuristic which is fast to compute. We
+design a heuristic that accounts for the content of the upcoming query letters
+to be aligned, which more effectively guides the search. Our proposed heuristic
+has two advantages: (i)~it is correctness-preserving, that is, it preserves the
+fact that \astarix finds the best alignment, yet (ii)~it is practically
+effective in that the algorithm performs a near-optimal number of steps.
+Overall, this heuristic enables \astarix to compute the best alignment while
+also scaling to larger reference graph sizes when compared to existing
+state-of-the-art optimal aligners.
 
 \begin{samepage}
 Our main contributions include:

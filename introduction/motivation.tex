@@ -1,0 +1,45 @@
+\section{Motivation for scalable optimal alignments}
+
+% Heuristics for alignment
+Both for sequence-to-sequence alignment and sequence-to-graph alignment,
+heuristics are employed to keep alignment
+tractable~\cite{altschul_basic_1990,langmead_fast_2012,garrison_variation_2018},
+especially for large populations of human-sized genomes.
+%
+% Importance of optimal alignment
+While such heuristics find the correct alignment for simple references, they
+often perform poorly in regions of very high complexity, such as in the human
+major histocompatibility complex (MHC)~\cite{dilthey_improved_2015}, in complex
+but rare genotypes arising from somatic-subclones in tumor sequencing
+data~\cite{harismendy_detection_2011}, or in the presence of frequent sequencing
+errors~\cite{salmela_lordec_2014}.
+%
+Importantly, these cases can be of specific clinical or biological interest, and
+incorrect alignment can cause severe biases for downstream analyses. For
+instance, the combination of high variability of MHC sequences in humans and
+small differences between alleles~\cite{buhler_hla_2011} leads to a risk of
+misclassifications due to suboptimal alignment. Guaranteeing optimal alignment
+against all variations represented in a graph is a major step towards
+alleviating those biases.
+
+% Optimal DP-based approaches
+\para{Optimal Alignment}
+Current optimal alignment algorithms reach the impractical $\Oh(nm)$ runtime
+that has been shown to be a lower bound for the worst-case edit distance
+computation~\cite{backurs2015edit}. In this light, approaches for improving the
+efficiency of optimal alignment have taken advantage of specialized features of
+modern CPUs to improve the practical runtime of the Smith-Waterman dynamic
+programming (DP) algorithm~\cite{smith_comparison_1981} considering all possible
+starting nodes. These use modern SIMD instructions (\eg
+\vg~\cite{garrison_variation_2018} and \pasgal~\cite{jain_accelerating_2019}) or
+reformulations of edit distance computation to allow for bit-parallel
+computations in \graphaligner \footnote{We refer as \bitparallel to to the
+bit-parallel DP algorithm implemented in \graphaligner tool
+\cite{rautiainen_bitparallel_2019}.}~\cite{rautiainen_bitparallel_2019}. Many of
+these, however, are designed only for specific types of genome graphs, such as
+{\itshape de Bruijn}
+graphs~\cite{liu_debga_2016,heydari_browniealigner_2018,limasset2019toward} and
+variation graphs~\cite{garrison_variation_2018}. A compromise often made when
+aligning sequences to cyclic graphs using algorithms reliant on directed acyclic
+graphs involves the computationally expensive ``DAG-ification'' of graph
+regions~\cite{kavya_sequence_2019,garrison_variation_2018}.

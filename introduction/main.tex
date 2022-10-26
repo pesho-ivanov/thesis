@@ -1,9 +1,21 @@
-\chapter{Introduction}
+\chapter{Introduction} \label{ch:introduction}
+
+\dictum{%
+   Provably optimal and heuristically fast.}
+\vskip 1em
 
 \graphicspath{{\dir/}}
 
 % The problem looked strange to work on; I didn't believe nobody has done it
 % before
+%\section{Research goals and scope}
+%\paragraph{Problem statement}
+%\paragraph{Problem domain}
+%only optimal alignment in this thesis
+%asymptotics analysis
+
+\input{\dir/problem}
+\input{\dir/motivation}
 
 Sequence alignment is a class of combinatorial problems that is of primary
 importance for analysis of genetic data. Algorithms and tools for alignment have
@@ -38,23 +50,10 @@ parallelization and use-cases. Our vision is that A* could become the default
 approach for sequence alignment, useful to the computational biology,
 bioinformatics and the more general algorithmic community.
 
-asymptotics analysis
+\input{\dir/prelim}
+\input{\dir/dp}
 
-\label{ch:introduction}
-
-%\section{Research goals and scope}
-%\paragraph{Problem statement}
-%\paragraph{Problem domain}
-
-\section{Preliminaries}
-
-\section{Current state of research in the field}
-
-\begin{floatingfigure}[l]{0.5\textwidth}
-    \includegraphics[width=0.5\textwidth]{alignment-types}
-	\caption[Alignment types]{Alignment types.}
-    \label{fig:alignment-types}
-\end{floatingfigure}
+\section{State of the optimal alignment field}
 
 Comparing one sequence to another is a basic combinatorial problem that has
 several variations (shown on the right), each applicable in computational
@@ -96,61 +95,9 @@ successfully applied to sequence alignment. A* may be the missing piece in the
 “a major open problem to implement an algorithm with linear-like empirical
 scaling on inputs where the edit distance is linear in n” (Medvedev, 2022a).
 
-\section{Global and semi-global alignment}
-
-\section{Mapping to reference graphs}
-
-\section{Alignment as shortest path}
-
-\input{\dir/astar}           %% HIGHER PRIORITY
-
-\paragraph{Heuristic function}
-
-\section{Contributions}
-
-\paragraph{Tools}
-
-\dictum[Freeman Dyson]{It is better to be wrong than to be vague.}
-\vskip 1em
-%\begin{otherlanguage}{ngerman}
-%Die ältesten Bestimmungen der wahren Grösse der Moleküle hat die kinetische
-%Theorie der Gase ermöglicht, während die an Flüssigkeiten beobachteten
-%physikalischen Phänomene bis jetzt zur Bestimmung der Molekülgrössen nicht
-%gedient haben. \dots
-%\end{otherlanguage}
-
-
-
-% Accuracy and Metrics
-The number of possible alignments grow exponentially with length. The usual
-underlying question to finding ``correct'' alignments. Regarding the precision
-of alignment, one is usually interested in base-to-base (aka letter-to-letter)
-correspondence between the sequences, even though for some applications a less
-detailed solution is sufficient: only the similarity between sequences or the
-location where a read maps to a reference. Exact alignment is only useful for
-very short sequences (often kmers), and for all other cases the optimized metric
-may be hamming distance, edit distance (unit costs), Levenshtein distance,
-affine costs, convex and concave costs, general costs and others. 
-
-% Problem statement
-Depending on the the number of aligned sequences, there is pairwise alignment
-and multiple sequence alignment (MSA). Depending on the parts of the sequences
-that are aligned to each other, we differentiate global, local and various
-semi-global alignemnts. There are generalizations to sequence-to-sequence
-alignment, including aligning to nonlinear structures, such as directed acyclic
-graphs, DAGs, general graphs and others. These structures are nowadays becoming
-more common as a compressed form of representing a set of references to which a
-sequence can be aligned. Often, one best alignment is sufficient but finding
-several best (top-K) alignments. In the context of read mapping, a set of reads
-is aligned to the same reference sequence so an indexing procedure is often
-useful for the performance.
-
-We specifically consider the mapping of a set of reads to a general graph, and
-the global pairwise alignment.
-
-Existing optimal algorithms are based on dynamic programming (DP) and
-run in quadratic time (assuming that the number of errors is proportional to the
-length)
-
-we employ the A* algorithm which is an \emph{informed search} algorithm.
-TODO: a case for the informed algorithms
+\input{\dir/semiglobal}
+\input{\dir/global}
+\input{\dir/pangenomics}
+\input{\dir/shortestpath}
+\input{\dir/astar}
+\input{\dir/contributions}

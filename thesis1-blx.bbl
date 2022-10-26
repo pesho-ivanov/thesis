@@ -96,8 +96,8 @@
     \field{addendum}{\\\emph{--- Introduces the seed heuristic for A* and
   scales near-linear with read length.}}
     \field{booktitle}{RECOMB}
-    \field{title}{Fast and {O}ptimal {S}equence-to-{G}raph {A}lignment {G}uided
-  by {S}eeds}
+    \field{title}{\textbf{Fast and {O}ptimal {S}equence-to-{G}raph {A}lignment
+  {G}uided by {S}eeds}}
     \field{year}{2022}
   \endentry
 
@@ -125,8 +125,8 @@
     \field{labeltitlesource}{title}
     \field{addendum}{\\\emph{--- Extends the seed heuristic with chaining and
   inexact matching to scale to high error rates.}}
-    \field{title}{Exact global alignment using A* with seed heuristic and match
-  pruning}
+    \field{title}{\textbf{Exact global alignment using A* with seed heuristic
+  and match pruning}}
     \field{journaltitle}{bioRxiv}
     \field{year}{2022}
   \endentry

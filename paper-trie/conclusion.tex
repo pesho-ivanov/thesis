@@ -13,11 +13,3 @@ increasing (but small) number of errors in the reads. Moreover, for short reads,
 both \astarix and \dijkstra scale better and outperform current state-of-the-art
 optimal aligners with increasing genome graph size. Nevertheless, scaling
 optimal alignment of long reads on big graphs remains an open problem.
-
-% Scaling difficulties.
-We expect that \astarix can be scaled further, to both (i)~bigger graphs and
-(ii)~longer and noisier reads. Scaling \astarix may require a combination of
-(i)~the development of more clever heuristic functions (by leveraging existing
-work on \A and edit distance) and (ii)~algorithmic optimizations. We note that
-if desired, a (sub-optimal) seeding step could speed up \astarix by
-pre-filtering the starting positions, analogously to other practical aligners.

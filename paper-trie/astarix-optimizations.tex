@@ -1,11 +1,10 @@
-\section{\astarix Algorithm: Optimizations} \label{TRIEsec:optimizations}
+\section{Optimizations} \label{TRIEsec:optimizations}
+
 We now discuss several optimizations we developed to speed up \astarix while
 preserving its optimality. These optimizations reduce preprocessing and
 alignment runtime as well as memory footprint (in particular for memoization).
 
-\input{\dir/astarix-trie}
-
-\subsection{Greedy Match Optimization} \label{TRIEsubsec:greedy}
+\subsection{Greedy match optimization} \label{TRIEsubsec:greedy}
 We also employ an optimization originally developed for computing the edit
 distance between two strings~\cite{sellers_algorithm_1974,allison_lazy_1992}, but
 which has also been used in the context of string to graph
@@ -25,7 +24,7 @@ We note that this optimization is only applicable when aligning in non-branching
 regions of the reference graph. In particular, it is not applicable for most
 trie nodes (\cref{TRIEsubsec:trie}).
 
-\subsection{Speeding Up Evaluation of Heuristic} \label{TRIEsubsec:speedup-heuristic}
+\subsection{Speeding up evaluation of heuristic} \label{TRIEsubsec:speedup-heuristic}
 In the following, we show how to reduce the runtime of evaluating the heuristic
 $h(u,s)$, by introducing two separate optimizations that compose naturally.
 
@@ -82,7 +81,8 @@ h_d(u,s) := \min_{\pi \in \Pi} \cost{\pi}, \text{ where } \\
 \end{samepage}
 
 
-\subsection{Partitioning Nodes into Equivalence Classes} \label{TRIEsubsec:partition}
+\subsection{Partitioning nodes into equivalence classes} \label{TRIEsubsec:partition}
+
 We have shown in \cref{TRIEpara:memoization} how to reuse an already computed
 $h(u,s)$ for repeating $s$ across different queries and query positions. In the
 following, we additionally aim to reuse $h(u,s)$ across different nodes $u$, so
@@ -98,7 +98,7 @@ the representative of the equivalence class of $u$. To look up representative
 nodes in $\Oh(1)$, we define a helper array $\mli{repr}$ with $\mli{repr[u]} =
 r$.
 
-\para{Identifying Equivalence Classes}
+\para{Identifying equivalence classes}
 To identify the nodes belonging to the same equivalence class, we assume the
 optimization from \cref{TRIEsubsec:speedup-heuristic}, \ie, that our heuristic only
 considers nodes up to a distance $d$ from~$u$.

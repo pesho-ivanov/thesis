@@ -1,4 +1,5 @@
-\subsection{Reducing Semi-global to Local Alignment Using a Trie} \label{TRIEsubsec:trie}
+\subsection{Aligning on a trie index} \label{TRIEsubsec:trie}
+
 To find an optimal alignment, we generally need to consider all reference graph
 nodes $u \in \RG$ as possible starting nodes. Thus, optimal aligners
 \pasgal~\cite{jain_accelerating_2019} and
@@ -25,7 +26,7 @@ be translated into an alignment on $\RG$ (we omit this translation
 here).
 
 \begin{floatingfigure}[l]{0.5\textwidth}
-	\includegraphics[width=0.5\linewidth]{figs/tree}
+	\includegraphics[width=0.5\linewidth]{\dir/figs/tree}
 	\caption[Indexing the reference with a trie]{$\TG$ enables semi-global alignment by extending $\RG$ with a trie.}
 	\label{TRIEfig:trie}
 \end{floatingfigure}

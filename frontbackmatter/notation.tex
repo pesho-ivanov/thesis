@@ -38,7 +38,7 @@
 		$\cmatch, \csubst, \cins, \cdel \geq 0$ & edit costs for match, insertion, deletion or substitution of a single letter \\[5pt]
 		$ed(A,B)$						& edit distance \\
 		$\RG=(\RGV,\RGE)$               & reference graph \\[5pt]
-	Position in read & $q[i] \in \Sigma$, $i \in \{0,\dots,m-1\}$\\	
+%	Position in read & $q[i] \in \Sigma$, $i \in \{0,\dots,m-1\}$\\	
 		$\st{u}{i}$ 					& state (subalignment of A)state heuristic function \\
 		$\AG=(\AGV,\AGE)$ 				& alignment graph on states $\AGV$\\
 		$g$								& best distance from start \\
@@ -46,9 +46,9 @@
 		$f = g + h$						& estimated total distance \\
 		$h\st{u}{i}$					& seed heuristic \\
 		$s\in \seeds$					& seeds \\
+		$k$ 							& seed length \\
 		$m \in \matches_s$				& matches of seed $s$ \\
 		$\bluecrumb{}, \yellowcrumb{}, \violetcrumb{}, \greencrumb{}$ & crumbs on nodes for match $m$ \\
-		$k, r$ 							& seed length, potential \\
-		$D$								& Trie depth \\
+		$D$								& trie depth \\
     \end{tabularx}
 \endgroup
