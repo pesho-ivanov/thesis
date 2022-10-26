@@ -11,6 +11,9 @@
 	explored states is shown for the \seedh and the \prefixh.}
 	\label{SEEDtab:illumina table}
 	\sffamily
+
+	\renewrobustcmd{\bfseries}{\fontseries{b}\selectfont}
+	\renewrobustcmd{\boldmath}{}
 	
 %\quad&&\color{mygrey}{.0004\%} &\color{mygrey}{99.9982\%} &&\color{mygrey}{99.9989} &\color{mygrey}{99.9984} &\,\color{mygrey}{fraction of explored states} \\
 %\quad&&\color{mygrey}{99.96} &\color{mygrey}{99.95} && & & \,\color{mygrey}{\% skipped states}\\
@@ -18,33 +21,32 @@
 \begin{tabular}{@{}lrrrrrl@{}}
 \addlinespace[-\aboverulesep]
 \cmidrule[\heavyrulewidth]{1-6}
-      & \multicolumn{2}{ c }{\textbf{Illumina}}& \phantom{a} & \multicolumn{2}{ c }{\textbf{HiFi}} &\\
+      & \multicolumn{2}{ c }{\textbf{Illumina reads}}& \phantom{a} & \multicolumn{2}{ c }{\textbf{HiFi reads}} &\\
         \cmidrule{2-3} \cmidrule{5-6}
 		\textbf{Tool} & \textit{E.~coli} & MHC && \textit{E.~coli} & MHC &\\
 \cmidrule{1-6}
-\mbox{\textbf{Seeds heuristic}}\xspace &\bfseries 0.019 &\bfseries 0.041 &&\bfseries 0.001 &\bfseries 0.002 & \,s/kbp\\
-&\color{mygrey}{2.4} &\color{mygrey}{2.6} &&\color{mygrey}{2.4} &\color{mygrey}{1.7} & \,\color{mygrey}{GB (max used)}\\
+
+\rowcolor{gray!10} \mbox{\textbf{Seeds heuristic}}\xspace &\bfseries 0.019 &\bfseries 0.041 &&\bfseries 0.001 &\bfseries 0.002 & \cellcolor{white} s/kbp\\
+\rowcolor{gray!10} &\color{mygrey}{2.4} &\color{mygrey}{2.6} &&\color{mygrey}{2.4} &\color{mygrey}{1.7} & \cellcolor{white} \color{mygrey}{GB (max used)}\\
 %\quad&&\color{mygrey}{1:250k} &\color{mygrey}{1:53k} &&\color{mygrey}{1:91k} &\color{mygrey}{1:61k} &\,\color{mygrey}{explored states} \\
-\quad&\color{mygrey}{99.9996} &\color{mygrey}{99.9981} &&\color{mygrey}{99.9989} &\color{mygrey}{99.9984} &\,\color{mygrey}{\% skipped states} \\
-\arrayrulecolor{black!30}
-\cmidrule{1-6}
-\mbox{Prefix heuristic}\xspace &\numprint{269}x &\numprint{180}x && n/a& n/a& \,x slowdown\\
+\rowcolor{gray!10} \quad&\color{mygrey}{99.9996} &\color{mygrey}{99.9981} &&\color{mygrey}{99.9989} &\color{mygrey}{99.9984} &\cellcolor{white} \color{mygrey}{\% skipped states} \\
+
+\mbox{Prefix heuristic}\xspace &\numprint{269}x &\numprint{180}x && n/a& n/a& x slowdown\\
 &\color{mygrey}{7.7} &\color{mygrey}{9.6} &&\color{mygrey}{>20} &\color{mygrey}{>20} & \\
 %\quad&&\color{mygrey}{1:2449} &\color{mygrey}{1:1936} &&\color{mygrey}{n/a} &\color{mygrey}{n/a} & \\
 \quad&\color{mygrey}{99.9501} &\color{mygrey}{99.9501} &&\color{mygrey}{n/a} &\color{mygrey}{n/a} & \\
-\arrayrulecolor{black!30}
-\cmidrule{1-6}
-\mbox{\textsc{GraphAligner}}\xspace &\numprint{424}x &\numprint{212}x &&\numprint{118}x &\numprint{64}x & \\
-&\color{mygrey}{0.2} &\color{mygrey}{0.2} &&\color{mygrey}{3.6} &\color{mygrey}{3.4} & \\
-\arrayrulecolor{black!30}
-\cmidrule{1-6}
+
+\rowcolor{gray!10} \mbox{\textsc{GraphAligner}}\xspace &\numprint{424}x &\numprint{212}x &&\numprint{118}x &\numprint{64}x & \cellcolor{white} \\
+\rowcolor{gray!10} &\color{mygrey}{0.2} &\color{mygrey}{0.2} &&\color{mygrey}{3.6} &\color{mygrey}{3.4} & \cellcolor{white} \\
+
 \mbox{\textsc{Vargas}}\xspace &\numprint{133}x &\numprint{67}x &&\numprint{1413}x &\numprint{705}x & \\
 &\color{mygrey}{<0.1}&\color{mygrey}{<0.1}&&\color{mygrey}{7.3} &\color{mygrey}{7.3} & \\
 \arrayrulecolor{black!30}
-\cmidrule{1-6}
-\mbox{\textsc{PaSGAL}}\xspace &\numprint{263}x &\numprint{130}x &&\numprint{1367}x &\numprint{736}x & \\
-&\color{mygrey}{0.6} &\color{mygrey}{0.6} &&\color{mygrey}{0.6} &\color{mygrey}{0.6} & \\
-\arrayrulecolor{black}
+
+\rowcolor{gray!10} \mbox{\textsc{PaSGAL}}\xspace &\numprint{263}x &\numprint{130}x &&\numprint{1367}x &\numprint{736}x & \cellcolor{white} \\
+\rowcolor{gray!10} &\color{mygrey}{0.6} &\color{mygrey}{0.6} &&\color{mygrey}{0.6} &\color{mygrey}{0.6} & \cellcolor{white} \\
+
+%\arrayrulecolor{black}
 \cmidrule[\heavyrulewidth]{1-6}
 \end{tabular}
 
