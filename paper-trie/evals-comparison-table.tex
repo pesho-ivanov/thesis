@@ -4,21 +4,28 @@
 \caption[Performance of optimal aligners for difference references]{Performance
 of optimal aligners for different reference graphs.}\label{TRIEtab:results}
 \sffamily
+%\rowcolors{2}{gray!25}{white}
+
+\renewrobustcmd{\bfseries}{\fontseries{b}\selectfont}
+\renewrobustcmd{\boldmath}{}
+
 \begin{tabular}{@{}llrrrr@{}}
 \toprule
-                && \multicolumn{3}{ c }{\textbf{Runtime} and \textbf{Memory}}\\
+                && \multicolumn{4}{ c }{\textbf{Runtime} and \textbf{Memory}}\\
                 \cmidrule{3-6}
 \textbf{Genome graph} & \textbf{Size} & \astarix & \dijkstra & \pasgal & \bitparallel\\
 \midrule
-\multirow{2}{*}{\textit{E. coli} (linear)} & \multirow{2}{*}{$\sim$4.7 Mbp} &\numprint{33} sec	 &\numprint{73} sec
-&\numprint{3272} sec &\numprint{4906} sec\\
-&          &\numprint{0.66} GB   &\numprint{0.66} GB &\numprint{0.55} GB   &\numprint{0.43} GB \\
-\cmidrule{1-6}
-\multirow{2}{*}{LCR (variant)} & \multirow{2}{*}{$\sim$1 Mbp}   &\numprint{437} sec &\numprint{940} sec	 &\numprint{1614} sec &\multirow{2}{*}{SegFault} \\
-&          &\numprint{1.12} GB   &\numprint{1.09} GB &\numprint{0.30} GB   & 		\\
-\cmidrule{1-6}
-\multirow{2}{*}{MHC1 (variant)} & \multirow{2}{*}{$\sim$5 Mbp} &\numprint{1282} sec &\numprint{1588} sec & >\numprint{7200} sec &\multirow{2}{*}{SegFault}\\
-&          &\numprint{4.35} GB   &\numprint{1.21} GB    &  \numprint{0.87} GB         		&\\
+    \rowcolor{gray!10}
+    & &\bfseries \numprint{33} sec	 &\numprint{73} sec &\numprint{3272} sec &\numprint{4906} sec \\
+    \rowcolor{gray!10}
+    \multirow{-2}{*}{\textit{E. coli} (linear)} & \multirow{-2}{*}{4.7 Mbp} &\numprint{0.66} GB   &\numprint{0.66} GB &\numprint{0.55} GB   &\numprint{0.43} GB \\
+    & &\bfseries \numprint{437} sec &\numprint{940} sec	 &\numprint{1614} sec & \\
+    \multirow{-2}{*}{LCR (graph)} & \multirow{-2}{*}{1 Mbp} &\numprint{1.12} GB   &\numprint{1.09} GB &\numprint{0.30} GB   & \multirow{-2}{*}{SegFault}\\
+    \rowcolor{gray!10}
+    & &\bfseries \numprint{1282} sec &\numprint{1588} sec & >\numprint{7200} sec &\\
+    \rowcolor{gray!10}
+    \multirow{-2}{*}{MHC1 (graph)} & \multirow{-2}{*}{5 Mbp} &\numprint{4.35} GB   &\numprint{1.21} GB    &  \numprint{0.87} GB         		&\multirow{-2}{*}{SegFault}\\
 \bottomrule
 \end{tabular}
+
 \end{table}
