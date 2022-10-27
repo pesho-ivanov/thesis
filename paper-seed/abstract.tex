@@ -7,15 +7,15 @@ information from the whole query length while keeping the trie. This way we
 could avoid the deep trie exploration and scale to long queries (as far as the
 error rate is not too high).
 
-We present a novel \A \textit{\seedh} that enables fast and optimal
+We present a novel \A \emph{\seedh} that enables fast and optimal
 sequence-to-graph alignment, guaranteed to minimize the edit distance of the
 alignment assuming non-negative edit costs.
 
 We phrase optimal alignment as a shortest path problem and solve it by
 instantiating the \A~algorithm with our \seedh. The \seedh first extracts
-non-overlapping substrings (\textit{seeds}) from the read, finds exact seed
-\textit{matches} in the reference, marks preceding reference positions by
-\textit{crumbs}, and uses the crumbs to direct the \A search. The key idea is to
+non-overlapping substrings (\emph{seeds}) from the read, finds exact seed
+\emph{matches} in the reference, marks preceding reference positions by
+\emph{crumbs}, and uses the crumbs to direct the \A search. The key idea is to
 punish paths for the absence of foreseeable seed matches. We prove admissibility
 of the \seedh, thus guaranteeing alignment optimality.
 
