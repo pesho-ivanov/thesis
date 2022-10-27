@@ -52,49 +52,7 @@ bioinformatics and the more general algorithmic community.
 
 \input{\dir/prelim}
 \input{\dir/dp}
-
-\section{State of the optimal alignment field}
-
-Comparing one sequence to another is a basic combinatorial problem that has
-several variations (shown on the right), each applicable in computational
-biology. Needleman-Wunsch (1970)  and Smith-Waterman (1981) are dynamic
-programming (DP) algorithms that serve as base solutions for global (or
-computing edit distance of two strings) and semi-global alignments (or mapping
-when a set of sequences is being aligned). Given that there is both biological
-and technical variation in the data, a biologically plausible alignment is one
-that minimizes the corresponding differences (e.g. insertions, deletions and
-substitutions), so metrics based on edit distance are usually used. Backurs and
-Indyk (2015) showed that even calculating the edit distance between two
-sequences (without finding an alignment), is not generally solvable in
-strongly-subquadratic time. Moreover, even for related sequences of lengths n
-and m and edit distance s, the fastest optimal global (Marco-Sola et al., 2021;
-Šošic and Šikic, 2017)) and semi-global aligners (Rautiainen et al., 2017) scale
-quadratically when the edit distance increases with the length, which is the
-case for sequencing errors and biological variation: O(s*min(n,m))=O(enm) and
-O(nm), respectively, where e is the error rate (Navarro, 2001). In the age of
-big data and long reads (e.g. PacBio, ONP), this quadratic scaling with length
-is prohibitive, so the algorithms with practical usage (e.g. minimap2, bwt,
-kallisto) do not guarantee optimality but run in subquadratic time (Kucherov,
-2019). The gap between fast and optimal global alignment has been recognized but
-no optimal algorithms are known that run subquadratically for related sequences
-(Medvedev, 2022a). The interest towards genome graphs keeps increasing with the
-first International Genome Graph Symposium being held this year in Ascona,
-Switzerland (2022). The benefits of using graph references representing
-biological variation has been demonstrated to increase the alignment quality
-(Garrison et al., 2018). The transition towards graph references only aggravates
-the computational issues owing to the potentially complex graph topology (Equi
-et al., 2019). The optimal algorithms used in computational biology explore the
-search space of possible alignments in an uninformed fashion: by aligning a
-prefix of one sequence to a prefix of the other. This contrasts with the
-informed search algorithms such as the algorithm by Hunt and Szymanski (1977)
-solving the longest common subsequence (LCS) problem (a special case of the edit
-distance alignment). Sequence alignment can naturally be formulated as a
-shortest path problem solvable by Dijkstra’s algorithm (Ukkonen, 1985). A* is an
-informed generalization of Dijkstra’s algorithm (Hart, 1968) but it has not been
-successfully applied to sequence alignment. A* may be the missing piece in the
-“a major open problem to implement an algorithm with linear-like empirical
-scaling on inputs where the edit distance is linear in n” (Medvedev, 2022a).
-
+\input{\dir/optimal}
 \input{\dir/semiglobal}
 \input{\dir/global}
 \input{\dir/pangenomics}
