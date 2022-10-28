@@ -50,12 +50,12 @@ aligners include \vargas~\citep{darby2020vargas},
 which use bit-level optimizations and parallelization to increase their
 throughput.
 
-In contrast, \astarix~\citep{ivanov2020astarix} follows the promising direction
-of using a heuristic to avoid worst-case runtime on realistic data. To this end,
-\astarix rephrases the task of alignment as a shortest-path problem in an
-\emph{alignment graph} extended by a \emph{trie index}, and solves it using the
-\A~algorithm instantiated with a problem-specific \prefixh. Importantly, its
-choice of heuristic only affects performance, not optimality.
+In contrast, we follow the promising direction of using a heuristic to avoid
+worst-case runtime on realistic data. To this end, \astarix rephrases the task
+of alignment as a shortest-path problem in an \emph{alignment graph} extended by
+a \emph{trie index}, and solves it using the \A~algorithm instantiated with a
+problem-specific \prefixh. Importantly, its choice of heuristic only affects
+performance, not optimality.
 %
 Unlike DP-based algorithms, this \prefixh allows scaling sublinearly with the
 reference size, substantially increasing performance on large genomes. However,

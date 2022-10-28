@@ -1,13 +1,10 @@
 % paper: global
 \paragraph{Seeds, and matches}
 
-Seed-and-extend is a commonly used paradigm for solving semi-global
-alignment approximately~\citep{kucherov2019evolution}.
-Seeds are also used to define and compute LCSk~\citep{benson2014longest}, a
-generalization of longest common subsequence (LCS). In contrast, the \emph{\sh}
-by~\citet{ivanov2022fast} speeds up finding an optimal alignment by
-using seed matches to speed up the \A search. The \sh enables
-empirical near-linear scaling to long HiFi reads (up to $30\kbp$ with $0.3\%$
-errors)~\citep{ivanov2022fast}. A limitation of the existing \sh is the low
-tolerance to increasing error rates due to using only long exact matches without
-accounting for their order.
+Seed-and-extend is a commonly used paradigm for solving semi-global alignment
+approximately~\citep{kucherov2019evolution}. Seeds are also used to define and
+compute LCSk~\citep{benson2014longest}, a generalization of longest common
+subsequence (LCS). In contrast, our \emph{\sh} speeds up finding an optimal
+alignment by using seed matches to speed up the \A search. A limitation of the
+existing \sh is the low tolerance to increasing error rates due to using only
+long exact matches without accounting for their order.

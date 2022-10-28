@@ -6,13 +6,12 @@ Considering all nodes $v \in \RGV$ as possible starting points for the alignment
 means that the \A~algorithm would explore all states of the form $\st{v}{0}$,
 which immediately induces a high overhead of $\lvert \RGV \rvert$.
 %
-In line with previous works~\citep{ivanov2020astarix,dox2018efficient}, we avoid
-this overhead by complementing the reference graph with a trie index to produce
-a new graph $\TG = (\TGV, \TGE)$, where $\TGV$ is the union of the reference
-graph nodes $\RGV$ and the new trie vertices, and $\TGE$ is the union of $\RGE$,
-the trie edges, and edges connecting the trie leafs with reference nodes. Note
-that constructing this trie index is a one-time pre-processing step that can be
-reused for multiple queries.
+In line with the previous section, we avoid this overhead by complementing the
+reference graph with a trie index to produce a new graph $\TG = (\TGV, \TGE)$,
+where $\TGV$ is the union of the reference graph nodes $\RGV$ and the new trie
+vertices, and $\TGE$ is the union of $\RGE$, the trie edges, and edges
+connecting the trie leafs with reference nodes. Note that constructing this trie
+index is a one-time pre-processing step that can be reused for multiple queries.
 
 Since we want to also support aligning reverse-complement reads by starting from
 the trie \trieroot{}, we build the trie not only from the original reference
@@ -32,10 +31,9 @@ length $D$ may rise exponentially, leading to an exponential number of trie
 leaves. To counteract this exponential growth, we can select $D$ logarithmically
 small, as $\log_4N$.
 
-For a more thorough introduction to the trie and its construction,
-see~\citep{ivanov2020astarix}. Importantly, our placement of
-crumbs~(\cref{SEEDsec:definition}) generalizes directly to reference graphs extended
-with a trie (see also \cref{SEEDfig:trie}).
+Importantly, our placement of crumbs~(\cref{SEEDsec:definition}) generalizes
+directly to reference graphs extended with a trie (see also
+\cref{SEEDfig:trie}).
 
 % This leads to the effect that the crumbs in a trie node correspond to the
 % union of the crumbs of its descendents (with the exception when crumbs are
