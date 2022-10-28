@@ -28,7 +28,7 @@ trie nodes (\cref{TRIEsubsec:trie}).
 In the following, we show how to reduce the runtime of evaluating the heuristic
 $h(u,s)$, by introducing two separate optimizations that compose naturally.
 
-\para{Capping Cost} We cap $h(u,s)$ at $\costcap$, replacing it by
+\para{Capping cost} We cap $h(u,s)$ at $\costcap$, replacing it by
 $h_{\costcap}(u,s):=\min(h(u,s),\costcap)$. To achieve this, we allow
 \textsc{RecursiveAlign} to ignore paths costing more than $\costcap$.
 %
@@ -47,11 +47,10 @@ $\costcap$ in \cref{TRIEsubsec:parameter_estimation}.
 	\end{proof}
 	\end{samepage}
 
-\para{Capping Depth}
+\para{Capping depth}
 We reduce the number of nodes that need to be considered by $h(u,s)$. To this
 end, we define a modified heuristic $h_d(u,s)$ that only considers nodes $R_u
-\subseteq \AGV$ at distance at most $d$ from $u$ (cp. \cref{TRIElin:d} in
-\cref{TRIEalg:astarix}):
+\subseteq \AGV$ at distance at most $d$ from $u$ (in \cref{TRIEalg:astarix}):
 $
 R_u := \{ v \in \RGV \mid \exists \; \text{path } \pi \in \RG \text{ from } u \text{ to } v \text{ with } \lvert \pi \rvert \leq d \}
 $.
@@ -62,10 +61,11 @@ allowed to only spell a prefix of $s$, and the remaining unaligned letters of
 $s$ are considered aligned with zero cost:
 \begin{gather*}
 h_d(u,s) := \min_{\pi \in \Pi} \cost{\pi}, \text{ where } \\
-\Pi := \left\{ \pi \in \RG \;\middle|\; \begin{array}{c}
+\Pi := \left\{ \pi \in \RG \;\middle|\;
+%\begin{array}{c}
 \mli{start}(\pi)=u, 
 \sigma(\pi)=s \lor \big(\mli{end}(\pi)\in B(R_u) \land \exists i. \sigma(\pi)=s[1..i] \big)
-\end{array}
+%\end{array}
 \right\}
 \end{gather*}
 
