@@ -1,0 +1,68 @@
+\subsection{Match pruning preserves finding a shortest path}\label{GLOBALsec:pruning-proof}
+
+\begin{lem}\label{GLOBALprop:consistent}
+  For both $\hshS$ and $\hcshS$\,, any expanded state at the start of a seed is fixed.
+\end{lem}
+\begin{proof}
+  Let $\hh$ be either $\hshS$ or $\hcshS$.
+  We use a proof by contradiction.
+  Thus, suppose that a state $u$ at the start of a seed has minimal $f$ among
+  all open states, but the shortest path $\pi^*$ from $v_s$ to $u$ has length $\g(u) < g(u)$.
+
+  Let $n\neq u$ be the last expanded state on $\pi^*$, and let $v$ be its successor.
+  Let the unexpanded states of $\pi^*$ following $n$ that are at the start of a seed be
+  $v\preceq w_0 \prec \dots\prec w_l=u$, in this order. We will show that
+  $f(v) < f(u)$, resulting in a contradiction with the fact that \A always
+  expands the open state with minimal $f$:
+  \begin{align*}
+    f(v) &= g(v)+\hh(v)
+         = \g(v)+\hh(v) && \text{$\pi^*$ is a shortest path to $v$,} \\
+         &\leq \g(w_0)+\hh(w_0) && \text{proven in part 1,} \\
+         &\phantom{aaa}\leq \cdots \leq \g(w_l)+\hh(w_l) && \text{proven in part 2,} \\
+         &= \g(u)+\hh(u)
+         < g(u)+\hh(u) = f(u) && \text{by contradiction.}
+  \end{align*}
+
+  \textbf{Part 1}: Proof of $\g(v)+h(v) \leq \g(w_0)+h(w_0)$.
+  Since $w_0$ is the first start of a seed at or after $v$, the set of seeds
+  following $v$ is the same as the set of seeds following $u$. Thus, the
+  summation in $\hh(v)$ and $\hh(w_0)$ in \cref{GLOBALeq:sh} or \cref{GLOBALeq:csh} is over
+  the same seeds. Since $v\preceq w_0$, this implies $\hh(v) \leq \hh(w_0)$ in
+  both cases, and $\g(v) \leq \g(w_0)$ since $v\preceq w_0$.
+
+  \textbf{Part 2}: Proof of $\g(w_i){+}\hh(w_i) \leq \g(w_{i+1}){+}\hh(w_{i+1})$.
+  Note that $w_i$ and $w_{i+1}$ are at the start of the same or consecutive
+  seeds. In the first case,
+  $\hh(w_i) \leq \hh(w_{i+1})$ follows by definition since $w_i \preceq w_{i+1}$.
+  Else, we have $\hh(w_i) \leq \hh(w_{i+1})+r$.
+  When $d:=d(w_i, w_{i+1}) < \spot$, there is an unpruned match $m$ from $w_i$
+  to $w_{i+1}$ in $M-E$ of cost $d$, since $w_i$ is not expanded.
+  This implies $\hh(w_i) \leq \hh(w_{i+1}) + d$, and we obtain
+  \begin{align*}
+    \g(w_i) + \hh(w_i) &= (\g(w_{i+1}) - d) + \hh(w_i)\\
+                       &\leq (\g(w_{i+1})-\min(d,r)) + (\hh(w_{i+1}) + \min(d,r))\\
+                       &= \g(w_{i+1}) + \hh(w_{i+1}).
+  \end{align*}
+  Thus, by contradiction, $\g(u) < g(u)$ for any expanded start of a seed $u$.
+\end{proof}
+
+\begin{lem}\label{GLOBALlem:partialadmissible}
+  The heuristics $\hcshS$ and $\hshS$ are partially-admissible.
+\end{lem}
+\begin{proof}
+  Let $\pi^*$ be a shortest path from $s$ to $v_t$. Let $n$ be the last
+  expanded state on $\Path$ at the start of a seed.
+  By \cref{GLOBALprop:consistent} $n$ is fixed.
+  By choice of $n$, no states on $\pi^*$ following $n$ are expanded, so
+  no matches on $\pi^*$ following $n$ are pruned.
+  The proof of \cref{GLOBALthm:admissible} applies to the path $\Path$ without
+  changes, implying that $h(u) \leq \h(u)$ for all $u$ on $\Path$ following
+  $n$, for both $h=\hshS$ and $h=\hcshS$.
+\end{proof}
+
+\thmprunedcorrect
+\begin{proof}
+Follows from~\cref{GLOBALthm:admissible} in~\cref{GLOBALsec:partial-admissible}
+and~\cref{GLOBALlem:partialadmissible}.
+\end{proof}
+
