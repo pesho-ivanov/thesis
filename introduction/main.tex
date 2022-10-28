@@ -50,9 +50,21 @@ parallelization and use-cases. Our vision is that A* could become the default
 approach for sequence alignment, useful to the computational biology,
 bioinformatics and the more general algorithmic community.
 
+% A* context 
+An optimal alignment can naturally be represented as a shortest path in an
+alignment graph (equivalent to the DP table). In order to find such a shortest
+path with minimal exploration, we instantiate the A* algorithm with a novel
+heuristic function based on the unaligned parts of the sequences. This
+additional information is a problem-specific heuristic function and it heavily
+determines the efficiency of the search. For any explored state by A*, this
+heuristic function should compute a lower bound on the remaining path length, or
+more specifically, the minimal cost of edit operations needed to align the
+remaining sequences.
+
 \input{\dir/prelim}
 \input{\dir/dp}
 \input{\dir/optimal}
+% \input{\dir/fast} ????? linear I/O but quadratic optimal
 \input{\dir/semiglobal}
 \input{\dir/global}
 \input{\dir/pangenomics}

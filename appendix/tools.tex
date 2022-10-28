@@ -1,0 +1,29 @@
+\subsection{Tools versions and parameters}\label{GLOBALsec:app-tools}
+
+\paragraph{\astarpa}\footnote{\url{https://github.com/RagnarGrootKoerkamp/astar-pairwise-aligner}}
+(commit \texttt{550bbe5}, and for human data commit \texttt{394b629} ),
+run as
+%\vspace{-0.6em}
+\begin{Verbatim}[fontsize=\footnotesize]
+  astar-pairwise-aligner -i {input} --silent2 -k {k} -r {r}
+      --algorithm {\dijkstra,SH,CSH} [--no-prune]
+\end{Verbatim}
+%\vspace{-0.6em}
+
+\paragraph{\wfa}\footnote{\url{https://github.com/smarco/WFA2-lib}}
+(commit \texttt{ffa2439}),
+run as
+%\vspace{-0.6em}
+\begin{Verbatim}[fontsize=\footnotesize]
+  align_benchmark -i {input} -a edit-wfa --wfa-memory-mode ultralow
+\end{Verbatim}
+%\vspace{-0.6em}
+
+\paragraph{\edlib} We forked \texttt{v1.2.7}\footnote{\url{https://github.com/RagnarGrootKoerkamp/edlib}}
+(commit \texttt{b34805c})
+to support \oldwfa's input format. Run as
+%\vspace{-0.6em}
+\begin{Verbatim}[fontsize=\footnotesize]
+  edlib-aligner -p -s {input}
+\end{Verbatim}
+%\vspace{-0.6em}

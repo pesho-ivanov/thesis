@@ -10,80 +10,41 @@
 
 \chapter*{Abstract}
 
-% Context
+% History and motivation 
 Sequence alignment is the process of detecting similarities between sequences.
-For the last half a century, sequence alignment has been of central importance
-for molecular biology since it became possible to sequence DNA. Applications
-include evolutionary biology, genome assembly, read mapping, variation
-detection. Computational methods are crucial for the correctness of the analyses
-of the vast amounts of biological data.
+Since genetic sequences were first sequenced half a century ago, sequence
+alignment is a basic task in molecular biolog, with applications in evolutionary
+biology, genome assembly, variation detection, and others. An ongoing transition
+from using genomes to using pangenomes motivates a rethinking of the classic
+alignment algorithms. The variety of applications combined with the growing
+amount of genetic data motivate the development of fast and accurate alignment
+algorithms. 
 
-% Problem
-This thesis explores two types of alignment: \emph{semi-global} and
-\emph{global}. Biological sequences do not generally align perfectly due to
-biological differences and technical errors. Given two sequences, the desired
-alignment is a position-to-position correspondence between two sequences which
-minimizes the edit costs (substitutions, insertions or deletions). This task is
-closely related to calculating \emph{edit distance}. Practical alignment
-algorithms are desired to \textcircled{1} find accurate alignments,
-\textcircled{2} apply to a wide range of data, and \textcircled{3} use little
-time and memory.
+% Goals
+Existing alignment algorithms are either optimal but quadratic or fast but
+approximate. This thesis proses an elegent approach to alignment based on the \A
+algorithm, which is both heuristically fast and provably optimal. It has been
+shown that alignment is likely not solvable in strongly subquadratic time in the
+general case. The goal we pursue throughout this thesis is to apply the \A
+approach to as many types of data as possible, while remaining fast and optimal.
 
-% Existing algorithms
-Existing aligning algorithms are either optimal but quadratic or fast but
-appximate. Even though the resulting alignment is linear. This gap has motivated
-the development of various faster but approximate algorithms. Moreover,
-theoretical results suggest that it is that in general, alignment is not
-solvable in strongly subquadratic time.
-
-Can we use the A* algorithm to find provably optimal alignment heuristically
-fast?
-
-% Shortest path formulation
-We consider a principled alignment formulation based on shortest paths and
-demonstrate that the A* shortest path algorithm can be used to outperform
-current methods. Unlike existing methods, A* enables an \emph{informed search}
-based on information from the unaligned sequence suffixes, thus radically
-improving the empyrical runtime scaling (up to linear) in the average case while
-providing optimality guarantees. On real data, this approach reaches orders of
-magnitude of speedup compared to existing approaches.
-
-% A* context 
-An optimal alignment can naturally be represented as a shortest path in an
-alignment graph (equivalent to the DP table). In order to find such a shortest
-path with minimal exploration, we instantiate the A* algorithm with a novel
-problem-specific heuristic function based on the unaligned parts of the
-sequences. This additional information is a problem-specific heuristic function
-and it heavily determines the efficiency of the search. For any explored state
-by A*, this heuristic function should compute a lower bound on the remaining
-path length, or more specifically, the minimal cost of edit operations needed to
-align the remaining sequences.
-
-% Algorithmic contribution
-Seed heuristic. In practice, while achieving polynomial speed ups on real data.
-It \textcircled{1} provides optimality guarantees according to edit distance,
-\textcircled{2} scales to long and noisy sequences, and \textcircled{3} scales
-subquadratically with sequence length. To scale to large reference sequences, we
-extend the graph with a trie index. To scale to long queries, we introduce
-design an admissible \emph{seed heuristic}, which is provably-optimal also
-efficient to compute. To scale to high error rates, we design  
-
-% Tools and Performance
-Many tools do not have a well-stated problem they optimize. Prototype tools.
+% Tasks and algorithmic contribution
+We consider two types of alignment: \emph{semi-global}, for mapping a set of DNA
+sequences to a pangenome reference; and \emph{global}, for calculating the edit
+distance distance between two sequences. In order to handle various data
+dimensions, we propose several techniques and empyrically study their runtime
+scaling: a trie index enables sublinear scaling with the reference size,
+\emph{seed heuristic} enables near-linear scaling with sequence length, and
+inexact seed matching and match chaining enable scaling to high error rates.
+Owing to the superior scaling of the \A approach, our prototypical
+implementations run orders of magnitude faster than existing optimal approaches
+even on long erroneous sequences.
 
 % Future work and limitations
-We open domain of research direction on \A for alignment, including approximate
-solutions, more general metrics, other alignment types local, production
-implementations, theoretical analysis of the scaling and performance. Hopefully
-one day multiple sequence alignment (MSA) will also be in reach.
-
-mapping on pangenomes, graph references, 
-
-scaling
-
-%Runtime, memory usage, scaling. Data variation A good algorithm should be
-%optimal, complete, performant (fast and low on memory), and reference
-%complexity (topology and enthropy).
+We foresee a multitude of future directions for advancing \A for sequence
+alignment, including other types of alignment, generalizing the edit distance
+metric, relaxing the optimality guarantee, theoretical analyses of the
+performance, and more efficient implementations for production use.
 
 \endgroup
 
@@ -94,14 +55,57 @@ scaling
 \let\cleardoublepage\relax
 \let\cleardoublepage\relax
 
-%\begin{otherlanguage}{ngerman}
+\begin{otherlanguage}{ngerman}
 \pdfbookmark[1]{Zusammenfassung}{Zusammenfassung}
 \chapter*{Zusammenfassung}
 
 Deutsche Zusammenfassung hier.
 
-%\end{otherlanguage}
+\end{otherlanguage}
 
 \endgroup
 
 \vfill
+
+% Problem
+%Biological sequences do not generally
+%align perfectly due to biological differences and technical errors. Given two
+%sequences, the desired alignment is a position-to-position correspondence
+%between two sequences which minimizes the edit costs (substitutions, insertions
+%or deletions).
+%This task is closely related to calculating \emph{edit distance}.
+
+% Existing algorithms
+% by using heuristic
+%information to speed up the alignment without sacrificing correctness.
+%to to making it both heuristically fast and provably optimal. 
+
+%Can we use the A* algorithm to find provably optimal alignment heuristically
+%fast?
+
+%Practical alignment algorithms are desired to \textcircled{1} find accurate
+%alignments, \textcircled{2} apply to a wide range of data, and \textcircled{3}
+%use little time and memory.
+
+% Shortest path formulation
+%We consider a principled alignment formulation based on shortest paths and
+%demonstrate that the A* shortest path algorithm can be used to outperform
+%current methods. Unlike existing methods, A* enables an \emph{informed search}
+%based on information from the unaligned sequence suffixes, thus radically
+
+%Runtime, memory usage, scaling. Data variation A good algorithm should be
+%optimal, complete, performant (fast and low on memory)
+
+%polynomial speed ups on real data. It \textcircled{1} provides optimality
+%guarantees according to edit distance, \textcircled{2} scales to long and noisy
+%sequences, and \textcircled{3} scales subquadratically with sequence length.
+
+%To scale to large reference sequences, we extend the graph with a trie index. To
+%scale to long queries, we introduce design an admissible \emph{seed heuristic},
+%which is provably-optimal also efficient to compute. To scale to high error
+%rates, we design  
+
+%improving the empyrical runtime scaling (up to linear) in the average case while
+%providing optimality guarantees.
+
+%mapping on pangenomes, graph references, 
