@@ -3,10 +3,10 @@
 \label{TRIEsec:task}
 
 We now describe the task of aligning a query to a reference graph. To this end,
-we (i)~introduce the task of optimal alignment on a \emph{reference graph},
-(ii)~formalize this task in terms of an \emph{edit graph}, and (iii)~introduce an
-alternative formulation in terms of an \emph{alignment graph}, which is the
-basis for shortest path formulations of the optimal alignment.
+we (i)~introduce the task of optimal alignment on a \emph{reference graph}, and
+(iii)~introduce an alternative formulation in terms of an \emph{alignment
+graph}, which is the basis for shortest path formulations of the optimal
+alignment.
 %
 \cref{TRIEfig:graph-constructions} summarizes these different graph types.
 
@@ -54,50 +54,55 @@ We make the (standard) assumption that $0 \leq \cmatch \leq \csubst, \cins,
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.8\columnwidth]{edit_graph}
-	\caption[Constructing the alignment graph]{Starting from the reference graph (left), we can construct the edit graph (middle) and the alignment graph $\AG$ for query $q=``\texttt{A}"$ (right). Edges are annotated with labels and/or costs, where sets of labels represent multiple edges, one for each letter in the set (indicated by $``\text{x}3"$ and $``\text{x}4"$).}
+	\caption[Constructing the alignment graph]{Starting from the reference graph
+	(left), we can construct the edit graph (middle) and the alignment graph
+	$\AG$ for query $q=``\texttt{A}"$ (right). Edges are annotated with labels
+	and/or costs, where sets of labels represent multiple edges, one for each
+	letter in the set (indicated by $``\text{x}3"$ and $``\text{x}4"$).}
 	\label{TRIEfig:graph-constructions}
 \end{figure}
 
-\para{Edit graph}
-Instead of representing alignments as pairs of (i)~paths in the reference graph and
-(ii)~sequences of edit operations on these paths, we introduce \emph{edit
-graphs} whose paths intrinsically capture both. This way, we can
-formally define an alignment more conveniently as a path in an edit graph.
-
-Formally, an \emph{edit graph} $\EG:=(\EGV,\EGE)$ has directed, labeled edges
-$\EGE \subseteq \EGV \times \EGV \times \Sigma_\epsilon \times \mathbb{R}_{\geq
-0}$ with associated costs that account for edits. Here, $\Sigma_\epsilon :=
-\Sigma \cup \{\epsilon\}$ extends the alphabet $\Sigma$ by $\epsilon$ to account
-for deleted characters (see \cref{TRIEfig:graph-constructions}).
+% TODO: remove
+%\para{Edit graph}
+%Instead of representing alignments as pairs of (i)~paths in the reference graph and
+%(ii)~sequences of edit operations on these paths, we introduce \emph{edit
+%graphs} whose paths intrinsically capture both. This way, we can
+%formally define an alignment more conveniently as a path in an edit graph.
 %
-The edit and reference graphs consist
-of the same vertices, \ie, $\EGV=\RGV$. However, $\EGE$ contains more edges
-than $\RGE$ to account for edits.
+%Formally, an \emph{edit graph} $\EG:=(\EGV,\EGE)$ has directed, labeled edges
+%$\EGE \subseteq \EGV \times \EGV \times \Sigma_\epsilon \times \mathbb{R}_{\geq
+%0}$ with associated costs that account for edits. Here, $\Sigma_\epsilon :=
+%\Sigma \cup \{\epsilon\}$ extends the alphabet $\Sigma$ by $\epsilon$ to account
+%for deleted characters (see \cref{TRIEfig:graph-constructions}).
+%%
+%The edit and reference graphs consist
+%of the same vertices, \ie, $\EGV=\RGV$. However, $\EGE$ contains more edges
+%than $\RGE$ to account for edits.
+%%
+%Concretely, for each edge $(u,v,\ell) \in \RGE$, $\EGE$ contains edges to
+%account for (i)~matches, by an edge $(u,v,\ell,\cmatch)$, (ii)~substitutions, by
+%edges $(u,v,\ell',\csubst)$ for each $\ell' \in \Sigma \backslash \ell$,
+%(iii)~deletions, by an edge $(u,v,\epsilon,\cdel)$, and (iv)~insertions, by
+%edges $(u,u,\ell',\cins)$ for each $\ell' \in \Sigma$.
+%%
+%The spelling $\sigma(\pi) \in \Sigma^*$ of a path $\pi \in \EG$ is defined
+%analogously to reference graphs, except that deleted letters (represented by
+%$\epsilon$) are ignored. The cost $\cost{\pi}$ of a path $\pi \in \EG$ is the
+%sum of all its edge costs.
 %
-Concretely, for each edge $(u,v,\ell) \in \RGE$, $\EGE$ contains edges to
-account for (i)~matches, by an edge $(u,v,\ell,\cmatch)$, (ii)~substitutions, by
-edges $(u,v,\ell',\csubst)$ for each $\ell' \in \Sigma \backslash \ell$,
-(iii)~deletions, by an edge $(u,v,\epsilon,\cdel)$, and (iv)~insertions, by
-edges $(u,u,\ell',\cins)$ for each $\ell' \in \Sigma$.
-%
-The spelling $\sigma(\pi) \in \Sigma^*$ of a path $\pi \in \EG$ is defined
-analogously to reference graphs, except that deleted letters (represented by
-$\epsilon$) are ignored. The cost $\cost{\pi}$ of a path $\pi \in \EG$ is the
-sum of all its edge costs.
-
-\para{Alignment on edit Graph}
-An \emph{alignment} of query $q$ to $\RG$ is a path $\pi \text{ in } \EG$
-spelling $q$, \ie, $q=\sigma(\pi)$. An \emph{optimal alignment} is an alignment
-of minimal cost.
+%\para{Alignment on edit Graph}
+%An \emph{alignment} of query $q$ to $\RG$ is a path $\pi \text{ in } \EG$
+%spelling $q$, \ie, $q=\sigma(\pi)$. An \emph{optimal alignment} is an alignment
+%of minimal cost.
 
 \para{Alignment graph}
-To find an optimal alignment of $q$ to the edit graph $\EG$ using shortest path
-finding algorithms, we must ensure that only paths spelling $q$ are considered.
-To this end, we introduce an alternative but equivalent formulation of
-alignments in terms of an \emph{alignment graph} $\AG=(\AGV,\AGE)$.
+To find an optimal alignment of $q$ using shortest path finding algorithms, we
+must ensure that only paths spelling $q$ are considered. To this end, we
+introduce an alternative but equivalent formulation of alignments in terms of an
+\emph{alignment graph} $\AG=(\AGV,\AGE)$.
 
 Here, each \emph{state} $\langle v,i \rangle \in \AGV$ consists of a vertex $v \in
-\EGV$ and a query position $i \in \{0,\dots,|q|\}$ (equivalent
+\RGV$ and a query position $i \in \{0,\dots,|q|\}$ (equivalent
 to~\cite{rautiainen_aligning_2017}). Traversing a state $\langle v,i \rangle \in
 \AGV$ represents the alignment of the first $i$ query characters ending at node $v$.
 %
@@ -106,40 +111,38 @@ letters from the query.
 %
 We note that the alignment graph explicitly depends on the query $q$. In
 particular, the example alignment graph $\AG[``\texttt{A}"]$ in
-~\cref{TRIEfig:graph-constructions} lacks substitution edges from $\EG$, as their
+~\cref{TRIEfig:graph-constructions} lacks substitution edges from $\AG$, as their
 labels ($\texttt{C}$, $\texttt{G}$, $\texttt{T}$) do not match the query
 $q=``A"$.
 
-We construct the alignment graph $\AG$ to guarantee that any walk from a source
-$\langle u,0 \rangle$ to a state $\langle v,i \rangle$ corresponds to an
-alignment of the first $i$ letters of query $q$ to $\RG$. As a consequence,
-there is a one-to-one correspondence between alignments $\edit{\pi}$ of $q$ to
-$\EG$ and paths $\alignment{\pi} \in \AG$ from sources $S:=\RGV \times \{0\}$ to
-targets $T:=\RGV \times \{|q|\}$, with
-$\cost{\reference{\pi}}=\cost{\alignment{\pi}}$. To find the best alignment in
-$\EG$, only paths in $\AG$ (walks without repeating nodes) can be considered,
-since repeating a node in $\AG$ cannot lead to a lower cost ($\cdel \geq 0$) for
-the same state.
+%We construct the alignment graph $\AG$ to guarantee that any walk from a source
+%$\langle u,0 \rangle$ to a state $\langle v,i \rangle$ corresponds to an
+%alignment of the first $i$ letters of query $q$ to $\RG$.
+%As a consequence, there is a one-to-one correspondence between alignments $\edit{\pi}$ of $q$ to
+%$\EG$ and paths $\alignment{\pi} \in \AG$ from sources $S:=\RGV \times \{0\}$ to
+%targets $T:=\RGV \times \{|q|\}$, with
+%$\cost{\reference{\pi}}=\cost{\alignment{\pi}}$. To find the best alignment in
+%$\EG$, only paths in $\AG$ (walks without repeating nodes) can be considered,
+%since repeating a node in $\AG$ cannot lead to a lower cost ($\cdel \geq 0$) for
+%the same state.
 
-\begin{samepage}
-The edges $\AGE \subseteq \AGV \times \AGV \times \Sigma_\epsilon \times
-\mathbb{R}_{\geq 0}$ are built based on the edges in $\EGE$, except that the
-former (i)~keep track of the position in the query $i$, and (ii)~only contain
-empty edges or edges
-whose label matches the next query letter:
+%The edges $\AGE \subseteq \AGV \times \AGV \times \Sigma_\epsilon \times
+%\mathbb{R}_{\geq 0}$ are built based on the edges in $\EGE$, except that the
+%former (i)~keep track of the position in the query $i$, and (ii)~only contain
+%empty edges or edges
+%whose label matches the next query letter:
 
-\vspace{-1.2em}
-{%
-\small
-\begin{alignat}{10}
-	(u,v,\ell,w) &\in \EGE \implies (&\langle u, i \rangle, &\langle v, i+1
-		&&\rangle,\ell,w) \in \AGE \quad \text{ for } 0 \leq i < |q| \text{ with }
-		q[i]=\ell \label{TRIEeq:alignment-edges-nondeletions} \\
-	(u,v,\epsilon,w) &\in\EGE \implies (&\langle u, i \rangle, &\langle v, i
-		&&\rangle,\epsilon,w) \in \AGE \quad \text{ for } 0 \leq i < |q| \label{TRIEeq:alignment-edges-deletions}
-\end{alignat}
-}%
-\end{samepage}
+%\vspace{-1.2em}
+%{%
+%\small
+%\begin{alignat}{10}
+%	(u,v,\ell,w) &\in \EGE \implies (&\langle u, i \rangle, &\langle v, i+1
+%		&&\rangle,\ell,w) \in \AGE \quad \text{ for } 0 \leq i < |q| \text{ with }
+%		q[i]=\ell \label{TRIEeq:alignment-edges-nondeletions} \\
+%	(u,v,\epsilon,w) &\in\EGE \implies (&\langle u, i \rangle, &\langle v, i
+%		&&\rangle,\epsilon,w) \in \AGE \quad \text{ for } 0 \leq i < |q| \label{TRIEeq:alignment-edges-deletions}
+%\end{alignat}
+%}%
 %
 Here, assuming $0$-indexing, $q[i]$ is the next letter to be matched after
 matching $i$ letters. Then, \cref{TRIEeq:alignment-edges-nondeletions} represents

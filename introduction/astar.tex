@@ -177,9 +177,9 @@ also yields favorable performance.
 % paper:global
 % Shortest paths, A* for MSA and semi-global alignment (AStarix), gaps
 \paragraph{Shortest paths and \A}
-A pairwise alignment that minimizes edit distance corresponds to a shortest path in the
-\emph{edit graph}~\citep{vintsyuk1968speech,ukkonen1985algorithms}. Assuming
-non-negative edit costs, a shortest path can be found using \dijkstra's
+A pairwise alignment that minimizes edit distance corresponds to a shortest path
+in the \emph{alignment graph}~\citep{vintsyuk1968speech,ukkonen1985algorithms}.
+Assuming non-negative edit costs, a shortest path can be found using \dijkstra's
 algorithm~\citep{ukkonen1985algorithms} (\cref{GLOBALfig1-dij}) or
 \A~\citep{spouge1989speeding}. \A is an informed search algorithm which uses a
 task-specific heuristic function to direct its search. Depending on the

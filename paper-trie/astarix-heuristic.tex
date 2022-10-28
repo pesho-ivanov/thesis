@@ -40,7 +40,7 @@ $\mli{best}$, the best path found so far.
 				\State \Return $\mli{curr}$
 			\EndIf
 			\ForAll{$(u,\mli{v},\ell,w) \in
-				\EGE \textbf{ where } \ell \in \{s[0], \epsilon \}$}
+				\AGE \textbf{ where } \ell \in \{s[0], \epsilon \}$}
 				\State $\mli{suff} = s[1{:}]$ \textbf{if} $\ell \neq \epsilon$ \textbf{else} $s$
 				\State $\mli{best} = \Call{RecursiveAlign}{u, \mli{suff}, curr + w, \mli{best}}$
 			\EndFor

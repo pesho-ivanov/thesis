@@ -109,16 +109,15 @@ suffixes $\overline{a_i \dots a_{n-1}}$ as $A_{\geq i}$. The \emph{edit
 distance} $\ed(A,B)$ is the minimum number of insertions, deletions, and
 substitutions of single letters needed to convert $A$ into $B$.
 
-\paragraph{Edit graph}
+\paragraph{Alignment graph}
 Let \emph{state} $\st{i}{j}$ denote the subtask of aligning the prefix $A_{<i}$
-to the prefix $B_{<j}$. The \emph{edit graph} (also called \emph{alignment
+to the prefix $B_{<j}$. The \emph{alignment graph} (also called \emph{edit
 graph}) $G(V,E)$ is a weighted directed graph with vertices $V = \{\st ij \vert
 {0\leq i \leq n}, {0\leq j\leq m}\}$ corresponding to all states, and edges
-connecting tasks to subtasks: edge ${\st ij \to \st{i{+}1}{j{+}1}}$ has cost
-$0$ if ${a_i = b_j}$ (match) and $1$ otherwise (substitution), and edges ${\st ij
-\to \st{i{+}1}{j}}$ (deletion) and ${\st ij \to\st{i}{j{+}1}}$ (insertion) have cost
-$1$. We denote the root state $\st 00$ by $v_s$ and the target state $\st nm$ by
-$v_t$.
-For brevity we write $f(\st ij)$ as $f \st ij$.
-The edit graph is a natural representation of the alignment problem that
-provides a base for all alignment algorithms.
+connecting tasks to subtasks: edge ${\st ij \to \st{i{+}1}{j{+}1}}$ has cost $0$
+if ${a_i = b_j}$ (match) and $1$ otherwise (substitution), and edges ${\st ij
+\to \st{i{+}1}{j}}$ (deletion) and ${\st ij \to\st{i}{j{+}1}}$ (insertion) have
+cost $1$. We denote the root state $\st 00$ by $v_s$ and the target state $\st
+nm$ by $v_t$. For brevity we write $f(\st ij)$ as $f \st ij$. The alignment graph is
+a natural representation of the alignment problem that provides a base for all
+alignment algorithms.

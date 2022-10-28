@@ -50,14 +50,14 @@ $\costcap$ in \cref{TRIEsubsec:parameter_estimation}.
 \para{Capping Depth}
 We reduce the number of nodes that need to be considered by $h(u,s)$. To this
 end, we define a modified heuristic $h_d(u,s)$ that only considers nodes $R_u
-\subseteq \EGV$ at distance at most $d$ from $u$ (cp. \cref{TRIElin:d} in
+\subseteq \AGV$ at distance at most $d$ from $u$ (cp. \cref{TRIElin:d} in
 \cref{TRIEalg:astarix}):
 $
-R_u := \{ v \in \RGV \mid \exists \; \text{path } \pi \in \EG \text{ from } u \text{ to } v \text{ with } \lvert \pi \rvert \leq d \}
+R_u := \{ v \in \RGV \mid \exists \; \text{path } \pi \in \RG \text{ from } u \text{ to } v \text{ with } \lvert \pi \rvert \leq d \}
 $.
 
 If an alignment of $s$ reaches the boundary of $R_u$, defined as $$B(R_u) := \{v
-\in R_u \mid \exists (v,v',\ell) \in \EGE \text{ with } v' \notin R_u \},$$ it is
+\in R_u \mid \exists (v,v',\ell) \in \AGE \text{ with } v' \notin R_u \},$$ it is
 allowed to only spell a prefix of $s$, and the remaining unaligned letters of
 $s$ are considered aligned with zero cost:
 \begin{gather*}
