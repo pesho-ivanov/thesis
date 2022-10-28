@@ -59,7 +59,41 @@ performance, and more efficient implementations for production use.
 \pdfbookmark[1]{Zusammenfassung}{Zusammenfassung}
 \chapter*{Zusammenfassung}
 
-Deutsche Zusammenfassung hier.
+Sequenzalignment ist der Prozess der Erkennung von Ähnlichkeiten zwischen
+Sequenzen. Seit vor einem halben Jahrhundert zum ersten Mal genetische Sequenzen
+sequenziert wurden, ment ist eine grundlegende Aufgabe in der Molekularbiologie
+mit Anwendungen in der Evolutionsbiologie, Genomassemblierung,
+Variationserkennung und andere. Ein laufender Übergang von uns- Die Umstellung
+von Genomen auf die Verwendung von Pangenomen motiviert zum Überdenken der
+klassischen Ausrichtung Algorithmen. Die Vielfalt der Anwendungen kombiniert mit
+der wachsenden Menge an genetische Daten motivieren die Entwicklung schneller
+und genauer Ausrichtungsalgorithmen.
+
+Existierende Ausrichtungsalgorithmen sind entweder optimal, aber quadratisch
+oder schnell, aber geeignet. nahe. Diese Arbeit prosiert einen eleganten Ansatz
+zur Ausrichtung basierend auf dem \A Algorithmus, der sowohl heuristisch schnell
+als auch nachweislich optimal ist. Es wurde gezeigt Diese Ausrichtung ist in
+stark subquadratischer Zeit im Allgemeinen wahrscheinlich nicht lösbar Fall. Das
+Ziel, das wir in dieser Arbeit verfolgen, ist die Anwendung des \A Ansatz als
+möglichst viele Arten von Daten und bleibt dabei schnell und optimal. Wir
+betrachten zwei Arten von Alignment: semi-global, um einen DNA-Satz zu kartieren
+Sequenzen zu einer Pangenom-Referenz; und global zur Berechnung der
+Bearbeitungsentfernung
+
+Abstand zwischen zwei Folgen. Um verschiedene Datendimensionen handhaben zu
+können, verwenden wir schlagen mehrere Techniken vor und untersuchen empirisch
+ihre Laufzeitskalierung: ein Versuch Index ermöglicht sublineare Skalierung mit
+der Referenzgröße, Seed-Heuristik ermöglicht nahezu lineare Skalierung mit
+Sequenzlänge und ungenaue Seed-Matching und Match-Verkettung Skalierung auf hohe
+Fehlerraten ermöglichen. Aufgrund der überlegenen Skalierung des \A sich nähern,
+Unsere prototypischen Implementierungen laufen um Größenordnungen schneller als
+bestehende optimale Anflüge auch bei langen Fehlsequenzen.
+
+Wir sehen eine Vielzahl zukünftiger Richtungen für die Weiterentwicklung von \A
+für Sequenz Ausrichtung, einschließlich anderer Ausrichtungsarten,
+Verallgemeinerung der Bearbeitungsentfernungsmetrik, Lockerung der
+Optimalitätsgarantie, theoretische Analysen der Leistung und Effizientere
+Implementierungen für den Produktionseinsatz.
 %\end{otherlanguage}
 
 \endgroup

@@ -1,19 +1,21 @@
 \section{Evaluations} \label{SEEDsec:eval}
 
-In the following, we demonstrate that our approach aligns faster than existing
-optimal aligners due to its superior scaling. Specifically, we address the
-following research questions:
-\begin{enumerate}[label={\bfseries Q\arabic*},nolistsep,leftmargin=15mm]
-	\item What speedup can the \seedh achieve?
-    \item How does the \seedh scale with reference size?
-	\item How does the \seedh scale with read length?
-\end{enumerate}
-The modes of operation which we analyze include both short (Illumina) and long
-(HiFi) reads to be aligned on on both linear and graph references.
+\begin{samepage}
+	In the following, we demonstrate that our approach aligns faster than existing
+	optimal aligners due to its superior scaling. Specifically, we address the
+	following research questions:
+	\begin{enumerate}[label={\bfseries Q\arabic*},nolistsep,leftmargin=15mm]
+		\item What speedup can the \seedh achieve?
+		\item How does the \seedh scale with reference size?
+		\item How does the \seedh scale with read length?
+	\end{enumerate}
+	The modes of operation which we analyze include both short (Illumina) and long
+	(HiFi) reads to be aligned on on both linear and graph references.
+\end{samepage}
 
-\input{\dir/evals-astarix.tex}
-\input{\dir/evals-settings.tex}
-\input{\dir/evals-commands.tex}
-\input{\dir/evals-table-comparison.tex}
-\input{\dir/evals-refsize-scaling.tex}
-\input{\dir/evals-readlen-scaling.tex}
+\input{\dir/evals-astarix}
+\input{\dir/evals-settings}
+%\input{\dir/evals-commands.tex}
+\input{\dir/evals-table-comparison}
+\input{\dir/evals-refsize-scaling}
+\input{\dir/evals-readlen-scaling}
