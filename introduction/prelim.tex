@@ -132,18 +132,18 @@ $q=``A"$.
 %empty edges or edges
 %whose label matches the next query letter:
 
-%\vspace{-1.2em}
-%{%
-%\small
-%\begin{alignat}{10}
-%	(u,v,\ell,w) &\in \EGE \implies (&\langle u, i \rangle, &\langle v, i+1
-%		&&\rangle,\ell,w) \in \AGE \quad \text{ for } 0 \leq i < |q| \text{ with }
-%		q[i]=\ell \label{TRIEeq:alignment-edges-nondeletions} \\
-%	(u,v,\epsilon,w) &\in\EGE \implies (&\langle u, i \rangle, &\langle v, i
-%		&&\rangle,\epsilon,w) \in \AGE \quad \text{ for } 0 \leq i < |q| \label{TRIEeq:alignment-edges-deletions}
-%\end{alignat}
-%}%
-%
+\vspace{-1.2em}
+{%
+\small
+\begin{alignat}{10}
+	(u,v,\ell,w) &\in \AGE \implies (&\langle u, i \rangle, &\langle v, i+1
+		&&\rangle,\ell,w) \in \AGE \quad \text{ for } 0 \leq i < |q| \text{ with }
+		q[i]=\ell \label{TRIEeq:alignment-edges-nondeletions} \\
+	(u,v,\epsilon,w) &\in\AGE \implies (&\langle u, i \rangle, &\langle v, i
+		&&\rangle,\epsilon,w) \in \AGE \quad \text{ for } 0 \leq i < |q| \label{TRIEeq:alignment-edges-deletions}
+\end{alignat}
+}%
+
 Here, assuming $0$-indexing, $q[i]$ is the next letter to be matched after
 matching $i$ letters. Then, \cref{TRIEeq:alignment-edges-nondeletions} represents
 matches, substitutions, and insertions (which advance the position in the query
