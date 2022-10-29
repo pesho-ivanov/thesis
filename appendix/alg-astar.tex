@@ -1,0 +1,42 @@
+\paragraph{Modified \A algorithm for pruning} \label{GLOBALsec:astar}
+
+%\renewcommand\theenumi{\algletter\arabic{enumi}}
+%\renewcommand\labelenumi{{\rmfamily \algletter\arabic{enumi}.}}
+%\setlength{\leftmargini}{2em}
+
+We give our variant of the \A algorithm \citep{hart1968formal} that adds steps
+\cref{GLOBALastar:pruning-check} and \cref{GLOBALastar:pruning} (marked as \textbf{bold}) to handle the
+pruning of matches. All computed values of $g$ are stored in a map, and all
+states in the front are stored in a priority queue of tuples $(v, g(v), f(v))$
+ordered by increasing $f$.
+
+\newcommand{\bolditem}{\refstepcounter{enumi}\item[\textbf{\theenumi.}]}
+\newcommand{\boldsubitem}{\refstepcounter{enumii}\item[\textbf{\theenumii.}]}
+\renewcommand{\algletter}{A}
+\begin{enumerate}
+  \item Set $g(v_s) = 0$ in the map and initialize the priority queue with
+        $(v_s, g(v_s){=}0, f(v_s))$.
+  \item Pop the tuple $(u, g, f)$ with minimal $f$.
+  \item If $g > g(u)$, \ie the value of $g(u)$ in the map has decreased since pushing the
+        tuple, go to step 2. This is impossible for a consistent heuristic.
+  \item \label{GLOBALastar:pruning-check} \textbf{If $f \neq f(u)$, \emph{reorder} $u$: push $(u, g(u), f(u))$ and
+        go to step 2. This can only happen when $f$ changes value, \ie after
+        pruning.}
+  \item If $u=v_t$, terminate and report a best path.
+  \item Otherwise, \emph{expand} $u$:
+  %      \vspace{-7pt}
+  \begin{enumerate}
+    \item \label{GLOBALastar:pruning} \textbf{Prune matches starting at $u$.}
+    \item \label{GLOBALastar:open}
+        For each successor $v$ of $u$, \emph{open} $v$ when either $g(v)$
+        has not yet been computed or when $g(u) + d(u,v) < g(v)$.
+        In this case, update the value of $g(v)$ in the map and insert $(v, g(v), f(v))$ in
+        the priority queue. Go to step 2. This makes $u$ the \emph{parent} of $v$.
+  \end{enumerate}
+\end{enumerate}
+
+Note that the heuristic is evaluated in steps \cref{GLOBALastar:pruning-check} and
+\cref{GLOBALastar:open} for the computation of $f(u)$ and $f(v)$ respectively.
+
+A vertex is called \emph{closed} after it has been expanded for the
+first time, and called \emph{open} when it is present in the priority queue.
