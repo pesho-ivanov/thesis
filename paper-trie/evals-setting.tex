@@ -26,7 +26,10 @@ For \dijkstra and \astarix, the runtime complexity depends not only on the data
 size, but also on the data content, including edit costs. More accurate
 heuristics lead to better \A performance~\cite{pearl_discovery_1983}, which is
 why we evaluate \astarix with costs corresponding more closely to Illumina error
-profiles: $\Delta=(0,1,5,5)$.
+profiles: $\Delta=(0,1,5,5)$. We apply all described optimizations.
+% to, except
+%\cref{TRIEsubsec:speedup-heuristic,TRIEsubsec:partition} which are applicable
+%only to \astarix.
 
 \para{Metrics}
 As all aligners evaluated here are provably optimal, we are mostly interested in
@@ -48,3 +51,28 @@ computation of the heuristic, the implementation and the system parameters.
 %all the neighbors of the states it expands.
 %\todo{Harun: this argument only really works
 %if computation of the heuristic is not a bottleneck. maybe make that more clear?}
+
+\subsection{Comparison to optimal mappers}
+
+% Even though there is a variety of short read-to-graph aligners, only a few are
+% guaranteed to be optimal.
+We compare the performance of \astarix to that of two state-of-the-art optimal
+aligners: \pasgal and \bitparallel, with their default parameters.
+%
+We do not compare to the exact aligner of \vg as (i)~its optimal alignment
+is intended for testing purposes only, (ii)~it does not provide an
+interface for aligning a set of reads, and (iii)~it has been consistently
+outperformed by \pasgal~\cite{jain_accelerating_2019}.
+
+\pasgal is compiled with AVX2 SIMD support. The resulting alignments are not
+expected to match exactly between the local aligner \pasgal and the semi-global
+aligners (\astarix and \bitparallel) as they solve different tasks with
+different edit costs. Nevertheless, in analogy with the evaluations of
+\pasgal~\cite{jain_accelerating_2019}, it is still meaningful to compare
+performance, assuming that the dynamic programming approach of \pasgal can be
+adapted to semi-global alignment with similar performance.
+
+Both \bitparallel and \pasgal reach their worst-case runtime complexity
+independent of the edit costs $\Delta=(\cmatch,\csubst,\cins,\cdel)$. \pasgal is
+evaluated using its default costs ~$\Delta=(-1,1,1,1)$ and \bitparallel is
+evaluated using the only supported costs~$\Delta=(0,1,1,1)$.

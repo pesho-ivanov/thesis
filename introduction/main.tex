@@ -1,21 +1,10 @@
-\chapter{Introduction} \label{ch:introduction}
-
-\dictum{%
-   Provably optimal and heuristically fast.}
-\vskip 1em
-
 \graphicspath{{\dir/}}
 
-% The problem looked strange to work on; I didn't believe nobody has done it
-% before
-%\section{Research goals and scope}
-%\paragraph{Problem statement}
-%\paragraph{Problem domain}
-%only optimal alignment in this thesis
-%asymptotics analysis
+\chapter{Introduction} \label{ch:introduction}
 
-\input{\dir/problem}
-\input{\dir/motivation}
+%\dictum{%
+%   Provably optimal and heuristically fast.}
+%\vskip 1em
 
 Sequence alignment is a class of combinatorial problems that is of primary
 importance for analysis of genetic data. Algorithms and tools for alignment have
@@ -24,7 +13,10 @@ quantification, detecting splicing, oncology, multiple sequence alignment (MSA),
 and evolutionary biology. Types of sequence alignment include global alignment,
 semi-global alignment, mapping, local alignment, and others. For each type, a
 common tradeoff that had to be done is between the alignment accuracy and the
-performance to find it. An additional difficulty is the fact that in the
+performance to find it.
+
+% graph reference
+An additional difficulty is the fact that in the
 upcoming pangenomic era, these algorithms must be also applicable to complex
 graph structures. For more than 60 years, a linear sequence has been extremely
 useful as a representation of a single genome. The affordability of sequencing
@@ -33,22 +25,7 @@ many genomes (e.g. of organisms or single cells), building a pangenome (an
 abstracted genome that represents the genetic variation of a whole clade). The
 shift towards population studies in the last decade motivates the adoption of
 graph data structures which serve as compressed representations of collections
-of related genomes (genomes are paths in the graph). During my PhD program, we
-initiated a new direction of sequence alignment based on the informed shortest
-path algorithms A* that we have shown to be both provably optimal, practically
-scalable and more performant than existing aligners in certain cases. The
-objective of this project is to develop our work on A* for sequence alignment
-from prototypical to practical, which includes the development of algorithms,
-formal proofs and software development. Our specific aim is to use the already
-constructed base for the development of AStarix as an industrial-scale mapper
-handling human-scale graph references, long and noisy reads, while being
-competitive in runtime and memory even to suboptimal aligners. In order to
-fulfill this aim, work in several directions will be needed: 1) rigorous
-development of the seed heuristic theory, 2) theoretical analysis of the
-expected runtime, 3) implementation optimized for runtime, memory,
-parallelization and use-cases. Our vision is that A* could become the default
-approach for sequence alignment, useful to the computational biology,
-bioinformatics and the more general algorithmic community.
+of related genomes (genomes are paths in the graph).
 
 % A* context 
 An optimal alignment can naturally be represented as a shortest path in an
@@ -61,14 +38,18 @@ heuristic function should compute a lower bound on the remaining path length, or
 more specifically, the minimal cost of edit operations needed to align the
 remaining sequences.
 
-\input{\dir/prelim}
-\input{\dir/dp}
-\input{\dir/optimal}
-% \input{\dir/fast} ????? linear I/O but quadratic optimal
-\input{\dir/semiglobal}
-\input{\dir/global}
-\input{\dir/pangenomics}
-\input{\dir/shortestpath}
-\input{\dir/astar}
-\input{\dir/seeds}
+\paragraph{Main contributions}
+We have effectively applied the \A algorithm to optimal sequence alignment. We
+demontrated that the additional information from the whole sequence can improve
+the scaling with query length, reference size and error rate, substantially
+decrease the necessary computations, and result in algorithms that are orders of
+magnitude faster than existing optimal algorithms. We apply the \A approach to
+two types of alignment: semi-global (mapping) and global.
+
+%only optimal alignment in this thesis
+%asymptotics analysis
+%????? linear I/O but quadratic optimal
+
 \input{\dir/contributions}
+\input{\dir/problem}
+\input{\dir/prelims}

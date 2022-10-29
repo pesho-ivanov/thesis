@@ -4,6 +4,23 @@
    It is better to be wrong than to be vague.}
 \vskip 1em
 
+% from the grand proposal
+We initiated a new direction of sequence alignment based on the informed
+shortest path algorithms A* that we have shown to be both provably optimal,
+practically scalable and more performant than existing aligners in certain
+cases. The objective of this project is to develop our work on A* for sequence
+alignment from prototypical to practical, which includes the development of
+algorithms, formal proofs and software development. Our specific aim is to use
+the already constructed base for the development of AStarix as an
+industrial-scale mapper handling human-scale graph references, long and noisy
+reads, while being competitive in runtime and memory even to suboptimal
+aligners. In order to fulfill this aim, work in several directions will be
+needed: 1) rigorous development of the seed heuristic theory, 2) theoretical
+analysis of the expected runtime, 3) implementation optimized for runtime,
+memory, parallelization and use-cases. Our vision is that A* could become the
+default approach for sequence alignment, useful to the computational biology,
+bioinformatics and the more general algorithmic community.
+
 %2.5. Relevance and impact
 The potential adoption of the \A approach to sequencing (incl. the usage of
 AStarix mapper and the A*PA global aligner) may hugely alleviate the
@@ -34,6 +51,7 @@ entire sequences. This additional information enables radically more focused
 path-finding at the cost of more complex algorithms.
 
 \paragraph{Limitations}
+% +asymptotic analysis
 Our presented method has several limitations:
 \begin{enumerate}
   \item \emph{Complex regions trigger quadratic search.} Since it is unlikely
