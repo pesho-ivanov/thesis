@@ -19,7 +19,7 @@ with the set of sources $S$. Then, \A iteratively \emph{expands} the explored
 state with lowest estimated cost by exploring all its neighbors, until it finds
 a target. Here, the cost for node $u$ is estimated by the distance from source, called $g(u)$, plus the estimate from the heuristic $h(u)$.
 
-\para{Heuristic Function}
+\paragraph{Heuristic Function}
 The heuristic function $h(u)$ estimates the
 cost $h^*(u)$ of a shortest path in $G$ from $u$ to a target $t \in T$. Intuitively, a
 good heuristic correlates well with the distance from $u$ to $t$.
@@ -40,7 +40,7 @@ h^*(u)-h(u)$ can only improve the performance of
 a domain-specific heuristic $h$.
 
 
-\para{\A algorithm}
+\paragraph{\A algorithm}
 We aim to guarantee optimal alignment while optimizing the average runtime
 to not reach its worst-case complexity. While \dijkstra is an algorithm that
 explores graph nodes in the order of their distance from the start, \A is a
@@ -136,7 +136,7 @@ remaining length of the shortest path from a given node $v \in V$ to a target
 $t \in T$.
 
 
-\para{Algorithm}
+\paragraph{Algorithm}
 % 
 In a nutshell, the \A~algorithm maintains a set of \emph{explored} nodes,
 initialized by all possible starting nodes $S$. It then iteratively
@@ -148,7 +148,7 @@ $t \in T$.
 When the \A~algorithm expands a target node $t \in T$, it reconstructs the path
 leading to $t$ and returns it.
 %
-\para{Admissibility}
+\paragraph{Admissibility}
 %
 The \A~algorithm is guaranteed to find a shortest path if its heuristic $h$
 provides a lower bound on the distance to the closest target, often referred to
@@ -158,7 +158,7 @@ Further, the performance of the \A~algorithm relies critically on the choice of
 $h$. Specifically, it is crucial to have low estimates for the optimal paths but
 also to have high estimates for suboptimal paths.
 
-\para{Discussion}
+\paragraph{Discussion}
 %
 To summarize, we use the \A~algorithm to find a shortest path from $\st{u}{0}$
 to $\st{v}{|q|}$ in $\AG$. To guarantee optimality, its heuristic function

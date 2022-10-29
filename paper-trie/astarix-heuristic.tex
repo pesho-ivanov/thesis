@@ -80,7 +80,7 @@ remaining letters. Since all costs are non-negative, the theorem follows.
 	\label{TRIEfig:heuristic-benefit}
 \end{figure}
 
-\para{Benefit of \A heuristic over \dijkstra} \label{TRIEpara:heuristic-benefits}
+\paragraph{Benefit of \A heuristic over \dijkstra} \label{TRIEpara:heuristic-benefits}
 \cref{TRIEfig:heuristic-benefit} shows the benefit of using our heuristic function
 compared to \dijkstra. Here, \dijkstra expands states based on their distance
 $g$ from the origin nodes $\st{u}{0}$ and $\st{v}{0}$. Hence, depending on
@@ -89,7 +89,7 @@ tie-breaking, \dijkstra may expand all states with $h \leq 1$, as shown in
 by the sum of the distance from the origin $g$ and the heuristic $h$, expanding
 only states with $g+h \leq 1$.
 
-\para{Memoization} \label{TRIEpara:memoization}
+\paragraph{Memoization} \label{TRIEpara:memoization}
 Recall that the return value of $h$ in \cref{TRIElin:heuristic-start} only depends
 on $u$ and the upcoming sequence $s$ (which in turn depends on $i$ and $d$).
 Thus, $h(u,s)$ can be reused for different positions across different queries in

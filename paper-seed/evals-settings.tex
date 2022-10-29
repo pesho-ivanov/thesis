@@ -7,7 +7,7 @@ We note that while multiple tools support parallelization when aligning a single
 read, all tools can be trivially parallelized to align multiple reads in
 parallel.
 
-\para{Compared aligners}
+\paragraph{Compared aligners}
 %
 We compare the novel \seedh to \prefixh (both heuristics are implemented in
 \astarix), \graphaligner, \pasgal, and \vargas. We provide the versions and
@@ -22,7 +22,7 @@ parallelization and a GPU but has been shown to be superseded in the single CPU
 regime~\citep[Fig.~9]{feng2021accelerating}. \pasgal and \vargas are compiled
 with AVX2 support. We execute the \prefixh with the default lookup depth $d=5$.
 
-\para{Seed heuristic parameters}
+\paragraph{Seed heuristic parameters}
 %
 The choice of parameters for the \seedh influences its performance.
 %
@@ -39,7 +39,7 @@ matches.
 In our experiments, we use seed lengths of $k=25$ for Illumina reads and $k=150$
 for HiFi reads.
 
-\para{Data}
+\paragraph{Data}
 %
 We aligned reads to two different reference graphs: a linear \textit{E.~coli}
 genome (strain: K-12 substr. MG1655, ASM584v2)~\citep{howe2019ensembl}, with
@@ -64,7 +64,7 @@ simulator~\citep{huang2011art}. We generated long HiFi reads using the script
 with sequencing lengths \mbox{5--25kbp} and error rates 0.3\%, which are typical
 for HiFi reads.
 
-\para{Edit costs}
+\paragraph{Edit costs}
 We execute \astarix with edit costs typical to the corresponding sequencing
 technology: $\cedits=(0,1,5,5)$ for Illumina reads and $\cedits=(0,1,1,1)$ for
 HiFi reads. As the performance of DP-based tools is independent of edit costs,
@@ -72,7 +72,7 @@ we are using the respective default edits costs when executing \graphaligner,
 \pasgal and \vargas.
 
 
-\para{Metrics}
+\paragraph{Metrics}
 %
 We report the performance of aligners in terms of runtime per one thousand
 aligned base pairs~[s/kbp]. Since we measured runtime end-to-end (including

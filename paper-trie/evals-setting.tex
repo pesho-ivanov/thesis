@@ -2,7 +2,7 @@
 All evaluations were executed singled-threaded on an Intel Core i7-6700 CPU running
 at 3.40GHz.
 
-\para{Reference graphs and reads}
+\paragraph{Reference graphs and reads}
 We designed three experiments utilizing three different reference graphs (in
 \cref{TRIEtab:results}). The first is a linear graph without variation based on the
 \textit{E.~coli} reference genome (strain: K-12 substr. MG1655,
@@ -15,7 +15,7 @@ Leukocyte Receptor Complex (LRC, with \numprint{1099856} nodes and
 We note that we do not evaluate on de Brujin graphs, since \pasgal does not
 support cyclic graphs.
 
-%\para{Reads}
+%\paragraph{Reads}
 For the \textit{E.~coli} dataset we used the ART tool~\cite{huang_art_2012} to simulate an
 Illumina single-end read set with \numprint{10000} reads of length 100. For the LCR and
 MHC1 datasets, we sampled \numprint{20000} single-end reads of length 100 from the already
@@ -31,7 +31,7 @@ profiles: $\Delta=(0,1,5,5)$. We apply all described optimizations.
 %\cref{TRIEsubsec:speedup-heuristic,TRIEsubsec:partition} which are applicable
 %only to \astarix.
 
-\para{Metrics}
+\paragraph{Metrics}
 As all aligners evaluated here are provably optimal, we are mostly interested in
 their performance.
 %

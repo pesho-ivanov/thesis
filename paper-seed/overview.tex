@@ -9,7 +9,7 @@ optimal alignment starting from an arbitrary node $v \in \RG$.
 For simplicity of the exposition, we assume unit edit costs $\cedits =
 (0,1,1,1)$, which we generalize in~\cref{SEEDsec:definition}.
 
-\para{Intuition}
+\paragraph{Intuition}
 The \A search requires us to provide a lower bound of the remaining path cost
 from a state $\st{v}{i}$ to a target state. Clearly, to align the whole query,
 each of the remaining seeds (\ie~at or after position $i$ in $q$) has to be
@@ -32,7 +32,7 @@ least one substitution, insertion, or deletion. Assuming unit edit costs,
 $h\st{v}{i}$ yields a lower bound on the cost for aligning $q[i{:}]$ starting
 from $v$ by simply returning the number of missing expected crumbs in $v$.
 
-\para{Crumbs precomputation example}
+\paragraph{Crumbs precomputation example}
 %
 \cref{SEEDfig:overview} shows four seeds as colored sections of length $2$ each, and
 represents their corresponding crumbs as \bluecrumb{}, \yellowcrumb{},
@@ -76,7 +76,7 @@ number of seeds.
 
 \input{\dir/figures/exploration-table-figure.tex}
 
-\para{Guiding the search example}
+\paragraph{Guiding the search example}
 %
 \cref{SEEDfig:exploration-table} demonstrates how $h\st{v}{i}$ guides the
 \A~algorithm towards the shortest path by showing which states may be

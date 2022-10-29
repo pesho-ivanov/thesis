@@ -4,7 +4,7 @@ Next, we formally define the \seedh function $h\st{v}{i}$. Overall, we want to
 ensure that $h\st{v}{i}$ is admissible, \ie, that it is a lower bound on the
 cost of a shortest path from $\st{v}{i}$ to some $\st{w}{|q|}$ in $\AG$.
 
-\para{Seeds}
+\paragraph{Seeds}
 %
 We split read $q \in \Sigma^*$ into a set $\seeds$ of non-overlapping seeds
 $s_0, \dots, s_{|\seeds|-1} \in \Sigma^*$.
@@ -19,7 +19,7 @@ lengths or non-consecutive seeds as long as they do not overlap. An interesting
 future work item is investigating how different choices of seeds affect the
 performance of our approach, and selecting seeds accordingly.
 
-\para{Matches}
+\paragraph{Matches}
 %
 For each seed $s \in \seeds$, we locate all nodes $u \in M(s)$ in the reference
 graph that can be the start of an exact match of $s$:
@@ -31,7 +31,7 @@ graph that can be the start of an exact match of $s$:
 To compute $M(s)$ efficiently, we leverage the trie introduced in
 \cref{SEEDsec:trie}.
 
-\para{Crumbs}
+\paragraph{Crumbs}
 For seed $s_j$ starting at position $i$ in $q$, we place crumbs on all nodes $u
 \in \RGV$ which can reach a node $v \in M(s_j)$ using less than $i+\maxdel$
 edges:
@@ -62,7 +62,7 @@ from each $v \in M(s)$ by a backward breadth-first-search (BFS).
 % So in~\cref{SEEDthe:admissible} we prove that all necessary crumbs are placed and
 % the heuristic is admissible.
 
-\para{Heuristic}
+\paragraph{Heuristic}
 %
 Let $\seeds_{\ge i}$ be the set of seeds that start at or after position $i$ of
 the read, formally defined by $\seeds_{\ge i} := \{s_{j} \mid \lceil i / k

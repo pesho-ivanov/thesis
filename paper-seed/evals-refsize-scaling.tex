@@ -36,7 +36,7 @@ extracted prefixes of increasing length from MHC-linear. We then generated reads
 from each prefix, and ran all tools on all prefixes with the corresponding
 reads.
 
-\para{Illumina reads}
+\paragraph{Illumina reads}
 \cref{SEEDfig:illumina_scaling_with_genomesize} shows the runtime scaling and memory
 usage for Illumina reads. The \seedh was provided with 10k reads, while other
 tools were provided with 1k reads.
@@ -48,7 +48,7 @@ like MHC, the speedup of the \seedh reaches 200 times. Note that the scaling of
 the \prefixh is substantially worse than the \seedh since the 200bp reads are
 outside of its operational capabilities.
 
-\para{HiFi reads}
+\paragraph{HiFi reads}
 \cref{SEEDfig:hifi_scaling_with_genomesize} shows the runtime scaling and memory
 usage for HiFi reads. The respective total lengths of all aligned reads are 5Mbp
 for the \seedh, 500kbp for \graphaligner, and 100kbp for \vargas and \pasgal. We

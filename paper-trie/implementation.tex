@@ -3,13 +3,13 @@
 Our \astarix implementation uses an adjacency list graph data structure to
 represent the reference and the trie in a unified way, representing each letter
 by a separate edge object.
-%\para{Reverse Complement Alignment}
+%\paragraph{Reverse Complement Alignment}
 To represent the reverse complementary walks in $\RG$, the vertices are doubled,
 connected in the opposite direction, and labeled with complementary nucleotides
 ($\texttt{A} \leftrightarrow \texttt{T}$, $\texttt{C} \leftrightarrow
 \texttt{G}$).
 %
-%\para{Default Parameters}
+%\paragraph{Default Parameters}
 We do not limit the number of memoized heuristic function values
 (\cref{TRIEpara:memoization}), but note we could do so by resetting the memoization
 table periodically.

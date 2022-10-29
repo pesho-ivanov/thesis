@@ -17,7 +17,7 @@ Since we want to also support aligning reverse-complement reads by starting from
 the trie \trieroot{}, we build the trie not only from the original reference
 graph and also from its reverse-complement.
 
-\para{Intuition}
+\paragraph{Intuition}
 %
 \cref{SEEDfig:trie} extends the reference graph $\RG$ from \cref{SEEDfig:overview} with
 a trie. Here, any path in the reference graph uniquely corresponds to a path
@@ -39,7 +39,7 @@ directly to reference graphs extended with a trie (see also
 % union of the crumbs of its descendents (with the exception when crumbs are
 % skipped for propagating to the trie \cref{SEEDpara}).
 
-\para{Reusing the trie to find seed matches}
+\paragraph{Reusing the trie to find seed matches}
 %
 As a second usage of the trie, we can also exploit it to efficiently locate all
 matches $M(s)$ of a given seed $s$.
@@ -67,7 +67,7 @@ reference graph.
 % backtrack both in the reference graph as well as in the trie, thus ensuring that
 % $M(s)$ is computed correctly.
 
-\para{Optimization: skip crumbs on the trie} \label{SEEDpar:skip_crumbs}
+\paragraph{Optimization: skip crumbs on the trie} \label{SEEDpar:skip_crumbs}
 %
 Generally, we aim to place as few crumbs as possible, in order to both reduce
 precomputation time and avoid misleading the \A~algorithm by unnecessary crumbs.

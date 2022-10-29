@@ -28,7 +28,7 @@ trie nodes (\cref{TRIEsubsec:trie}).
 In the following, we show how to reduce the runtime of evaluating the heuristic
 $h(u,s)$, by introducing two separate optimizations that compose naturally.
 
-\para{Capping cost} We cap $h(u,s)$ at $\costcap$, replacing it by
+\paragraph{Capping cost} We cap $h(u,s)$ at $\costcap$, replacing it by
 $h_{\costcap}(u,s):=\min(h(u,s),\costcap)$. To achieve this, we allow
 \textsc{RecursiveAlign} to ignore paths costing more than $\costcap$.
 %
@@ -47,7 +47,7 @@ $\costcap$ in \cref{TRIEsubsec:parameter_estimation}.
 	\end{proof}
 	\end{samepage}
 
-\para{Capping depth}
+\paragraph{Capping depth}
 We reduce the number of nodes that need to be considered by $h(u,s)$. To this
 end, we define a modified heuristic $h_d(u,s)$ that only considers nodes $R_u
 \subseteq \AGV$ at distance at most $d$ from $u$ (in \cref{TRIEalg:astarix}):
@@ -98,7 +98,7 @@ the representative of the equivalence class of $u$. To look up representative
 nodes in $\Oh(1)$, we define a helper array $\mli{repr}$ with $\mli{repr[u]} =
 r$.
 
-\para{Identifying equivalence classes}
+\paragraph{Identifying equivalence classes}
 To identify the nodes belonging to the same equivalence class, we assume the
 optimization from \cref{TRIEsubsec:speedup-heuristic}, \ie, that our heuristic only
 considers nodes up to a distance $d$ from~$u$.

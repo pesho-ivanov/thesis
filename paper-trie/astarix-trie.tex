@@ -11,7 +11,7 @@ extend the reference graph with a trie (referred to as \emph{suffix tree}
 in~\cite{dox2018efficient}) to effectively align from all possible starting
 nodes \emph{simultaneously}.
 
-\para{Single Starting State}
+\paragraph{Single Starting State}
 In the trie approach, abstraction nodes are added to the graph, each of which
 corresponds to a set of nodes in $\RG$ that correspond to the same prefix. In
 the following, we formalize this approach.
@@ -60,7 +60,7 @@ optimizations. In particular, when searching for a shortest path in the
 alignment graph constructed from $\TG$, it suffices to only consider starting
 node $\langle \epsilon, 0 \rangle$.
 
-\para{Reducing Size of Trie} \label{TRIEpara:reducing_trie}
+\paragraph{Reducing Size of Trie} \label{TRIEpara:reducing_trie}
 We can reduce the size of the trie by removing specific trie nodes.
 %
 In particular, we iteratively remove each trie leaf node $s \cdot \ell \in \TGV$ with a unique outgoing edge $(s \cdot \ell, v, \ell')$ to a reference graph node $v \in \RGV$.
