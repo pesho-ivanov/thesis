@@ -1,7 +1,7 @@
 \input{\dir/astarix-algo}
 %\input{\dir/astarix-general-astar}
 
-\subsection{Prefix heuristic for \A} \label{TRIEsubsec:astarix-heuristic}
+\subsection{Simple prefix heuristic} \label{TRIEsubsec:astarix-heuristic}
 
 \cref{TRIEalg:astarix} shows an unoptimized version of \astarix and its heuristic
 function.
@@ -94,5 +94,3 @@ Recall that the return value of $h$ in \cref{TRIElin:heuristic-start} only depen
 on $u$ and the upcoming sequence $s$ (which in turn depends on $i$ and $d$).
 Thus, $h(u,s)$ can be reused for different positions across different queries in
 $\Oh(1)$ time, if it was computed for a previous query.
-
-\input{\dir/implementation}

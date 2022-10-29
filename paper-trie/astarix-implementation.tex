@@ -1,8 +1,10 @@
-\section{Optimizations} \label{TRIEsec:optimizations}
+\section{Implementation} \label{TRIEsec:optimizations}
 
 We now discuss several optimizations we developed to speed up \astarix while
 preserving its optimality. These optimizations reduce preprocessing and
 alignment runtime as well as memory footprint (in particular for memoization).
+Our aligner \astarix handles both \A and \dijkstra algorithm (formally with $h
+\equiv 0$).
 
 \subsection{Greedy match optimization} \label{TRIEsubsec:greedy}
 We also employ an optimization originally developed for computing the edit
@@ -24,7 +26,7 @@ We note that this optimization is only applicable when aligning in non-branching
 regions of the reference graph. In particular, it is not applicable for most
 trie nodes (\cref{TRIEsubsec:trie}).
 
-\subsection{Speeding up evaluation of heuristic} \label{TRIEsubsec:speedup-heuristic}
+\subsection{Capping the cost and depth} \label{TRIEsubsec:speedup-heuristic}
 In the following, we show how to reduce the runtime of evaluating the heuristic
 $h(u,s)$, by introducing two separate optimizations that compose naturally.
 
@@ -81,7 +83,7 @@ h_d(u,s) := \min_{\pi \in \Pi} \cost{\pi}, \text{ where } \\
 \end{samepage}
 
 
-\subsection{Partitioning nodes into equivalence classes} \label{TRIEsubsec:partition}
+\subsection{Equivalence classes} \label{TRIEsubsec:partition}
 
 We have shown in \cref{TRIEpara:memoization} how to reuse an already computed
 $h(u,s)$ for repeating $s$ across different queries and query positions. In the
@@ -116,3 +118,13 @@ Note that for smaller $d$, the number of equivalence classes gets smaller, the
 reuse of the heuristic gets higher, and the memoization table has a lower memory
 footprint. At the same time, however, the heuristic $h_d(u,s)$ is less
 informative.
+
+\subsection{Data structures}
+Our \astarix implementation uses an adjacency list graph data structure to
+represent the reference and the trie in a unified way, representing each letter
+by a separate edge object. To represent the reverse complementary walks in
+$\RG$, the vertices are doubled, connected in the opposite direction, and
+labeled with complementary nucleotides ($\texttt{A} \leftrightarrow \texttt{T}$,
+$\texttt{C} \leftrightarrow \texttt{G}$). We do not limit the number of memoized
+heuristic function values (\cref{TRIEpara:memoization}), but note we could do so
+by resetting the memoization table periodically.

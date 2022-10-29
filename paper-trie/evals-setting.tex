@@ -52,7 +52,7 @@ computation of the heuristic, the implementation and the system parameters.
 %\todo{Harun: this argument only really works
 %if computation of the heuristic is not a bottleneck. maybe make that more clear?}
 
-\subsection{Comparison to optimal mappers}
+\paragraph{Comparison to optimal mappers}
 
 % Even though there is a variety of short read-to-graph aligners, only a few are
 % guaranteed to be optimal.
@@ -76,3 +76,5 @@ Both \bitparallel and \pasgal reach their worst-case runtime complexity
 independent of the edit costs $\Delta=(\cmatch,\csubst,\cins,\cdel)$. \pasgal is
 evaluated using its default costs ~$\Delta=(-1,1,1,1)$ and \bitparallel is
 evaluated using the only supported costs~$\Delta=(0,1,1,1)$.
+
+\input{\dir/evals-param-tuning}

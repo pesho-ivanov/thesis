@@ -60,9 +60,6 @@
     \strng{fullhash}{IPBBMHKARGVM1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
-    \field{addendum}{\\\emph{Suggests \A for optimal mapping, demonstrates that
-  a trie index enables sub-linear mapping with reference size, introduces the
-  sequence-to-graph mapper AStarix.}}
     \field{booktitle}{RECOMB}
     \field{title}{\textbf{{AStarix}: {F}ast and {O}ptimal {S}equence-to-{G}raph
   {A}lignment}}
@@ -94,9 +91,6 @@
     \strng{fullhash}{IPBBVM1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
-    \field{addendum}{\\\emph{Improves upon the previous paper by a seed
-  heuristic for A* to map long sequences in near-linear time with sequence
-  length.}}
     \field{booktitle}{RECOMB}
     \field{title}{\textbf{Fast and {O}ptimal {S}equence-to-{G}raph {A}lignment
   {G}uided by {S}eeds}}
@@ -125,8 +119,6 @@
     \strng{fullhash}{GKRIP1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
-    \field{addendum}{\\\emph{Extends the seed heuristic with inexact seed
-  matching and match chaining to align sequences with high error rates.}}
     \field{title}{\textbf{Exact global alignment using A* with seed heuristic
   and match pruning}}
     \field{journaltitle}{bioRxiv}
