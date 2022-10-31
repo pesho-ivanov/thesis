@@ -226,3 +226,81 @@ approaches: instead of searching for a good alignment around seed matches, it
 punishes potential alignments by the lack of matches. This negation makes the
 difference between finding a good alignment and proving that no other alignment
 is better.
+
+% paper-global
+\paragraph{Paths, alignments, seeds and matches}
+Any path from $\st ij$ to $\st{i'}{j'}$ in the alignment graph~$G$ represents a
+\emph{pairwise alignment} (or just \emph{alignment}) of the substrings $A_{i
+\dots i'}$ and $B_{j \dots j'}$. We denote with $d(u,v)$ the distance between
+states $u$ and $v$. A shortest path $\pi^*$ corresponds to an optimal alignment,
+thus $\cost(\pi^*) = d(v_s, v_t) = \ed(A, B)$. For a state $u$ we write $\g(u)
+:= d(v_s, u)$ and $\h(u) := d(u, v_t)$ for the distance from the start to $u$
+and from $u$ to the target $v_t$, respectively.
+
+% paper-global
+We outline algorithms for exact pairwise alignment and their fastest implementations for
+biological sequences. Refer to~\citet{kucherov2019evolution} for approximate,
+probabilistic, and non-edit distance algorithms and aligners.
+
+\paragraph{Banding and bit-parallelization} When similar sequences are being
+aligned, the whole DP table may not need to be computed. One such
+output-sensitive algorithm is the \emph{banded} algorithm of
+\citet{ukkonen1985algorithms} (\cref{GLOBALfig1-band}) which considers only states
+near the diagonal within an exponentially increasing \emph{band}, and runs in
+$\Oh(ns)$ time, where $s$ is the edit distance between the sequences. This
+algorithm, combined with the \emph{bit-parallel optimization}
+by~\citet{myers1999fast} is implemented by the \edlib
+aligner~\citep{vsovsic2017edlib} that runs in $\Oh(ns/w)$ runtime, where $w$ is
+the machine word size (nowadays 32 or 64).
+
+\paragraph{Diagonal transition and WFA}
+The $\Oh(ns)$ runtime complexity can be improved using the algorithm independently
+discovered by \citet{ukkonen1985algorithms} and \citet{myers1986ano} that is
+known as \emph{diagonal transition} \citep{navarro2001guided} (\cref{GLOBALfig1-wfa}).
+It has an $\Oh(ns)$ runtime in the worst-case but only takes expected
+$\Oh(n+s^2)$ time under the assumption that the input sequences are
+random~\citep{myers1986ano}. This algorithm has been extended to linear and
+affine costs in the \emph{wavefront alignment} (WFA)
+algorithm~\citep{marco2021fast} in a way similar to~\citet{gotoh1982improved},
+and has been improved to only require linear memory in
+\wfa~\citep{marco2022optimal} by combining it with the \emph{divide and conquer}
+approach of~\citet{hirschberg1975linear}, similar to \citet{myers1986ano}
+algorithm for unit edit costs (\cref{GLOBALfig1-biwfa}).
+% This new name, WFA, has since replaced the original \emph{diagonal transition}
+% name and refers to both the unit cost and affine variants of the
+% algorithm as well as the implementation.
+Note that when each sequence letter has an error with a constant probability,
+the total number of errors $s$ is proportional to $n$, so that even these
+algorithms have a quadratic runtime.
+
+\paragraph{Chains}
+A state $u=\st ij\in V$ \emph{precedes} a state $v=\st {i'}{j'}\in V$, denoted
+$u\preceq v$, when $i\leq i'$ and $j\leq j'$. Similarly, a match $m$ precedes a
+match $m'$, denoted $m\preceq m'$, when the end of $m$ precedes the start of
+$m'$. This makes the set of matches a partially ordered set.
+A state $u$ precedes a match $m$ (denoted $u\preceq m$) when it precedes
+the start of the match. A \emph{chain} of matches is a (possibly empty) sequence
+of matches $m_1 \preceq \dots \preceq m_l$.
+
+\paragraph{Contours}
+To efficiently calculate maximal chains of matches, \emph{contours} are used.
+Given a set of matches $\matches$, $\statescore(u)$ is the number of matches in
+the longest chain $u\preceq m_0 \preceq \dots$, starting at $u$. The function
+$\statescore\st ij$ is non-increasing in both $i$ and $j$. \emph{Contours} are
+the boundaries between regions of states with $\statescore(u) = \ell$ and
+$\statescore(u)<\ell$ (see~\cref{GLOBALfig:contours}). Note that contour $\ell$ is
+completely determined by the set of matches $m\in \matches$ for which
+${\statescore(\start(m)) = \ell}$~\citep{hirschberg1977algorithms}.
+
+\citet{hunt1977fast} give an algorithm to efficiently compute $\statescore$ when
+$\matches$ is the set of single-letter matches between $A$ and $B$, and
+\citet{deorowicz2014efficient} give an algorithm when $\matches$ is the set of
+$k$-mer exact matches.
+
+% Output-sensitive overview
+%\paragraph{Relaxations} Approximate
+%algorithms~\citep{kucherov2019evolution}, an $\Oh(n \log n)$ algorithm that is
+%exact with high probability assuming a limited error rate
+%$e<3.485\%$~\citep[Proof of Lemma~25, p.~17]{ganesh2020near}. The
+%asymptotically best know algorithm reaches
+%$\Oh(n^2/\log^2n)$~\citep{masek1980faster} but is not practical.
