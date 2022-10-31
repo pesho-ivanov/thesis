@@ -1,5 +1,8 @@
 % paper: global
-\subsection{Seeds and matches}
+\subsection{Seeds}
+
+\dictum{Cut off your nose to spite your face.}
+\vskip 1em
 
 Seed-and-extend is a commonly used paradigm for solving semi-global alignment
 approximately~\citep{kucherov2019evolution}. Seeds are also used to define and
@@ -8,3 +11,9 @@ subsequence (LCS). In contrast, our \emph{\sh} speeds up finding an optimal
 alignment by using seed matches to speed up the \A search. A limitation of the
 existing \sh is the low tolerance to increasing error rates due to using only
 long exact matches without accounting for their order.
+
+Our seed heuristic uses seeds in a very different way than existing seeding
+approaches: instead of searching for a good alignment around seed matches, it
+punishes potential alignments by the lack of matches. This negation makes the
+difference between finding a good alignment and proving that no other alignment
+is better.

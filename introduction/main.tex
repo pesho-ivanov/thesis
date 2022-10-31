@@ -2,6 +2,29 @@
 
 \chapter{Introduction} \label{ch:introduction}
 
+\section{Motivation}
+
+Observation 1: A long query has more information that may hint towards the best
+mapping place. Unlike the practical approximate algorithms, the existing optimal
+algorithm do not exploit this information. As a result, all state-of-the-art
+optimal algorithms take longer to map a longer query to a reference. 
+
+Observation 2: The input is linear, the output is linear, the best case is
+linear. On the other hand all optimal solutions are near-quadratic and the
+theoretical limit is near-quadratic. To spead up beyond this near-quadratic
+barrier, current practical algorithms break the optimality guarantee hoping that
+the produced alignments are accurate enough. 
+
+%But it is possible to be fast and accurate in the same time?
+We take another approach: we preserve the optimality guarantee and use
+substantially more information with the hope to be fast enough. As it turns out,
+when the error rate is limited, our optimal solutions empirically scale
+near-linearly up to very long sequences. This translates to many orders of
+magnitude of runtime speedup compared to state-of-the-art optimal aligners.
+
+\subsection{}
+
+%\subsection{Knowledge gap}
 %\dictum{%
 %   Provably optimal and heuristically fast.}
 %\vskip 1em
