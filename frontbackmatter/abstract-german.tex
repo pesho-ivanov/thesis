@@ -1,0 +1,54 @@
+Sequenzalignment ist die Aufgabe, Ähnlichkeiten zwischen Sequenzen zu finden.
+Seit vor einem halben Jahrhundert die ersten DNA-, RNA- und Proteinsequenzen
+gewonnen wurden, ist Sequenzalignment ein zentraler Baustein in der
+Molekularbiologie. Seine Anwendungen umfassen Evolutionsbiologie,
+Genomassemblierung, Variationserkennung und andere. Die Vielfalt der Anwendungen
+und die wachsende Menge genetischer Daten erfordern von den
+Alignment-Algorithmen eine hohe Genauigkeit und Geschwindigkeit. Darüber hinaus
+motiviert der fortschreitende Übergang von der Verwendung einzelner
+Genomreferenzen zur Verwendung von Pangenomen zu einem Überdenken der
+klassischen Alignment-Algorithmen.
+
+Wir betrachten zwei Arten von paarweisen Alignment-Problemen: semi-globales
+Mapping eines Satzes von DNA-Lesevorgängen auf eine allgemeine Graphreferenz,
+die ein Pangenom darstellt, und globales (oder Ende-zu-Ende) Alignment von zwei
+Sequenzen. Frühere Algorithmen führen eine uninformierte Suche durch – ihre
+Alignmentprozesse vernachlässigen Informationen aus den nicht ausgerichteten
+Teilen der Sequenzen. Dadurch steigen ihre Laufzeit und ihr Speicherbedarf
+nahezu quadratisch mit der Sequenzlänge, was im allgemeinen Fall ebenfalls eine
+grundsätzliche Einschränkung darstellen dürfte. Wir beschleunigen das Alignment
+verwandter Sequenzen, indem wir Informationen aus den gesamten Sequenzen nutzen.
+
+A* ist ein klassischer Kürzester-Pfad-Algorithmus, der explizit Heuristiken
+nutzt, um die Suche zu lenken und zu beschleunigen, und dennoch Garantien für
+das Finden eines kürzesten Pfads bietet. Seltsamerweise wurde A* bisher nicht
+für paarweises Sequenzalignment übernommen, und in der vorliegenden Arbeit
+untersuchen wir, wie dies zu bewerkstelligen ist. Wir (i) formulieren das
+Alignmentproblem als Kürzester-Pfad-Problem, (ii) schlagen eine Heuristik vor,
+um die A*-Suche zu steuern, (iii) entwerfen effiziente Algorithmen und
+Datenstrukturen zur Berechnung der Heuristik, (iv) beweisen ihre Optimalität,
+(v) implementieren die vorgestellten Algorithmen und (vi) vergleichen ihre
+Leistung und Skalierung mit anderen optimalen Algorithmen. Unser Ansatz ist
+nachweislich optimal in Bezug auf die Bearbeitungsentfernung, seine Laufzeit
+skaliert empirisch stark subquadratisch (und manchmal sogar nahezu linear), was
+zu einer Beschleunigung um Größenordnungen im Vergleich zu modernen optimalen
+Algorithmen führt.
+
+In der gesamten Arbeit demonstrieren wir, wie verschiedene Dimensionen der
+Eingabekomplexität erfasst werden können, während die Geschwindigkeit und
+Optimalität erhalten bleiben. Zuerst demonstrieren wir, wie man einen Trie-Index
+anwendet, um die Mapping-Laufzeit sublinear mit der Referenzgröße zu skalieren.
+Dann führen wir eine neuartige Seed-Heuristik für A* ein, die zusätzlich eine
+nahezu lineare Ausrichtung langer Sequenzen (bis zu Millionen von Basenpaaren)
+mit ihrer Länge ermöglicht. Zuletzt erweitern wir die Seed-Heuristik mit
+ungenauem Matching und Match-Chaining, um die tolerierte Fehlerrate zu erhöhen
+(bis zu 30 \%). Zusammenfassend zeigen wir, wie man lange und fehlerhafte
+Sequenzen optimal ausrichtet.
+
+Der A*-Ansatz zum Sequenzalignment steckt noch in den Kinderschuhen, aber eine
+Reihe von Forschungsrichtungen gehen bereits davon aus: andere Alignment-Typen,
+allgemeinere Optimierungsmetriken, gelockerte Optimalitätsgarantien,
+Leistungsanalysen, verbesserte Heuristiken, Anwendungen außerhalb der Biologie
+und leistungsfähigere Algorithmen und Implementierungen. Vielleicht wird der
+A*-Ansatz für die Ausrichtung eines Tages ausgereift genug sein, um die Leistung
+suboptimaler Algorithmen zu erreichen.

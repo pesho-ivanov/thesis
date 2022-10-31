@@ -1,0 +1,46 @@
+Sequence alignment is the task of finding similarities between sequences. Since
+the first DNA, RNA and protein sequences were obtained half a century ago,
+sequence alignment has been a central building block in molecular biology. Its
+applications include evolutionary biology, genome assembly, variation detection,
+and others. The variety of applications and the growing amount of genetic data
+require high accuracy and speed from the alignment algorithms. Moreover, the
+ongoing transition from using single genome references to using pangenomes
+motivates a rethinking of the classic alignment algorithms.
+
+We consider two types of pairwise alignment problems: semi-global mapping of a
+set of DNA reads to a general graph reference representing a pangenome, and
+global (or end-to-end) alignment of two sequences. Prior algorithms perform
+uninformed search – their aligning processes neglect  information from the
+unaligned parts of the sequences. As a result, their runtime and memory
+footprint increase near-quadratically in the sequence length, which is also
+likely to be a fundamental limitation in the general case. We speed up the
+alignment of related sequences exploiting information from the whole sequences.
+
+\A is a classic shortest path algorithm, which explicitly leverages heuristics
+to direct and speed up the search, and yet it provides guarantees for finding a
+shortest path. Curiously, so far \A has not been adopted for pairwise sequence
+alignment, and in the present thesis we investigate how to do that. We (i)
+phrase the alignment problem as a shortest path problem, (ii) suggest a
+heuristic to direct the \A search, (iii) design efficient algorithms and data
+structures for computing the heuristic, (iv) prove their optimality, (v)
+implement the presented algorithms, and (vi) compare their performance and
+scaling to other optimal algorithms. Our approach is provably optimal according
+to edit distance, its runtime empirically scales strongly subquadratic (and even
+sometimes near-linearly), which translates to orders of magnitude of speedup
+compared to state-of-the-art optimal algorithms.
+
+Throughout the thesis, we demonstrate how to encompass various dimensions of the
+input complexity while preserving the speed and optimality. First, we
+demonstrate how to apply a trie index to scale the mapping runtime sublinearly
+with the reference size. Then, we introduce a novel seed heuristic for \A which
+additionally enables aligning of long sequences (up to millions of base pairs)
+near-linearly with their length. Last, we extend the seed heuristic with inexact
+matching and match chaining to raise the tolerated error rate (up to 30\%). In
+summary, we demonstrate how to optimally align long and erroneous sequences.
+
+The \A approach to sequence alignment is in its infancy but a number of research
+directions already stem from it: other alignment types, more general
+optimization metrics, relaxed optimality guarantees, performance analyses,
+improved heuristics, applications outside of biology, and more performant
+algorithms and implementations. Perhaps, one day the \A approach to alignment
+will mature enough to match the performance of suboptimal algorithms.

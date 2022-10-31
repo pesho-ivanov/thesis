@@ -9,45 +9,7 @@
 \let\cleardoublepage\relax
 
 \chapter*{Abstract}
-
-% History and motivation 
-Sequence alignment is the process of detecting similarities between sequences.
-Since DNA, RNA and proteins were first sequenced half a century ago, the
-alignment task has been a central building block in molecular biology. Its
-applications include evolutionary biology, genome assembly, variation detection,
-and others. The variety of applications and the growing amount of genetic data
-require accuracy and speed from the alignment algorithms. Moreover, the ongoing
-transition from using single genome references to using pangenomes motivates a
-rethinking of the classic alignment algorithms.
-
-% Goals
-Existing alignment algorithms are either optimal but quadratic, or fast but
-approximate. This thesis proposes an elegant approach to alignment based on the
-\A algorithm for finding shortest paths in graphs. \A uses a problem-specific
-heuristic function that informs it about the not-yet-aligned parts of the
-sequences to make it both heuristically fast and provably optimal. In the
-general case, the alignment problem is likely not solvable in strongly
-subquadratic time. Our theme throughout this thesis is to apply the \A approach
-to as many types of data as possible, while remaining fast and optimal.
-
-% Tasks and algorithmic contribution
-We apply the \A approach to two types of alignment minimizing edit distance:
-\emph{semi-global}, to map a set of DNA sequences to a pangenome reference, and
-\emph{global} to align two sequences end-to-end. In order to handle various
-dimensions of the data complexity, we propose several techniques and empirically
-study their runtime scaling. A trie index enables sublinear scaling with the
-reference size, \emph{seed heuristic} enables near-linear scaling with sequence
-length, and inexact seed matching and match chaining enable scaling to high
-error rates. Owing to the superior scaling of the \A approach, our prototypical
-implementations run orders of magnitude faster than existing optimal approaches
-even on long erroneous sequences.
-
-% Future work and limitations
-We foresee a multitude of future directions for advancing \A for sequence
-alignment, including other types of alignment, generalizing the edit distance
-metric, relaxing the optimality guarantee, theoretical analyses of the
-performance, superior heuristic functions and algorithms, and more efficient
-implementations for production use.
+\input{\dir/abstract-english}
 
 \endgroup
 
@@ -61,6 +23,8 @@ implementations for production use.
 %\begin{otherlanguage}{ngerman}
 \pdfbookmark[1]{Zusammenfassung}{Zusammenfassung}
 \chapter*{Zusammenfassung}
+
+\input{\dir/abstract-german}
 
 Sequenzalignment ist der Prozess der Erkennung von Ähnlichkeiten zwischen
 Sequenzen. Seit vor einem halben Jahrhundert zum ersten Mal genetische Sequenzen
