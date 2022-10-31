@@ -212,3 +212,7 @@ Existing approaches to MSA using A* consider pairwise edit distances, which do n
 
 P9: Explore suboptimal relaxations for performance gain
 Various relaxations of the heuristic admissibility, variants of A*, windowing the search (dropping expanded states that are too far behind the exploration head), have the potential to greatly increase the performance at the price of alignment optimality. This work package may be useful for the performance and thus the practical adoption of the algorithm but we prefer first gaining the performance from the obvious promising optimality-preserving optimizations.
+
+For \dijkstra and \astarix, the runtime complexity depends not only on the data
+size, but also on the data content, including edit costs. More accurate
+heuristics lead to better \A performance~\cite{pearl_discovery_1983}
