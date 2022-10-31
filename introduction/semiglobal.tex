@@ -1,10 +1,10 @@
 \subsection{Semi-global alignment (Mapping)}
 
-%\begin{floatingfigure}[l]{0.5\textwidth}
-%    \includegraphics[width=0.5\textwidth]{alignment-types}
-%	\caption[Alignment types]{Alignment types.}
-%    \label{fig:alignment-types}
-%\end{floatingfigure}
+\begin{floatingfigure}[l]{0.5\textwidth}
+    \includegraphics[width=0.5\textwidth]{alignment-types}
+	\caption[Alignment types]{Alignment types.}
+    \label{fig:alignment-types}
+\end{floatingfigure}
 
 % paper-trie; seed-and-extend approach to semi-global alignment
 \paragraph{Seed-and-Extend}
@@ -19,13 +19,3 @@ optimal extension phase may not result in optimal alignments due to the
 selection of a suboptimal seed in the first phase. In cases of high sequence
 variability, the seeding phase may even fail to find an appropriate seed from
 which to extend.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\subsection{Related work}
-
-% Brownie aligner
-BrownieAligner, another recent work developed for local alignment of sequences
-to {\itshape de Bruijn} graph representations of genomic variation, features an
-optimal extension phase using a branch-and-bound-based early cutoff, while
-employing a heuristic maximal-exact-match approach for
-seeding~\cite{heydari_browniealigner_2018}.

@@ -21,5 +21,208 @@ equivalent to \A using a heuristic that is always $0$, and that both algorithms
 require non-negative edge costs. Our variant of the \A algorithm is provided
 in~\cref{GLOBALsec:astar}.
 
-\input{\dir/astar}
-\input{\dir/seeds}
+\subsection{\A algorithm and its heuristic function} \label{sec:astar}
+
+% paper: trie
+%\subsection{Background: General \A algorithm} \label{TRIEsubsec:general-astar}
+Given a weighted graph $G=(V,E)$ with $E \subseteq V \times V \times
+\mathbb{R}_{\geq 0}$, the \A algorithm (abbreviated as \A) searches for the
+shortest path from sources $S \subseteq V$ to targets $T \subseteq V$. It is an
+extension of \dijkstra's algorithm that additionally leverages a \emph{heuristic
+function} $h \colon V \to \mathbb{R}_{\geq 0}$ to decide which paths to explore
+first.
+%
+If $h(u) \equiv 0$, \A is equivalent to \dijkstra's algorithm.
+%
+You can refer to the \A and \dijkstra algorithms in \cref{alg:astar}, but do not
+assume knowledge of either algorithm in the following.
+%
+At a high level, \A maintains the set of all \emph{explored} states, initialized
+with the set of sources $S$. Then, \A iteratively \emph{expands} the explored
+state with lowest estimated cost by exploring all its neighbors, until it finds
+a target. Here, the cost for node $u$ is estimated by the distance from source, called $g(u)$, plus the estimate from the heuristic $h(u)$.
+
+\paragraph{Heuristic Function}
+The heuristic function $h(u)$ estimates the
+cost $h^*(u)$ of a shortest path in $G$ from $u$ to a target $t \in T$. Intuitively, a
+good heuristic correlates well with the distance from $u$ to $t$.
+
+To ensure that \A indeed finds the shortest path, $h$ should be
+\emph{admissible}:
+
+\begin{definition}[Admissible heuristic] A heuristic $h$ is \emph{admissible}
+    if it provides a lower bound on the distance to the closest target: $\forall
+    u. h(u) \leq h^*(u)$.
+\end{definition}
+
+While any admissible $h$ ensures that \A finds optimal
+alignments~\cite{dechter_generalized_1985}, the specific choice of $h$
+is critical for performance. In particular, decreasing the error $\delta(u) =
+h^*(u)-h(u)$ can only improve the performance of
+\A~\cite{dechter_generalized_1985}. Thus, a key contribution of ours is
+a domain-specific heuristic $h$.
+
+
+\paragraph{\A algorithm}
+We aim to guarantee optimal alignment while optimizing the average runtime
+to not reach its worst-case complexity. While \dijkstra is an algorithm that
+explores graph nodes in the order of their distance from the start, \A is a
+generalization of \dijkstra that also accounts for their distance from the
+target. \A prioritizes the exploration of nodes that seem to be closer to the
+target nodes. This way, \A can sometimes dramatically improve on the performance
+of \dijkstra while remaining optimal.
+
+There has been one attempt to apply \A for optimal
+alignment~\cite{dox2018efficient} which uses a heuristic function that accounts
+only for the length of the remaining query sequence to be aligned. However, it
+does not significantly outperform \dijkstra (in fact, it is equivalent for
+a zero matching cost).
+%
+In contrast, the heuristic function we introduce is more informative and
+consistently outperforms \dijkstra.
+
+\cref{alg:astar} shows a generic implementation of the \A algorithm,
+roughly following~\cite{dechter_generalized_1985}.
+We do not implement the reconstruction of the best alignment in order to simplify the presentation.
+The procedure \mbox{\textsc{BacktrackPath}} traces the best alignment back to the $source$, based on remembered edges used to optimize $f$ for each alignment state.
+%
+\cref{alg:astar} also shows a simple implementation of \dijkstra in terms of \A.
+We omit the implementation of \textsc{BacktrackPath} for simplicity.
+
+\begin{algorithm}[t]
+	\caption{\A~algorithm} \label{alg:astar}
+	\begin{algorithmic}[1]
+		\Function{\A}{$G\colon \text{Graph}$,
+			$S\colon \text{Sources}$,
+			$T\colon \text{Targets}$,
+			$h\colon \text{Heuristic function}$}
+		\State $g \gets \mli{Map}\colon (\text{Nodes} \to \mathbb{R}_{\geq 0})$
+		\Comment Shortest paths lengths to explored nodes
+
+		\State $f \gets \mli{Map}\colon (\text{Nodes} \to \mathbb{R}_{\geq 0})$
+		\Comment $f(u)=g(u)+h(u)$ 
+
+		\State $Q \gets \mli{MinPriorityQueue}(\mli{priority}=f)$ 
+		\Comment Priorities according to $f$
+		\ForAll{$s \in S$}
+			\State $g[s] \gets 0.0,\, f[s] \gets 0.0$
+			\State $Q.\mli{push}(s)$
+			\Comment Initially, explore all $s \in S$
+		\EndFor
+		\While{$Q \neq \emptyset$}
+			\State $\mli{curr} \gets Q.\mli{pop}()$
+			\Comment Get state with minimal $f$ to be expanded
+			\If{$\mli{curr} \in T$}
+				\State \Return \Call{BacktrackPath}{$\mli{curr}$}
+				\Comment Reconstruct a walk to $\mli{curr}$
+			\EndIf
+			\ForAll{$(\mli{curr},\mli{next},\mli{cost}) \in G.\mli{outgoingEdges}(\mli{curr})$}
+			\State $g_\mli{next} \gets g[\mli{curr}] + \mli{cost}$
+			\State $\hat{f}_\mli{next} \gets g_\mli{next} + h(\mli{next})$
+				\Comment Candidate value for $f[\mli{next}]$
+				\If{$\hat{f}_\mli{next} < f[\mli{next}{}]$}
+					\State $g[\mli{next}] \gets g_\mli{next}$		
+					\State $f[\mli{next}] \gets \hat{f}_\mli{next}$		
+					\State $Q.\mli{push}(\mli{next})$
+					\Comment Explore state $\mli{next}$
+				\EndIf
+		\EndFor
+		\EndWhile
+		\State \textbf{assert} $\mli{False}$
+		\Comment Cannot happen if $T$ is reachable from $S$
+		\EndFunction
+
+		\Statex
+
+		\Function{\dijkstra}{$G\colon \mli{Graph}$,
+			$S\colon \mli{Sources}$,
+			$T\colon \mli{Targets}$}
+			\State $h(v) \gets 0.0$
+			\Comment Constant-zero function $h$
+			\State $\Call{\A}{G,S,T,h}$
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+% paper: seeds
+
+%\subsection{\A~algorithm for finding a shortest path} \label{SEEDsec:astar}
+%
+The \A~algorithm is a shortest path algorithm that generalizes \dijkstra's
+algorithm by directing the search towards the target.
+Given a weighted graph $G=(V,E)$, the \A~algorithm finds a shortest path from
+sources $S \subseteq V$ to targets $T \subseteq V$.
+%
+To prioritize paths that lead to a target, it relies on an admissible heuristic
+function $h \colon V \to \mathbb{R}_{\geq 0}$, where $h(v)$ estimates the
+remaining length of the shortest path from a given node $v \in V$ to a target
+$t \in T$.
+
+
+\paragraph{Algorithm}
+% 
+In a nutshell, the \A~algorithm maintains a set of \emph{explored} nodes,
+initialized by all possible starting nodes $S$. It then iteratively
+\emph{expands} the explored state $v$ with lowest estimated total cost $f(v)$ by
+exploring all its neighbors. Here, $f(v) := g(v) + h(v)$, where $g(v)$ is the
+distance from $s \in S$ to $v$, and $h(v)$ is the estimated distance from $v$ to
+$t \in T$.
+%
+When the \A~algorithm expands a target node $t \in T$, it reconstructs the path
+leading to $t$ and returns it.
+%
+\paragraph{Admissibility}
+%
+The \A~algorithm is guaranteed to find a shortest path if its heuristic $h$
+provides a lower bound on the distance to the closest target, often referred to
+as $h$ being \emph{admissible} or optimistic.
+
+Further, the performance of the \A~algorithm relies critically on the choice of
+$h$. Specifically, it is crucial to have low estimates for the optimal paths but
+also to have high estimates for suboptimal paths.
+
+\paragraph{Discussion}
+%
+To summarize, we use the \A~algorithm to find a shortest path from $\st{u}{0}$
+to $\st{v}{|q|}$ in $\AG$. To guarantee optimality, its heuristic function
+$h\st{v}{i}$ must provide a lower bound on the shortest distance from state
+$\st{v}{i}$ to a terminal state of the form $\st{w}{\lvert q \rvert}$.
+%
+Equivalently, $h\st{v}{i}$ should lower bound the minimal cost of aligning
+$q[i{:}]$ to $\RG$ starting from $v$, where $q[i{:}]$ denotes the suffix of $q$
+starting at position $i$ ($0$-indexed).
+%
+The key challenge is thus finding a heuristic that is not only admissible but
+also yields favorable performance.
+
+% paper:global
+% Shortest paths, A* for MSA and semi-global alignment (AStarix), gaps
+\paragraph{Shortest paths and \A}
+A pairwise alignment that minimizes edit distance corresponds to a shortest path
+in the \emph{alignment graph}~\citep{vintsyuk1968speech,ukkonen1985algorithms}.
+Assuming non-negative edit costs, a shortest path can be found using \dijkstra's
+algorithm~\citep{ukkonen1985algorithms} (\cref{GLOBALfig1-dij}) or
+\A~\citep{spouge1989speeding}. \A is an informed search algorithm which uses a
+task-specific heuristic function to direct its search. Depending on the
+heuristic function, a shortest path may be found significantly faster than by an
+uninformed search such as \dijkstra's algorithm.
+
+% paper: global
+\subsection{Seed heuristic}
+
+\dictum{Cut off your nose to spite your face.}
+\vskip 1em
+
+Seed-and-extend is a commonly used paradigm for solving semi-global alignment
+approximately~\citep{kucherov2019evolution}. Seeds are also used to define and
+compute LCSk~\citep{benson2014longest}, a generalization of longest common
+subsequence (LCS). In contrast, our \emph{\sh} speeds up finding an optimal
+alignment by using seed matches to speed up the \A search. A limitation of the
+existing \sh is the low tolerance to increasing error rates due to using only
+long exact matches without accounting for their order.
+
+Our seed heuristic uses seeds in a very different way than existing seeding
+approaches: instead of searching for a good alignment around seed matches, it
+punishes potential alignments by the lack of matches. This negation makes the
+difference between finding a good alignment and proving that no other alignment
+is better.
