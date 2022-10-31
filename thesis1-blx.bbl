@@ -16,7 +16,37 @@
   {}
 \endgroup
 
-\datalist[entry]{none/global//global/global}
+\datalist[entry]{nyt/global//global/global}
+  \entry{koerkamp2022exact}{article}{}
+    \name{author}{2}{}{%
+      {{hash=GKR}{%
+         family={Groot\bibnamedelima Koerkamp$^\dagger$},
+         familyi={G\bibinitperiod\bibinitdelim K\bibinitperiod},
+         given={Ragnar},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=IP}{%
+         family={Ivanov$^\dagger$},
+         familyi={I\bibinitperiod},
+         given={Pesho},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Cold Spring Harbor Laboratory}%
+    }
+    \strng{namehash}{GKRIP1}
+    \strng{fullhash}{GKRIP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{title}{\textbf{Exact global alignment using A* with seed heuristic
+  and match pruning}}
+    \field{journaltitle}{bioRxiv}
+    \field{year}{2022}
+  \endentry
+
   \entry{ivanov2020astarix}{inproceedings}{}
     \name{author}{6}{}{%
       {{hash=IP}{%
@@ -60,6 +90,8 @@
     \strng{fullhash}{IPBBMHKARGVM1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
+    \field{sortinit}{I}
+    \field{sortinithash}{I}
     \field{booktitle}{RECOMB}
     \field{title}{\textbf{{AStarix}: {F}ast and {O}ptimal {S}equence-to-{G}raph
   {A}lignment}}
@@ -91,37 +123,11 @@
     \strng{fullhash}{IPBBVM1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
+    \field{sortinit}{I}
+    \field{sortinithash}{I}
     \field{booktitle}{RECOMB}
     \field{title}{\textbf{Fast and {O}ptimal {S}equence-to-{G}raph {A}lignment
   {G}uided by {S}eeds}}
-    \field{year}{2022}
-  \endentry
-
-  \entry{koerkamp2022exact}{article}{}
-    \name{author}{2}{}{%
-      {{hash=GKR}{%
-         family={Groot\bibnamedelima Koerkamp$^\dagger$},
-         familyi={G\bibinitperiod\bibinitdelim K\bibinitperiod},
-         given={Ragnar},
-         giveni={R\bibinitperiod},
-      }}%
-      {{hash=IP}{%
-         family={Ivanov$^\dagger$},
-         familyi={I\bibinitperiod},
-         given={Pesho},
-         giveni={P\bibinitperiod},
-      }}%
-    }
-    \list{publisher}{1}{%
-      {Cold Spring Harbor Laboratory}%
-    }
-    \strng{namehash}{GKRIP1}
-    \strng{fullhash}{GKRIP1}
-    \field{labelnamesource}{author}
-    \field{labeltitlesource}{title}
-    \field{title}{\textbf{Exact global alignment using A* with seed heuristic
-  and match pruning}}
-    \field{journaltitle}{bioRxiv}
     \field{year}{2022}
   \endentry
 \enddatalist
