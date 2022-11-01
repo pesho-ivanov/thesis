@@ -1,0 +1,78 @@
+\section{Discussion}
+
+\subsection{On the developments for sequence alignment}
+A question I was asking myself and have been asked multiple times is why this
+approach has not been used decades earlier.
+
+Most of the techniques this thesis builds upon have been known for many decades
+and have also been heavily motivated by applications in molecular biology. The
+global alignment problem exists since
+\citeyear{vintsyuk1968speech}~\cite{vintsyuk1968speech,needleman1970general}.
+
+The problem of approximate/fuzzy string search (semi-global alignment of one
+query) has been efficiently approached a decade later, in
+\citeyear{sellers1980theory}~\cite{sellers1980theory,smith1981identification}.
+more recent and additionally to the issues with handling errors, a new dimension
+of complexity appears by the need to locate the position in the reference. The
+problem of searching for multiple sequencing has been approached
+since\citeyear{pearson1988improved}~\cite{pearson1988improved} and became
+central to read mapping of high-throughput sequencing. The specifics with
+semi-global alignment requires a trie-like index which is well-used in the
+fiels, and known since
+\citeyear{thue1912gegenseitige}~\cite{thue1912gegenseitige} and used in
+informatics since~\citeyear{de1959file}~\cite{de1959file}.
+
+An important factor for the development of the sequencing algorithms is the
+technological advancement~\cite{alser2021technology}. One possible reason is the
+combination of massive new data and advancement in computation hardware allowing
+for various kinds of parallelization. Thus the advancements with bit-parallel
+algorithms (CITE Myears, Mikko).
+
+\subsection{Reconceptualizing seeds for optimal alignment}
+
+All production read aligners rely on the \emph{seed-extend} paradigm (and its
+\emph{seed-chain-extend} variants for long reads). This paradigm requires
+similar short \emph{seed} patches to be found between the sequences (\eg by
+hashed kmers, minimiziers, maximum exact matching, etc.), and then to
+\emph{extend} the alignment of the whole query around these \emph{seeded}
+similar patches. This is a very intuitiv approach if the goal is to find a
+\emph{good alignment}.
+
+If we instead seek not good but provably \emph{best} alignments, we are required
+to at least implicitly refute all the exponentially-many competing alignments.
+
+Instead, to find optimal alignments, we do not need to choose the seeds to be
+long and similar with the reference buare not required to be similar.
+
+\begin{observation}[Seeds without matches]
+    To efficiently find an optimal alignment using \A with the seed heuristic,
+    seeds are not required to match (even on the resulting alignment).
+\end{observation}
+
+Nevertheless, each seed can penalize potential alignment by not more than its
+\emph{potential} (\ie the number of plus $1$, for the case of exact matching
+with unit costs). Any additional errors will require more states to be expanded.
+
+This is an interesting observation was made by Ragnar while playing with the
+seed heursitic. It looks Indeed, of finding a good alignment but to prove that all
+alternative alignments are no better, the seed heuristic for \A search does not
+really need matches to be efficient.
+
+This novel usage of seeds carrie different problems and different possibilities.
+
+\subsection{On the feasibility of optimal alignment}
+Many scholars consider read mapping to be infeasible for optimal algorithms,
+especially when reads are long: all production read mappers following the
+approximate seed-extend paradigm~\cite[including 107
+aligners]{alser2021technology}.
+
+\subsection{On the optimization metric}
+\dictum[Freeman Dyson]{%
+   It is better to be wrong than to be vague.}
+\vskip 1em
+
+\subsection{On pangenomics}
+%has been solved in linear time in \citeyear{morris1970linear}~\cite{morris1970linear}.
+
+\subsection{On scaling}
+% asymptotics
