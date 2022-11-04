@@ -1,0 +1,36 @@
+%\section{Reconceptualizing seeds for optimal alignment}
+\section{\emph{Seed-and-extend} need not apply}
+
+As we saw in \cref{ch:trie,ch:seed}, all optimal read mappers compute the whole
+dynamic programming table, thus reaching the prohibitively slow quadratic
+runtime. On the other side, all current production aligners rely on the
+\emph{seed-extend} paradigm (and its \emph{seed-chain-extend} variants for long
+reads).
+
+This paradigm requires similar short \emph{seed} patches to be found
+between the sequences (\eg by hashed kmers, minimiziers, maximum exact matching,
+etc.), and then to \emph{extend} the alignment of the whole query around these
+\emph{seeded} similar patches. This is a very intuitiv approach if the goal is
+to find a \emph{good alignment}.
+
+If we instead seek not good but provably \emph{best} alignments, we are required
+to at least implicitly refute all the exponentially-many competing alignments.
+
+Instead, to find optimal alignments, we do not need to choose the seeds to be
+long and similar with the reference buare not required to be similar.
+
+\begin{observation}[Seeds without matches]
+    To efficiently find an optimal alignment using \A with the seed heuristic,
+    seeds are not required to match (even on the resulting alignment).
+\end{observation}
+
+Nevertheless, each seed can penalize potential alignment by not more than its
+\emph{potential} (\ie the number of plus $1$, for the case of exact matching
+with unit costs). Any additional errors will require more states to be expanded.
+
+This is an interesting observation was made by Ragnar while playing with the
+seed heursitic. It looks Indeed, of finding a good alignment but to prove that all
+alternative alignments are no better, the seed heuristic for \A search does not
+really need matches to be efficient.
+
+This novel usage of seeds carrie different problems and different possibilities.
