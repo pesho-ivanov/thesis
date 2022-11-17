@@ -3,6 +3,11 @@
 We foresee a multitude of extensions and optimizations that may lead to
 efficient global aligning for production usage.
 
+Approximate relaxations
+Practical: AStarix2, lowering the \A constant
+Pangenomics: The non-linear structure are additional dimensions of data complexity. And
+another challenge for the scalability which is good.
+
 \begin{enumerate}
     \item \emph{Performance.} The practical performance of our \A approach could
         be improved using multiple existing ideas from the alignment domain:
@@ -266,3 +271,12 @@ Our presented method has several limitations:
         in~\cref{GLOBALfig:limitations}). Further optimizations are needed to align
         complex data.
 \end{enumerate}
+
+\paragraph{Generalizing the distance metric}
+%\dictum[Freeman Dyson]{%
+%   It is better to be wrong than to be vague.}
+%\vskip 1em
+
+In this thesis we were optimizing edit distance. 
+Big gaps (indels) in biological sequences motivate affine and concave costs. Local alignment is
+\cite{arslan2001new}.
