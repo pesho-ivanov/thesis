@@ -1,47 +1,8 @@
-%\section{Summary}
-
-We presented \astarix, an \A algorithm to find optimal alignments, based on a
-domain-specific heuristic and enhanced by multiple algorithmic optimizations.
-Importantly, our approach allows for both cyclic and acyclic graphs including
-variation and de Bruijn graphs. We demonstrated that \astarix scales exponentially better than \dijkstra with
-increasing (but small) number of errors in the reads. Moreover, for short reads,
-both \astarix and \dijkstra scale better and outperform current state-of-the-art
-optimal aligners with increasing genome graph size. Nevertheless, scaling
-optimal alignment of long reads on big graphs remains an open problem.
-
-We have presented an optimal read aligner based on the \A~algorithm instantiated
-with a novel \seedh which guides the search by preferring crumbs on nodes that lead
-towards optimal alignments even for long reads.
-
-We presented an algorithm with an implementation in \astarpa solving pairwise alignment between
-two sequences. The algorithm is based on \A with a \sh, inexact matching, match
-chaining, and match pruning, which we proved to find an exact solution according
-to edit distance. For random sequences with up to $15\%$ uniform errors, the
-runtime of \astarpa scales near-linearly to very long sequences ($10^7\bp$)
-and outperforms other exact aligners. We demonstrate that on real ONT reads from
-a human genome, \astarpa is faster than other aligners on only a limited portion of the
-reads.
-
-% from the grand proposal
-We initiated a new direction of sequence alignment based on the informed
-shortest path algorithms A* that we have shown to be both provably optimal,
-practically scalable and more performant than existing aligners in certain
-cases. The objective of this project is to develop our work on A* for sequence
-alignment from prototypical to practical, which includes the development of
-algorithms, formal proofs and software development. Our specific aim is to use
-the already constructed base for the development of AStarix as an
-industrial-scale mapper handling human-scale graph references, long and noisy
-reads, while being competitive in runtime and memory even to suboptimal
-aligners. In order to fulfill this aim, work in several directions will be
-needed: 1) rigorous development of the seed heuristic theory, 2) theoretical
-analysis of the expected runtime, 3) implementation optimized for runtime,
-memory, parallelization and use-cases. Our vision is that A* could become the
-default approach for sequence alignment, useful to the computational biology,
-bioinformatics and the more general algorithmic community.
+%\section{Conclusion}
 
 %2.5. Relevance and impact
 The potential adoption of the \A approach to sequencing (incl. the usage of
-AStarix mapper and the A*PA global aligner) may hugely alleviate the
+\astarix mapper and the A*PA global aligner) may hugely alleviate the
 decades-long conflict between alignment optimality and computational costs. This
 basic task is an extremely common element in the upstream pipelines and other
 high-level tools like assemblers. Possibly, many alignment tools can be
@@ -59,7 +20,7 @@ in the computation biology community, even though most conference attendants
 with technical background are familiar with the name and the general usage. Our
 conviction is that \A is a powerful instrument that has fallen out of focus in
 our community but that may prove useful for other algorithmic biology problems
-as well.Potentially, it could become a standard topic in the university
+as well. Potentially, it could become a standard topic in the university
 bioinformatics courses.
 
 % paper:global
@@ -67,3 +28,27 @@ Our graph-based approach to alignment differs considerably from dynamic
 programming approaches, mainly because of the ability to use information from the
 entire sequences. This additional information enables radically more focused
 path-finding at the cost of more complex algorithms.
+
+\begin{enumerate}
+	\item In~\cref{ch:trie} we presented the tool \astarix which applies the \A
+algorithm to find optimal alignments, based on a domain-specific heuristic and
+enhanced by multiple algorithmic optimizations. Importantly, our approach allows
+for both cyclic and acyclic graphs including variation and de Bruijn graphs. We
+demonstrated that \astarix scales exponentially better than \dijkstra with
+increasing (but small) number of errors in the reads. Moreover, for short reads,
+both \astarix and \dijkstra scale better and outperform current state-of-the-art
+optimal aligners with increasing genome graph size. Nevertheless, scaling
+optimal alignment of long reads on big graphs remained an open problem.
+	\item In~\cref{ch:seed} we upgrade \astarix with a novel \seedh which guides
+the search by preferring crumbs on nodes that lead towards optimal alignments
+even for long reads.
+	\item In~\cref{ch:global} we resolve the third major bottleneck -- handling
+high error rates. We presented an algorithm with an implementation in \astarpa
+solving pairwise alignment between two sequences. The algorithm is based on \A
+with a \sh, inexact matching, match chaining, and match pruning, which we proved
+to find an exact solution according to edit distance. For random sequences with
+up to $15\%$ uniform errors, the runtime of \astarpa scales near-linearly to
+very long sequences ($10^7\bp$) and outperforms other exact aligners. We
+demonstrate that on real ONT reads from a human genome, \astarpa is faster than
+other aligners on only a limited portion of the reads.
+\end{enumerate}

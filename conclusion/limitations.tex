@@ -1,0 +1,28 @@
+\section{Limitations}
+
+% +asymptotic analysis
+Our presented method has several limitations:
+\begin{enumerate}
+  \item \emph{Complex regions trigger quadratic search.} Since it is unlikely
+        that edit distance in general can be solved in strongly subquadratic
+        time, it is inevitable that there are inputs for which our algorithm
+        requires quadratic time.  In particular, regions with high error rate,
+        long indels, and too many matches~(\cref{GLOBALsec:limitations}) are
+        challenging and trigger quadratic exploration.
+  \item \emph{High constant in runtime complexity.} Despite the near-linear
+        scaling of the number of expanded states~(\cref{GLOBALsec:expanded}),
+        \astarpa only outperforms \edlib and \wfa for sufficiently long sequences
+        (~\cref{GLOBALfig:scaling-n}) due to the relatively high computational constant
+        that the \A search induces.
+  \item \emph{Complex parameter tuning.} The performance of our algorithm
+        depends heavily on the sequences to be aligned and the corresponding choice of
+        parameters (whether to use chaining, the seed length $k$, and whether to use
+        inexact matches $\spot$). The parameter tuning (currently
+        very simple~(\cref{GLOBALsec:evals-setup}) may require a more comprehensive
+        framework when introducing additional optimizations.
+  \item \emph{Real data.} The efficiency of the presented algorithm has high
+        variability on real data~(\cref{GLOBALsec:evals-comparison-hg}) due to high
+        error rates, long indels, and multiple repeats (demonstrated
+        in~\cref{GLOBALfig:limitations}). Further optimizations are needed to align
+        complex data.
+\end{enumerate}

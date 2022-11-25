@@ -19,13 +19,13 @@ nahezu quadratisch mit der Sequenzlänge, was im allgemeinen Fall ebenfalls eine
 grundsätzliche Einschränkung darstellen dürfte. Wir beschleunigen das Alignment
 verwandter Sequenzen, indem wir Informationen aus den gesamten Sequenzen nutzen.
 
-A* ist ein klassischer Kürzester-Pfad-Algorithmus, der explizit Heuristiken
+\A ist ein klassischer Kürzester-Pfad-Algorithmus, der explizit Heuristiken
 nutzt, um die Suche zu lenken und zu beschleunigen, und dennoch Garantien für
-das Finden eines kürzesten Pfads bietet. Seltsamerweise wurde A* bisher nicht
+das Finden eines kürzesten Pfads bietet. Seltsamerweise wurde \A bisher nicht
 für paarweises Sequenzalignment übernommen, und in der vorliegenden Arbeit
 untersuchen wir, wie dies zu bewerkstelligen ist. Wir (i) formulieren das
 Alignmentproblem als Kürzester-Pfad-Problem, (ii) schlagen eine Heuristik vor,
-um die A*-Suche zu steuern, (iii) entwerfen effiziente Algorithmen und
+um die \A-Suche zu steuern, (iii) entwerfen effiziente Algorithmen und
 Datenstrukturen zur Berechnung der Heuristik, (iv) beweisen ihre Optimalität,
 (v) implementieren die vorgestellten Algorithmen und (vi) vergleichen ihre
 Leistung und Skalierung mit anderen optimalen Algorithmen. Unser Ansatz ist
@@ -38,17 +38,17 @@ In der gesamten Arbeit demonstrieren wir, wie verschiedene Dimensionen der
 Eingabekomplexität erfasst werden können, während die Geschwindigkeit und
 Optimalität erhalten bleiben. Zuerst demonstrieren wir, wie man einen Trie-Index
 anwendet, um die Mapping-Laufzeit sublinear mit der Referenzgröße zu skalieren.
-Dann führen wir eine neuartige Seed-Heuristik für A* ein, die zusätzlich eine
+Dann führen wir eine neuartige Seed-Heuristik für \A ein, die zusätzlich eine
 nahezu lineare Ausrichtung langer Sequenzen (bis zu Millionen von Basenpaaren)
 mit ihrer Länge ermöglicht. Zuletzt erweitern wir die Seed-Heuristik mit
 ungenauem Matching und Match-Chaining, um die tolerierte Fehlerrate zu erhöhen
 (bis zu 30 \%). Zusammenfassend zeigen wir, wie man lange und fehlerhafte
 Sequenzen optimal ausrichtet.
 
-Der A*-Ansatz zum Sequenzalignment steckt noch in den Kinderschuhen, aber eine
+Der \A-Ansatz zum Sequenzalignment steckt noch in den Kinderschuhen, aber eine
 Reihe von Forschungsrichtungen gehen bereits davon aus: andere Alignment-Typen,
 allgemeinere Optimierungsmetriken, gelockerte Optimalitätsgarantien,
 Leistungsanalysen, verbesserte Heuristiken, Anwendungen außerhalb der Biologie
 und leistungsfähigere Algorithmen und Implementierungen. Vielleicht wird der
-A*-Ansatz für die Ausrichtung eines Tages ausgereift genug sein, um die Leistung
+\A-Ansatz für die Ausrichtung eines Tages ausgereift genug sein, um die Leistung
 suboptimaler Algorithmen zu erreichen.

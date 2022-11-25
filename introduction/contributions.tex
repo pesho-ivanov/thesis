@@ -33,7 +33,7 @@ Existing optimal algorithms are based on dynamic programming (DP) and
 run in quadratic time (assuming that the number of errors is proportional to the
 length)
 
-we employ the A* algorithm which is an \emph{informed search} algorithm.
+we employ the \A algorithm which is an \emph{informed search} algorithm.
 TODO: a case for the informed algorithms
 
 \subsection{Scalable optimal alignments}
@@ -122,8 +122,8 @@ prefix of one sequence to a prefix of the other. This contrasts with the
 informed search algorithms such as the algorithm by Hunt and Szymanski (1977)
 solving the longest common subsequence (LCS) problem (a special case of the edit
 distance alignment). Sequence alignment can naturally be formulated as a
-shortest path problem solvable by Dijkstra’s algorithm (Ukkonen, 1985). A* is an
+shortest path problem solvable by Dijkstra’s algorithm (Ukkonen, 1985). \A is an
 informed generalization of Dijkstra’s algorithm (Hart, 1968) but it has not been
-successfully applied to sequence alignment. A* may be the missing piece in the
+successfully applied to sequence alignment. \A may be the missing piece in the
 “a major open problem to implement an algorithm with linear-like empirical
 scaling on inputs where the edit distance is linear in n” (Medvedev, 2022a).

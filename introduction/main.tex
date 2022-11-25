@@ -69,13 +69,13 @@ shift towards population studies in the last decade motivates the adoption of
 graph data structures which serve as compressed representations of collections
 of related genomes (genomes are paths in the graph).
 
-% A* context 
+% \A context 
 An optimal alignment can naturally be represented as a shortest path in an
 alignment graph (equivalent to the DP table). In order to find such a shortest
-path with minimal exploration, we instantiate the A* algorithm with a novel
+path with minimal exploration, we instantiate the \A algorithm with a novel
 heuristic function based on the unaligned parts of the sequences. This
 additional information is a problem-specific heuristic function and it heavily
-determines the efficiency of the search. For any explored state by A*, this
+determines the efficiency of the search. For any explored state by \A, this
 heuristic function should compute a lower bound on the remaining path length, or
 more specifically, the minimal cost of edit operations needed to align the
 remaining sequences.

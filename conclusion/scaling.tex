@@ -1,8 +1,21 @@
 \section{Scaling analysis}
 
-Our heuristic functions are not consistent (TODO: define), thus the same state
-could be expanded more than once. Formally speaking, this implies that the worst
-case asymptotics could explode.
+Classically, the runtime and memory usage of algorithms has been analysed for a
+worst case asymptotic behavior. Since the near quadratic worst case asymptotics
+is likely to be tight, we target related sequences (with limited error rates),
+and empyrically the runtime and memory scaling.
 
-In practice we employ a best-fit estimation of the scaling which is not
-asymptotic.
+The seed heuristic, which is in the core of our \A algorithm, is admissible
+(optimistic) but not consistent (monotone). As a consequence, it guarantees
+finding a best alignment but the same state could be expanded more than once
+(and this indeed happens). Theoretically, this also implies that the worst
+case asymptotics in not anymore bounded by the quadratic number of states.
+
+Nevertheless, in practice
+
+we employ a best-fit estimation of the scaling which
+is not asymptotic. Tools
+
+Theory
+
+exponential scaling
