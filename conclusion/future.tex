@@ -34,7 +34,7 @@ another challenge for the scalability which is good.
         aggressive pruning, and better parameter tuning. More efficient
         implementations may be possible by using computational
         domains~\citep{spouge1989speeding}, bit-parallelization~\citep{myers1999fast},
-        and SIMD~\citep{marco2021fast}.
+        and SIMD~\citep{marco2021fast}, lowering the \A constant.
     \item \emph{Generalizations.} Our method can be generalized to more
         expressive cost models (non-unit costs, affine costs) and different alignment
         types (semi-global, ends-free, and possibly local alignment).
@@ -53,6 +53,8 @@ another challenge for the scalability which is good.
     \item \emph{Scaling with the reference text complexity} Repeats, multiple
         best alignments
     \item \emph{Scaling with the reference graph complexity} Bubbles, cycles
+    \item \emph{Optimality verification} Verify given an alignment.
+    \item \emph{Combining \A with DT} (Ragnar's idea).
 \end{enumerate}
 
 multiple paths
