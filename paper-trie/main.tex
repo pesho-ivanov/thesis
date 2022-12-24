@@ -1,6 +1,11 @@
 \chapter{Scaling with reference size} \label{ch:trie}
-
 \graphicspath{{\dir/}}
+
+In this chapter we apply \A to semi-global alignment of a set of reads to a
+general graph reference. We supplement the reference graph with a trie index,
+enabling sublinear scaling of the alignment time with the reference size. Even
+for moderate size references, this results in orders of magnitude of speedup
+compared to other optimal algorithms.
 
 \input{\dir/overview}
 \input{\dir/astarix}

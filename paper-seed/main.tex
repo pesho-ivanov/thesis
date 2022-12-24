@@ -2,6 +2,12 @@
 
 \graphicspath{{\dir/}}
 
+In this chapter we consider the same problem of semi-global alignment of a set
+of reads to a general graph reference. The main advantage of our approach is
+that it uses a trie index, allowing sublinear scaling of the alignment time with
+the reference size. Even for moderate size references, this results in orders of
+magnitude of speedup compared to other optimal algorithms.
+
 \input{\dir/overview}
 \input{\dir/methods}
 \input{\dir/evals}
