@@ -35,67 +35,6 @@ Genome graph, Optimal alignment, Semi-global alignment, Edit distance, Shortest
 path, Long reads, \A algorithm, Seed heuristic
 \section{Overview}
 
-% General: aligning, edit distance
-Alignment of reads to a reference genome is an essential and early step in most
-bioinformatics pipelines. While linear references have been used traditionally,
-an increasing interest is directed towards graph references capable of
-representing biological variation~\citep{garrison_variation_2018}.
-%
-Specifically, a \emph{sequence-to-graph} alignment is a base-to-base
-correspondence between a given read and a walk in the graph. As sequencing
-errors and biological variation result in inexact read alignments, edit distance
-is the most common metric that alignment algorithms optimize in order to find
-the most probable read origin in the reference.
-
-% We note that in contrast to linear references, reference graphs capture
-% genomic variation and therefore enable more accurate
-% alignments~\citep{garrison_variation_2018}.
-
-\paragraph{Suboptimal alignment}
-%
-In the last decades, approximate and alignment-free methods satisfied the demand
-for faster algorithms which process huge volumes of genetic
-data~\citep{kucherov2019evolution}. 
-%
-\emph{Seed-and-extend} is arguably the most popular paradigm in read
-alignment~\citep{altschul_basic_1990,langmead_fast_2012,li_fast_2009}. First,
-substrings (called \emph{seeds} or \emph{kmers}) of the read are extracted, then
-aligned to the reference, and finally prospective matching locations are
-\emph{extended} on both sides to align the full read.
-
-While such a heuristic may produce acceptable alignments in many cases, it
-fundamentally does not provide quality guarantees, resulting in suboptimal
-alignment accuracy.
-%
-In contrast, here we demonstrate that seeds can benefit optimal alignment as
-well.
-
-\paragraph{Key challenges in optimal alignment}
-%
-Finding optimal alignments is desirable but expensive in the worst case,
-requiring $\Oh(Nm)$ time~\citep{equi2019complexity}, for graph size $N$ and read
-length $m$.
-%
-Unfortunately, most optimal sequence-to-graph aligners rely on dynamic
-programming (DP) and always reach this worst-case asymptotic runtime. Such
-aligners include \vargas~\citep{darby2020vargas},
-\pasgal~\citep{jain_accelerating_2019},
-\graphaligner~\citep{rautiainen_bitparallel_2019},
-\hga~\citep{feng2021accelerating}, and \vg~\citep{garrison_variation_2018},
-which use bit-level optimizations and parallelization to increase their
-throughput.
-
-In contrast, we follow the promising direction of using a heuristic to avoid
-worst-case runtime on realistic data. To this end, \astarix rephrases the task
-of alignment as a shortest-path problem in an \emph{alignment graph} extended by
-a \emph{trie index}, and solves it using the \A~algorithm instantiated with a
-problem-specific \prefixh. Importantly, its choice of heuristic only affects
-performance, not optimality.
-%
-Unlike DP-based algorithms, this \prefixh allows scaling sublinearly with the
-reference size, substantially increasing performance on large genomes. However,
-it can only efficiently align reads of limited length.
-
 \paragraph{Contributions}
 %
 Here we address the key challenge of scaling to long HiFi reads, while
@@ -108,7 +47,7 @@ Specifically, the \seedh utilizes information from the whole read to narrowly
 direct the \A search by placing \emph{crumbs} on graph nodes which lead up to a
 \emph{seed match}, \ie, an exact match of a substring of the read.
 
-Overall, the contributions presented next include:
+Overall, the contributions presented in this chapter include:
 \begin{enumerate}
     \item A novel \A~\seedh that exploits information from the whole read to
     quickly align it to a general graphs reference.
