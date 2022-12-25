@@ -3,10 +3,14 @@
 \graphicspath{{\dir/}}
 
 In this chapter we consider the same problem of semi-global alignment of a set
-of reads to a general graph reference. The main advantage of our approach is
-that it uses a trie index, allowing sublinear scaling of the alignment time with
-the reference size. Even for moderate size references, this results in orders of
-magnitude of speedup compared to other optimal algorithms.
+of reads to a general graph reference. The trie index from~\cref{ch:trie}
+enables sublinear scaling with the reference size but each additional error
+triggers a deeper exploration of the trie, leading to exponential scaling. Now
+we equip the \A algorithm with a superior \seedh that is informed by substrings
+from the whole query length. This enables near-linear scaling with the error
+rate (as opposed the exponential scaling in~\cref{ch:trie}), thus scaling to
+long reads with orders of magnitude of speedup compared to other optimal
+algorithms. 
 
 \input{\dir/overview}
 \input{\dir/methods}

@@ -1,11 +1,4 @@
-% This text will be sanitized and placed into lqa-output/abstract.txt
-%
-Motivation and approach: the trie index works for scaling sublinerly with the
-reference size but each error in the query triggers deeper exploration of the
-trie so the runtime grows exponentially. Lets inform the \A algorithm using
-information from the whole query length while keeping the trie. This way we
-could avoid the deep trie exploration and scale to long queries (as far as the
-error rate is not too high).
+\section{Overview}
 
 We present a novel \A \emph{\seedh} that enables fast and optimal
 sequence-to-graph alignment, guaranteed to minimize the edit distance of the
@@ -33,7 +26,6 @@ compute.\\
 
 Genome graph, Optimal alignment, Semi-global alignment, Edit distance, Shortest
 path, Long reads, \A algorithm, Seed heuristic
-\section{Overview}
 
 \paragraph{Contributions}
 %
