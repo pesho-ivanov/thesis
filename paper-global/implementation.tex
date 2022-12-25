@@ -1,0 +1,63 @@
+\subsection{Implementation}\label{GLOBALsec:impl}
+
+This section covers some implementation details which are necessary for a good
+performance.
+
+\paragraph{Bucket queue}
+We use a hashmap to store all computed values of $g$ in the \A algorithm.
+Since the edit costs are bounded integers, we implement the priority queue
+using a \emph{bucket queue}~\citep{bertsekas1991linear}. Unlike
+heaps, this data structure has amortized constant time push and pop operations
+since the difference between the value of consecutive pop operations is bounded.
+
+\paragraph{Greedy matching of letters}
+From a state $\st ij$ where $a_i = b_j$, it is sufficient to only consider the
+matching edge to $\st {i+1}{j+1}$~\citep{allison_lazy_1992}, and ignore the
+insertion and deletion edges to $\st i{j+1}$ and $\st {i+1}j$. During alignment,
+we greedily match as many letters as possible within the current seed before
+inserting only the last opened state in the priority queue. We do not cross seed
+boundaries in order to not interfere with match pruning. We include greedily
+matched states in the reported number of expanded states.
+
+\paragraph{Priority queue offset}
+Pruning the last match in a layer may cause an increase of the heuristic in all
+states preceding the start $u$ of the match. This invalidates $f$ values in the
+priority queue and causes reordering (step \cref{GLOBALastar:pruning-check}).
+We skip most of the update operations by keeping a global
+offset to the $f$-values in the priority queue, which is updated it when all
+states in the priority queue precede $u$.
+
+\paragraph{Split vector for layers}
+Pruning a match may lead to the removal of one or more layers of the array of
+layer starts $LS$ or the array of layer matches $LM$, after which all higher
+layers are shifted down. To support this efficiently, we use a \emph{split
+vector}: a data structure that internally consists of two stacks, one containing
+the layers before the last deletion, and one containing the layers after the
+last deletion in reverse order. To delete a layer, we move layers from the top
+of one of the stacks to the top of the other, until the layer to be deleted is
+at the top of one of the stacks, and then remove it. When layers are removed in
+decreasing order of $\ell$, this takes linear total time.
+
+\paragraph{Binary search hints}
+When we open $v$ from its parent $u$ in step \cref{GLOBALastar:open} of the \A
+algorithm, the value of $h(v)$ is close to the value of $h(u)$. In particular,
+$\shscore(v)$ (resp. $\cshscore(v)$) is close to and at most the score in $u$.
+Instead of a binary search (step \cref{GLOBALstep:bin-search}), we do a
+linear search starting at the value of $\ell=\shscore(u)$ (resp. $\ell=\cshscore(u)$).
+
+We also speed up the binary search in the recomputation of $f(u)$ in the
+reordering check (step \cref{GLOBALastar:pruning-check}) by storing the last computed
+value of $hint(u):=\shscore(v_s) - \shscore(u)$ (resp.
+$\cshscore(v_s) - \cshscore(u)$) in the hashmap. When evaluating $\shscore(u)$,
+we start the linear search at $\shscore(v_s) - hint(u)$ with a fallback to
+binary search in case the linear search needs more than $5$ iterations. Since
+$hint(u)$ remains constant when matches starting after $u$ are pruned, it is a
+good starting point for the search when only matches near the tip of the \A
+search are pruned.
+
+\paragraph{Code correctness}
+Our implementation \astarpa is written in Rust, contains many assertions testing
+\eg the correctness of our \A and layers data structure implementation,
+and is tested for correctness and performance on randomly-generated sequences.
+Correctness is checked against simpler algorithms (Needleman-Wunsch) and other
+aligners (\edlib, \wfa).

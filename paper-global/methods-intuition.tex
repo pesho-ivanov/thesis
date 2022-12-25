@@ -1,0 +1,42 @@
+\subsection{Overview} \label{GLOBALsec:intuition}
+
+% Shortest path task, \A
+In order to find a minimal cost alignment of $A$ and $B$, we use the \A
+algorithm to find a shortest path from the starting state $v_s{=}\st 00$ to the
+target state $v_t{=}\st nm$ in the alignment graph. We present two heuristic functions,
+the \sh and the \csh, and prove that they are admissible, so that \A always finds a
+shortest path.
+
+% SH
+To define the \sh $\hsh$\,, we split $A$ into short, non-overlapping substrings
+(\emph{seeds}) of fixed length $k$. Since the whole of sequence $A$ has to be
+aligned, each of the seeds also has to be aligned somewhere. If
+a seed cannot be \emph{exactly} matched in $B$ without mistakes, then at least
+one edit has to be made to align it. We first compute all positions in
+$B$ where each seed from $A$ matches exactly. Then, a
+lower bound on the edit distance between the remaining suffixes $A_{\geq i}$ and
+$B_{\geq j}$ is given by the number of seeds entirely contained in $A_{\geq i}$
+that do not match anywhere in $B$. An example is shown in \cref{GLOBALfig:sh}.
+
+% CSH
+We improve the \sh by enforcing that the seed matches occur in the same order as
+their seeds occur in $A$, \ie, they form a \emph{chain}. Now, the number of upcoming
+errors is at least the minimal number of remaining seeds that cannot be aligned
+on a single path to the target. The \csh $\hcsh$ equals the number of remaining
+seeds minus the maximum length of a chain of matches, see \cref{GLOBALfig:csh}.
+
+% inexact matches
+To scale to larger error rates, we generalize both heuristics to use
+\emph{inexact matches}. For each seed from $A$, our algorithm finds all its
+inexact matches in $B$ with cost at most $1$. Then, not using any match of a
+seed will require at least $r{=}2$ edits for the seed to be eventually aligned.
+
+% pruning
+Finally, we use \emph{match pruning}: once we find a shortest path to a state
+$v$, no shorter path to that state is possible. Since we are only looking for a
+single shortest path, we may ignore any other path going to $v$. In particular,
+when we are evaluating the heuristic $h$ in some state $u$ preceding $v$, and
+$v$ is at the start of a match, all paths containing the match are excluded, and
+thus we may simply ignore (\emph{prune}) this match for future computations of
+the heuristic. This increases the value of the heuristic, as shown in \cref{GLOBALfig:pruning}, and leads to a
+significant reduction of the number of states being expanded by the \A.

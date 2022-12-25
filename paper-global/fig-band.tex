@@ -1,0 +1,30 @@
+\begin{table}[t]
+	\ra{0.8}
+  \centering
+  \sffamily
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{lSSSSlSSSS}
+    & \multicolumn{4}{c}{\SH} &  & \multicolumn{4}{c}{\CSH} \\
+    \cmidrule{2-5} \cmidrule{7-10}
+    $e$ \quad $n=$\hspace{-0.5em} & {$10^4$} & {$10^5$} & {$10^6$} & {$10^7$}  && {$10^4$} & {$10^5$} & {$10^6$} & {$10^7$} \\
+    \cmidrule{1-10}
+    \rowcolor{gray!10}
+    $1\%$ & 1.08 & 1.08 & 1.08 & 1.08 &
+    & 1.07 & 1.07 & 1.07 & 1.07 \\
+    $5\%$ & 1.90 & 1.92 & 1.92 & 1.95 &
+    & 1.89 & 1.91 & 1.90 & 1.91 \\
+    \rowcolor{gray!10}
+    $10\%$ & 2.85 & 2.88 & 3.16 & 16.6 &
+    & 2.79 & 2.80 & 2.81 & 2.82 \\
+    $15\%$ & 18.9 & 21.7 & 43.4 & \text{ML} &
+    & 18.5 & 20.1 & 20.4 & 20.3 \\
+    \cmidrule{1-10}
+  \end{tabular}
+  \caption[Equivalent band of expanded states for the (chaining) seed heuristic
+           (various sequence lengths and error rates)]{Equivalent band of
+           expanded states for aligning \textbf{synthetic sequences} of a given
+           length and error rate. Each cell averages over $\lfloor
+           10^7/n\rfloor$ alignments. ML stands for exceeding the memory limit
+           of~$\qty{30}{GB}$.}
+  \label{GLOBALtab:band}
+\end{table}

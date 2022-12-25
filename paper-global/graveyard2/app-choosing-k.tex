@@ -1,0 +1,33 @@
+\paragraph{Choosing $k$ and $\spot$ parameters for \astarpa}
+The correctness of \astarpa does not depend on the choice of parameters but
+its performance does. We choose the seed length $k$ to be according
+to~\cref{GLOBALfig:scaling_k}, we choose $k: \log_{\lvert \Sigma \rvert} n \le k \le
+1/e$, and $\spot = 1$ for $e < 10\%$ and $\spot=2$ otherwise. Note we assume that $e$ is
+known in advance. An empyrical analysis is presented in the Suppl.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth/2]{imgs/plots/scaling_k.pdf}\label{GLOBALfig:scaling-k}
+    \caption{Aligning runtime for the same set of sequence pairs for different $k$, $n$ and chaining. Seed matches are exact.  [TODO: e=?]}
+    \label{GLOBALfig:scaling_k}
+\end{figure}
+
+img:
+- for $k < \log n$: rapid performance degradation of \sh and \csh [TODO: draw line]
+- for $k > 1/e$: brakes down [TODO: draw vertical line]
+- the higher the $n$, the more important the choice of $k$
+- the higher the $n$, the more important the chaining is
+
+Choosing $k$ based on length and relative edit
+distance.
+
+$k \ge \log_4 n$ and $k \le 1/e$ => we choose $k$ to be the average
+
+If $\log_4 n > 1/e$, the scaling breaks which can be seen for $20\%$.
+
+\spot=2 iff $e \ge 10\%$.
+\spot is 2 when e, etc...
+
+TODO: Statement that if the algorithm
+becomes quadratic if k is too small or too big.
+TODO: More generally, for N>f(k,e,\spot), the algorithm is quadratic.

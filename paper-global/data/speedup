@@ -1,0 +1,5 @@
+Speedup at n = 10^7:
+Speedup at 0.01: 40.38
+Speedup at 0.05: 289.2
+Speedup at 0.10: 134.4
+Speedup at 0.15: 13.94

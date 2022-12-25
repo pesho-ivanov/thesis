@@ -1,0 +1,39 @@
+\section{Supplementaries} \label{GLOBALsec:supplementaries}
+
+table with bands by n, e, 
+
+\subsection{Scaling}
+
+% Expanded states
+\begin{figure}[t]
+    \centering
+    \subfloat[$e=1\%, \spot=1$]{\includegraphics[width=0.5\linewidth]{imgs/scaling/expanded_e0.01.pdf}}
+    \subfloat[$e=5\%, \spot=1$]{\includegraphics[width=0.5\linewidth]{imgs/scaling/expanded_e0.05.pdf}}\\
+    \subfloat[$e=10\%, \spot=2$]{\includegraphics[width=0.5\linewidth]{imgs/scaling/expanded_e0.1.pdf}}
+    \subfloat[$e=15\%, \spot=2$]{\includegraphics[width=0.5\linewidth]{imgs/scaling/expanded_e0.15.pdf}}
+    \caption{Expanded states scaling. Polynomial fit. Note that $e$ is the
+      generated errors, which is higher than the resulting difference.
+      Note that for $e=20\%$ all \A solutions are quadratic too.}
+    \label{GLOBALfig:expanded_length_scaling}
+\end{figure}
+
+% Memory
+\begin{figure}[t]
+    \centering
+    \subfloat[$e=1\%, \spot=1$]{\includegraphics[width=0.5\linewidth]{imgs/scaling/memory_e0.01.pdf}}
+    \subfloat[$e=5\%, \spot=1$]{\includegraphics[width=0.5\linewidth]{imgs/scaling/memory_e0.05.pdf}}\\
+    \subfloat[$e=10\%, \spot=2$]{\includegraphics[width=0.5\linewidth]{imgs/scaling/memory_e0.1.pdf}}
+    \subfloat[$e=15\%, \spot=2$]{\includegraphics[width=0.5\linewidth]{imgs/scaling/memory_e0.15.pdf}}
+    \caption{Memory.}
+    \label{GLOBALfig:memory_length_scaling}
+\end{figure}
+
+% Scaling with e
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.9\linewidth]{imgs/scaling/e_scaling_e_s_per_pair.pdf}
+    \caption{Scaling with error rate. Polynomial fit. Note that $e$ is the generated errors, which is higher than the resulting difference. Note that for $e=20\%$ all \A solutions are quadratic too.}
+    \label{GLOBALfig:scaling_with_e}
+\end{figure}
+
+\input{app-choosing-k}

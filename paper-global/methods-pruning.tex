@@ -1,0 +1,31 @@
+\subsection{Match pruning} \label{GLOBALsec:match-pruning}
+
+In order to reduce the number of
+states expanded by the \A algorithm, we apply the \emph{multiple-path pruning}
+observation: once a shortest path to a vertex has been found, no other path to
+this vertex could possibly improve the global shortest
+path~\citep{poole2017artificial}. When \A expands the start of a
+match we
+\emph{prune} this match, so that the heuristic values of preceding states do no longer
+benefit from it, thus getting deprioritized by the
+\A. We define \emph{pruned} variants of the \sh and the \csh that ignore
+pruned matches:
+
+\begin{definition}[Match pruning]
+   Let $E$ be the set of expanded states during the \A search, and let $\matches \backslash
+   E$ be the set of \emph{unpruned matches}, \ie those matches not starting in an expanded
+   vertex. Then the pruning \sh is $\hat h\ssh := h^{\matches\backslash E}\ssh$ and
+   the pruning \csh is ${\hat h\scsh := h^{\matches\backslash E}\scsh}$.
+\end{definition}
+
+The hat ($\hat h$) denotes the implicit dependency on the progress of the \A. Even
+though match pruning breaks the admissibility of our heuristics for some
+vertices, we prove that \A is sill guaranteed to find a shortest path:
+
+\begin{restatable}{thm}{thmprunedcorrect} \label{GLOBALthm:pruned-correct}
+   \A with match pruning heuristic $\hh\ssh$ or $\hh\scsh$ finds a shortest path.
+\end{restatable}
+
+The proof can be found in~\cref{GLOBALsec:partial-admissible}. Since the heuristic may
+increase over time, our algorithm ensures that $f$ is up-to-date when expanding a
+state by \emph{reordering} nodes with outdated $f$ values (see \cref{GLOBALremark:monotone} in \cref{GLOBALsec:partial-admissible}).

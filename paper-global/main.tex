@@ -1,0 +1,23 @@
+\chapter{Scaling with error rate} \label{ch:global}
+
+\graphicspath{{\dir/}}
+
+The trie index (\cref{ch:trie}) enabled sublinear scaling with the reference
+size, and the seed heuristic (\cref{ch:seed}) additionally enabled long queries
+to be aligned. Nevertheless, when there are too many errors (more than 1\% for
+long sequences), the seed heuristic may not be able to compensate for all of
+them, and the search has to start exporing in width (similar to Dijkstra).
+
+In this chapter we consider the more basic problem of global alignment between
+two sequences and demonstrate how to squeeze out more information from each seed
+by aligning it inexactly (with up to 1 edit), as well as from the connection
+between the seeds by chaining them in order in both sequences. As a result, we
+reach near-linear scaling to long sequence for error rates as high as $15\%$ and
+orders of magnitude of speedup compared to other optimal aligners for $5\%$
+error rate. 
+
+\input{\dir/overview}
+\input{\dir/fig-heuristics}
+\input{\dir/methods}
+\input{\dir/alg}
+\input{\dir/evals}

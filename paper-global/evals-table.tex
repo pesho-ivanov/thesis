@@ -1,0 +1,46 @@
+\begin{table*}[t]
+    \ra{0.8}
+    \centering
+
+    \renewrobustcmd{\bfseries}{\fontseries{b}\selectfont}
+    \renewrobustcmd{\boldmath}{}
+
+	\sffamily
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{
+        @{}
+        rl %l
+        S[table-format=2.2, detect-weight, mode=text]
+        S[table-format=3.2, detect-weight, mode=text]
+        S[table-format=4.1, detect-weight, mode=text]
+        S[table-format=4.0, detect-weight, mode=text]
+        l
+        S[table-format=3.1, detect-weight, mode=text]
+        S[table-format=3.1, detect-weight, mode=text]
+        S[table-format=3.1, detect-weight, mode=text]
+        S[table-format=3.1, detect-weight, mode=text]
+        @{}
+    }
+%    \addlinespace[-\aboverulesep]
+%    \cmidrule[\heavyrulewidth]{2-10}
+    & & \multicolumn{4}{ c }{\textbf{Runtime} [\unit{s}]}& & \multicolumn{4}{ c }{\textbf{Memory} [\unit{MB}]}\\
+    \cmidrule{3-6} \cmidrule{8-11}
+%\hspace{12.5em} 
+    & \textbf{Aligner} $e=$ & {$1\%$}  & {$5\%$} & {$10\%$} & {$15\%$} & & {$1\%$} & {$5\%$} & {$10\%$} & {$15\%$} \\
+    \cmidrule{1-11}
+    \rowcolor{gray!10}
+    \edlibsymbol                & \edlib      & 206  & 839  & 1653 & 3073 &&  \bfseries 102 &  \bfseries 106 & \bfseries 105 & \bfseries 106 \\
+    \wfasymbol                  & \wfa        & 56.9 & 806  & 2799 & 5492 &&  148  &  168  & 181 & 190 \\
+    \rowcolor{gray!10}
+    \shsymbol~\shsymbolsq       & \textbf{\astarpa}    & \bfseries 1.41 & \bfseries 2.79 & 82.5 & \text{ML} && 434   & 548   & 4759 & \text{ML} \\
+    \cshsymbol~\cshsymbolsq     & \textbf{\astarpa} (chain)   & 1.60 & 2.98 & \bfseries 12.3 & \bfseries 220 && 436   & 543   & 2369 & 4696 \\
+    \cmidrule{1-11}
+    \end{tabular}
+	\caption[Performance comparison of global alignment tools]{Runtime and
+      memory comparison on \textbf{synthetic sequences} of length $n{=}10^7\bp$
+      for various error rates. ML stands for exceeding the memory limit
+      of~$\qty{30}{GB}$. Note that we run our \A heuristics with exact
+      matches~(\shsymbol~\cshsymbol) when $e{\leq}5\%$, and with inexact
+      matches~(\shsymbolsq~\cshsymbolsq) when $e{\geq}10\%$.}
+	\label{GLOBALtab:evals}
+\end{table*}
