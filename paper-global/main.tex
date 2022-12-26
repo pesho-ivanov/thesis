@@ -2,11 +2,12 @@
 
 \graphicspath{{\dir/}}
 
-The trie index (\cref{ch:trie}) enabled sublinear scaling with the reference
-size, and the seed heuristic (\cref{ch:seed}) additionally enabled long queries
-to be aligned. Nevertheless, when there are too many errors (more than 1\% for
-long sequences), the seed heuristic may not be able to compensate for all of
-them, and the search has to start exporing in width (similar to Dijkstra).
+The trie index from \cref{ch:trie} enabled sublinear scaling with the reference
+size, and the seed heuristic from \cref{ch:seed} additionally enabled long
+queries to be aligned. Nevertheless, when there are too many errors (more than
+1\% for long sequences), the seed heuristic may not be able to compensate for
+all of them, and the search has to start exporing in width (similar to
+Dijkstra).
 
 In this chapter we consider the more basic problem of global alignment between
 two sequences and demonstrate how to squeeze out more information from each seed

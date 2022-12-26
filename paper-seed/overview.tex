@@ -4,6 +4,7 @@ We present a novel \A \emph{\seedh} that enables fast and optimal
 sequence-to-graph alignment, guaranteed to minimize the edit distance of the
 alignment assuming non-negative edit costs.
 
+\paragraph{Methods}
 We phrase optimal alignment as a shortest path problem and solve it by
 instantiating the \A~algorithm with our \seedh. The \seedh first extracts
 non-overlapping substrings (\emph{seeds}) from the read, finds exact seed
@@ -12,32 +13,24 @@ non-overlapping substrings (\emph{seeds}) from the read, finds exact seed
 punish paths for the absence of foreseeable seed matches. We prove admissibility
 of the \seedh, thus guaranteeing alignment optimality.
 
-\qquad Our implementation extends the free and open source aligner and
-demonstrates that the \seedh outperforms all state-of-the-art optimal aligners
-including \graphaligner, \vargas, \pasgal, and the \prefixh previously employed
-by \astarix. Specifically, we achieve a consistent speedup of >60$\times$ on
-both short Illumina reads and long HiFi reads (up to 25kbp), on both the
-\textit{E.~coli} linear reference genome (1Mbp) and the MHC variant graph
-(5Mbp). Our speedup is enabled by the \seedh consistently skipping >99.99\% of
-the table cells that optimal aligners based on dynamic programming
-compute.\\
-
-\astarix aligner and evaluations: \astarixurl\\
-
-Genome graph, Optimal alignment, Semi-global alignment, Edit distance, Shortest
-path, Long reads, \A algorithm, Seed heuristic
-
 \paragraph{Contributions}
-%
-Here we address the key challenge of scaling to long HiFi reads, while
-retaining the superior scaling of \astarix in the size of the reference graph.
-%
-To this end, we instantiate the \A algorithm with a novel \seedh, which
-outperforms existing optimal aligners on both short and long HiFi reads.
-%
-Specifically, the \seedh utilizes information from the whole read to narrowly
-direct the \A search by placing \emph{crumbs} on graph nodes which lead up to a
-\emph{seed match}, \ie, an exact match of a substring of the read.
+Here we address the key challenge of scaling to long HiFi reads, while retaining
+the superior scaling of \astarix in the size of the reference graph. To this
+end, we instantiate the \A algorithm with a novel \seedh, which outperforms
+existing optimal aligners on both short and long HiFi reads. Specifically, the
+\seedh utilizes information from the whole read to narrowly direct the \A search
+by placing \emph{crumbs} on graph nodes which lead up to a \emph{seed match},
+\ie, an exact match of a substring of the read.
+
+Our implementation extends the free and open source aligner and demonstrates
+that the \seedh outperforms all state-of-the-art optimal aligners including
+\graphaligner, \vargas, \pasgal, and the \prefixh previously employed by
+\astarix. Specifically, we achieve a consistent speedup of >60$\times$ on both
+short Illumina reads and long HiFi reads (up to 25kbp, 0.3\% error rate), on
+both the \textit{E.~coli} linear reference genome (1Mbp) and the MHC variant
+graph (5Mbp). Our speedup is enabled by the \seedh consistently skipping
+>99.99\% of the table cells that optimal aligners based on dynamic programming
+compute.
 
 Overall, the contributions presented in this chapter include:
 \begin{enumerate}
@@ -50,7 +43,7 @@ Overall, the contributions presented in this chapter include:
     short Illumina reads and long HiFi reads to both linear and graph references
     $\geq 60 \times$ faster than existing optimal aligners.
     \item A demonstration of superior empirical runtime scaling in the reference
-    size $N$: $N^{0.46}$ on Illumina reads and $N^{0.11}$ on HiFi reads.
+    size~$N$: $N^{0.46}$ on Illumina reads and $N^{0.11}$ on HiFi reads.
 \end{enumerate}
 
 \input{\dir/intuition}

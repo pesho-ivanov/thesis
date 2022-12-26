@@ -1,12 +1,12 @@
 \subsection{Implementation}
 
 Both the \seedh and the \prefixh reuse the same free and open source C++
-codebase of our \astarix aligner. It includes a simple implementation of a graph
-and trie data structure which is not optimized for memory usage. In order to
-easily align reverse complement reads, the reverse complement of the graph is
-stored alongside its straight version. The shortest path algorithm only
-constructs explored states explicitly, so most states remain implicitly defined
-and do not cause computational burden.
+codebase of our \astarix aligner: \astarixurl. It includes a simple
+implementation of a graph and trie data structure which is not optimized for
+memory usage. In order to easily align reverse complement reads, the reverse
+complement of the graph is stored alongside its straight version. The shortest
+path algorithm only constructs explored states explicitly, so most states remain
+implicitly defined and do not cause computational burden.
 
 Both heuristics benefit from a default optimization in \astarix we call
 \emph{greedy matching} (also known as \emph{sliding}) which skips adding a state

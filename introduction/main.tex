@@ -1,6 +1,15 @@
 \graphicspath{{\dir/}}
 
+%keywords: Next-generation sequencing, Genome graph, Edit distance, Semi-global
+%alignment, Global alignment, Long reads, Optimal alignment, Shortest path, \A
+%algorithm, Seed heuristic
+
 \chapter{Introduction} \label{ch:introduction}
+
+\paragraph{Motivation}
+Sequence alignment has been a core problem in computational biology for the last
+half-century. It is an open problem whether exact pairwise alignment is possible
+in linear time for related sequences~\citep{medvedev2022theoretical}.
 
 An algorithm without an objective function may be wrong because they do not
 solve the correct problem. or because they 
@@ -20,6 +29,13 @@ not only but allows to enjoy being wrong rather than vague. Moreove, often
 problems in computational biology are ill-stated andalgorithms that approximate
 algorithms that. But many algorithms in computational biology do not even have a
 formal statement 
+
+% Our scope
+Formally, we consider the optimal \emph{sequence-to-graph alignment} problem,
+the task of finding an optimal base-to-base correspondence between a query
+sequence and a (possibly cyclic) walk in the graph. Related alignment problems
+have already been formulated as graph shortest path
+problems~\cite{jain_complexity_2019}.
 
 \section{Motivation}
 
@@ -41,7 +57,28 @@ when the error rate is limited, our optimal solutions empirically scale
 near-linearly up to very long sequences. This translates to many orders of
 magnitude of runtime speedup compared to state-of-the-art optimal aligners.
 
-\subsection{}
+% Problem, applications
+The problem of aligning one biological sequence to another has been formulated
+over half a century ago~\citep{needleman1970general} and is known as
+\emph{global pairwise alignment}~\citep{navarro2001guided}. Pairwise alignment
+has numerous applications in computational biology, such as genome assembly,
+read mapping, variant detection, multiple sequence alignment, and differential
+expression~\citep{prjibelski2018sequence}. Despite the centrality and age of
+pairwise alignment, ``a major open problem is to implement an algorithm with linear-like
+empirical scaling on inputs where the edit distance is linear
+in~$n$''~\citep{medvedev2022theoretical}.
+
+% Near-quadratic worst case
+Alignment accuracy affects the subsequent analyses, so a common goal
+is to find a shortest sequence of edit operations (insertions, deletions, and
+substitutions of single letters) that transforms one sequence into the other.
+Finding such a sequence of operations is at least as hard as computing the \emph{edit
+distance}, which has recently been proven to not be computable in strongly
+subquadratic time, unless SETH is false~\citep{backurs2015edit}. Given that
+the number of sequencing errors is proportional to the length, existing exact aligners are
+limited by quadratic scaling not only in the worst case but also in practice.
+This is a computational bottleneck given the growing amounts of biological data
+and the increasing sequence lengths~\citep{kucherov2019evolution}.
 
 %\subsection{Knowledge gap}
 %\dictum{%
@@ -156,7 +193,7 @@ it can only efficiently align reads of limited length.
 %asymptotics analysis
 %????? linear I/O but quadratic optimal
 
+\input{\dir/prelims}
 \input{\dir/progress}
 \input{\dir/problem}
 \input{\dir/contributions}
-\input{\dir/prelims}
