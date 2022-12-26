@@ -8,7 +8,7 @@ cases. The objective of this project is to develop our work on \A for sequence
 alignment from prototypical to practical, which includes the development of
 algorithms, formal proofs and software development. Our specific aim is to use
 the already constructed base for the development of \astarix as an
-industrial-scale mapper handling human-scale graph references, long and noisy
+industrial-scale aligner handling human-scale graph references, long and noisy
 reads, while being competitive in runtime and memory even to suboptimal
 aligners. In order to fulfill this aim, work in several directions will be
 needed: 1) rigorous development of the seed heuristic theory, 2) theoretical
@@ -90,11 +90,11 @@ as the uncorrected PacBio reads that may reach 20\% of mistakes. Possible
 improvements of the seed heuristic may include inexact matching of seeds,
 careful choice of seed positions, and accounting for the seeds order.
 
-P1: Develop the \astarix sequence-to-graph mapper from prototype to production As
+P1: Develop the \astarix sequence-to-graph aligner from prototype to production As
 our previous work demonstrates, scaling optimal \A alignment to long sequences
 and high error rates relies on various non-trivial algorithms, data structures
 and optimizations. In order for \astarix to become of practical importance, it
-must be comparable to not only optimal mappers but to approximate ones as well –
+must be comparable to not only optimal aligners but to approximate ones as well –
 this includes tolerating more errors, lowering the runtime and memory
 consumption, and supporting features. Tolerating errors. We observe two
 qualitatively-different modes in which the \A explores the state space: linear
@@ -149,7 +149,7 @@ figured out that extension alignment (very similar in the approach to global
 alignment) is of great interest for its reusability in the seed-and-extend
 paradigm that other aligners follow. Evaluation. The dataset for evaluation
 ideally includes bigger graphs, noisy long reads (e.g. ONP, PacBio), reads with
-bigger indels. The comparison should be not only to optimal mappers but also to
+bigger indels. The comparison should be not only to optimal aligners but also to
 approximate oces. Potential risks. The preliminary experiments demonstrate
 sublinear scaling (n0.2) with the reference size but since this is an empirical
 result, it may also deteriorate for bigger graphs. Some of the optimizations may
@@ -185,9 +185,9 @@ that are 1 more distant from the diagonal. This is also theoretically and
 practically true for the special case of \A, Dijkstra, which has potential 0 and
 thus reaches O(ns) where s is the overall number of errors. Our empirical
 results demonstrate that a near-linear runtime scaling is practically possible
-up to very long sequences (100 Mbp) for error rates of 10\%. Mapping. In
+up to very long sequences (100 Mbp) for error rates of 10\%. In
 addition to the computational costs for aligning a sequence to another sequence,
-mapping has the burden of localization of the best mapping. Our intuition behind
+alignment has the burden of localization of the best alignment. Our intuition behind
 his localization cost is related to to usage of \A on the trie: for each error
 that the \A potential does not compensate for, the exploration would get one
 lever deeper in the trie, thus exploring expected 4x more states. This is an
@@ -219,7 +219,7 @@ alignment after being generalized to probabilistic queries. MAPQ. The mapq value
 may be calculated more precisely if accounting for the probability estimates.
 
 P4: Explore the applicability of \A to local alignment Our previous work has
-been focusing on semi-global alignment (mapping) and global alignment (and
+been focusing on semi-global alignment (alignment) and global alignment (and
 extension). The issue with extending the \A approach to local alignment is
 two-fold: The search for the best local alignment is being reset when the
 current score becomes negative – in other words, negative scores are crucial for
@@ -254,7 +254,7 @@ K-best alignments is the computation of the MAPQ mapping score which is based on
 the alignment costs of the K-best alignments and provides an estimation on the
 certainty of the best alignment. Potentially, there may be other applications.
 
-P7: Explore joint mapping of a set of sequence to a graph The reads to be mapped
+P7: Explore joint alignment of a set of sequence to a graph The reads to be mapped
 to a reference genome are highly correlated since they usually come from the
 same biological sample. On the other hand, they can be biased according to the
 reference genome, due to biological variation. Ideally, a clever alignment

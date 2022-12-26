@@ -40,7 +40,7 @@ problems~\cite{jain_complexity_2019}.
 \section{Motivation}
 
 Observation 1: A long query has more information that may hint towards the best
-mapping place. Unlike the practical approximate algorithms, the existing optimal
+alignment place. Unlike the practical approximate algorithms, the existing optimal
 algorithm do not exploit this information. As a result, all state-of-the-art
 optimal algorithms take longer to map a longer query to a reference. 
 
@@ -62,7 +62,7 @@ The problem of aligning one biological sequence to another has been formulated
 over half a century ago~\citep{needleman1970general} and is known as
 \emph{global pairwise alignment}~\citep{navarro2001guided}. Pairwise alignment
 has numerous applications in computational biology, such as genome assembly,
-read mapping, variant detection, multiple sequence alignment, and differential
+read alignment, variant detection, multiple sequence alignment, and differential
 expression~\citep{prjibelski2018sequence}. Despite the centrality and age of
 pairwise alignment, ``a major open problem is to implement an algorithm with linear-like
 empirical scaling on inputs where the edit distance is linear
@@ -90,7 +90,7 @@ importance for analysis of genetic data. Algorithms and tools for alignment have
 been thoroughly developed and routinely used for genome assembly, RNA
 quantification, detecting splicing, oncology, multiple sequence alignment (MSA),
 and evolutionary biology. Types of sequence alignment include global alignment,
-semi-global alignment, mapping, local alignment, and others. For each type, a
+semi-global alignment, alignment, local alignment, and others. For each type, a
 common tradeoff that had to be done is between the alignment accuracy and the
 performance to find it.
 
@@ -123,7 +123,7 @@ demontrated that the additional information from the whole sequence can improve
 the scaling with query length, reference size and error rate, substantially
 decrease the necessary computations, and result in algorithms that are orders of
 magnitude faster than existing optimal algorithms. We apply the \A approach to
-two types of alignment: semi-global (mapping) and global.
+two types of alignment: semi-global (alignment) and global.
 
 
 % from seeds paper
@@ -193,8 +193,7 @@ it can only efficiently align reads of limited length.
 %asymptotics analysis
 %????? linear I/O but quadratic optimal
 
-\input{\dir/optimal-feasibility}
-\input{\dir/prelims}
-\input{\dir/progress}
 \input{\dir/problem}
+\input{\dir/progress}
+\input{\dir/prelims}
 \input{\dir/contributions}

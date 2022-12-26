@@ -7,7 +7,7 @@ the growing amounts of genetic data require algorithms with high accuracy and
 speed. Moreover, the ongoing transition from using single genome references to
 using pangenomes motivates adaptation of the classic alignment algorithms.
 
-We consider two types of pairwise alignment problems: semi-global mapping of a
+We consider two types of pairwise alignment problems: semi-global alignment of a
 set of DNA reads to a general graph reference representing a pangenome, and
 global (or end-to-end) alignment of two sequences. Modern optimal algorithms
 perform uninformed search -- they neglect information from the unaligned parts of
@@ -38,7 +38,7 @@ speedup compared to state-of-the-art optimal algorithms.
 
 Throughout this thesis, we demonstrate how to encompass various dimensions of
 the input complexity while preserving the speed and optimality. First, we
-demonstrate how to apply a trie index to scale the mapping runtime sublinearly
+demonstrate how to apply a trie index to scale the alignment runtime sublinearly
 with the reference size. Then, we introduce a novel seed heuristic for \A which
 enables aligning of long sequences (up to millions of base pairs) near-linearly
 with their length. Last, we extend the seed heuristic with inexact matching and

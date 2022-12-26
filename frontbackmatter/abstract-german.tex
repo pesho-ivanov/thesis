@@ -10,7 +10,7 @@ Genomreferenzen zur Verwendung von Pangenomen zu einem Überdenken der
 klassischen Alignment-Algorithmen.
 
 Wir betrachten zwei Arten von paarweisen Alignment-Problemen: semi-globales
-Mapping eines Satzes von DNA-Lesevorgängen auf eine allgemeine Graphreferenz,
+alignment eines Satzes von DNA-Lesevorgängen auf eine allgemeine Graphreferenz,
 die ein Pangenom darstellt, und globales (oder Ende-zu-Ende) Alignment von zwei
 Sequenzen. Frühere Algorithmen führen eine uninformierte Suche durch – ihre
 Alignmentprozesse vernachlässigen Informationen aus den nicht ausgerichteten
@@ -37,7 +37,7 @@ Algorithmen führt.
 In der gesamten Arbeit demonstrieren wir, wie verschiedene Dimensionen der
 Eingabekomplexität erfasst werden können, während die Geschwindigkeit und
 Optimalität erhalten bleiben. Zuerst demonstrieren wir, wie man einen Trie-Index
-anwendet, um die Mapping-Laufzeit sublinear mit der Referenzgröße zu skalieren.
+anwendet, um die alignment-Laufzeit sublinear mit der Referenzgröße zu skalieren.
 Dann führen wir eine neuartige Seed-Heuristik für \A ein, die zusätzlich eine
 nahezu lineare Ausrichtung langer Sequenzen (bis zu Millionen von Basenpaaren)
 mit ihrer Länge ermöglicht. Zuletzt erweitern wir die Seed-Heuristik mit

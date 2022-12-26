@@ -25,11 +25,11 @@ alignment, including aligning to nonlinear structures, such as directed acyclic
 graphs, DAGs, general graphs and others. These structures are nowadays becoming
 more common as a compressed form of representing a set of references to which a
 sequence can be aligned. Often, one best alignment is suefficient but finding
-several best (top-K) alignments. In the context of read mapping, a set of reads
+several best (top-K) alignments. In the context of read alignment, a set of reads
 is aligned to the same reference sequence so an indexing procedure is often
 useful for the performance.
 
-We specifically consider the mapping of a set of reads to a general graph, and
+We specifically consider the alignment of a set of reads to a general graph, and
 the global pairwise alignment.
 
 Existing optimal algorithms are based on dynamic programming (DP) and
@@ -95,7 +95,7 @@ Comparing one sequence to another is a basic combinatorial problem that has
 several variations (shown on the right), each applicable in computational
 biology. Needleman-Wunsch (1970)  and Smith-Waterman (1981) are dynamic
 programming (DP) algorithms that serve as base solutions for global (or
-computing edit distance of two strings) and semi-global alignments (or mapping
+computing edit distance of two strings) and semi-global alignments (or alignment
 when a set of sequences is being aligned). Given that there is both biological
 and technical variation in the data, a biologically plausible alignment is one
 that minimizes the corresponding differences (e.g. insertions, deletions and
