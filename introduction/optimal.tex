@@ -1,4 +1,4 @@
-\subsection{Practical feasibility of optimal alignment}
+\subsection{Feasibility of optimal alignment}
 
 There is a fundamental trade-off between perforamance and optimality guarantees:
 an algorithm which is allowed to be suboptimal may exploit the lesser
@@ -15,9 +15,9 @@ practice, despite of their quadratic scaling. The ongoing competition between
 the optimal aligners employs both algorithmic advancements and implementation
 optimizations on caching, bit-parallelization, GPU.~(\cref{ch:global}).
 
-For semi-global alignment (read alignment), common believe is that optimal
-algorithms are infeasible for read alignment, especially when reads are long. All
-production read aligners following the approximate seed-extend
+For semi-global alignment (read alignment), common belief is that optimal
+algorithms are infeasible for read alignment, especially when reads are long.
+All production read aligners following the approximate seed-extend
 paradigm~\cite{alser2021technology}\footnote{This study examines 107 aligners.}.
 
 Informed search

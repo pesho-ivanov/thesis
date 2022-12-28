@@ -12,6 +12,22 @@ problems~\cite{jain_complexity_2019}.
 
 \subsection{Semi-global alignment (Read alignment)}
 
+% General: aligning, edit distance
+Alignment of reads to a reference genome is an essential and early step in most
+bioinformatics pipelines. While linear references have been used traditionally,
+an increasing interest is directed towards graph references capable of
+representing biological variation~\citep{garrison_variation_2018}.
+%
+Specifically, a \emph{sequence-to-graph} alignment is a base-to-base
+correspondence between a given read and a walk in the graph. As sequencing
+errors and biological variation result in inexact read alignments, edit distance
+is the most common metric that alignment algorithms optimize in order to find
+the most probable read origin in the reference.
+
+% We note that in contrast to linear references, reference graphs capture
+% genomic variation and therefore enable more accurate
+% alignments~\citep{garrison_variation_2018}.
+
 %\begin{floatingfigure}[l]{0.5\textwidth}
 \begin{figure}[t]
     \includegraphics[width=0.5\textwidth]{alignment-types}

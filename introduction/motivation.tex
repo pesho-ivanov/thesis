@@ -1,0 +1,78 @@
+\section{Motivation}
+
+Observation 1: A long query has more information that may hint towards the best
+alignment place. Unlike the practical approximate algorithms, the existing optimal
+algorithm do not exploit this information. As a result, all state-of-the-art
+optimal algorithms take longer to map a longer query to a reference. 
+
+Observation 2: The input is linear, the output is linear, the best case is
+linear. On the other hand all optimal solutions are near-quadratic and the
+theoretical limit is near-quadratic. To spead up beyond this near-quadratic
+barrier, current practical algorithms break the optimality guarantee hoping that
+the produced alignments are accurate enough. 
+
+%But it is possible to be fast and accurate in the same time?
+We take another approach: we preserve the optimality guarantee and use
+substantially more information with the hope to be fast enough. As it turns out,
+when the error rate is limited, our optimal solutions empirically scale
+near-linearly up to very long sequences. This translates to many orders of
+magnitude of runtime speedup compared to state-of-the-art optimal aligners.
+
+% Problem, applications
+The problem of aligning one biological sequence to another has been formulated
+over half a century ago~\citep{needleman1970general} and is known as
+\emph{global pairwise alignment}~\citep{navarro2001guided}. Pairwise alignment
+has numerous applications in computational biology, such as genome assembly,
+read alignment, variant detection, multiple sequence alignment, and differential
+expression~\citep{prjibelski2018sequence}. Despite the centrality and age of
+pairwise alignment, ``a major open problem is to implement an algorithm with linear-like
+empirical scaling on inputs where the edit distance is linear
+in~$n$''~\citep{medvedev2022theoretical}.
+
+% Near-quadratic worst case
+Alignment accuracy affects the subsequent analyses, so a common goal
+is to find a shortest sequence of edit operations (insertions, deletions, and
+substitutions of single letters) that transforms one sequence into the other.
+Finding such a sequence of operations is at least as hard as computing the \emph{edit
+distance}, which has recently been proven to not be computable in strongly
+subquadratic time, unless SETH is false~\citep{backurs2015edit}. Given that
+the number of sequencing errors is proportional to the length, existing exact aligners are
+limited by quadratic scaling not only in the worst case but also in practice.
+This is a computational bottleneck given the growing amounts of biological data
+and the increasing sequence lengths~\citep{kucherov2019evolution}.
+
+Sequence alignment is a class of combinatorial problems that is of primary
+importance for analysis of genetic data. Algorithms and tools for alignment have
+been thoroughly developed and routinely used for genome assembly, RNA
+quantification, detecting splicing, oncology, multiple sequence alignment (MSA),
+and evolutionary biology. Types of sequence alignment include global alignment,
+semi-global alignment, alignment, local alignment, and others. For each type, a
+common tradeoff that had to be done is between the alignment accuracy and the
+performance to find it.
+
+% graph reference
+An additional difficulty is the fact that in the
+upcoming pangenomic era, these algorithms must be also applicable to complex
+graph structures. For more than 60 years, a linear sequence has been extremely
+useful as a representation of a single genome. The affordability of sequencing
+technologies enables not only to sequence genomes deeper but also to sequence
+many genomes (e.g. of organisms or single cells), building a pangenome (an
+abstracted genome that represents the genetic variation of a whole clade). The
+shift towards population studies in the last decade motivates the adoption of
+graph data structures which serve as compressed representations of collections
+of related genomes (genomes are paths in the graph).
+
+% \A context 
+An optimal alignment can naturally be represented as a shortest path in an
+alignment graph (equivalent to the DP table). In order to find such a shortest
+path with minimal exploration, we instantiate the \A algorithm with a novel
+heuristic function based on the unaligned parts of the sequences. This
+additional information is a problem-specific heuristic function and it heavily
+determines the efficiency of the search. For any explored state by \A, this
+heuristic function should compute a lower bound on the remaining path length, or
+more specifically, the minimal cost of edit operations needed to align the
+remaining sequences.
+
+%only optimal alignment in this thesis
+%asymptotics analysis
+%????? linear I/O but quadratic optimal
