@@ -10,11 +10,11 @@ The most basic operations one can do with texts is to modify them letter by
 letter, to compare two texts, and to search texts in a big corpus. This thesis
 considers comparison and approximate search applied to genetic ``texts'', also
 known as \emph{sequence alignment}. Sequence alignment has been a core problem
-in computational biology for the last half-century. Nevertheless, it is still
-considered an open problem since it is still not known whether exact pairwise
-alignment is possible in linear time for related
-sequences~\citep{medvedev2022theoretical}. We will approach this question using
-the \A informed search algorithm.
+in computational biology for the last half-century. We know that in the general
+case, it is not solvable for strictly subquadratic time but the approximate
+algorithms that are used in practice seem to be scale much better. We employ  
+the \A informed search algorithm in an attempt to design an optimal algorithm
+that scales subquadratically for related sequences.
 
 \input{\dir/motivation}
 \input{\dir/problem}
