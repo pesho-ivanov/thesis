@@ -1,0 +1,87 @@
+\subsection{Practical feasibility of optimal alignment}
+
+There is a fundamental trade-off between perforamance and optimality guarantees:
+an algorithm which is allowed to be suboptimal may exploit the lesser
+restrictions for greater performance. Especially given the worst-case analysis
+requiring near-quadratic runtime even to compute edit distance exactly, it is
+understandable why most scholars are skeptical about faster optimal algorithms.
+With our \A approach  offers a to exploits another dimensions: average case or expected case analysis.
+
+% asymptotics
+%has been solved in linear time in \citeyear{morris1970linear}~\cite{morris1970linear}.
+
+In the direction of global alignment, optimal algorithms are commonly used in
+practice, despite of their quadratic scaling. The ongoing competition between
+the optimal aligners employs both algorithmic advancements and implementation
+optimizations on caching, bit-parallelization, GPU.~(\cref{ch:global}).
+
+For semi-global alignment (read alignment), common believe is that optimal
+algorithms are infeasible for read alignment, especially when reads are long. All
+production read aligners following the approximate seed-extend
+paradigm~\cite{alser2021technology}\footnote{This study examines 107 aligners.}.
+
+Informed search
+
+An algorithm without an objective function may be wrong because they do not
+solve the correct problem. or because they 
+
+Algorithms that guarantee correctness can be wrong only by being given a wrong problem.
+
+An approximate algorithm can be wrong either because it did not fullfill its
+mathematical goal. reach its solve the problem because of either optimizing the
+\emph{wrong} function.
+
+Algorithm correctness is arguably a useful property which is often not simple to
+guarantee. It can undoubtedly improve accuracy, especially in the case of
+complex data, but still be wrong from biological point of view. This is because
+of  This Nevertheless, since biology is a natural science, its  optimality
+guarantees must have an additional impact on the development of the field. It
+not only but allows to enjoy being wrong rather than vague. Moreove, often
+problems in computational biology are ill-stated andalgorithms that approximate
+algorithms that. But many algorithms in computational biology do not even have a
+formal statement 
+
+\paragraph{Suboptimal alignment}
+%
+In the last decades, approximate and alignment-free methods satisfied the demand
+for faster algorithms which process huge volumes of genetic
+data~\citep{kucherov2019evolution}. 
+%
+\emph{Seed-and-extend} is arguably the most popular paradigm in read
+alignment~\citep{altschul_basic_1990,langmead_fast_2012,li_fast_2009}. First,
+substrings (called \emph{seeds} or \emph{kmers}) of the read are extracted, then
+aligned to the reference, and finally prospective matching locations are
+\emph{extended} on both sides to align the full read.
+
+While such a heuristic may produce acceptable alignments in many cases, it
+fundamentally does not provide quality guarantees, resulting in suboptimal
+alignment accuracy.
+%
+In contrast, here we demonstrate that seeds can benefit optimal alignment as
+well.
+
+\paragraph{Key challenges in optimal alignment}
+%
+Finding optimal alignments is desirable but expensive in the worst case,
+requiring $\Oh(Nm)$ time~\citep{equi2019complexity}, for graph size $N$ and read
+length $m$.
+%
+Unfortunately, most optimal sequence-to-graph aligners rely on dynamic
+programming (DP) and always reach this worst-case asymptotic runtime. Such
+aligners include \vargas~\citep{darby2020vargas},
+\pasgal~\citep{jain_accelerating_2019},
+\graphaligner~\citep{rautiainen_bitparallel_2019},
+\hga~\citep{feng2021accelerating}, and \vg~\citep{garrison_variation_2018},
+which use bit-level optimizations and parallelization to increase their
+throughput.
+
+In contrast, we follow the promising direction of using a heuristic to avoid
+worst-case runtime on realistic data. To this end, \astarix rephrases the task
+of alignment as a shortest-path problem in an \emph{alignment graph} extended by
+a \emph{trie index}, and solves it using the \A~algorithm instantiated with a
+problem-specific \prefixh. Importantly, its choice of heuristic only affects
+performance, not optimality.
+%
+Unlike DP-based algorithms, this \prefixh allows scaling sublinearly with the
+reference size, substantially increasing performance on large genomes. However,
+it can only efficiently align reads of limited length.

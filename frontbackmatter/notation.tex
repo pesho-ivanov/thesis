@@ -8,22 +8,22 @@
     \vskip -2em
     \begin{tabularx}{\textwidth}{lX}
     	edit distance		& minimal cost to edit one sequence to another \\
-    	alignment 			& correspondence between letters of two sequences \\
-		\,$\sbullet$ global 			& fully aligning two sequences to each other \\
-		\,$\sbullet$ semi-global		& fully aligning a query somewhere in a reference \\
-		\,$\sbullet$ reads alignment 		& multiple semi-global alignments to the same reference \\[5pt]
-    	dynamic programming & optimization technique by reusing partial results \\
-    	\,$\sbullet$ explored state&  \\
-    	\,$\sbullet$ expanded state&  \\
+    	alignment 			& correspondence between letters of two sequences \\[-3pt]
+		\,$\sbullet$ global 			& fully aligning two sequences to each other \\[-3pt]
+		\,$\sbullet$ semi-global		& fully aligning a query somewhere in a reference \\[-3pt]
+		\,$\sbullet$ reads alignment 		& multiple semi-global alignments to the same reference \\
+    	dynamic programming & optimization technique by reusing partial results \\[-3pt]
+    	\,$\sbullet$ explored state& pushed to the priority queue \\[-3pt]
+    	\,$\sbullet$ expanded state& popped from the priority queue \\
 		\dijkstra's algorithm & uninfomred shortest path algorithm \\
-    	\A algorithm 		& generalization of \dijkstra, informed by a heuristic \\
+    	\A algorithm 		& generalization of \dijkstra, informed by a heuristic \\[-3pt]
 		\,$\sbullet$ admissible heuristic		& lower bound on the remaining shortest distance \\
     	graph reference		& a compressed representation of multiple references \\
     	trie index 			& tree structure with short reference subsequences \\
-    	seed heuristic		& our proposed heuristic function for \A \\
-		\,$\sbullet$ chaining & \\
-		\,$\sbullet$ inexact matching & \\
-		\,$\sbullet$ potential & maximal edits a seed can ``compensate'' for \\
+    	seed heuristic		& our proposed heuristic function for \A \\[-3pt]
+		\,$\sbullet$ chaining & requiring that all matches are consequitive  \\[-3pt]
+		\,$\sbullet$ inexact matching & allowing a number of errors (1) when matching a seed \\[-3pt]
+		\,$\sbullet$ potential & maximal value of the heuristic \\
     	performance 		& runtime and memory footprint \\
     	scaling	 			& change (not necessarily asymptotic) with bigger input \\
     \end{tabularx}
@@ -36,7 +36,7 @@
 		$A, B \in \Sigma^*$				& sequences \\
 		$q \in \Sigma^m$				& query/read \\
 %    	edit operation		& insertion, deletion or substitution of a single letter \\
-		$\cmatch, \csubst, \cins, \cdel \geq 0$ & edit costs for match, insertion, deletion or substitution of a single letter \\[5pt]
+		$\cmatch, \csubst, \cins, \cdel \geq 0$ & edit costs for match, insertion, deletion and substitution of a single letter \\[5pt]
 		$ed(A,B)$						& edit distance \\
 		$\RG=(\RGV,\RGE)$               & reference graph \\[5pt]
 %	Position in read & $q[i] \in \Sigma$, $i \in \{0,\dots,m-1\}$\\	

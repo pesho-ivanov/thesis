@@ -1,5 +1,18 @@
 \section{Preliminaries}
 
+% paper:global
+\paragraph{Dynamic programming} The standard approach to sequence alignment is
+by successively aligning prefixes of the first sequence to prefixes of the
+second. \citet{vintsyuk1968speech} was the first to introduce this $\Oh(nm)$
+dynamic programming (DP) approach for a comparing a pair speech signals with $n$
+and $m$ elements. Independently, it was applied to compute edit distance for
+biological
+sequences~\citep{needleman1970general,sankoff1972matching,sellers1974theory,wagner1974string}.
+This well-known algorithm is implemented in modern aligners  like
+\seqan~\citep{reinert2017seqan} and \parasail~\citep{daily2016parasail}.
+Improving the performance of these quadratic algorithms has been a central goal
+in later works.
+
 \subsection{Alignment as shortest path}
 
 Alignment is equivalent to shortest path.
