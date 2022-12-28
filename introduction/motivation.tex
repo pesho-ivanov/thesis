@@ -1,5 +1,8 @@
 \section{Motivation}
 
+All optimal algorithms have to iterate over the whole reference for each query.
+We should be able to optimize this by precomputation.
+
 Observation 1: A long query has more information that may hint towards the best
 alignment place. Unlike the practical approximate algorithms, the existing optimal
 algorithm do not exploit this information. As a result, all state-of-the-art
