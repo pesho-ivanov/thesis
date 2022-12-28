@@ -318,3 +318,114 @@ $k$-mer exact matches.
 %$e<3.485\%$~\citep[Proof of Lemma~25, p.~17]{ganesh2020near}. The
 %asymptotically best know algorithm reaches
 %$\Oh(n^2/\log^2n)$~\citep{masek1980faster} but is not practical.
+
+In the following, we formalize the task of optimally aligning a read to a
+reference graph in terms of finding a shortest path in an \emph{alignment
+graph}.
+
+\paragraph{Reference graph}
+%
+A reference graph $\RG=(\RGV,\RGE)$ encodes a collection of references to be
+considered when aligning a read. Its directed edges $\RGE \subseteq \RGV \times
+\RGV \times \Sigma$ are labeled by nucleotide letters from $\Sigma =
+\{\texttt{A},\texttt{C},\texttt{G},\texttt{T}\}$, hence any walk
+$\reference{\pi}$ in $\RG$ spells a string $\sigma(\reference{\pi}) \in
+\Sigma^*$.
+
+An alignment of a read $q \in \Sigma^*$ to a reference graph $\RG$ consists of
+(i)~a walk $\reference{\pi}$ in $\RG$ and (ii)~a sequence of edits (matches,
+substitutions, deletions, and insertions) that transform
+$\sigma(\reference{\pi})$ to $q$. An alignment is \emph{optimal} if it minimizes
+the sum of edit costs for a given real-valued cost model $\cedits = (\cmatch,
+\csubst,\cdel, \cins)$.
+%
+We assume that edit costs are non-negative---a pre-requisite for the correctness
+of \A. Further, we assume that $\cmatch \leq \csubst, \cins, \cdel$---a
+prerequisite for the correctness of our heuristic.
+
+We note that our approach naturally works for cyclic reference graphs.
+
+\begin{figure}[t]
+	\begin{alignat*}{20}
+		(
+			&\langle&& u &,& i   &\rangle&,
+			&\langle&  v &,& i+1 &\rangle&,
+			&&q[i],
+			&&\cmatch
+		&)&\in \AGE
+		&& \quad \text{ if } (u,v,\ell) \in \RGE, \ell = q[i] & \qquad \text{(match)}\\
+		%
+		(
+			&\langle&& u &,& i   &\rangle&,
+			&\langle&  v &,& i+1 &\rangle&,
+			&&q[i],
+			&&\csubst
+		&) &\in \AGE
+		&& \quad \text{ if } (u,v,\ell) \in \RGE, \ell \neq q[i] & \qquad \text{(substitution)}\\
+		%
+		(
+			&\langle&& u &,& i &\rangle&,
+			&\langle&  v &,& i &\rangle&,
+			&&\varepsilon,
+			&&\cdel
+		&) &\in \AGE
+		&& \quad \text{ if } (u,v,\ell) \in \RGE & \qquad \text{(deletion)}\\
+		%
+		(
+			&\langle&& u &,& i   &\rangle&,
+			&\langle&  u &,& i+1 &\rangle&,
+			&&q[i],
+			&&\cins
+		&) &\in \AGE
+		&& \quad & \qquad \text{(insertion)},
+	\end{alignat*}
+	\caption[Formal definition of alignment graph]{Formal definition of
+	alignment graph edges $\AGE \subseteq \AGV[q] \times \AGV[q] \times
+	\Sigma_\varepsilon \times \mathbb{R}_{\geq 0}$. Here, $u,v \in \RGV$, $0
+	\leq i < |q|$, $\ell \in \Sigma$, and $\varepsilon$ represents the empty
+	string, indicating that letter $\ell$ was deleted.}
+	\label{SEEDfig:graph-edges}
+\end{figure}
+
+\paragraph{Alignment graph}
+%
+In order to formalize optimal alignment as a shortest path finding problem, we
+rely on an \emph{alignment graph} $\AG[q]=(\AGV[q],\AGE[q])$.
+%
+Its nodes $\AGV[q]$ are \emph{states} of the form $\langle v, i \rangle$, where
+$v \in \RGV$ is a node in the reference graph and $i \in \{0, \dots, |q|\}$
+corresponds to a position in the read $q$.
+%
+Its edges $\AGE[q]$ are selected such that any path $\alignment{}{\pi}$ in
+$\AG[q]$ from $\langle u, 0 \rangle$ to $\langle v, i \rangle$ corresponds to an
+alignment of the first $i$ letters of $q$ to $\RG$.
+%
+Further, the edges are weighted, which allows us to define an \emph{optimal
+alignment} of a read $q \in \Sigma^*$ as a shortest path $\alignment{}{\pi}$ in
+$\AG[q]$ from $\langle u, 0 \rangle$ to $\langle v, |q| \rangle$, for any $u, v
+\in \RGV$.
+%
+\cref{SEEDfig:graph-edges} formally defines the edges $\AGE$.
+
+% paper:global
+\paragraph{Sequences}
+The input sequences $A = \overline{a_0a_1\dots a_{n-1}}$ and $B =
+\overline{b_0b_1 \dots b_{m-1}}$ are over an alphabet $\Sigma$ with $4$ letters.
+We refer to substrings $\overline{a_i \dots a_{i'-1}}$ as $\substr Ai{i'}$, to
+prefixes $\overline{a_0 \dots a_{i-1}}$ as $A_{<i}$, and to suffixes
+$\overline{a_i \dots a_{n-1}}$ as $A_{\geq i}$. The \emph{edit distance}
+$\ed(A,B)$ is the minimum number of insertions, deletions, and substitutions of
+single letters needed to convert $A$ into $B$.
+
+\paragraph{Alignment graph}
+Let \emph{state} $\st{i}{j}$ denote the subtask of aligning the prefix $A_{<i}$
+to the prefix $B_{<j}$. The \emph{alignment graph} (also called \emph{edit
+graph}) $G(V,E)$ is a weighted directed graph with vertices $V = \{\st ij \vert
+{0\leq i \leq n}, {0\leq j\leq m}\}$ corresponding to all states, and edges
+connecting tasks to subtasks: edge ${\st ij \to \st{i{+}1}{j{+}1}}$ has cost $0$
+if ${a_i = b_j}$ (match) and $1$ otherwise (substitution), and edges ${\st ij
+\to \st{i{+}1}{j}}$ (deletion) and ${\st ij \to\st{i}{j{+}1}}$ (insertion) have
+cost $1$. We denote the root state $\st 00$ by $v_s$ and the target state $\st
+nm$ by $v_t$. For brevity we write $f(\st ij)$ as $f \st ij$. The alignment graph is
+a natural representation of the alignment problem that provides a base for all
+alignment algorithms.

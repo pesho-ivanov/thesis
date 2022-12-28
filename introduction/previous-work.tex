@@ -39,3 +39,25 @@ linguistics since .
 
 % parallelization
 % sketches
+
+% Optimal DP-based approaches
+\paragraph{Optimal Alignment}
+Current optimal alignment algorithms reach the impractical $\Oh(nm)$ runtime
+that has been shown to be a lower bound for the worst-case edit distance
+computation~\cite{backurs2015edit}. In this light, approaches for improving the
+efficiency of optimal alignment have taken advantage of specialized features of
+modern CPUs to improve the practical runtime of the Smith-Waterman dynamic
+programming (DP) algorithm~\cite{smith_comparison_1981} considering all possible
+starting nodes. These use modern SIMD instructions (\eg
+\vg~\cite{garrison_variation_2018} and \pasgal~\cite{jain_accelerating_2019}) or
+reformulations of edit distance computation to allow for bit-parallel
+computations in \graphaligner \footnote{We refer as \bitparallel to to the
+bit-parallel DP algorithm implemented in \graphaligner tool
+\cite{rautiainen_bitparallel_2019}.}~\cite{rautiainen_bitparallel_2019}. Many of
+these, however, are designed only for specific types of genome graphs, such as
+{\itshape de Bruijn}
+graphs~\cite{liu_debga_2016,limasset2019toward} and
+variation graphs~\cite{garrison_variation_2018}. A compromise often made when
+aligning sequences to cyclic graphs using algorithms reliant on directed acyclic
+graphs involves the computationally expensive ``DAG-ification'' of graph
+regions~\cite{kavya_sequence_2019,garrison_variation_2018}.
