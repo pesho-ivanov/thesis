@@ -1,23 +1,32 @@
 \section{Motivation}
 
-Nevertheless, it is still
-considered an open problem since it is still not known whether exact pairwise
-alignment is possible in linear time for related
+All optimal algorithms for semi-global alignment have to iterate over the whole
+reference for each query. We should be able to optimize this by precomputation.
+
+\begin{paradox}
+A long query has more information that may hint towards the best semi-global
+alignment position in a reference but all optimal algorithms are strictly slower
+for longer query length.
+\end{paradox}
+
+Unlike the practical approximate algorithms, the existing optimal algorithms do
+not exploit this information. As a result, all state-of-the-art optimal
+algorithms take longer to map a longer query to a reference. 
+
+\begin{gap}
+The runtime of global alignment scales near-quadratically in general, but
+linearly when there there are no errors. It is unknown how the error rate
+influences the expected runtime.
+\end{gap}
+
+Global alignment is still considered an open problem since it is still not known
+whether exact pairwise alignment is possible in linear time for related
 sequences~\citep{medvedev2022theoretical}. 
 
-All optimal algorithms have to iterate over the whole reference for each query.
-We should be able to optimize this by precomputation.
-
-Observation 1: A long query has more information that may hint towards the best
-alignment place. Unlike the practical approximate algorithms, the existing optimal
-algorithm do not exploit this information. As a result, all state-of-the-art
-optimal algorithms take longer to map a longer query to a reference. 
-
-Observation 2: The input is linear, the output is linear, the best case is
-linear. On the other hand all optimal solutions are near-quadratic and the
-theoretical limit is near-quadratic. To spead up beyond this near-quadratic
-barrier, current practical algorithms break the optimality guarantee hoping that
-the produced alignments are accurate enough. 
+On the other hand all optimal solutions are near-quadratic and the theoretical
+limit is near-quadratic. To spead up beyond this near-quadratic barrier, current
+practical algorithms break the optimality guarantee hoping that the produced
+alignments are accurate enough. 
 
 %But it is possible to be fast and accurate in the same time?
 We take another approach: we preserve the optimality guarantee and use
