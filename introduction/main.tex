@@ -6,19 +6,20 @@
 
 \chapter{Introduction} \label{ch:introduction}
 
-The most basic operations one can do with texts is to modify them letter by
-letter, to compare two texts, and to search texts in a big corpus. This thesis
-considers comparison and approximate search applied to genetic ``texts'', also
-known as \emph{sequence alignment}. Sequence alignment has been a core problem
-in computational biology for the last half-century. We know that in the general
-case, it is not solvable for strictly subquadratic time but the approximate
-algorithms that are used in practice seem to be scale much better. We employ  
-the \A informed search algorithm in an attempt to design an optimal algorithm
-that scales subquadratically for related sequences.
+Two basic operations one can do with two texts is to compare them, and to search
+for one in the other. This thesis considers comparison and approximate search
+applied to genetic ``texts'', also known as \emph{sequence alignment}. Sequence
+alignment has been a core problem in computational biology for the last
+half-century with a multitude of applications. In its general case, it is not
+solvable for strictly subquadratic time which is often prohibitively slow.
+Faster approximate algorithms are instead used in practice. We employ  
+the \A informed search algorithm in order to design an optimal algorithm that
+scales subquadratically for related sequences.
 
+\input{\dir/previous-work}
 \input{\dir/motivation}
 \input{\dir/problem}
-\input{\dir/previous-work}
-\input{\dir/optimal}
-\input{\dir/prelims}
 \input{\dir/contributions}
+
+% other section?
+\input{\dir/prelims}
