@@ -1,4 +1,5 @@
-\chapter{Preliminaries}
+\section*{Preliminaries}
+\addcontentsline{toc}{section}{\protect\numberline{}{Preliminaries}}
 
 % paper:global
 \paragraph{Dynamic programming} The standard approach to sequence alignment is
@@ -13,7 +14,7 @@ This well-known algorithm is implemented in modern aligners  like
 Improving the performance of these quadratic algorithms has been a central goal
 in later works.
 
-\subsection{Alignment as shortest path}
+\subsection*{Alignment as shortest path}
 
 Alignment is equivalent to shortest path.
 
@@ -34,7 +35,7 @@ equivalent to \A using a heuristic that is always $0$, and that both algorithms
 require non-negative edge costs. Our variant of the \A algorithm is provided
 in~\cref{GLOBALsec:astar}.
 
-\subsection{\A algorithm and its heuristic function} \label{sec:astar}
+\subsection*{\A algorithm and its heuristic function} \label{sec:astar}
 
 % paper: trie
 %\subsection{Background: General \A algorithm} \label{TRIEsubsec:general-astar}
@@ -55,7 +56,7 @@ with the set of sources $S$. Then, \A iteratively \emph{expands} the explored
 state with lowest estimated cost by exploring all its neighbors, until it finds
 a target. Here, the cost for node $u$ is estimated by the distance from source, called $g(u)$, plus the estimate from the heuristic $h(u)$.
 
-\paragraph{Heuristic Function}
+\paragraph{Heuristic function}
 The heuristic function $h(u)$ estimates the
 cost $h^*(u)$ of a shortest path in $G$ from $u$ to a target $t \in T$. Intuitively, a
 good heuristic correlates well with the distance from $u$ to $t$.

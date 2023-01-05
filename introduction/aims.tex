@@ -1,4 +1,14 @@
-\section{Research aims}
+\section*{Motivation and research aims}
+\addcontentsline{toc}{section}{\protect\numberline{}{Motivation and research aims}}
+
+It may be surprising that a novel approach to alignment appears 60 years after
+the problem was first efficiently solved. Nevertheless, 
+
+Here we speculate about the possible
+reasons for it: focus on new technology and data, not believing that optimal
+solutions could be efficient.
+
+%combining several existing ideas new (\A, trie, seeds)
 
 All optimal algorithms for semi-global alignment have to iterate over the whole
 reference for each query. We should be able to optimize this by precomputation.
@@ -193,14 +203,14 @@ scaling on inputs where the edit distance is linear in n” (Medvedev, 2022a).
 \begin{paradox}
 A long query has more information that may hint towards the best semi-global
 alignment position in a reference but all optimal algorithms are strictly slower
-for longer quknowledge gap
+for longer sequences.
 \end{paradox}
 
 Unlike the practical approximate algorithms, the existing optimal algorithms do
 not exploit this information. As a result, all state-of-the-art optimal
 algorithms take longer to map a longer query to a reference. 
 
-\section{Feasibility of optimal alignment}
+\subsection*{Feasibility of optimal alignment}
 
 There is a fundamental trade-off between perforamance and optimality guarantees:
 an algorithm which is allowed to be suboptimal may exploit the lesser

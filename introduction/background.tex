@@ -1,11 +1,5 @@
-\section{Background}
-
-It may come as a surprise that another approach to such a basic problem as
-alignment appears 60 years after the problem was first efficiently solved. Here
-we speculate about the possible reasons for it: focus on new technology and
-data, not believing that optimal solutions could be efficient.
-
-%combining several existing ideas new (\A, trie, seeds)
+\section*{Background}
+\addcontentsline{toc}{section}{\protect\numberline{}{Background}}
 
 Most of the techniques this thesis builds upon have been known for many decades
 and have also been heavily motivated by applications in molecular biology. The
@@ -28,20 +22,22 @@ informatics since~\citeyear{de1959file}~\cite{de1959file}.
 An important factor for the development of the sequencing algorithms is the
 technological advancement~\cite{alser2021technology}. One possible reason is the
 combination of massive new data and advancement in computation hardware allowing
-for various kinds of parallelization. Thus the advancements with bit-parallel
-algorithms (CITE Myears, Mikko).
+for various kinds of parallelization.
+%Thus the advancements with bit-parallel algorithms (CITE Myears, Mikko).
 
-A major importance for our apporach is the usage of seeds to build good
-heuristic functions that drive the \A search. Seeds are cousins of kmers which
-are popular in sequence alignment since de Bruijn Graphs were applied for genome
-assembly. Further kmers are cousins of ngrams which are popular in computational
+A major importance for our apporach is to borrow the concept of seeds but apply
+it in a novel way: instead of finding alignments around seed matches, we use the
+lack of matches to penalize alignments by desigining the \emph{seed heuristic}
+that drive the \A search. Seeds are cousins of kmers which are popular in
+sequence alignment since de Bruijn Graphs were applied for genome assembly.
+Further kmers are cousins of ngrams which are popular in computational
 linguistics since .
 
 % parallelization
 % sketches
 
 % Optimal DP-based approaches
-\paragraph{Optimal Alignment}
+\paragraph{Optimal alignment}
 Current optimal alignment algorithms reach the impractical $\Oh(nm)$ runtime
 that has been shown to be a lower bound for the worst-case edit distance
 computation~\cite{backurs2015edit}. In this light, approaches for improving the
@@ -61,3 +57,7 @@ variation graphs~\cite{garrison_variation_2018}. A compromise often made when
 aligning sequences to cyclic graphs using algorithms reliant on directed acyclic
 graphs involves the computationally expensive ``DAG-ification'' of graph
 regions~\cite{kavya_sequence_2019,garrison_variation_2018}.
+
+\paragraph{Known limitations}
+
+Quadratic optimal for semi-global
