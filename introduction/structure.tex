@@ -1,0 +1,26 @@
+\section*{Structure}
+\addcontentsline{toc}{section}{\protect\numberline{}{Structure}}
+
+\begin{enumerate}
+	\item In~\cref{ch:trie} we presented the tool \astarix which applies the \A
+algorithm to find optimal alignments, based on a domain-specific heuristic and
+enhanced by multiple algorithmic optimizations. Importantly, our approach allows
+for both cyclic and acyclic graphs including variation and de Bruijn graphs. We
+demonstrated that \astarix scales exponentially better than \dijkstra with
+increasing (but small) number of errors in the reads. Moreover, for short reads,
+both \astarix and \dijkstra scale better and outperform current state-of-the-art
+optimal aligners with increasing genome graph size. Nevertheless, scaling
+optimal alignment of long reads on big graphs remained an open problem.
+	\item In~\cref{ch:seed} we upgrade \astarix with a novel \seedh which guides
+the search by preferring crumbs on nodes that lead towards optimal alignments
+even for long reads.
+	\item In~\cref{ch:global} we resolve the third major bottleneck -- handling
+high error rates. We presented an algorithm with an implementation in \astarpa
+solving pairwise alignment between two sequences. The algorithm is based on \A
+with a \sh, inexact matching, match chaining, and match pruning, which we proved
+to find an exact solution according to edit distance. For random sequences with
+up to $15\%$ uniform errors, the runtime of \astarpa scales near-linearly to
+very long sequences ($10^7\bp$) and outperforms other exact aligners. We
+demonstrate that on real ONT reads from a human genome, \astarpa is faster than
+other aligners on only a limited portion of the reads.
+\end{enumerate}
