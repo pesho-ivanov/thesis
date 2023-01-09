@@ -2,6 +2,26 @@
 
 \section{Overview}
 
+\paragraph{Methods}
+We solve exact global pairwise alignment with respect to edit distance by using
+the \A shortest path algorithm on the alignment graph. In order to efficiently
+align long sequences with high error rate, we extend the \emph{seed~heuristic}
+with \emph{match~chaining}, \emph{inexact~matches}, and the novel
+\emph{match~pruning} optimization. We prove the correctness of our algorithm and
+provide an efficient implementation in \astarpa.
+
+\paragraph{Results}
+We evaluate \astarpa on synthetic data (random sequences of length $n$ with
+uniform errors with rate $e$) and on real long ONT reads of human data. On the
+synthetic data with $e{=}5\%$ and $n{\leq}10^7\bp$, \astarpa exhibits a
+near-linear empirical runtime scaling of $n^{1.08}$ and achieves ${>}250\times$
+speedup compared to the leading exact aligners \edlib and \wfa. Even for a high
+error rate of $e{=}15\%$, the empirical scaling is $n^{1.28}$ for
+$n{\leq}10^7\bp$. On two real datasets, \astarpa is the fastest aligner for
+$58\%$ of the alignments when the reads contain only sequencing errors, and for
+$17\%$ of the alignments when the reads also include biological variation.
+
+\paragraph{Contributions}
 Our algorithm exactly solves global pairwise alignment for edit distance costs,
 also known as \emph{Levenshtein distance}~\citep{levenshtein1966binary}. It uses
 the \A algorithm to find a shortest path in the alignment graph.

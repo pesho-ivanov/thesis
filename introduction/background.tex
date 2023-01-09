@@ -25,14 +25,6 @@ combination of massive new data and advancement in computation hardware allowing
 for various kinds of parallelization.
 %Thus the advancements with bit-parallel algorithms (CITE Myears, Mikko).
 
-A major importance for our apporach is to borrow the concept of seeds but apply
-it in a novel way: instead of finding alignments around seed matches, we use the
-lack of matches to penalize alignments by desigining the \emph{seed heuristic}
-that drive the \A search. Seeds are cousins of kmers which are popular in
-sequence alignment since de Bruijn Graphs were applied for genome assembly.
-Further kmers are cousins of ngrams which are popular in computational
-linguistics since .
-
 % parallelization
 % sketches
 
@@ -57,6 +49,19 @@ variation graphs~\cite{garrison_variation_2018}. A compromise often made when
 aligning sequences to cyclic graphs using algorithms reliant on directed acyclic
 graphs involves the computationally expensive ``DAG-ification'' of graph
 regions~\cite{kavya_sequence_2019,garrison_variation_2018}.
+
+\paragraph{Seed-and-Extend}
+Since optimal alignment is often intractable, many aligners use heuristics, most
+commonly the \emph{seed-and-extend}
+paradigm~\cite{altschul_basic_1990,langmead_fast_2012,li_fast_2009}. In this
+approach, alignment initiation sites (\emph{seeds}) are determined, which are
+then \emph{extended} to form the \emph{alignments} of the query sequence. The
+fundamental issue with this approach, however, is that the seeding and extension
+phases are mostly decoupled during alignment. Thus, an algorithm with a provably
+optimal extension phase may not result in optimal alignments due to the
+selection of a suboptimal seed in the first phase. In cases of high sequence
+variability, the seeding phase may even fail to find an appropriate seed from
+which to extend.
 
 \paragraph{Known limitations}
 
