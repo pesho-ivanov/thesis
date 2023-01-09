@@ -1,11 +1,34 @@
 \section*{Background}
 \addcontentsline{toc}{section}{\protect\numberline{}{Background}}
 
-Most of the techniques this thesis builds upon have been known for many decades
-and have also been heavily motivated by applications in molecular biology. The
-global alignment problem exists since
-\citeyear{vintsyuk1968speech}~\cite{vintsyuk1968speech,needleman1970general}.
+% intuitive problem statements
+\paragraph{Problems} In this thesis we consider the problem of pairwise sequence
+alignment: given two sequences, one has to be aligned to the other in a way that
+minimizes the aligning differences. More specifically, we minimize the number of
+substitutions, insertions and deletions of single letters that have to be
+applied to one of the sequences in order to perfectly align to the other. As
+shown on~\cref{fig:alignment-types}, there are multiple alignment types but in
+this thesis we limit our attention to global and semi-global alignment only. If
+both sequences have to be aligned end to end, we call it a \emph{global
+alignment} and the number of differences is \emph{edit distance}. If instead we
+search for an alignment of the first sequence somewhere within the second (so we
+are free to skip the beginning and the end of the second sequence), such an
+alignment is called \emph{semi-global}. 
 
+%\begin{floatingfigure}[l]{0.5\textwidth}
+\begin{figure}[t]
+    \includegraphics[width=0.5\textwidth]{alignment-types}
+	\caption[Alignment types]{Alignment types.}
+    \label{fig:alignment-types}
+\end{figure}
+
+\paragraph{Applications} Commonly in bioinformatics, the high-throughput
+sequencing data consist of a great number of genomic sequences that have to be 
+
+% first effiecient solutions
+\paragraph{First solutions} The global alignment problem has been efficiently
+solved for a first time around
+\citeyear{vintsyuk1968speech}~\cite{vintsyuk1968speech,needleman1970general}.
 The problem of approximate/fuzzy string search (semi-global alignment of one
 query) has been efficiently approached a decade later, in
 \citeyear{sellers1980theory}~\cite{sellers1980theory,smith1981identification}.
