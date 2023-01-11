@@ -1,19 +1,46 @@
+% intuitive
 \section*{Background}
 \addcontentsline{toc}{section}{\protect\numberline{}{Background}}
 
-% intuitive problem statements
-\paragraph{Problems} In this thesis we consider the problem of pairwise sequence
-alignment: given two sequences, one has to be aligned to the other in a way that
-minimizes the aligning differences. More specifically, we minimize the number of
-substitutions, insertions and deletions of single letters that have to be
-applied to one of the sequences in order to perfectly align to the other. As
-shown on~\cref{fig:alignment-types}, there are multiple alignment types but in
-this thesis we limit our attention to global and semi-global alignment only. If
-both sequences have to be aligned end to end, we call it a \emph{global
-alignment} and the number of differences is \emph{edit distance}. If instead we
-search for an alignment of the first sequence somewhere within the second (so we
-are free to skip the beginning and the end of the second sequence), such an
-alignment is called \emph{semi-global}. 
+\paragraph{Context}
+% domain
+The linear structure of DNA\citep{watson1953structure} made possible the
+invention of sequencing technologies that enabled the analysis of genetic data.
+Much of it is organized as linear sequences, similar to human text and speech.
+specifically, genetic data. Genetic data Much of the genetic data is This thesis
+considers two basic related tasks on ``texts'': comparison and search. Commonly
+in bioinformatics, the high-throughput sequencing data consist of a great number
+of genomic sequences that have to be In the context of molecular biology, they
+are generally known as \emph{sequence alignment}.
+
+Sequence alignment has been a core problem in
+computational biology for the last half-century with a multitude of
+applications. In its general case, it is not solvable for strictly subquadratic
+time which is often prohibitively slow. Faster approximate algorithms are
+instead used in practice. We employ  
+the \A informed search algorithm in order to design an optimal algorithm that
+scales subquadratically for related sequences.
+
+\paragraph{Problem}
+% problem statements
+In this thesis we consider the problem of pairwise sequence alignment in the
+context of genetic data: given two DNA sequences, one has to be aligned to the
+other in a way that minimizes the aligning differences. More specifically, we
+minimize the number of edits (substitutions, insertions and deletions) of single
+letters that have to be applied to one of the sequences in order to perfectly
+align to the other.
+
+% alignment types
+Depending on the goal, two sequences can be aligned in multiple ways
+(\cref{fig:alignment-types}). In this thesis we focus on global and semi-global
+alignment types only. If both sequences have to be aligned end to end, we look
+for a \emph{global alignment} whose minimal number of edits is known as
+\emph{edit distance}. If we instead search for the closest occurance of the
+first sequence within the second, so we start and end the alignment at any
+position in the second sequence, finding a \emph{semi-global} alignment.
+
+% graph references for semi-global
+
 
 %\begin{floatingfigure}[l]{0.5\textwidth}
 \begin{figure}[t]
@@ -22,8 +49,7 @@ alignment is called \emph{semi-global}.
     \label{fig:alignment-types}
 \end{figure}
 
-\paragraph{Applications} Commonly in bioinformatics, the high-throughput
-sequencing data consist of a great number of genomic sequences that have to be 
+\paragraph{Applications}
 
 % first effiecient solutions
 \paragraph{First solutions} The global alignment problem has been efficiently
