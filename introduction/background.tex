@@ -2,29 +2,27 @@
 \section*{Background}
 \addcontentsline{toc}{section}{\protect\numberline{}{Background}}
 
-\paragraph{Context}
+%\paragraph{Context}
 % domain
-The linear structure of DNA\citep{watson1953structure} made possible the
-invention of sequencing technologies that enabled the analysis of genetic data.
-Much of it is organized as linear sequences, similar to human text and speech.
-specifically, genetic data. Genetic data Much of the genetic data is This thesis
-considers two basic related tasks on ``texts'': comparison and search. Commonly
-in bioinformatics, the high-throughput sequencing data consist of a great number
-of genomic sequences that have to be In the context of molecular biology, they
-are generally known as \emph{sequence alignment}.
+The discovery of the DNA structure\citep{watson1953structure} was followed by
+developing sequencing technologies that enabled acquiring genomic data in a
+linear format, similar to human text and speech. With the development of
+high-throughput sequencing technologies, the amount and complexity of the
+available genomic data bacame not only intractable by hand, but also challenging
+for computer analysis. In this thesis we propose a novel approach to comparing
+and searching with a major application in genomics. 
 
-Sequence alignment has been a core problem in
-computational biology for the last half-century with a multitude of
-applications. In its general case, it is not solvable for strictly subquadratic
-time which is often prohibitively slow. Faster approximate algorithms are
-instead used in practice. We employ  
+Sequence alignment has been a core problem in computational biology for the last
+half-century with a multitude of applications. In its general case, it is not
+solvable for strictly subquadratic time which is often prohibitively slow.
+Faster approximate algorithms are instead used in practice. We employ  
 the \A informed search algorithm in order to design an optimal algorithm that
 scales subquadratically for related sequences.
 
 \paragraph{Problem}
 % problem statements
 In this thesis we consider the problem of pairwise sequence alignment in the
-context of genetic data: given two DNA sequences, one has to be aligned to the
+context of genomic data: given two DNA sequences, one has to be aligned to the
 other in a way that minimizes the aligning differences. More specifically, we
 minimize the number of edits (substitutions, insertions and deletions) of single
 letters that have to be applied to one of the sequences in order to perfectly
