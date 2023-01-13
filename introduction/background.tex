@@ -17,10 +17,14 @@ superior performance on genomic data (including metagenomic data).
 \paragraph{Alignment problem}
 % problem statements
 We consider the problem of pairwise sequence alignment in the context of genomic
-data: given two DNA sequences, one has to be aligned to the other in a way that
-minimizes the aligning differences. More specifically, we minimize the number of
-edits (substitutions, insertions and deletions) of single letters that have to
-be applied to one of the sequences in order to perfectly align to the other.
+data: given two DNA sequences, one has to be aligned to the other. Since there
+are both biological differences and technical errors in the data, we are mainly
+interested in such alignment that represents the simplest explaination for all
+differences. Such a the  minimal number of elementary edit opeartions, which is
+consistent with both the maximum parsomony principle, . More specifically, we
+minimize the number of edits (substitutions, insertions and deletions) of single
+letters that have to be applied to one of the sequences in order to perfectly
+align to the other.
 
 % alignment types
 \begin{figure}[t]  %\begin{floatingfigure}[l]{0.5\textwidth}
@@ -45,29 +49,18 @@ types of analysis. To figure out which part of the reference each sequence most
 probably originates from, it should first be semi-globally aligned to the
 reference.
 
-\paragraph{Metagenomics}
-% graph references for semi-global
-The development of high-throughput sequencing technologies lead to higher
-amounts of cheaper data. The abundance of data enabled the assembly of richer
-references that capture biological variation from different individuals and
-species. In particular, the last decade saw the increased development of graph
-references that compactly represent a whole set of genomes (a metagenome) as
-paths. Semi-global alignment of de novo sequences on such graphs produces more
-accurate alignments than on linear references.
-
-\paragraph{Applications}
-
+\paragraph{Dynamic programming}
 % first effiecient solutions
-\paragraph{History} The global alignment problem has been efficiently solved for
-a first time around
+The global alignment problem has been efficiently solved for a first time after
 \citeyear{vintsyuk1968speech}~\cite{vintsyuk1968speech,needleman1970general}.
+
 The problem of approximate/fuzzy string search (semi-global alignment of one
 query) has been efficiently approached a decade later, in
 \citeyear{sellers1980theory}~\cite{sellers1980theory,smith1981identification}.
 more recent and additionally to the issues with handling errors, a new dimension
 of complexity appears by the need to locate the position in the reference. The
-problem of searching for multiple sequencing has been approached
-since\citeyear{pearson1988improved}~\cite{pearson1988improved} and became
+problem of searching for multiple query sequences has been approached
+since~\citeyear{pearson1988improved}~\cite{pearson1988improved} and has become
 central to read alignment of high-throughput sequencing. The specifics with
 semi-global alignment requires a trie-like index which is well-used in the
 fiels, and known since
@@ -79,6 +72,18 @@ technological advancement~\cite{alser2021technology}. One possible reason is the
 combination of massive new data and advancement in computation hardware allowing
 for various kinds of parallelization.
 %Thus the advancements with bit-parallel algorithms (CITE Myears, Mikko).
+
+\paragraph{Metagenomics}
+% graph references for semi-global
+The development of high-throughput sequencing technologies lead to higher
+amounts of cheaper data. The abundance of data enabled the assembly of richer
+references that capture biological variation from different individuals and
+species. In particular, the last decade saw the increased development of graph
+references that compactly represent a whole set of genomes (a metagenome) as
+paths. Semi-global alignment of de novo sequences on such graphs produces more
+accurate alignments than on linear references.
+
+\paragraph{Applications}
 
 % parallelization
 % sketches
