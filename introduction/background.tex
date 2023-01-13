@@ -7,51 +7,59 @@
 The discovery of the DNA structure\citep{watson1953structure} was followed by
 developing sequencing technologies that enabled acquiring genomic data in a
 linear format, similar to human text and speech. With the development of
-high-throughput sequencing technologies, the amount and complexity of the
-available genomic data bacame not only intractable by hand, but also challenging
-for computer analysis. In this thesis we propose a novel approach to comparing
-and searching with a major application in genomics. 
-
+sequencing technologies, the amount and complexity of the available genomic data
+bacame not only intractable by hand, but also challenging for computer analysis.
 Sequence alignment has been a core problem in computational biology for the last
-half-century with a multitude of applications. In its general case, it is not
-solvable for strictly subquadratic time which is often prohibitively slow.
-Faster approximate algorithms are instead used in practice. We employ  
-the \A informed search algorithm in order to design an optimal algorithm that
-scales subquadratically for related sequences.
+half-century with a multitude of applications. In this thesis I propose a novel
+principled approach to sequence alignment and search, and demonstrate its
+superior performance on genomic data (including metagenomic data).
 
-\paragraph{Problem}
+\paragraph{Alignment problem}
 % problem statements
-In this thesis we consider the problem of pairwise sequence alignment in the
-context of genomic data: given two DNA sequences, one has to be aligned to the
-other in a way that minimizes the aligning differences. More specifically, we
-minimize the number of edits (substitutions, insertions and deletions) of single
-letters that have to be applied to one of the sequences in order to perfectly
-align to the other.
+We consider the problem of pairwise sequence alignment in the context of genomic
+data: given two DNA sequences, one has to be aligned to the other in a way that
+minimizes the aligning differences. More specifically, we minimize the number of
+edits (substitutions, insertions and deletions) of single letters that have to
+be applied to one of the sequences in order to perfectly align to the other.
 
 % alignment types
-Depending on the goal, two sequences can be aligned in multiple ways
-(\cref{fig:alignment-types}). In this thesis we focus on global and semi-global
-alignment types only. If both sequences have to be aligned end to end, we look
-for a \emph{global alignment} whose minimal number of edits is known as
-\emph{edit distance}. If we instead search for the closest occurance of the
-first sequence within the second, so we start and end the alignment at any
-position in the second sequence, finding a \emph{semi-global} alignment.
-
-% graph references for semi-global
-
-
-%\begin{floatingfigure}[l]{0.5\textwidth}
-\begin{figure}[t]
+\begin{figure}[t]  %\begin{floatingfigure}[l]{0.5\textwidth}
     \includegraphics[width=0.5\textwidth]{alignment-types}
 	\caption[Alignment types]{Alignment types.}
     \label{fig:alignment-types}
 \end{figure}
+Two sequences can be aligned in multiple ways (\cref{fig:alignment-types}). In
+this thesis we focus on global and semi-global alignment types only. If both
+sequences have to be aligned end to end, we look for a \emph{global alignment}
+whose minimal number of edits is known as \emph{edit distance}. If we instead
+search for the closest occurance of a query sequence within a reference
+sequence, a \emph{semi-global} alignment allows for the query to start aligning
+from any position of the reference.
+
+\paragraph{Sequencing}
+Genomic (DNA, RNA) sequencing is a technology that takes genetic material and
+produces a data file with a set of sequences. Each sequence from a new
+biological sample can be compared to a reference genome (if such is available)
+in order to identify mutations, quantify expression per gene, and many other
+types of analysis. To figure out which part of the reference each sequence most
+probably originates from, it should first be semi-globally aligned to the
+reference.
+
+\paragraph{Metagenomics}
+% graph references for semi-global
+The development of high-throughput sequencing technologies lead to higher
+amounts of cheaper data. The abundance of data enabled the assembly of richer
+references that capture biological variation from different individuals and
+species. In particular, the last decade saw the increased development of graph
+references that compactly represent a whole set of genomes (a metagenome) as
+paths. Semi-global alignment of de novo sequences on such graphs produces more
+accurate alignments than on linear references.
 
 \paragraph{Applications}
 
 % first effiecient solutions
-\paragraph{First solutions} The global alignment problem has been efficiently
-solved for a first time around
+\paragraph{History} The global alignment problem has been efficiently solved for
+a first time around
 \citeyear{vintsyuk1968speech}~\cite{vintsyuk1968speech,needleman1970general}.
 The problem of approximate/fuzzy string search (semi-global alignment of one
 query) has been efficiently approached a decade later, in
@@ -113,3 +121,8 @@ which to extend.
 \paragraph{Known limitations}
 
 Quadratic optimal for semi-global
+
+In its general case, it is not solvable for strictly subquadratic time which is
+often prohibitively slow. Faster approximate algorithms are instead used in
+practice. We employ the \A informed search algorithm in order to design an
+optimal algorithm that scales subquadratically for related sequences.
