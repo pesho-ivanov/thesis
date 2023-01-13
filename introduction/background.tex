@@ -17,14 +17,13 @@ superior performance on genomic data (including metagenomic data).
 \paragraph{Alignment problem}
 % problem statements
 We consider the problem of pairwise sequence alignment in the context of genomic
-data: given two DNA sequences, one has to be aligned to the other. Since there
-are both biological differences and technical errors in the data, we are mainly
-interested in such alignment that represents the simplest explaination for all
-differences. Such a the  minimal number of elementary edit opeartions, which is
-consistent with both the maximum parsomony principle, . More specifically, we
-minimize the number of edits (substitutions, insertions and deletions) of single
-letters that have to be applied to one of the sequences in order to perfectly
-align to the other.
+data: given two DNA sequences, one has to be aligned to the other. It would have
+been a rather trivial task if the alignment would be perfect. Nevertheless, the
+real data contains both biological variation and technical errors resulting from
+evolution and the sequencing process. A common intuitive and robust assumption
+is that an alignment with a minimal number of single-letter edits
+(substitutions, insertions and deletions) is the most plausable explainationo of
+the divergence of both sequences from an unknown common ancestor.
 
 % alignment types
 \begin{figure}[t]  %\begin{floatingfigure}[l]{0.5\textwidth}
@@ -36,9 +35,10 @@ Two sequences can be aligned in multiple ways (\cref{fig:alignment-types}). In
 this thesis we focus on global and semi-global alignment types only. If both
 sequences have to be aligned end to end, we look for a \emph{global alignment}
 whose minimal number of edits is known as \emph{edit distance}. If we instead
-search for the closest occurance of a query sequence within a reference
-sequence, a \emph{semi-global} alignment allows for the query to start aligning
-from any position of the reference.
+search for an occurance of a query sequence within a reference sequence, we
+allow the alignment to start and end at any reference locations in a
+\emph{semi-global} alignment (also called approximate/fuzzy string search
+outside computational biology).
 
 \paragraph{Sequencing}
 Genomic (DNA, RNA) sequencing is a technology that takes genetic material and
@@ -50,22 +50,30 @@ probably originates from, it should first be semi-globally aligned to the
 reference.
 
 \paragraph{Dynamic programming}
-% first effiecient solutions
-The global alignment problem has been efficiently solved for a first time after
-\citeyear{vintsyuk1968speech}~\cite{vintsyuk1968speech,needleman1970general}.
+The first efficient solution for global alignment, known as the Needleman-Wunsch
+algorithm, got developed around~\citeyear{vintsyuk1968speech}~
+\cite{vintsyuk1968speech,needleman1970general}. This algorithm is based on the
+then newly-developed dynamic programming (DP) technique~\cite{bellman1954theory}
+of splitting a task into overlapping subtasks and reusing their solutions. Thus,
+combining optimal alignments of prefixes of the sequences, allows to choose an
+optimal solution for only quadratic time with the sequences length, despite of
+the exponential number of candidates.
 
-The problem of approximate/fuzzy string search (semi-global alignment of one
-query) has been efficiently approached a decade later, in
-\citeyear{sellers1980theory}~\cite{sellers1980theory,smith1981identification}.
-more recent and additionally to the issues with handling errors, a new dimension
-of complexity appears by the need to locate the position in the reference. The
-problem of searching for multiple query sequences has been approached
-since~\citeyear{pearson1988improved}~\cite{pearson1988improved} and has become
-central to read alignment of high-throughput sequencing. The specifics with
-semi-global alignment requires a trie-like index which is well-used in the
-fiels, and known since
-\citeyear{thue1912gegenseitige}~\cite{thue1912gegenseitige} and used in
-informatics since~\citeyear{de1959file}~\cite{de1959file}.
+Since semi-global alignment requires not only aligning but also determining a
+starting position in the reference, an application of the same DP approach came
+a decade later~\cite{sellers1980theory,smith1981identification} and took
+$\Oh(nm)$ to align a single query of length $n$ to a reference of length $m$. It
+is highly redundant to explore the whole reference for each alignment, so
+various data structures were suggested that can be precomputed to index the
+reference, and then reuse this index to quickly align multiple query sequences
+~\citeyear{pearson1988improved}~\cite{pearson1988improved} and has become
+central to read alignment of high-throughput sequencing.
+
+Considering the subtasks of aligning one prefix to another prefix remains a main
+the domain in which most appoaches to optimal alignment work, regardless of
+using DP.
+
+\paragraph{Optimal alignment}
 
 An important factor for the development of the sequencing algorithms is the
 technological advancement~\cite{alser2021technology}. One possible reason is the
