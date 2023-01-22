@@ -8,6 +8,33 @@ sequence and a (possibly cyclic) walk in the graph. Related alignment problems
 have already been formulated as graph shortest path
 problems~\cite{jain_complexity_2019}.
 
+\paragraph{Alignment problem}
+% problem statements
+We consider the problem of pairwise sequence alignment in the context of genomic
+data: given two DNA sequences, one has to be aligned to the other. It would have
+been a rather trivial task if the alignment would be perfect. Nevertheless, the
+real data contains both biological variation and technical errors resulting from
+evolution and the sequencing process. A common intuitive and robust assumption
+is that an alignment with a minimal number of single-letter edits
+(substitutions, insertions and deletions) is the most plausable explainationo of
+the divergence of both sequences from an unknown common ancestor.
+
+% alignment types
+\begin{figure}[t]  %\begin{floatingfigure}[l]{0.5\textwidth}
+    \includegraphics[width=0.5\textwidth]{alignment-types}
+	\caption[Alignment types]{Alignment types.}
+    \label{fig:alignment-types}
+\end{figure}
+\paragraph{Global and semi-global alignment}
+Two sequences can be aligned in multiple ways (\cref{fig:alignment-types}). In
+this thesis we focus on global and semi-global alignment types only. If both
+sequences have to be aligned end to end, we look for a \emph{global alignment}
+whose minimal number of edits is known as \emph{edit distance}. If we instead
+search for an occurance of a query sequence within a reference sequence, we
+allow the alignment to start and end at any reference locations in a
+\emph{semi-global} alignment (also called approximate/fuzzy string search
+outside computational biology).
+
 %\paragraph{Problem statement}
 %\paragraph{Problem domain}
 

@@ -13,9 +13,10 @@ state-of-the-art optimal aligners with increasing genome graph size.
 Nevertheless, scaling optimal alignment of long reads on big graphs remained an
 open problem.
 
-In~\cref{ch:seed} we upgrade \astarix with a novel \seedh which guides the
+In~\cref{ch:seed} we upgrade \astarix with a novel \seedh which guides the \A
 search by preferring crumbs on nodes that lead towards optimal alignments even
-for long reads.
+for long reads. This approach enables the scaling of semi-global alignment with
+read length.
 
 In~\cref{ch:global} we resolve the third major bottleneck -- handling high error
 rates. We presented an algorithm with an implementation in \astarpa solving

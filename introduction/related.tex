@@ -1,0 +1,69 @@
+\section*{Related work}
+\addcontentsline{toc}{section}{\protect\numberline{}{Related work}}
+
+\paragraph{Dynamic programming (DP) for global alignment}
+The first efficient solution for global alignment, known as the Needleman-Wunsch
+algorithm, got developed around~\citeyear{vintsyuk1968speech}~
+\cite{vintsyuk1968speech,needleman1970general}. This algorithm is based on the
+novel dynamic programming technique~\cite{bellman1954theory} of splitting a task
+into overlapping subtasks (or \emph{states}) which can be solved once and then
+reused. Each state corresponds to aligning a prefix of the first sequence to a
+prefix of the second sequence. Each subtask can be solved by reducing it to
+already solved alignments of shorter prefixes, and extending them by a last
+operation of matching or mismatching the last letters from the prefixes,
+inserting one, or inserting the other (equivalent to deleting from the first
+sequence). Each subtask is solved for $\Oh(1)$ so the quadratic number of prefix
+pairs is solved for quadratic overall time, even though the number of possible
+alignments is exponential.
+
+\paragraph{DP for semi-global alignment}
+Semi-global alignment is a related problem to global alignment but in addition
+to the need to align letter-to-letter, it also requires determining a starting
+position in the reference. This task has also been efficiently solved using a
+similar DP approach~\cite{sellers1980theory,smith1981identification} taking
+$\Oh(nm)$ to align a single query of length $n$ to a reference of length $m$. It
+is highly redundant to explore the whole reference for each alignment, so
+various data structures were suggested that can be precomputed to index the
+reference, and then reuse this index to quickly align multiple query sequences
+~\citeyear{pearson1988improved}~\cite{pearson1988improved} and has become
+central to read alignment of high-throughput sequencing.
+
+% parallelization
+% sketches
+
+\paragraph{Suboptimal alignment}
+
+% Optimal DP-based approaches
+\paragraph{Optimal alignment}
+Current optimal alignment algorithms reach the impractical $\Oh(nm)$ runtime
+that has been shown to be a lower bound for the worst-case edit distance
+computation~\cite{backurs2015edit}. In this light, approaches for improving the
+efficiency of optimal alignment have taken advantage of specialized features of
+modern CPUs to improve the practical runtime of the Smith-Waterman dynamic
+programming (DP) algorithm~\cite{smith_comparison_1981} considering all possible
+starting nodes. These use modern SIMD instructions (\eg
+\vg~\cite{garrison_variation_2018} and \pasgal~\cite{jain_accelerating_2019}) or
+reformulations of edit distance computation to allow for bit-parallel
+computations in \graphaligner \footnote{We refer as \bitparallel to to the
+bit-parallel DP algorithm implemented in \graphaligner tool
+\cite{rautiainen_bitparallel_2019}.}~\cite{rautiainen_bitparallel_2019}. Many of
+these, however, are designed only for specific types of genome graphs, such as
+{\itshape de Bruijn}
+graphs~\cite{liu_debga_2016,limasset2019toward} and
+variation graphs~\cite{garrison_variation_2018}. A compromise often made when
+aligning sequences to cyclic graphs using algorithms reliant on directed acyclic
+graphs involves the computationally expensive ``DAG-ification'' of graph
+regions~\cite{kavya_sequence_2019,garrison_variation_2018}.
+
+\paragraph{Seed-and-Extend}
+Since optimal alignment is often intractable, many aligners use heuristics, most
+commonly the \emph{seed-and-extend}
+paradigm~\cite{altschul_basic_1990,langmead_fast_2012,li_fast_2009}. In this
+approach, alignment initiation sites (\emph{seeds}) are determined, which are
+then \emph{extended} to form the \emph{alignments} of the query sequence. The
+fundamental issue with this approach, however, is that the seeding and extension
+phases are mostly decoupled during alignment. Thus, an algorithm with a provably
+optimal extension phase may not result in optimal alignments due to the
+selection of a suboptimal seed in the first phase. In cases of high sequence
+variability, the seeding phase may even fail to find an appropriate seed from
+which to extend.
