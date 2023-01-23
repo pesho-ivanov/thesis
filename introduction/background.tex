@@ -23,7 +23,7 @@ most probably originates from, it should first be semi-globally aligned to the
 reference. If the sequences of two proteins or viruses have been reconstructed,
 aligning them globally reveals the most probabale mutations between them.
 
-\paragraph{Applications}
+%\paragraph{Applications}
 
 \paragraph{Second generation (high-throughput) sequencing}
 Initially, the sequenced data has been scarce and the sequence alignment was
@@ -40,7 +40,9 @@ kinds of parallelization.
 
 \paragraph{Third generation (long-read) sequencing}
 Since the end of the 2000s, novel technologies started to appear that are
-capable of producing long sequences. The price was the high error rate, 
+capable of producing long sequences. Long sequences enabled massive applications
+but the limiting factor was the high error rate (up to $20\%$) and the higher
+price.
 
 \paragraph{Metagenomics and genome graphs}
 % graph references for semi-global
@@ -50,16 +52,3 @@ last decade saw the increased development of graph references that compactly
 represent a whole set of genomes (a metagenome) as paths. Semi-global alignment
 of de novo sequences on such graphs produces more accurate alignments than on
 linear references.
-
-\paragraph{Alignment}
-
-\paragraph{Accuracy and performance}
-
-\paragraph{Known limitations}
-
-Quadratic optimal for semi-global
-
-In its general case, it is not solvable for strictly subquadratic time which is
-often prohibitively slow. Faster approximate algorithms are instead used in
-practice. We employ the \A informed search algorithm in order to design an
-optimal algorithm that scales subquadratically for related sequences.
