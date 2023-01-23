@@ -3,18 +3,17 @@
 \addcontentsline{toc}{section}{\protect\numberline{}{Background}}
 
 %\paragraph{Context}
-% domain
-The discovery of the DNA structure\citep{watson1953structure} was followed by
-developing sequencing technologies that enabled acquiring genomic data in a
-linear format, similar to human text and speech. With the development of
-sequencing technologies, the amount and complexity of the available genomic data
-bacame not only intractable by hand, but also challenging for computer analysis.
-Sequence alignment has been a core problem in computational biology for the last
-half-century with a multitude of applications. In this thesis I propose a novel
-principled approach to sequence alignment and search, and demonstrate its
-superior performance on genomic data (including metagenomic data).
+%\paragraph{DNA discovery}
+The discovery of the DNA structure and function\citep{watson1953structure}
+seventy years ago was a revolution in our understanding of the living world.
+Subsequently, the technologies for reading (\emph{sequencing}) of genetic data
+exploited the non-branching (linear or circular) DNA structure, similar to human
+text and speech. Since then, sequence alignment has been a core problem in
+computational biology with a multitude of applications. In this thesis I propose
+a novel principled approach to this problem, and demonstrate its superior
+scaling and performance on a variaty of genomic data.
 
-\paragraph{Genomic sequencing}
+\paragraph{First generation sequencing}
 Genomic (DNA, RNA) sequencing is a technology that takes genetic material and
 produces a data file with a set of sequences. Each sequence from a new
 biological sample can be compared to a reference genome (if such is available)
@@ -24,28 +23,33 @@ most probably originates from, it should first be semi-globally aligned to the
 reference. If the sequences of two proteins or viruses have been reconstructed,
 aligning them globally reveals the most probabale mutations between them.
 
-\paragraph{High-throughput sequencing}
+\paragraph{Applications}
+
+\paragraph{Second generation (high-throughput) sequencing}
 Initially, the sequenced data has been scarce and the sequence alignment was
-done by hand. With the advance of the sequencing technology, the need for fast
-and accurate algorithms has been steadily increasing~\cite{alser2021technology}.
-One possible reason is the combination of massive new data and advancement in
-computation hardware allowing for various kinds of parallelization.
+done by hand. The development of high-throughput sequencing in the late 90s and
+2000s lead to higher amounts of cheaper data due to sequencing millions and
+billions of molecules in parallel. The amount and complexity of the available
+genomic data bacame not only intractable by hand, but also challenging for
+computer analysis.With the advance of the sequencing technology, the need for
+fast and accurate algorithms has been steadily
+increasing~\cite{alser2021technology}. One possible reason is the combination of
+massive new data and advancement in computation hardware allowing for various
+kinds of parallelization.
 %Thus the advancements with bit-parallel algorithms (CITE Myears, Mikko).
 
-\paragraph{Long-read sequencing}
-length, error rate
+\paragraph{Third generation (long-read) sequencing}
+Since the end of the 2000s, novel technologies started to appear that are
+capable of producing long sequences. The price was the high error rate, 
 
 \paragraph{Metagenomics and genome graphs}
 % graph references for semi-global
-The development of high-throughput sequencing technologies lead to higher
-amounts of cheaper data. The abundance of data enabled the assembly of richer
-references that capture biological variation from different individuals and
-species. In particular, the last decade saw the increased development of graph
-references that compactly represent a whole set of genomes (a metagenome) as
-paths. Semi-global alignment of de novo sequences on such graphs produces more
-accurate alignments than on linear references.
-
-\paragraph{Applications}
+The abundance of data enabled the assembly of richer references that capture
+biological variation from different individuals and species. In particular, the
+last decade saw the increased development of graph references that compactly
+represent a whole set of genomes (a metagenome) as paths. Semi-global alignment
+of de novo sequences on such graphs produces more accurate alignments than on
+linear references.
 
 \paragraph{Alignment}
 
