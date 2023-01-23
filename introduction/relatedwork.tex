@@ -16,6 +16,19 @@ sequence). Each subtask is solved for $\Oh(1)$ so the quadratic number of prefix
 pairs is solved for quadratic overall time, even though the number of possible
 alignments is exponential.
 
+% TODO: merge
+\paragraph{Dynamic programming} The standard approach to sequence alignment is
+by successively aligning prefixes of the first sequence to prefixes of the
+second. \citet{vintsyuk1968speech} was the first to introduce this $\Oh(nm)$
+dynamic programming (DP) approach for a comparing a pair speech signals with $n$
+and $m$ elements. Independently, it was applied to compute edit distance for
+biological
+sequences~\citep{needleman1970general,sankoff1972matching,sellers1974theory,wagner1974string}.
+This well-known algorithm is implemented in modern aligners  like
+\seqan~\citep{reinert2017seqan} and \parasail~\citep{daily2016parasail}.
+Improving the performance of these quadratic algorithms has been a central goal
+in later works.
+
 \paragraph{DP for semi-global alignment}
 Semi-global alignment is a related problem to global alignment but in addition
 to the need to align letter-to-letter, it also requires determining a starting
@@ -55,7 +68,7 @@ aligning sequences to cyclic graphs using algorithms reliant on directed acyclic
 graphs involves the computationally expensive ``DAG-ification'' of graph
 regions~\cite{kavya_sequence_2019,garrison_variation_2018}.
 
-\paragraph{Seed-and-Extend}
+\paragraph{Seed-and-extend}
 Since optimal alignment is often intractable, many aligners use heuristics, most
 commonly the \emph{seed-and-extend}
 paradigm~\cite{altschul_basic_1990,langmead_fast_2012,li_fast_2009}. In this
@@ -67,3 +80,11 @@ optimal extension phase may not result in optimal alignments due to the
 selection of a suboptimal seed in the first phase. In cases of high sequence
 variability, the seeding phase may even fail to find an appropriate seed from
 which to extend.
+
+\paragraph{\A for sequence alignment}
+There has been one attempt to apply \A for optimal pairwise
+alignment~\cite{dox2018efficient} which uses a heuristic function that accounts
+only for the length of the remaining query sequence to be aligned. However, it
+does not significantly outperform \dijkstra (in fact, it is equivalent for a
+zero matching cost).
+% TODO: MSA

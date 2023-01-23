@@ -3,22 +3,9 @@
 %\section*{Preliminaries}
 %\addcontentsline{toc}{section}{\protect\numberline{}{Preliminaries}}
 
-% paper:global
-\paragraph{Dynamic programming} The standard approach to sequence alignment is
-by successively aligning prefixes of the first sequence to prefixes of the
-second. \citet{vintsyuk1968speech} was the first to introduce this $\Oh(nm)$
-dynamic programming (DP) approach for a comparing a pair speech signals with $n$
-and $m$ elements. Independently, it was applied to compute edit distance for
-biological
-sequences~\citep{needleman1970general,sankoff1972matching,sellers1974theory,wagner1974string}.
-This well-known algorithm is implemented in modern aligners  like
-\seqan~\citep{reinert2017seqan} and \parasail~\citep{daily2016parasail}.
-Improving the performance of these quadratic algorithms has been a central goal
-in later works.
-
-\subsection*{Alignment as shortest path}
-
-Alignment is equivalent to shortest path.
+%\paragraph{Alignment as shortest path}
+%
+%Alignment is equivalent to shortest path.
 
 \paragraph{\dijkstra and \A}
 \dijkstra's algorithm \citep{dijkstra1959note} finds a shortest path from $v_s$
@@ -37,7 +24,13 @@ equivalent to \A using a heuristic that is always $0$, and that both algorithms
 require non-negative edge costs. Our variant of the \A algorithm is provided
 in~\cref{GLOBALsec:astar}.
 
-\subsection*{\A algorithm and its heuristic function} \label{sec:astar}
+At a high level, \A maintains the set of all \emph{explored} states, initialized
+with the set of sources $S$. Then, \A iteratively \emph{expands} the explored
+state with lowest estimated cost by exploring all its neighbors, until it finds
+a target. Here, the cost for node $u$ is estimated by the distance from source,
+called $g(u)$, plus the estimate from the heuristic $h(u)$.
+
+\paragraph{Heuristic functions for \A}
 
 % paper: trie
 %\subsection{Background: General \A algorithm} \label{TRIEsubsec:general-astar}
@@ -49,14 +42,6 @@ function} $h \colon V \to \mathbb{R}_{\geq 0}$ to decide which paths to explore
 first.
 %
 If $h(u) \equiv 0$, \A is equivalent to \dijkstra's algorithm.
-%
-You can refer to the \A and \dijkstra algorithms in \cref{alg:astar}, but do not
-assume knowledge of either algorithm in the following.
-%
-At a high level, \A maintains the set of all \emph{explored} states, initialized
-with the set of sources $S$. Then, \A iteratively \emph{expands} the explored
-state with lowest estimated cost by exploring all its neighbors, until it finds
-a target. Here, the cost for node $u$ is estimated by the distance from source, called $g(u)$, plus the estimate from the heuristic $h(u)$.
 
 \paragraph{Heuristic function}
 The heuristic function $h(u)$ estimates the
@@ -78,7 +63,6 @@ h^*(u)-h(u)$ can only improve the performance of
 \A~\cite{dechter_generalized_1985}. Thus, a key contribution of ours is
 a domain-specific heuristic $h$.
 
-
 \paragraph{\A algorithm}
 We aim to guarantee optimal alignment while optimizing the average runtime
 to not reach its worst-case complexity. While \dijkstra is an algorithm that
@@ -87,12 +71,6 @@ generalization of \dijkstra that also accounts for their distance from the
 target. \A prioritizes the exploration of nodes that seem to be closer to the
 target nodes. This way, \A can sometimes dramatically improve on the performance
 of \dijkstra while remaining optimal.
-
-There has been one attempt to apply \A for optimal
-alignment~\cite{dox2018efficient} which uses a heuristic function that accounts
-only for the length of the remaining query sequence to be aligned. However, it
-does not significantly outperform \dijkstra (in fact, it is equivalent for
-a zero matching cost).
 %
 In contrast, the heuristic function we introduce is more informative and
 consistently outperforms \dijkstra.
@@ -174,7 +152,6 @@ function $h \colon V \to \mathbb{R}_{\geq 0}$, where $h(v)$ estimates the
 remaining length of the shortest path from a given node $v \in V$ to a target
 $t \in T$.
 
-
 \paragraph{Algorithm}
 % 
 In a nutshell, the \A~algorithm maintains a set of \emph{explored} nodes,
@@ -229,6 +206,7 @@ uninformed search such as \dijkstra's algorithm.
 %\dictum{Cut off your nose to spite your face.}
 %\vskip 1em
 
+\paragraph{Seed-and-extend}
 Seed-and-extend is a commonly used paradigm for solving semi-global alignment
 approximately~\citep{kucherov2019evolution}. Seeds are also used to define and
 compute LCSk~\citep{benson2014longest}, a generalization of longest common
