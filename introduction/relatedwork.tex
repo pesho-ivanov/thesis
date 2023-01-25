@@ -1,6 +1,12 @@
 \section*{Related work}
 \addcontentsline{toc}{section}{\protect\numberline{}{Related work}}
 
+With the advance of the sequencing technology, the need for fast and accurate
+algorithms has been steadily increasing~\cite{alser2021technology}. One possible
+reason is the combination of massive new data and advancement in computation
+hardware allowing for various kinds of parallelization.
+%Thus the advancements with bit-parallel algorithms (CITE Myears, Mikko).
+
 \paragraph{Dynamic programming (DP) for global alignment}
 The first efficient solution for global alignment, known as the Needleman-Wunsch
 algorithm, got developed around~\citeyear{vintsyuk1968speech}~
@@ -41,10 +47,10 @@ reference, and then reuse this index to quickly align multiple query sequences
 ~\citeyear{pearson1988improved}~\cite{pearson1988improved} and has become
 central to read alignment of high-throughput sequencing.
 
+\paragraph{Suboptimal alignment}
+There are 
 % parallelization
 % sketches
-
-\paragraph{Suboptimal alignment}
 
 % Optimal DP-based approaches
 \paragraph{Optimal alignment}
@@ -88,3 +94,5 @@ only for the length of the remaining query sequence to be aligned. However, it
 does not significantly outperform \dijkstra (in fact, it is equivalent for a
 zero matching cost).
 % TODO: MSA
+
+\paragraph{Informed search for sequence alignment}

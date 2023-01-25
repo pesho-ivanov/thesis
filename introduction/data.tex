@@ -1,0 +1,79 @@
+\section*{Genomic data}
+\addcontentsline{toc}{section}{\protect\numberline{}{Background}}
+
+\paragraph{DNA structure} The discovery of the structure and function of
+DNA\citep{watson1953structure} seventy years ago started a revolution in our
+understanding of the living world. The non-branching (linear or circular) DNA
+structure resembles similar the linear structure of human text and speech. This
+property is massively exploited by both \emph{sequencing} technologies used to
+digitalize genomic information, and by algorithms used to analyze the data.
+
+\paragraph{Sequence alignment} One of the simplest operations on sequences is to
+align one to another. Sequence alignment has been a core problem in
+computational biology for more than half a century, exhibiting a multitude of
+applications, including variation analysis, de novo assembly, philogenetics, RNA
+quantification, etc. Is has been shown that sequencing alignment is a
+funamentally complex problem that requires quadratic time in the worst
+case~\citep{backurs2015edit}. Practical alignment algorithms exploit
+similarities between the sequences to speed up the computation but give up on
+optimality guarantees. Thus, a satisfactory solution that combines optimality
+guanratees with heuristic performance is yet to be
+developed~\citep{medvedev2022theoretical}.
+
+\paragraph{Goal} In this thesis I propose a novel principled approach that
+exploits information from the whole sequences to align sequences provably
+optimally and heuristically fast. We empyrically demonstrate the superior
+scaling and performance to other optimal alignment algorithms. Even though the
+method should be applicable outside of computational biology, we focus on
+genomic data for its immense practical importance. Next, we review the main
+sequencing technologies up to date and the data they produce.
+
+\paragraph{First generation sequencing}
+Genomic (DNA, RNA) sequencing is a technology that takes genetic material and
+produces a data file with a set of sequences. Since the late 1970s, Sanger
+sequencing is the first widely used technology that dominated the field for over
+40 years. The produced sequences are of length $>1000$ nucleotides and have very
+high quality ($<0.001\%$ error rate)~\citep{shendure2008next}.
+
+\paragraph{Second generation (high-throughput / next-generation / shotgun) sequencing}
+Initially, the sequenced data has been scarce and the sequence alignment was
+done by hand. The development of high-throughput sequencing in the late 1990s
+and 2000s lead to higher amounts of cheaper data due to sequencing millions and
+billions of molecules in parallel. The amount and complexity of the available
+genomic data bacame not only intractable by hand, but also challenging for
+computer analysis.
+
+\paragraph{Third generation (long-read) sequencing}
+Since the end of the 2000s, novel technologies started to appear that are
+capable of producing long sequences. Long sequences enabled massive applications
+but the limiting factor was the high error rate (up to $20\%$) and the higher
+price.
+
+\paragraph{Pangenomics and genome graphs}
+Traditionally, a single linear reference sequence has been used to represent a
+representative consensus genome. Linear references are limited in representing
+biological variation which the modern sequencing technologies are producing in
+great abundance. Thus, in the 2010s, the field started shifting from using
+linear references towards sets of reference sequences, and their compact
+representation as so called \emph{genome graphs}. A path in such a graph
+represent a species, an individual or a
+haplotype~\cite{dilthey_improved_2015,paten_genome_2017}.
+
+In particular, the last decade saw the increased development of graph references
+that compactly represent a whole set of genomes (a metagenome) as paths.
+
+First attempts to include variation into the reference data structure were made
+by augmenting the local alignment method to consider alternative walks during the
+extend step~\cite{schneeberger_simultaneous_2009,palmapper}. This approach has
+since been extended from the linear reference case to graph references. To
+represent non-reference variation of multiple references during the seeding
+stage, HISAT2 uses generalized compressed suffix
+arrays~\cite{siren_indexing_2014} to index walks in an augmented reference
+sequence, forming a local genome graph~\cite{kim_graphbased_2019}.
+VG~\cite{garrison_variation_2018} uses a similar
+technique~\cite{siren_indexing_2017} to index variation graphs representing a
+population of references.
+
+While providing a working abstraction for most cases, rare or sub-population
+specific variation is especially hard to model in this setting, creating a
+reference allele bias~\cite{stevenson_sources_2013,brandt_mapping_2015}.
