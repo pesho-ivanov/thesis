@@ -23,17 +23,24 @@ developed~\citep{medvedev2022theoretical}.
 \paragraph{Goal} In this thesis I propose a novel principled approach that
 exploits information from the whole sequences to align sequences provably
 optimally and heuristically fast. We empyrically demonstrate the superior
-scaling and performance to other optimal alignment algorithms. Even though the
-method should be applicable outside of computational biology, we focus on
-genomic data for its immense practical importance. Next, we review the main
-sequencing technologies up to date and the data they produce.
+scaling and performance to other optimal alignment algorithms.
+
+\paragraph{Biological and technical variation}
+Even though our method should be applicable outside of DNA sequening and even
+computational biology, we focus on genomic data for its immense practical
+importance. More generally, the differences between the two sequences are
+explained by biological variation (resulting from differences in the sequenced
+organism) and technical variation (resulting from sequencing errors). Next, we
+review the main sequencing technologies up to date and the data profile they
+produce.
 
 \paragraph{First generation sequencing}
 Genomic (DNA, RNA) sequencing is a technology that takes genetic material and
 produces a data file with a set of sequences. Since the late 1970s, Sanger
 sequencing is the first widely used technology that dominated the field for over
-40 years. The produced sequences are of length $>1000$ nucleotides and have very
-high quality ($<0.001\%$ error rate)~\citep{shendure2008next}.
+40 years. The produced \emph{reads} (each read is a sequence originating from a
+continuous DNA fragment) are of length $>1000$ nucleotides and have very high
+quality ($<0.001\%$ error rate)~\citep{shendure2008next}.
 
 \paragraph{Second generation (high-throughput / next-generation / shotgun) sequencing}
 Initially, the sequenced data has been scarce and the sequence alignment was
