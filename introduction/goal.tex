@@ -20,6 +20,28 @@ solutions could be efficient.
 All optimal algorithms for semi-global alignment have to iterate over the whole
 reference for each query. We should be able to optimize this by precomputation.
 
+\begin{observation}
+    The output of the alignment problem is linear in the input size.
+\end{observation}
+
+\begin{observation}
+    The approximate aligners scale much better in practice than optimal
+    aligners.
+\end{observation}
+
+\begin{observation}
+    The approximate aligners scale much better in practice than optimal
+    aligners.
+\end{observation}
+
+\begin{observation}
+    The same quadratic dynamic programming approach to global alignment
+    (Needleman-Wunsch) also solves semi-global and local alignment
+    (Smith-Waterman) without additional runtime expenses.
+\end{observation}
+
+This observation hints to the potential 
+
 \begin{problem}
     What is the computational complexity of global and semi-global alignment of
     related sequences under edit distance?
