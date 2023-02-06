@@ -96,3 +96,12 @@ zero matching cost).
 % TODO: MSA
 
 \paragraph{Informed search for sequence alignment}
+
+\paragraph{Known limitations}
+
+Quadratic optimal for semi-global
+
+In its general case, it is not solvable for strictly subquadratic time which is
+often prohibitively slow. Faster approximate algorithms are instead used in
+practice. We employ the \A informed search algorithm in order to design an
+optimal algorithm that scales subquadratically for related sequences.

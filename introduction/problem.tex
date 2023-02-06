@@ -13,15 +13,6 @@ occurance of a query sequence within a reference sequence, we allow the
 alignment to start and end at any reference locations in a \emph{semi-global}
 alignment.
 
-% merge
-Each sequence from a new biological sample can be compared to a reference genome
-(if such is available) in order to identify mutations, quantify expression per
-gene, and many other types of analysis. To figure out the location in the
-reference each sequence most probably originates from, it should first be
-semi-globally aligned to the reference. If the sequences of two proteins or
-viruses have been reconstructed, aligning them globally reveals the most
-probabale mutations between them.
-
 % alignment types
 \begin{figure}[t]  %\begin{floatingfigure}[l]{0.5\textwidth}
     \includegraphics[width=0.5\textwidth]{alignment-types}
@@ -62,22 +53,3 @@ is the most common metric that alignment algorithms optimize in order to find
 the most probable read origin in the reference. The shortest path approach
 naturally fits more complex references than linear, including even graphs with
 cycles.
-
-\paragraph{Data}
-
-
-%\section{Task Description: Alignment to Reference Graphs}
-\label{TRIEsec:task}
-
-\paragraph{Scalability and performance}
-
-\paragraph{Guaranteed optimality}
-
-\paragraph{Known limitations}
-
-Quadratic optimal for semi-global
-
-In its general case, it is not solvable for strictly subquadratic time which is
-often prohibitively slow. Faster approximate algorithms are instead used in
-practice. We employ the \A informed search algorithm in order to design an
-optimal algorithm that scales subquadratically for related sequences.
