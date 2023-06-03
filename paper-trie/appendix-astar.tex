@@ -1,0 +1,62 @@
+\subsection{Generic Algorithms: \A and \dijkstra} \label{app:astar}
+
+\cref{alg:generic-alignment} shows a generic implementation of the \A algorithm,
+roughly following~\cite{dechter_generalized_1985}.
+We do not implement the reconstruction of the best alignment in order to simplify the presentation.
+The procedure \mbox{\textsc{BacktrackPath}} traces the best alignment back to the $source$, based on remembered edges used to optimize $f$ for each alignment state.
+%
+\cref{alg:generic-alignment} also shows a simple implementation of Dijkstra in
+terms of \A.
+
+\begin{algorithm}[H]
+	\caption{\A algorithm (generalizes Dijkstra)}\label{alg:generic-alignment}
+	\begin{algorithmic}[1]
+				
+		\Function{\A}{$G\colon \text{Graph}$,
+			$S\colon \text{Sources}$,
+			$T\colon \text{Targets}$,
+			$h\colon \text{Heuristic function}$}
+		\State $f \gets \mli{Map}(\mli{default}=\infty)\colon
+		\text{Nodes} \to \mathbb{R}_{\geq 0}$
+		\Comment Map nodes from $G$ to priorities 
+		\State $Q \gets \mli{MinPriorityQueue}(\mli{priority}=f)$ 
+		\Comment Priorities according to $f$
+		\ForAll{$s \in S$}
+			\State $f[s] \gets 0.0$
+			\State $Q.\mli{push}(s)$
+			\Comment Initially, explore all $s \in S$
+		\EndFor
+		\While{$Q \neq \emptyset$}
+			\State $\mli{curr} \gets Q.\mli{pop}()$
+			\Comment Get state with minimal $f$ to be expanded
+			\If{$\mli{curr} \in T$}
+				\State \Return \Call{BacktrackPath}{$\mli{curr}$}
+				\Comment Reconstruct a path to $\mli{curr}$ (omitted)
+			\EndIf
+				\ForAll{$(\mli{curr},\mli{next},\mli{cost}) \in
+				G.\mli{outgoingEdges}(\mli{curr})$}
+			\State $\hat{f}_\mli{next} \gets f[\mli{curr}] + \mli{cost} +
+			h(\mli{next})$
+				\Comment Candidate value for $f[\mli{next}]$
+				\If{$\hat{f}_\mli{next} < f[\mli{next}{}]$}
+					\State $f[\mli{next}] \gets \hat{f}_\mli{next}$		
+					\State $Q.\mli{push}(\mli{next})$
+					\Comment Explore state $\mli{next}$
+				\EndIf
+		\EndFor
+		\EndWhile
+		\State \textbf{assert} $\mli{False}$
+		\Comment Cannot happen if $T$ is reachable from $S$
+		\EndFunction
+
+		\Statex
+
+		\Function{Dijkstra}{$G\colon \mli{Graph}$,
+			$S\colon \mli{Sources}$,
+			$T\colon \mli{Targets}$}
+			\State $h(v) \gets 0.0$
+			\Comment Constant-zero function $h$
+			\State $\Call{\A}{G,S,T,h}$
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}

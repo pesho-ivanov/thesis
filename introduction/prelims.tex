@@ -477,29 +477,29 @@ We make the (standard) assumption that $0 \leq \cmatch \leq \csubst, \cins,
 %graphs} whose paths intrinsically capture both. This way, we can
 %formally define an alignment more conveniently as a path in an edit graph.
 %
-%Formally, an \emph{edit graph} $\EG:=(\EGV,\EGE)$ has directed, labeled edges
-%$\EGE \subseteq \EGV \times \EGV \times \Sigma_\epsilon \times \mathbb{R}_{\geq
+%Formally, an \emph{edit graph} $\AG:=(\AGV,\AGE)$ has directed, labeled edges
+%$\AGE \subseteq \AGV \times \AGV \times \Sigma_\epsilon \times \mathbb{R}_{\geq
 %0}$ with associated costs that account for edits. Here, $\Sigma_\epsilon :=
 %\Sigma \cup \{\epsilon\}$ extends the alphabet $\Sigma$ by $\epsilon$ to account
 %for deleted characters (see \cref{TRIEfig:graph-constructions}).
 %%
 %The edit and reference graphs consist
-%of the same vertices, \ie, $\EGV=\RGV$. However, $\EGE$ contains more edges
+%of the same vertices, \ie, $\AGV=\RGV$. However, $\AGE$ contains more edges
 %than $\RGE$ to account for edits.
 %%
-%Concretely, for each edge $(u,v,\ell) \in \RGE$, $\EGE$ contains edges to
+%Concretely, for each edge $(u,v,\ell) \in \RGE$, $\AGE$ contains edges to
 %account for (i)~matches, by an edge $(u,v,\ell,\cmatch)$, (ii)~substitutions, by
 %edges $(u,v,\ell',\csubst)$ for each $\ell' \in \Sigma \backslash \ell$,
 %(iii)~deletions, by an edge $(u,v,\epsilon,\cdel)$, and (iv)~insertions, by
 %edges $(u,u,\ell',\cins)$ for each $\ell' \in \Sigma$.
 %%
-%The spelling $\sigma(\pi) \in \Sigma^*$ of a path $\pi \in \EG$ is defined
+%The spelling $\sigma(\pi) \in \Sigma^*$ of a path $\pi \in \AG$ is defined
 %analogously to reference graphs, except that deleted letters (represented by
-%$\epsilon$) are ignored. The cost $\cost{\pi}$ of a path $\pi \in \EG$ is the
+%$\epsilon$) are ignored. The cost $\cost{\pi}$ of a path $\pi \in \AG$ is the
 %sum of all its edge costs.
 %
 %\paragraph{Alignment on edit Graph}
-%An \emph{alignment} of query $q$ to $\RG$ is a path $\pi \text{ in } \EG$
+%An \emph{alignment} of query $q$ to $\RG$ is a path $\pi \text{ in } \AG$
 %spelling $q$, \ie, $q=\sigma(\pi)$. An \emph{optimal alignment} is an alignment
 %of minimal cost.
 
@@ -527,15 +527,15 @@ $q=``A"$.
 %$\langle u,0 \rangle$ to a state $\langle v,i \rangle$ corresponds to an
 %alignment of the first $i$ letters of query $q$ to $\RG$.
 %As a consequence, there is a one-to-one correspondence between alignments $\edit{\pi}$ of $q$ to
-%$\EG$ and paths $\alignment{\pi} \in \AG$ from sources $S:=\RGV \times \{0\}$ to
+%$\AG$ and paths $\alignment{\pi} \in \AG$ from sources $S:=\RGV \times \{0\}$ to
 %targets $T:=\RGV \times \{|q|\}$, with
 %$\cost{\reference{\pi}}=\cost{\alignment{\pi}}$. To find the best alignment in
-%$\EG$, only paths in $\AG$ (walks without repeating nodes) can be considered,
+%$\AG$, only paths in $\AG$ (walks without repeating nodes) can be considered,
 %since repeating a node in $\AG$ cannot lead to a lower cost ($\cdel \geq 0$) for
 %the same state.
 
 %The edges $\AGE \subseteq \AGV \times \AGV \times \Sigma_\epsilon \times
-%\mathbb{R}_{\geq 0}$ are built based on the edges in $\EGE$, except that the
+%\mathbb{R}_{\geq 0}$ are built based on the edges in $\AGE$, except that the
 %former (i)~keep track of the position in the query $i$, and (ii)~only contain
 %empty edges or edges
 %whose label matches the next query letter:
