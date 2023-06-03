@@ -1,12 +1,12 @@
 \subsection{Recursive Alignment Algorithm} \label{app:recursive-align}
 \cref{alg:recursiveAlign} shows our implementation of \textsc{RecursiveAlign},
-used in \cref{alg:astarix} to evaluate $h$. \textsc{RecursiveAlign} is a simple
+used in \cref{TRIEalg:astarix} to evaluate $h$. \textsc{RecursiveAlign} is a simple
 branch-and-bound algorithm that recursively looks for the cheapest alignment of
 $s$ starting from $u$, and does not follow paths whose cost exceeds
 $\mli{best}$, the best path found so far.
 
 \begin{algorithm}[t]
-	\caption{Recursive alignment used by Heuristic in \cref{alg:astarix}.}\label{alg:recursiveAlign}
+	\caption{Recursive alignment used by Heuristic in \cref{TRIEalg:astarix}.}\label{alg:recursiveAlign}
 	\begin{algorithmic}[1]
 		\Statex
 			\Function{RecursiveAlign}{$u, s, \mli{curr}, \mli{best}$} \Comment
