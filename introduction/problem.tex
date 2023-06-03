@@ -8,7 +8,7 @@
     \label{fig:alignment-types}
 \end{figure}
 
-\paragraph{Alignment problem}
+\paragraph{Sequence alignment}
 % problem statements
 We consider the problem of pairwise sequence alignment in the context of genomic
 data: given two DNA sequences, one can be aligned to the other in multiple
@@ -45,6 +45,9 @@ alignments~\citep{garrison_variation_2018}.
 Semi-global alignment of reads to a reference genome is an essential and early
 step in most bioinformatics pipelines.
 
+\paragraph{Multiple semi-global alignment (for read mapping)}
+
+\paragraph{Sequence-to-graph alignment (for pangenome references)}
 Specifically, a \emph{sequence-to-graph} alignment is a base-to-base
 correspondence between a given read and a walk in the graph. As sequencing
 errors and biological variation result in inexact read alignments, edit distance
@@ -52,3 +55,6 @@ is the most common metric that alignment algorithms optimize in order to find
 the most probable read origin in the reference. The shortest path approach
 naturally fits more complex references than linear, including even graphs with
 cycles.
+
+\paragraph{Metrics}
+Edit distance
