@@ -1,0 +1,50 @@
+\subsection{\A~algorithm for finding a shortest path} \label{sec:astar}
+%
+The \A~algorithm is a shortest path algorithm that generalizes Dijkstra's
+algorithm by directing the search towards the target.
+Given a weighted graph $G=(V,E)$, the \A~algorithm finds a shortest path from
+sources $S \subseteq V$ to targets $T \subseteq V$.
+%
+To prioritize paths that lead to a target, it relies on an admissible heuristic
+function $h \colon V \to \mathbb{R}_{\geq 0}$, where $h(v)$ estimates the
+remaining length of the shortest path from a given node $v \in V$ to a target
+$t \in T$.
+
+
+\paragraph{Algorithm}
+% 
+In a nutshell, the \A~algorithm maintains a set of \emph{explored} nodes,
+initialized by all possible starting nodes $S$. It then iteratively
+\emph{expands} the explored state $v$ with lowest estimated total cost $f(v)$ by
+exploring all its neighbors. Here, $f(v) := g(v) + h(v)$, where $g(v)$ is the
+distance from $s \in S$ to $v$, and $h(v)$ is the estimated distance from $v$ to
+$t \in T$.
+%
+When the \A~algorithm expands a target node $t \in T$, it reconstructs the path
+leading to $t$ and returns it.
+%
+For completeness, \cref{app:astar} provides an implementation of \A.
+
+\paragraph{Admissibility}
+%
+The \A~algorithm is guaranteed to find a shortest path if its heuristic $h$
+provides a lower bound on the distance to the closest target, often referred to
+as $h$ being \emph{admissible} or optimistic.
+
+Further, the performance of the \A~algorithm relies critically on the choice of
+$h$. Specifically, it is crucial to have low estimates for the optimal paths but
+also to have high estimates for suboptimal paths.
+
+\paragraph{Discussion}
+%
+To summarize, we use the \A~algorithm to find a shortest path from $\st{u}{0}$
+to $\st{v}{|q|}$ in $\AG$. To guarantee optimality, its heuristic function
+$h\st{v}{i}$ must provide a lower bound on the shortest distance from state
+$\st{v}{i}$ to a terminal state of the form $\st{w}{\lvert q \rvert}$.
+%
+Equivalently, $h\st{v}{i}$ should lower bound the minimal cost of aligning
+$q[i{:}]$ to $\RG$ starting from $v$, where $q[i{:}]$ denotes the suffix of $q$
+starting at position $i$ ($0$-indexed).
+%
+The key challenge is thus finding a heuristic that is not only admissible but
+also yields favorable performance.
