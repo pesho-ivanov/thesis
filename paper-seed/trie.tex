@@ -98,24 +98,14 @@ particular the longest one.
 The following \cref{SEEDlem:trie-optimization} shows that this optimization
 preserves optimality.
 
-\begin{lem}[Admissibility when skipping crumbs]
-	\label{SEEDlem:trie-optimization}
+\begin{restatable}[Admissibility when skipping crumbs]{lem}{trieOptimization}
+	\label{lem:trie-optimization}
 	The \sh remains admissible when crumbs are skipped in the trie.
-\end{lem}
+\end{restatable}
 \begin{proof}
-	Consider a reference graph with a match of seed $s$ starting in node $w$.
-	Now, consider a node $v$ that cannot reach $w$ using more than $i-D-\maxins$
-	edges.
+	We provide a proof for \cref{lem:trie-optimization} in \cref{app:proof}.
 	%
-	We can then show that a trie node $v'$ with a path to $v$ does not require a
-	crumb for the match of $s$ in node $w$.
-
-	Specifically, any path from $\trieroot$ through nodes $v'$ and $v$ to node
-	$w$ has total length greater or equal $i-\maxins$. Thus, matching $s$ at $w$
-	requires at least $\maxins$ insertions. Hence, the cost of such a path is at
-	least $\maxins \cdot \cins = |q| \cdot \cmatch + n \cdot
-	\delta_{\mli{min}}$. Observing that this is an upper bound for $h\st{v}{i}$
-	concludes the proof.
+	\qedhere
 \end{proof}
 
 In order to efficiently identify all nodes $u$ that can reach $w$ by using more

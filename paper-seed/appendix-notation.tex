@@ -1,0 +1,60 @@
+\subsection{Notations} \label{sec:notation}
+
+\cref{tab:notation} summarizes the notational conventions used in this work.
+
+\begin{table}[!h]
+	\centering
+	\caption{Notational conventions.}\label{tab:notation}
+	\begin{tabular}{ll}
+	\hline
+	\textbf{Object}	         & \textbf{Notation}\\
+	\hline
+	\textbf{Queries}  & $Q = \{ q_i \vert q_i \in \Sigma^m \}$ \\
+	\,\, Read            & $q \in Q$ \\
+	\,\, Length     & $m := \lvert q \rvert\in \mathbb{N}$\\
+	\,\, Position in read & $q[i] \in \Sigma$, $i \in \{0,\dots,m-1\}$\\	
+	\hline
+	\textbf{Reference graph}& $\RG=(\RGV,\RGE)$\\
+	\,\, Size& $\lvert \RG \rvert := \lvert \RGV \rvert + \lvert \RGE \rvert \in \mathbb{N}$\\
+	\,\, Nodes& $u, v \in \RGV$\\
+	\,\, Number of nodes& $N := \lvert \RGV \rvert \in \mathbb{N}$\\
+	\,\, Edges& $e \in \RGE := \RGV \times \RGV \times \Sigma$\\
+	\,\, Edge letter& $\ell \in \Sigma$\\
+	\textbf{Reference graph with a trie} & $\TG = (\TGV, \TGE)$ \\
+	\,\, Trie depth  & $D \in \mathbb{N}_{>0}$\\
+	\hline
+	\textbf{Alignment graph}& $\AG=(\AGV,\AGE)$\\
+	\,\, State& $\langle u,i \rangle \in \AGV := V \times \{0,\dots,m\}$\\
+	\,\, Edges& $(\langle u,i \rangle, \langle v,j \rangle,\ell,w) \in \AGE
+	\subseteq \AGV \times \AGV \times \Sigma_{\varepsilon} \times
+	\mathbb{R}_{\geq 0}$, $\Sigma_{\varepsilon} = \Sigma \cup \{\varepsilon\}$\\
+	\,\, Edge cost& $w \in \mathbb{R}_{\geq 0}$\\
+	\,\, Alignment& $\pi \in \AGE^*$ and $\sigma(\pi)=q$ \\
+	\,\, Alignment cost& $\cost{\pi} \in \mathbb{R}_{\geq 0}$\\
+	\hline
+	\textbf{Seed heuristic}& $h\st{u}{i}$\\
+	\,\, State& $\st{u}{i}$\\
+	\,\, Seed length& $k$\\
+	\,\, Maximum number of deletions& $\maxdel$\\
+	\,\, Maximum number of insertions& $\maxins$\\
+	\hline
+	\textbf{In all graphs}& $G = (V,E) \in \{ \RG, \AG \}$ \\
+	\,\, Walk& $\pi \in G: \pi \in E^*$\\
+	\,\, Walk spelling& $\sigma(\pi) \in \Sigma^*$\\
+%	\,\, Walk begin and end nodes& $\mli{begin}(\pi), \mli{end}(\pi) \in V$\\
+	\,\, Path& A walk without repeating nodes\\
+	\hline
+	\textbf{\A} & $A^\star(G,S,T,h)$\\
+	\,\, Graph& $G=(V,E)$\\
+	\,\, Nodes& $u,v \in V$\\
+	\,\, Edges& $e \in E \subseteq V \times V \times \Costs$\\ 
+	\,\, Source states& $S \subseteq V$\\
+	\,\, Target states& $T \subseteq V$\\
+	\,\, Heuristic function& $h \colon V \to \Costs$\\
+	\,\, Minimum cost to a target& $h^*(u)$\\
+	%\,\, Optimistic& $h(u) \leq \min_\pi \cost{\pi}, \pi \colon \pi \text{ starts from } u$\\
+	\,\, Explored state & A state pushed to the queue of \cref{alg:astar}\\
+	\,\, Expanded state & A state popped from the queue of \cref{alg:astar}\\
+	\hline
+\end{tabular}
+\end{table}
