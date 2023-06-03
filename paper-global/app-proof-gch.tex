@@ -121,14 +121,12 @@ $\gapcost(u,v) < r = \seedcost(u,v)$ by definition.
   By \cref{lem:transform}, every $\preceq_T$-chain is a $\preceq$-chain, so
   $h(u) \leq h'(u)$. To prove $h(u) {=} h'(u)$, it remains to show the reverse
   inequality, $h'(u) \leq h(u)$. To this end, choose a match $m$ that
-  \vspace{-0.7em}
-  \begin{itemize}[\quad (priority 0)]
+  \begin{description}%[\quad (priority 0)]
     \item[(priority 0)] minimizes $h(u)$ in \cref{eq:recursion}, and among those, has
     \item[(priority 1)] maximal $\seedcost(u, m)$, and among those, has
     \item[(priority 2)] minimal $\gapcost(u, m)$, and among those, has
     \item[(priority 3)] minimal $\gapcost(m, v_t)$.
-  \end{itemize}
-  \vspace{-0.7em}
+  \end{description}
   We show that $u\preceq_T m$~(in 2.A) and $m\preceq_T v_t$~(in 2.B), which
   proves~\cref{eq:trecursion}.
 
