@@ -1,0 +1,22 @@
+\paragraph{Future work} \phantom{x}
+\nopagebreaklist
+
+\begin{enumerate}
+    \item \emph{Performance.} The runtime could be improved by variable seed
+        lengths, overlapping seeds, more aggressive pruning, and better
+        parameter tuning. Implementation optimizations may include computational
+        domains~\citep{spouge1989speeding}, block
+        computations~\citep{liu21block}, SIMD (similar to~\wfa), or
+        bit-parallelization~\citep{myers1999fast} (similar to~\edlib).
+    \item \emph{Generalizations.} Our chaining seed heuristic could be
+        generalized to non-unit and affine costs, and to semi-global alignment.
+        Cost models that better correspond to the data can speed up the
+        alignment.
+    \item \emph{Relaxations.} At the expense of optimality guarantees,
+        inadmissible heuristics could speed up \A considerably. Another possible
+        relaxation would be to validate the optimality of a given alignment
+        instead of computing it from scratch.
+    \item \emph{Analysis.} The near-linear scaling of \A is not asymptotic and
+        requires a more thorough theoretical
+        analysis~\citep{medvedev2022limitations}.
+\end{enumerate}

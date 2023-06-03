@@ -1,42 +1,69 @@
-\subsection{Overview} \label{GLOBALsec:intuition}
+\subsection{Intuition} \label{sec:intuition}
 
-% Shortest path task, \A
-In order to find a minimal cost alignment of $A$ and $B$, we use the \A
-algorithm to find a shortest path from the starting state $v_s{=}\st 00$ to the
-target state $v_t{=}\st nm$ in the alignment graph. We present two heuristic functions,
-the \sh and the \csh, and prove that they are admissible, so that \A always finds a
-shortest path.
+% Shortest path task, A*
+To align sequences~$A$ and~$B$ with minimal cost, we use the \A shortest path
+algorithm from the start to the end of the alignment
+graph~(\cref{app:comparison}). \A uses a heuristic function that estimates the
+shortest distance from the current vertex to the target. To ensure that \A finds a
+shortest path, the heuristic must be \emph{admissible}, i.e. never overestimate
+the distance. A good heuristic efficiently computes an accurate estimate of
+the remaining distance.
 
 % SH
-To define the \sh $\hsh$\,, we split $A$ into short, non-overlapping substrings
-(\emph{seeds}) of fixed length $k$. Since the whole of sequence $A$ has to be
-aligned, each of the seeds also has to be aligned somewhere. If
-a seed cannot be \emph{exactly} matched in $B$ without mistakes, then at least
-one edit has to be made to align it. We first compute all positions in
-$B$ where each seed from $A$ matches exactly. Then, a
-lower bound on the edit distance between the remaining suffixes $A_{\geq i}$ and
-$B_{\geq j}$ is given by the number of seeds entirely contained in $A_{\geq i}$
-that do not match anywhere in $B$. An example is shown in \cref{GLOBALfig:sh}.
+\paragraph{\Sh (\SH)} To define the \emph{\sh} $\hsh$\,, we split $A$ into short,
+non-overlapping substrings~(\emph{seeds}) of fixed length $k$. Since the whole
+sequence~$A$ has to be aligned, each of the seeds also has to be aligned
+somewhere in~$B$. If a seed does not match anywhere in~$B$ without mistakes,
+then at least $1$ edit has to be made to align it. To this end, we precompute
+for each seed from~$A$, all positions in~$B$ where it matches exactly. Then, the
+\SH is the number of remaining seeds~(contained in~$A_{\geq i}$) that do not
+match anywhere in~$B$~(\cref{fig:sh}), and is a lower bound on the distance
+between the remaining suffixes $A_{\geq i}$ and~$B_{\geq j}$. Next, we improve
+the \sh with chaining, inexact matching, and gap costs.
 
 % CSH
-We improve the \sh by enforcing that the seed matches occur in the same order as
-their seeds occur in $A$, \ie, they form a \emph{chain}. Now, the number of upcoming
-errors is at least the minimal number of remaining seeds that cannot be aligned
-on a single path to the target. The \csh $\hcsh$ equals the number of remaining
-seeds minus the maximum length of a chain of matches, see \cref{GLOBALfig:csh}.
+\paragraph{Chaining (\CSH)} We improve on the \SH by enforcing that the matches
+occur in the same order in $B$ as their corresponding seeds occur in $A$, i.e.,
+the matches form a \emph{chain} going down and to the right. Now, the number of
+upcoming errors is at least the minimal number of remaining seeds that cannot be
+aligned on a single chain to the target. To compute this number efficiently, we
+instead count the maximal number of matches in a chain from the current state,
+and subtract that from the number of remaining seeds~(\cref{fig:csh}). This
+improves the \sh when there are many spurious matches (i.e. outside the optimal
+alignment).
+
+% GCH
+\paragraph{Gap costs (\GCH)} In order to penalize long indels, the \gch $\hgch$
+(\cref{fig:gch}) extends \csh by also incurring a \emph{gap cost} if two
+consecutive matches in a chain do not lie on the same diagonal. In such cases,
+the transition to the next match requires at least as many gaps as the
+difference in length of the two substrings.
 
 % inexact matches
-To scale to larger error rates, we generalize both heuristics to use
-\emph{inexact matches}. For each seed from $A$, our algorithm finds all its
-inexact matches in $B$ with cost at most $1$. Then, not using any match of a
-seed will require at least $r{=}2$ edits for the seed to be eventually aligned.
+\paragraph{Inexact matches} To scale to higher divergence, we use
+\emph{inexact matches}. For each seed in $A$, our algorithm finds all its inexact
+matches in $B$ with cost at most $1$. Then, not using any match of a seed will
+require at least $r{=}2$ edits for the seed to be eventually aligned. Thus, the
+\emph{potential} of our heuristics to penalize errors roughly doubles.
 
 % pruning
-Finally, we use \emph{match pruning}: once we find a shortest path to a state
-$v$, no shorter path to that state is possible. Since we are only looking for a
-single shortest path, we may ignore any other path going to $v$. In particular,
-when we are evaluating the heuristic $h$ in some state $u$ preceding $v$, and
-$v$ is at the start of a match, all paths containing the match are excluded, and
-thus we may simply ignore (\emph{prune}) this match for future computations of
-the heuristic. This increases the value of the heuristic, as shown in \cref{GLOBALfig:pruning}, and leads to a
-significant reduction of the number of states being expanded by the \A.
+\paragraph{Pruning} We introduce the \emph{match pruning}
+improvement~(\cref{fig:pruning}) for all our heuristics: once we find a shortest
+path to a state $v$, no shorter path to that state is possible. Since we are
+only looking for a single shortest path, we can ignore all alternative paths to
+$v$. If $v$ is the start or end of a match and $v$ has been expanded, we are not
+interested in alternative paths using this match, and hence we simply
+ignore~(\emph{prune}) this match when evaluating a heuristic at states preceding
+$v$. Pruning a match increases the heuristic in states before the match, thus
+penalizing states preceding the ``tip'' of the \A search. Pruning significantly
+reduces the number of expanded states, and leads to near-linear scaling with the
+sequence length.
+
+% DT
+\paragraph{Diagonal transition (\DT)}
+The DT optimization~(\cref{sec:dt}) only computes a subset of \emph{farthest
+reaching} states. This speeds up the \A in cases where the search becomes
+quadratic~(\cref{fig1-wfa}).
+
+Finally, we prove correctness of all heuristics and optimizations, and
+in \cref{sec:computation} we show how to compute the heuristics efficiently.

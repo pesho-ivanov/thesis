@@ -139,17 +139,17 @@ costs), Levenshtein distance, affine costs, convex and concave costs, general
 costs and others. 
 
 % Problem statement
-Depending on the the number of aligned sequences, there is pairwise alignment
-and multiple sequence alignment (MSA). Depending on the parts of the sequences
-that are aligned to each other, we differentiate global, local and various
+Depending on the number of aligned sequences, there is pairwise alignment and
+multiple sequence alignment (MSA). Depending on the parts of the sequences that
+are aligned to each other, we differentiate global, local and various
 semi-global alignemnts. There are generalizations to sequence-to-sequence
 alignment, including aligning to nonlinear structures, such as directed acyclic
 graphs, DAGs, general graphs and others. These structures are nowadays becoming
 more common as a compressed form of representing a set of references to which a
 sequence can be aligned. Often, one best alignment is suefficient but finding
-several best (top-K) alignments. In the context of read alignment, a set of reads
-is aligned to the same reference sequence so an indexing procedure is often
-useful for the performance.
+several best (top-K) alignments. In the context of read alignment, a set of
+reads is aligned to the same reference sequence so an indexing procedure is
+often useful for the performance.
 
 We specifically consider the alignment of a set of reads to a general graph, and
 the global pairwise alignment.

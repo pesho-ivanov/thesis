@@ -8,15 +8,12 @@
   year={1959}
 }
 
-@inproceedings{levenshtein1966binary,
+@article{levenshtein1966binary,
   title={Binary codes capable of correcting deletions, insertions, and reversals},
-  author={Levenshtein, Vladimir I and others},
-  booktitle={Soviet physics doklady},
-  volume={10},
-  number={8},
+  author={Levenshtein, Vladimir I},
+  journal={Soviet Physics Doklady},
   pages={707--710},
   year={1966},
-  organization={Soviet Union}
 }
 
 @article{vintsyuk1968speech,
@@ -281,6 +278,16 @@
   publisher={ACM New York, NY, USA}
 }
 
+@article{koenig2004incremental,
+  title={Incremental heuristic search in AI},
+  author={Koenig, Sven and Likhachev, Maxim and Liu, Yaxin and Furcy, David},
+  journal={AI Magazine},
+  volume={25},
+  number={2},
+  pages={99--99},
+  year={2004}
+}
+
 @inproceedings{koenig2006real,
   title={Real-time adaptive {A*}},
   author={Koenig, Sven and Likhachev, Maxim},
@@ -384,12 +391,19 @@
   publisher={Elsevier}
 }
 
-@incollection{prjibelski2018sequence,
-  title={Sequence analysis},
-  author={Prjibelski, Andrey D and Korobeynikov, Anton I and Lapidus, Alla L},
-  booktitle={Encyclopedia of Bioinformatics and Computational Biology: ABC of Bioinformatics},
-  pages={292--322},
-  year={2018}
+@inbook{prjibelski2018sequence,
+  title = {Sequence Analysis},
+  editor = {Shoba Ranganathan and Michael Gribskov and Kenta Nakai and Christian Schönbach},
+  booktitle = {Encyclopedia of Bioinformatics and Computational Biology},
+  publisher = {Academic Press},
+  address = {Oxford},
+  pages = {292-322},
+  year = {2019},
+  isbn = {978-0-12-811432-2},
+  doi = {https://doi.org/10.1016/B978-0-12-809633-8.20106-4},
+  url = {https://www.sciencedirect.com/science/article/pii/B9780128096338201064},
+  author = {Andrey D. Prjibelski and Anton I. Korobeynikov and Alla L. Lapidus},
+  keywords = {Bioinformatics, Data analysis, Genome assembly, Nucleic acid sequence, Protein sequence, Quality assessment, Sequence alignment, Transcriptomics},
 }
 
 @article{bowden2019sequencing,
@@ -413,6 +427,22 @@
   publisher={Oxford University Press}
 }
 
+@inproceedings{ivanov2020astarix,
+	title = {{AStarix}: {F}ast and {O}ptimal {S}equence-to-{G}raph {A}lignment},
+  author = {Ivanov, Pesho and Bichsel, Benjamin and Mustafa, Harun and Kahles, Andr{\'e} and R{\"a}tsch, Gunnar and Vechev, Martin T},
+  booktitle = {RECOMB 2020},
+	doiNOTSHOWN = {10.1101/2020.01.22.915496},
+	abstract = {We present an algorithm for the optimal alignment of sequences to genome graphs. It works by phrasing the edit distance minimization task as finding a shortest path on an implicit alignment graph. To find a shortest path, we instantiate the A* paradigm with a novel domain-specific heuristic function that accounts for the upcoming sub-sequence in the read to be aligned, resulting in a provably optimal alignment algorithm called AStarix.Experimental evaluation of AStarix shows that it is 1{\textendash}2 orders of magnitude faster than state-of-the-art optimal algorithms on the task of aligning Illumina reads to reference genome graphs. Implementations and evaluations are available at https://github.com/eth-sri/astarix.},
+  year = {2020}
+}
+
+@inproceedings{ivanov2022fast,
+  title={Fast and {O}ptimal {S}equence-to-{G}raph {A}lignment {G}uided by {S}eeds},
+  author={Ivanov, Pesho and Bichsel, Benjamin and Vechev, Martin},
+  booktitle={RECOMB 2022},
+  year={2022},
+}
+
 @article{marco2021fast,
   title={Fast gap-affine pairwise alignment using the wavefront algorithm},
   author={Marco-Sola, Santiago and Moure, Juan Carlos and Moreto, Miquel and Espinosa, Antonio},
@@ -424,12 +454,21 @@
   publisher={Oxford University Press}
 }
 
-@article{marco2022optimal,
-  title={Optimal gap-affine alignment in ${O(s)}$ space},
-  author={Marco-Sola, Santiago and Eizenga, Jordan M and Guarracino, Andrea and Paten, Benedict and Garrison, Erik and Moreto, Miquel},
-  journal={bioRxiv},
-  year={2022},
-  publisher={Cold Spring Harbor Laboratory}
+@Article{marco2022optimal,
+  author          = {Marco-Sola, Santiago and Eizenga, Jordan M and Guarracino,
+                  Andrea and Paten, Benedict and Garrison, Erik and Moreto,
+                  Miquel},
+  title           = {Optimal gap-affine alignment in $O(s)$ space},
+  journal         = {Bioinformatics},
+  year            = 2023,
+  editor          = {Martelli, Pier Luigi},
+  volume          = 39,
+  number          = 2,
+  month           = {Feb},
+  issn            = {1367-4811},
+  doi             = {10.1093/bioinformatics/btad074},
+  url             = {http://dx.doi.org/10.1093/bioinformatics/btad074},
+  publisher       = {Oxford University Press (OUP)}
 }
 
 @article{medvedev2022theoretical,
@@ -458,15 +497,57 @@
 }
 
 @article{nurk2022complete,
-  author = {Sergey Nurk  and Sergey Koren  and Arang Rhie  and Mikko Rautiainen  and others},
-  title = {The complete sequence of a human genome},
-  journal = {Science},
-  volume = {376},
-  number = {6588},
-  pages = {44-53},
-  year = {2022},
-  doi = {10.1126/science.abj6987},
-  URL = {https://www.science.org/doi/abs/10.1126/science.abj6987},
-  eprint = {https://www.science.org/doi/pdf/10.1126/science.abj6987},
-  abstract = {Since its initial release in 2000, the human reference genome has covered only the euchromatic fraction of the genome, leaving important heterochromatic regions unfinished. Addressing the remaining 8\% of the genome, the Telomere-to-Telomere (T2T) Consortium presents a complete 3.055 billion–base pair sequence of a human genome, T2T-CHM13, that includes gapless assemblies for all chromosomes except Y, corrects errors in the prior references, and introduces nearly 200 million base pairs of sequence containing 1956 gene predictions, 99 of which are predicted to be protein coding. The completed regions include all centromeric satellite arrays, recent segmental duplications, and the short arms of all five acrocentric chromosomes, unlocking these complex regions of the genome to variational and functional studies.}
+author = {Sergey Nurk  and Sergey Koren  and Arang Rhie  and Mikko Rautiainen  and others},
+title = {The complete sequence of a human genome},
+journal = {Science},
+volume = {376},
+number = {6588},
+pages = {44-53},
+year = {2022},
+doi = {10.1126/science.abj6987},
+URL = {https://www.science.org/doi/abs/10.1126/science.abj6987},
+eprint = {https://www.science.org/doi/pdf/10.1126/science.abj6987},
+abstract = {Since its initial release in 2000, the human reference genome has covered only the euchromatic fraction of the genome, leaving important heterochromatic regions unfinished. Addressing the remaining 8\% of the genome, the Telomere-to-Telomere (T2T) Consortium presents a complete 3.055 billion–base pair sequence of a human genome, T2T-CHM13, that includes gapless assemblies for all chromosomes except Y, corrects errors in the prior references, and introduces nearly 200 million base pairs of sequence containing 1956 gene predictions, 99 of which are predicted to be protein coding. The completed regions include all centromeric satellite arrays, recent segmental duplications, and the short arms of all five acrocentric chromosomes, unlocking these complex regions of the genome to variational and functional studies.}
+}
+
+@Article{papamichail2009improved,
+  author          = {Papamichail, Dimitris and Papamichail, Georgios},
+  title           = {Improved algorithms for approximate string matching
+                  (extended abstract)},
+  journal         = {BMC Bioinformatics},
+  year            = 2009,
+  volume          = 10,
+  number          = {S1},
+  month           = {Jan},
+  issn            = {1471-2105},
+  doi             = {10.1186/1471-2105-10-s1-s10},
+  url             = {http://dx.doi.org/10.1186/1471-2105-10-S1-S10},
+  publisher       = {Springer Science and Business Media LLC}
+}
+
+@Article{wu90onp,
+  author          = {Wu, Sun and Manber, Udi and Myers, Gene and Miller, Webb},
+  title           = {An O(NP) sequence comparison algorithm},
+  journal         = {Information Processing Letters},
+  year            = 1990,
+  volume          = 35,
+  number          = 6,
+  month           = {Sep},
+  pages           = {317–323},
+  issn            = {0020-0190},
+  doi             = {10.1016/0020-0190(90)90035-v},
+  url             = {http://dx.doi.org/10.1016/0020-0190(90)90035-V},
+  publisher       = {Elsevier BV}
+}
+
+@Article{liu21block,
+  author          = {Liu, Daniel and Steinegger, Martin},
+  title           = {Block aligner: fast and flexible pairwise sequence
+                  alignment with SIMD-accelerated adaptive blocks},
+  journal={bioRxiv},
+  year            = 2021,
+  month           = {Nov},
+  doi             = {10.1101/2021.11.08.467651},
+  url             = {http://dx.doi.org/10.1101/2021.11.08.467651},
+  publisher       = {Cold Spring Harbor Laboratory}
 }

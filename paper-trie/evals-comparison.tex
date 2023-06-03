@@ -25,14 +25,8 @@ The heuristic function of \astarix demonstrates a 2-fold speed-up over
 allows skipping the explicit exploration for the majority of starting nodes. 
 
 \begin{figure}[t]
-  \begin{subfigure}{.45\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{figs/cmp/performance_vs_genomesize-head_Mbpxs.pdf}
-  \end{subfigure}
-  \begin{subfigure}{.45\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{figs/cmp/memory_vs_genomesize-headxmax_rss.pdf}
-  \end{subfigure}
+	\subfloat{\includegraphics[width=0.45\textwidth]{figs/cmp/performance_vs_genomesize-head_Mbpxs.pdf}}
+	\subfloat{\includegraphics[width=0.45\textwidth]{figs/cmp/memory_vs_genomesize-headxmax_rss.pdf}}
   \caption[Performance scaling with reference size]{Comparison of overall
      runtime and memory usage of optimal aligners with increasing prefixes of E.
      coli as references}
@@ -62,14 +56,8 @@ dashed line. This lower bound is determined by the fact that at least the states
 on a best alignment need to be explored.
 
 \begin{figure}[t]
-  \begin{subfigure}{.45\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{figs/cmp/heuristic_MHC1_cost-t(map).pdf}
-  \end{subfigure}%~\hspace{1em}
-  \begin{subfigure}{.45\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{figs/cmp/heuristic_MHC1_cost-explored_states.pdf}
-  \end{subfigure}%
+  \subfloat[]{\includegraphics[width=0.45\linewidth]{figs/cmp/heuristic_MHC1_cost-t(map).pdf}}
+  \subfloat[]{\includegraphics[width=0.45\linewidth]{figs/cmp/heuristic_MHC1_cost-explored_states.pdf}}
   \caption[Performance scaling with alignment cost]{Comparison of \A and \dijkstra in terms of mean alignment runtime per read and mean explored states depending on the alignment cost on MHC1.}
   \label{TRIEfig:scaling_with_errors}
 \end{figure}

@@ -1,0 +1,62 @@
+\subsection{Memory usage}\label{app:memory}
+\Cref{tab:synthetic-memory} compares memory usage of aligners on synthetic
+sequences of length $n{=}10^6$. Alignments with inexact matches ($d{\geq} 8\%$)
+use significantly more memory than those with exact matches because
+more $k$-mer hashes need to be stored to find inexact matches.
+\Cref{tab:human-memory} compares memory usage
+on the human data sets.
+
+
+\begin{table}[h]
+  \centering
+  \sffamily
+  \begin{tabular}{l
+S[table-format=2]
+S[table-format=2]
+S[table-format=3]
+S[table-format=3]
+    }
+\toprule
+    & \multicolumn{4}{ c }{\textbf{Memory usage [MB]}}\\
+    \cmidrule{2-5}
+\textbf{Aligner} &  {$d{=}1\%$} &  {$d{=}4\%$} &  {$d{=}8\%$} &  {$d{=}12\%$} \\
+\midrule
+\edlib       &     2 &     1 &     2 &     2 \\
+\wfa         &    15 &    13 &    14 &    18 \\
+\textbf{\SH}          &    50 &    59 &   151 &   480 \\
+\textbf{\CSH}         &    52 &    59 &   151 &   261 \\
+\textbf{\GCH}         &    49 &    50 &   151 &   255 \\
+\textbf{\SH + DT}     &    49 &    49 &   151 &   150 \\
+\textbf{\CSH + DT}    &    49 &    49 &   151 &   150 \\
+\textbf{\GCH + DT}    &    48 &    46 &   152 &   150 \\
+\bottomrule
+\end{tabular}
+  \caption{\textbf{Memory usage per algorithm} (synthetic data, $n{=}10^6$). Exact
+    matches are used when $d\leq 4\%$, and inexact matches when $d\geq 8\%$.}
+  \label{tab:synthetic-memory}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \sffamily
+  \begin{tabular}{l
+    S[table-format=3]
+    S[table-format=4]
+    S[table-format=3]
+    S[table-format=4]
+    }
+    \toprule
+    & \multicolumn{2}{ c }{\textbf{ONT reads}}  & \multicolumn{2}{ c }{\textbf{+ genetic var.}} \\
+    \cmidrule(lr){2-3}
+    \cmidrule(lr){4-5}
+    \textbf{Aligner} & {Median}  & {Max} & {Median} & {Max} \\
+    \midrule
+    \edlib   &                  2 &               5 &                  2 &               6 \\
+    \wfa     &                 11 &              19 &                 15 &              24 \\
+    \textbf{\astarpa (\GCH + DT)} &                160 &            3478 &                270 &            6926 \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{Memory usage [MB] of aligners on human data.} Medians are over
+    all alignments; maximums are over alignments not timing out.}
+  \label{tab:human-memory}
+\end{table}

@@ -1,0 +1,16 @@
+%\vspace{-1.5em}
+\section{Conclusion} \label{sec:conclusion}
+
+% Summary of the paper
+\astarpa solves global pairwise alignment provably exact and empirically fast.
+To this end, we extended the existing \sh for \A with inexact matches, match
+chaining, gap costs, match pruning, and diagonal-transition. We proved that our
+novel heuristics and optimizations are guaranteed to find an alignment with
+minimal edit distance.
+
+On random sequences with $d{\leq}8\%$ uniform divergence, the runtime of
+\astarpa scales near-linearly to very long sequences ($n{\leq}10^7\bp$) and
+outperforms other exact aligners. On long ONT reads of human data with $d{\leq}10\%$,
+\astarpa is over $2\times$ faster than other aligners, and $1.4\times$ faster
+when genetic variation is also present.
+\vspace{-2em}

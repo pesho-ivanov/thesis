@@ -1,0 +1,53 @@
+%\documentclass[nocrop,draft]{bioinfo}
+\documentclass[nocrop]{bioinfo}
+
+% project-specific packages, commands, etc.
+\input{\dir/header}
+
+\copyrightyear{2023} \pubyear{2023}
+
+\begin{document}
+\firstpage{1}
+
+\subtitle{}
+
+\title[Exact global alignment using \A]{Exact global alignment using \A\\ with chaining seed heuristic and match pruning}
+\author[R. {Groot Koerkamp} and P. Ivanov]{Ragnar {Groot Koerkamp}\,$^{*,\dagger}$ and Pesho Ivanov\,$^{*,\dagger}$} % \text{\sfb 1,}
+\address{Department of Computer Science, ETH Zurich, Switzerland}% \\
+%$^{\text{\sf 2}}$Department, Institution, City, Post Code, Country.}
+
+\corresp{$^\ast$To whom correspondence should be addressed. \\
+$^\dagger$These authors contributed equally to this work.}
+
+\history{}
+
+\editor{}
+
+\input{\dir/abstract}
+\maketitle
+% keywords: pairwise alignment, exact algorithm, A* algorithm, seed heuristic,
+% match pruning, dynamic heuristic, contours
+
+\input{\dir/intro}
+
+% Make sure the figure goes on the same page as the method overview.
+
+%\pagebreak
+\input{\dir/prelim}
+\input{\dir/methods}
+\input{\dir/evals}
+%\pagebreak
+\input{\dir/discussion}
+%\input{\dir/conclusion}
+\input{\dir/acknowledgements}
+%\clearpage
+
+\bibliographystyle{natbib}
+\bibliography{\dir/biblio}
+
+\clearpage
+\appendix
+\renewcommand{\thesection}{\Alph{section}}
+\input{\dir/appendix}
+
+\end{document}

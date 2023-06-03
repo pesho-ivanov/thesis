@@ -2,7 +2,7 @@
 
 \paragraph{Intuition} \label{SEEDsec:overview}
 % Task
-\cref{SEEDfig:overview} showcases the \seedh on an overview example. It shows a
+\cref{SEEDfig:overview} showcases the \sh on an overview example. It shows a
 read~$q$ to be aligned to a reference graph~$\RG$. Our goal is to find an
 optimal alignment starting from an arbitrary node $v \in \RG$.
 %
@@ -13,7 +13,7 @@ For simplicity of the exposition, we assume unit edit costs $\cedits =
 The \A search requires us to provide a lower bound of the remaining path cost
 from a state $\st{v}{i}$ to a target state. Clearly, to align the whole query,
 each of the remaining seeds (\ie~at or after position $i$ in $q$) has to be
-eventually aligned. The intuition underlying the \seedh is to punish the state
+eventually aligned. The intuition underlying the \sh is to punish the state
 for the absence of any foreseeable match of each remaining seed. Notice that the
 order of the seeds is not directly taken into account.
 
@@ -80,16 +80,16 @@ number of seeds.
 %
 \cref{SEEDfig:exploration-table} demonstrates how $h\st{v}{i}$ guides the
 \A~algorithm towards the shortest path by showing which states may be
-\colorbox{pink-highlight}{expanded} when using the \seedh.
+\colorbox{pink-highlight}{expanded} when using the \sh.
 %
 Specifically, the unique optimal alignment in \cref{SEEDfig:overview} starts from
 node $v_{1}$, continues to $v_{2}$, and then proceeds through node $v_{10}$
 (instead of~$v_{3}$).
 
-While the \seedh initially explores all states of the form $\st{v}{0}$ (we
+While the \sh initially explores all states of the form $\st{v}{0}$ (we
 discuss in \cref{SEEDsec:trie} how to avoid this by using a trie), it skips
 expanding any state that involves nodes $v_{3}$--$v_{8}$. This improvement is
-possible because all these explored states are penalized by the \seedh by at
+possible because all these explored states are penalized by the \sh by at
 least $3$, while the shortest path of cost $2$ will be found before considering
 states on nodes $v_{3}$--$v_{8}$.
 %
@@ -99,13 +99,13 @@ eventually lead to an exact alignment of seeds
 and \colorbox{light-green}{$\mathtt{TT}$}, while expanding $v_3$ may not lead to
 an alignment of either seed.
 %
-In particular, the \seedh is not misled by the short-term benefit of correctly
+In particular, the \sh is not misled by the short-term benefit of correctly
 matching $A$ in $v_{2}$, and instead provides a long-term recommendation based
 on the whole read. Thus, even though the walk to $v_{3}$ aligns exactly the
-first two letters of $q$, \A does not expand $v_{3}$ because the \seedh
+first two letters of $q$, \A does not expand $v_{3}$ because the \sh
 guarantees that the future cost will be at least $3$.
 
-% Overall, the \seedh directs the search to the best alignment with one
+% Overall, the \sh directs the search to the best alignment with one
 % substitution
 % ($\mathtt{\textcolor{dark-red}{T}{\rightarrow}\textcolor{dark-red}{A}}$) and
 % one deletion ($\textcolor{dark-red}{\mathtt{C}}$).

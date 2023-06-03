@@ -1,0 +1,17 @@
+\begin{table}[H]
+	\centering
+	\sffamily
+    \begin{tabular}{@{}rlcl@{}}
+    \toprule
+    \multicolumn{2}{l}{\textbf{Heuristic}} & \textbf{Order} &  \textbf{Chaining cost $\gamma$} \\
+      \midrule
+    $\hsh(u)$ & \Sh (\SH) & $\preceq_i$ & $\phantom{\max(\gapcost,{}}\seedcost$ \\
+    $\hcsh(u)$ & Chaining seed h. (\CSH) & $\preceq$   & $\phantom{\max(\gapcost,{}}\seedcost$ \\
+    $\hgch(u)$ & Gap-chaining seed h. (\GCH)\!\! & $\preceq$   & $\max(\gapcost,\seedcost)$ \\
+    \bottomrule
+    \end{tabular}
+	\caption{\textbf{Definitions of our heuristic functions.} \SH orders the matches by
+    $i$ and uses only the seed cost. \CSH orders the matches by both $i$ and
+    $j$. \GCH additionally exploits the gap cost.}
+	\label{tab:heuristics}
+\end{table}

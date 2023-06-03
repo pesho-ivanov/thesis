@@ -1,0 +1,11 @@
+\subsection{Match pruning} \label{sec:pruning-proof}
+
+During the \A search, we continuously improve our heuristic using match pruning.
+The pruning increases the value of our heuristics and breaks their admissibility.
+Nevertheless, we prove in two steps that \A with match pruning still finds a
+shortest path. First, we introduce the concept of a \emph{\wah} and show that \A
+using a \wah finds a shortest path~(\cref{thm:weak-admissible-dfn}). Then, we
+show that our pruning heuristics are indeed \wa~(\cref{thm:weak-admissible-h}).
+
+\input{\dir/app-proof-admissible-dfn}
+\input{\dir/app-proof-admissible-h}

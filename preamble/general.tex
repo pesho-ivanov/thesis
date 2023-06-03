@@ -48,6 +48,9 @@
 \usepackage{mathtools}
 \usepackage{isomath}
 
+\usepackage{microtype}
+\usepackage{textcase}
+
 % Figures, tables, and captions
 \usepackage{tabularx}
 \usepackage{ltablex}
@@ -57,9 +60,9 @@
 \usepackage{floatrow}
 \usepackage{caption}
 \captionsetup{format=hang,font=small,labelfont={sc},margin=5pt}
-\usepackage{subcaption}
-\captionsetup[sub]{margin=0pt,font=small,labelfont={rm}}
-\captionsetup{compatibility=false}  % a workaround for "The `subcaption' package does not work correctly in compatibility mode."
+%\usepackage{subcaption}
+%\captionsetup[sub]{margin=0pt,font=small,labelfont={rm}}
+%\captionsetup{compatibility=false}  % a workaround for "The `subcaption' package does not work correctly in compatibility mode."
 
 \usepackage{blindtext}
 
@@ -67,6 +70,8 @@
 \usepackage[%
   hyperfootnotes=false,%
   pdfpagelabels,%
+  colorlinks=true,
+  allcolors=blue
   % pdfa,%
 ]{hyperref}
 \usepackage{hyperxmp}
@@ -115,7 +120,7 @@
 \renewcommand*{\subsectionautorefname}{Section}
 \renewcommand*{\subsubsectionautorefname}{Section}
 \providecommand{\subfigureautorefname}{\figureautorefname}%
-\usepackage[capitalize]{cleveref}
+\usepackage[capitalize,nameinlink]{cleveref}
 
 \PassOptionsToPackage{printonlyused}{acronym}
 \usepackage{acronym}
@@ -182,7 +187,7 @@
 \renewcommand*\dictumauthorformat[1]{--- #1}
 
 % Subfigure labels (manual)
-\newcommand{\subfig}[1]{(#1)}
+%\newcommand{\subfig}[1]{(#1)}
 
 % CV
 \newcommand{\cvleft}[1]{\begin{minipage}[t]{2.5cm}\begin{flushright}#1\end{flushright}\end{minipage}\hspace{5mm}}
@@ -205,15 +210,16 @@
 %\displaywidowpenalty = 10000
 
 \renewcommand{\sfdefault}{phv}
+\PassOptionsToPackage{hyphens}{url}
 
+% Too many alphabets
 \usepackage{amssymb}
 \usepackage{amsthm}
-
 \usepackage{latexsym}  % \leadsto
 
 \usepackage{booktabs}   % tables: toprule, midrule
 \usepackage{colortbl}
-\usepackage{dsfont} % beautiful 1
+%\usepackage{dsfont} % beautiful 1
 \usepackage{float}
 \usepackage{ragged2e}
 
@@ -255,6 +261,19 @@
 \Crefname{paradox}{Paradox}{Paradoxes}
 \crefname{problem}{open problem}{open problems}
 \Crefname{problem}{Open problem}{Open problems}
+
+% Fix spacing after Proof. header.
+\labelsep 0.5em
+
+\crefname{definition}{Def.}{Definitions}
+\Crefname{definition}{Def.}{Definitions}
+\crefname{section}{Sec.}{Sections}
+\Crefname{section}{Sec.}{Sections}
+\crefname{appendix}{App.}{Appendices}
+\Crefname{appendix}{App.}{Appendices}
+\crefname{algorithm}{Algorithm}{Algorithms}
+\Crefname{algorithm}{Algorithm}{Algorithms}
+% used packages
 
 \patchcmd{\paragraph}{\itshape}{\bfseries\boldmath}{}{}
 
@@ -327,3 +346,16 @@
 %    \iftoggle{blx@save@use##1}{\toggletrue{blx@use##1}}{\togglefalse{blx@use##1}}%
 %  }%
 %  \dolistcsloop{blx@datamodel@names}}
+
+% paper-global
+
+%https://tex.stackexchange.com/questions/5293/how-to-patch-a-package
+%\let\href\undefined
+\usepackage{layout}
+%\usepackage{MnSymbol} % \llangle, \rrangle
+%\usepackage{latexsym}  % messes up \sqsubset and \sqsubseteq.
+%\usepackage{stmaryrd} % \llbracket = [[
+%\usepackage{subcaption}  % for subfigure
+\usepackage[caption=false]{subfig}  % deprecated
+
+%\usepackage{titlesec}

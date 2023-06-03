@@ -1,35 +1,18 @@
-\subsection{Comparison on real data} \label{GLOBALsec:evals-comparison-hg}
+\subsection{Comparison on human data} \label{sec:evals-comparison-hg}
 
-\begin{figure}[t]
-  \centering
-  \subfloat[CHM13: ONT read errors]%
-  {\includegraphics[width=0.48\linewidth]{imgs/fig7/human_sorted_chm13.pdf}}
-  \hfill
-  \subfloat[NA12878: ONT read errors + biological variation]%
-  {\includegraphics[width=0.48\linewidth]{imgs/fig7/human_sorted_na12878.pdf}}
-  \caption[Runtime per sequence (real data)]{Log plot comparison of the
-  aligners' runtime on \textbf{real data}. The data points for each individual
-  aligner are sorted by alignment time. Alignments that timed out after $100$
-  seconds are not shown.}
-  \label{GLOBALfig:human-results}
-\end{figure}
-
-In this section we compare the exact optimal aligners on long ONT reads from our
-human datasets~(\cref{GLOBALfig:human-results}). With the presented minimalistic
-features, \astarpa aligns some sequences faster than \wfa and \edlib, but the
-high runtime variance makes it slower overall~(\cref{GLOBALsec:variation-human-results}).
-
-% heuristics vs biwfa/edlib
-On the dataset without biological variation \datasetOne, \SH is faster than \wfa
-and \edlib on $58\%$ of the alignments ($29$ of $50$). On the dataset with
-biological variation \datasetTwo, \SH outperforms \wfa and \edlib on $17\%$ of the
-alignments ($8$ of $48$) and in other cases is over an order of magnitude
-slower. In both datasets, \SH and \CSH time out for the sequences with the
-highest edit distances, because they have an error rate larger than the
-heuristic can handle efficiently~($e\geq r/k=2/15=13.3\%$).
-
-% SH vs CSH
-\CSH usually explores fewer states than \SH since \csh dominates
-the \sh. However, in certain cases \CSH is slower than \SH since needs more time
-to update the heuristic after pruning (Step 3$'$ in \cref{GLOBALsec:compute-csh}).
-%, and %spends up to $98\%$ of its time on this.
+We compare runtime~(\cref{fig:human-summary} and~\cref{app:human}), and memory
+usage (\cref{app:memory}) on human data.
+%
+We configure \astarpa to prune matches only when expanding their start (not
+their end), leaving some matches on the optimal path unpruned and speeding up
+the contour updates.
+%
+\astarpa~(\GCH with DT) aligns ONT reads faster than \edlib and \wfa in all
+quartiles, being ${>}2\times$ faster in median. However, the heuristic does not predict all errors
+when $d{\geq}10\%$, causing $6$~alignments to time out.
+%
+With genetic variation, \astarpa is $1.4\times$ faster than \edlib and \wfa in
+median. Low-divergence alignments are faster than \edlib, while
+high-divergence alignments are slower~($3$ sequences with $d{\geq}10\%$ time out) because of expanding
+quadratically many states in complex regions~(\cref{app:complex-cases}). Since slow alignments
+dominate the total runtime, \edlib is faster on average.

@@ -1,0 +1,56 @@
+\subsection{Computation of the (chaining) \sh}\label{app:computation}
+
+\thmcomputation*
+
+\begin{proof}
+For a chain of matches $\{m_i\} \subseteq \matches$, let $s_i$ and $t_i$ be the
+start and end states of $m_i$. We translate the terms of our heuristic from
+costs to potentials and match
+scores~(\cref{sec:computation}):
+\begin{align*}
+  && \seedcost(m_i, m_{i+1}) \; &+ \; \matchcost(m_{i+1})\\
+  &=& \big(P(t_i) - P(s_{i+1})\big) \; &+ \; \big(P(s_{i+1}) - P(t_{i+1}) - \matchscore(m_{i+1})\big)\\
+  &=& P(t_i)\; &-\; P(t_{i+1}) - \matchscore(m_{i+1}).
+\end{align*}
+The heuristic~(\cref{eq:general_sh}) can then be rewritten as follows:
+\begin{align*}
+  &h^\matches_{p,\seedcost}(u)\nonumber\\
+  &\quad= \min_{
+          \substack{
+            u \preceq_p m_1 \preceq_p \dots \preceq_p m_l \preceq_p v_t\\
+            m_i \in \matches}
+        }
+        \sum_{0\leq i \leq l}
+          \big[ P(t_i) - P(t_{i+1}) - \matchscore(m_{i+1}) \big]\nonumber\\
+  &\quad= P(u) - \max_{
+          \substack{
+            u \preceq_p m_1 \preceq_p \dots \preceq_p m_l \preceq_p v_t\\
+            m_i \in \matches}
+        }
+        \sum_{0\leq i \leq l}
+          \matchscore(m_{i+1})\nonumber\\
+      &\quad= P(u) - S_p(u).
+      \qedhere
+\end{align*}
+\end{proof}
+
+\begin{lem}\label{lem:contour}
+  Layer $\layer_\ell$ ($\ell>0$) is fully determined by the set of those matches~$m$
+  for which $\ell \leq S_p(m) < \ell+r$:
+  \begin{equation*}
+    \layer_\ell = \{u \mid \exists m\in \matches : u \preceq_p m \text{ \emph{and} } S_p(m) \in [\ell,\ell+r)\}.
+  \end{equation*}
+\end{lem}
+
+\begin{proof}\label{lem:contour-proof}
+Take any state $u \in \layer_\ell$. Its score $S_p(u) \geq \ell > 0$ implies
+that there is a non-empty \mbox{$\preceq_p$-chain}
+${u\preceq_p m_1 \preceq_p m_2\preceq_p \dots}$ with
+$\matchscore(m_1)+\matchscore(m_2) + \dots \geq \ell$.  The score of each match
+is less than~$r$ and thus there must be a match $m_i$ so that the subset of the
+chain starting at $m_i$ has score
+$S_p(m_i) = \matchscore(m_i) + \matchscore(m_{i{+}1}) + \dots +$ in the
+interval~$[\ell, \ell+r)$. This implies that for any $u$ with score
+$S_p(u)\geq \ell > 0$ there is a match with score in $[\ell, \ell+r)$ succeeding
+$u$, as required.
+\end{proof}

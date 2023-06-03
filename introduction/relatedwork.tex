@@ -7,14 +7,16 @@ reason is the combination of massive new data and advancement in computation
 hardware allowing for various kinds of parallelization.
 %Thus the advancements with bit-parallel algorithms (CITE Myears, Mikko).
 
-\paragraph{Dynamic programming (DP) for global alignment}
+\paragraph{Approaches to sequence alignment}
+
+\paragraph{Dynamic programming for global alignment}
 The first efficient solution for global alignment, known as the Needleman-Wunsch
 algorithm, got developed around~\citeyear{vintsyuk1968speech}~
 \cite{vintsyuk1968speech,needleman1970general}. This algorithm is based on the
-novel dynamic programming technique~\cite{bellman1954theory} of splitting a task
-into overlapping subtasks (or \emph{states}) which can be solved once and then
-reused. Each state corresponds to aligning a prefix of the first sequence to a
-prefix of the second sequence. Each subtask can be solved by reducing it to
+novel dynamic programming~(DP) technique~\cite{bellman1954theory} of splitting a
+task into overlapping subtasks~(or \emph{states}) which can be solved once and
+then reused. Each state corresponds to aligning a prefix of the first sequence
+to a prefix of the second sequence. Each subtask can be solved by reducing it to
 already solved alignments of shorter prefixes, and extending them by a last
 operation of matching or mismatching the last letters from the prefixes,
 inserting one, or inserting the other (equivalent to deleting from the first

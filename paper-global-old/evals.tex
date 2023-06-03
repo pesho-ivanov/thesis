@@ -1,0 +1,20 @@
+\section{Evaluations} \label{GLOBALsec:evals}
+
+We implemented the algorithms from~\cref{GLOBALsec:methods} in the aligner \astarpa
+and refer to the two of our algorithms as \SH for \sh, and \CSH for \csh. Here
+we empirically compare the runtime and memory usage to the exact optimal
+aligners \edlib and \wfa on both synthetic and real data. We demonstrate the
+benefit of match pruning on the runtime scaling with sequence length, and the
+benefits from match chaining and inexact matches on scaling to high error rates.
+All code, evaluation scripts and data are available in the \astarpa repository.
+
+\input{\dir/evals-setup}
+%\input{\dir/app-tools}
+\input{\dir/evals-table}
+\input{\dir/evals-comparison-synthetic}
+\input{\dir/evals-comparison-hg}
+
+\input{\dir/app-techniques}
+\input{\dir/app-band}
+\input{\dir/app-human}
+\input{\dir/app-complex-alignments}

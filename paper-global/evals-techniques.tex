@@ -1,0 +1,32 @@
+\subsection{Effect of pruning, inexact matches, chaining, and DT}\label{sec:techniques}
+
+We visualize the effects of complex sequences on the \A
+search~(\cref{app:comparison}).
+
+\paragraph{Pruning enables near-linear runtime}
+\Cref{fig:scaling-n} shows that match pruning changes the quadratic runtime of
+\SH to near-linear, by penalizing the expansion of states before the search tip.
+
+\paragraph{Inexact matches cope with higher divergence}
+Inexact matches increase the heuristic potential, allowing higher
+divergence~(\cref{fig:scaling-e}). For low divergence, the runtime is nearly
+constant~(\cref{app:scaling-e}), while for higher divergence it switches to
+linear. Inexact matches nearly double the threshold for constant runtime from
+$d\leq10\% = 1/k$ to $d\leq18\% \approx2/k$.
+
+\paragraph{Chaining copes with spurious matches}
+When seeds have many spurious matches (typical for inexact
+matches, $r{=}2$ in~\cref{fig:scaling-e}), \SH loses its strength. \CSH reduces the
+degradation of \SH by chaining matches.
+
+\paragraph{Gap-chaining copes with indels}
+Gap costs penalize both short and long indels which are common in genetic
+variation. As a result, \GCH is significantly faster than \CSH with genetic
+variation~(\cref{fig:human-summary}).
+
+\paragraph{Diagonal transition speeds up quadratic search}
+When \A explores quadratically many states, it behaves similar to \dijkstra. DT
+speeds up \dijkstra $20\times$~(\cref{fig:scaling-n}) and \CSH
+$3\times$~(\cref{fig:scaling-e}). For \dijkstra this is close to $1/d$, the
+expected reduction in number of expanded states. DT also speeds up the alignment
+of human data~(\cref{app:human}).

@@ -1,6 +1,6 @@
 \subsection{Seed heuristic with crumbs} \label{SEEDsec:definition}
 %
-Next, we formally define the \seedh function $h\st{v}{i}$. Overall, we want to
+Next, we formally define the \sh function $h\st{v}{i}$. Overall, we want to
 ensure that $h\st{v}{i}$ is admissible, \ie, that it is a lower bound on the
 cost of a shortest path from $\st{v}{i}$ to some $\st{w}{|q|}$ in $\AG$.
 
@@ -55,9 +55,9 @@ from each $v \in M(s)$ by a backward breadth-first-search (BFS).
 % (seeds towards the end need more crumbs so that the beginning of the alignment
 % can also see them), and $d$ is the maximal number of deletions (since a
 % deletion in the read may require a longer alignment in the reference grap)
-% after which the \seedh is anyway capped.\todo{explain better} Note that
+% after which the \sh is anyway capped.\todo{explain better} Note that
 % putting crumbs in all nodes that can potentially lead to an exact match is
-% crucial for the optimality guarantees of the \seedh, while putting unnecessary
+% crucial for the optimality guarantees of the \sh, while putting unnecessary
 % crumbs may only make the heuristic less precise so more state may be explored.
 % So in~\cref{SEEDthe:admissible} we prove that all necessary crumbs are placed and
 % the heuristic is admissible.
@@ -72,7 +72,7 @@ This allows us to define the number of expected but missing crumbs in state
 $\st{v}{i}$ as $\mli{misses}\st{v}{i} := \big\lvert \left\{  s
 \in \seeds_{\ge i} \mid v \notin C(s) \right \} \big\rvert$.
 %
-Finally, we define the \seedh as
+Finally, we define the \sh as
 \begin{align} \label{SEEDeq:heuristic}
 	h\st{v}{i} &= (\lvert q \rvert - i) \cdot \cmatch + \mli{misses}\st{v}{i} \cdot \delta_\mli{min},\\
 	\text{for } &\delta_\mli{min} = \min(\csubst - \cmatch,\cdel,\cins - \cmatch), \label{SEEDeq:delta}
@@ -103,7 +103,7 @@ our heuristic yields optimal alignments.
 
 \begin{thm}[Admissibility]
 	\label{SEEDthe:admissible}
-	The \seedh $h\st{v}{i}$ is admissible.
+	The \sh $h\st{v}{i}$ is admissible.
 \end{thm}
 \begin{proof}
 	Let $A$ be an optimal alignment of $q[i{:}]$ starting from $v \in \RG$. We

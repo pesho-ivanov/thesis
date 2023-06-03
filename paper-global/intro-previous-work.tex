@@ -1,0 +1,95 @@
+\subsection{Related work} \label{sec:intro-related-work}
+
+Here we outline algorithms, tools, optimizations, and implementations for exact
+\pa of genetic sequences. Refer to \citet{kucherov2019evolution} for
+approximate, probabilistic, and affine-cost algorithms and aligners.
+
+\paragraph{Dynamic programming (DP)} This classic approach to aligning two
+sequences computes a table where each cell contains the edit distance between a
+prefix of the first sequence and a prefix of the second by reusing the solutions
+for shorter prefixes. This quadratic DP was introduced for speech
+signals~\citet{vintsyuk1968speech} and genetic
+sequences~\citep{needleman1970general,sankoff1972matching,sellers1974theory,wagner1974string}.
+The quadratic $\Oh(nm)$ runtime for sequences of lengths $n$ and $m$
+allowed for aligning of long sequences for the time but speeding it up has been
+a central goal in later works. Implementations of this algorithm include
+\seqan~\citep{reinert2017seqan} and \parasail~\citep{daily2016parasail}.
+
+\paragraph{Band doubling and bit-parallelization} When the aligned
+sequences are similar, the whole DP table does not need to be computed.
+One such output-sensitive algorithm is the \emph{band doubling}
+algorithm of \citet{ukkonen1985algorithms} (\cref{fig1-band}) which considers
+only states around the main diagonal of the table, in a \emph{band}
+with exponentially increasing width, leading to $\Oh(ns)$ runtime, where $s$ is
+the edit distance between the sequences. This algorithm, combined with the
+\emph{bit-parallel optimization} by~\citet{myers1999fast} is implemented in
+\edlib~\citep{vsovsic2017edlib} with $\Oh(ns/w)$ runtime, where
+$w$ is the machine word size (nowadays $64$).
+
+\paragraph{Diagonal transition (DT)}
+The \emph{diagonal transition}
+algorithm~\citep{ukkonen1985algorithms,myers1986ano} exploits the observation
+that the edit distance does not decrease along diagonals of the DP matrix. This
+allows for an equivalent representation of the DP table based on
+\emph{farthest-reaching states} for a given edit distance along each diagonal.
+Diagonal transition has an $\Oh(ns)$ worst-case runtime but only takes expected
+$\Oh(n{+}s^2)$ time~(\cref{fig1-wfa}) for random input
+sequences~\citep{myers1986ano} (which is still quadratic for a fixed
+divergence~$d=s/n$). It has been extended to linear and affine costs in the
+\emph{wavefront alignment}~(WFA)~\citep{marco2021fast} in a way similar
+to~\citet{gotoh1982improved}. Its memory usage has been improved to linear in
+\wfa~\citep{marco2022optimal} by combining it with the divide-and-conquer
+approach of~\citet{hirschberg1975linear}, similar to~\citet{myers1986ano} for
+unit edit costs.
+
+\paragraph{Contours}
+The longest common subsequence (LCS) problem is a special case of edit distance,
+in which gaps are allowed but substitutions are forbidden. \emph{Contours}
+partition the state-space into regions with the same remaining answer of the LCS
+subtask~(\cref{fig:contours}). The contours can be computed in log-linear
+time in the number of matching elements between the two sequences which is
+practical for large alphabets~\citep{hirschberg1977algorithms,hunt1977fast}.
+
+% Shortest paths, A* for MSA and semi-global alignment (AStarix), gaps
+\paragraph{Shortest paths and heuristic search using \A}
+A \pa that minimizes edit distance corresponds to a shortest path in the
+\emph{alignment graph}~\citep{vintsyuk1968speech,ukkonen1985algorithms}.
+Assuming non-negative edit costs, a shortest path can be found using Dijkstra's
+algorithm~\citep{ukkonen1985algorithms} (\cref{fig1-dij}) or
+\A~\citep{hart1968formal,spouge1989speeding}. \A is an informed search algorithm which uses a
+task-specific heuristic function to direct its search. Depending on the
+heuristic function, a shortest path may be found significantly faster than by an
+uninformed search such as Dijkstra's algorithm.
+
+% NOTE: The below is false (they define incremental heuristic as reusing info
+%       from previous searches), and we do not use/refer to it at all.
+%An incremental heuristic search
+%is one with a heuristic function that is allowed to get refined during the
+%search~\citep{koenig2004incremental}.
+
+\paragraph{Gap cost} One common heuristic function to speed up alignments is the
+\emph{gap
+cost}~\citep{ukkonen1985algorithms,myers1995chaining,spouge1989speeding,wu90onp,papamichail2009improved}
+This is a lower bound on the remaining edit distance and counts the minimal
+number of indels needed to align the suffixes of two sequences.
+
+\paragraph{Seed-and-extend}
+\emph{Seed-and-extend} is a commonly used paradigm for approximately solving
+semi-global alignment by first matching similar regions between sequences
+(\emph{seeding}) to find \emph{matches} (also called \emph{anchors}), followed by
+\emph{extending} these matches~\citep{kucherov2019evolution}. Aligning long
+reads requires the additional step of chaining the seed matches
+(\emph{seed-chain-extend}). Seeds have also been used to solve the LCSk
+generalization of LCS~\citep{benson2014longest,pavetic2017fast}. Except for the
+\sh \citep{ivanov2022fast}, most seeding approaches seek for seeds with accurate
+long matches.
+
+\paragraph{Seed heuristic}
+\A with \emph{\sh} is an exact algorithm that was recently introduced for
+exact semi-global sequence-to-graph alignment~\citep{ivanov2022fast}. In a
+precomputation step, the query sequence is split into non-overlapping
+\emph{seeds} each of which is matched exactly to the reference. When \A explores
+a new state, the admissible \sh is computed as the number of remaining seeds
+that cannot be matched in the upcoming reference. A limitation of the existing
+\sh is that it only closely approximates the edit distance for very
+similar sequences (divergence between $0.3\%$ and $4\%$).

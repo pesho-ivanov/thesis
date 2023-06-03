@@ -1,0 +1,97 @@
+\subsection{Computation of the heuristic}\label{sec:heuristic-code}
+\cref{alg:heuristic} shows how the heuristic is initialized, how $S_p(u)$ and
+$h(u)$ are computed, and how matches are pruned.
+
+\algnewcommand{\AND}{\textbf{ and }}
+\algnewcommand{\OR}{\textbf{ or }}
+
+\begin{algorithm}[h]
+  \caption{Computation of the heuristic.} \label{alg:heuristic}
+\fontfamily{\sfdefault}\selectfont
+\begin{algorithmic}[1]
+\State \textbf{Input:} Sequences $A$ and $B$
+\State \textbf{Output:} Heuristic $h$
+\Function{initializeheuristic}{$A$, $B$, $k$}
+\State $S \gets$ Non-overlapping $k$-mers of $A$
+\Comment Seeds
+\State $H \gets$ Map of all $k$-mers (and $k{\pm}1$-mers for $r=2$) of $B$
+\State $\matches_s \gets \bigcup_{s':\ \ed(s, s') < r} H[s']$
+\Comment Seed matches
+\State $\matches\phantom{_s} \gets \bigcup_{s\in \seeds} \matches_s$
+\Comment Matches
+\State $P(i) \gets r \cdot |S_{\geq i}|$ for all $i \in [0, |A|]$
+\Comment Potentials
+\State $L[0] = \{m_\omega\}$
+\Comment Layers
+\For{$m\in \matches$ in decreasing order of $\preceq_p$}
+  \State $\ell \gets \matchscore(m) + S_p(\matchend(m))$
+  \If{$m\preceq_p m_\omega$}
+  \Comment{If $m$ precedes the target}
+    \State $L[\ell].push(m)$
+  \EndIf
+\EndFor
+\EndFunction
+
+\Statex
+\Function{$S_p$}{$u$}
+\Function{test}{$\ell$}
+\For{$\ell' \in [\ell, \ell+r)$}
+\If{$u\preceq_p m$ for some $m\in L[\ell']$}
+\State \Return $True$
+\EndIf
+\EndFor
+\State \Return $False$
+\EndFunction
+\State\Return $\max \{\ell\mid \texttt{TEST}(\ell)\}$
+\Comment{Binary search the highest $\ell$}
+%\State \Comment{Or first do a small linear search using a \emph{hint}}
+\EndFunction
+
+\Statex
+\Function{$\hsh$}{$u$}
+\Comment{\SH}
+\State\Return $P(u) - S_i(u)$
+\EndFunction
+
+\Statex
+\Function{$\hcsh$}{$u$}
+\Comment{\CSH}
+\State\Return $P(u) - S_\preceq(u)$
+\EndFunction
+
+\Statex
+\Function{$\hgch$}{$u$}
+\Comment{\GCH}
+\State\Return $\max(P(u) - S_T(u), \gapcost(u, v_t))$
+\EndFunction
+
+\Statex
+\Function{prune}{$u$}
+\State $\ell_u \gets S_p(u)$
+\ForAll{$m \in \matches\colon start(m) = u$ \OR $end(m) = u$}
+  \If{$h \neq \hgch \OR$ $\matches \backslash \{m\}$ is consistent}
+    \State Remove $m$ from $\matches$
+    \For{$\ell \in [S_p(start(m))-r+1, S_p(start(m))]$}
+        \State Remove $m$ from $L[\ell]$ if present
+    \EndFor
+  \EndIf
+\EndFor
+\For{$\ell \in [\ell_u+1, S_p\st 00]$}
+\ForAll{$m\in L[\ell]$}
+\State $\ell' \gets S_p(m)$
+  \If{$\ell'\neq \ell$}
+    \State Move $m$ from $L[\ell]$ to $L[\ell']$ 
+  \EndIf
+\EndFor
+\If{$r$ consecutive layers unchanged}
+\State \Return
+\EndIf
+\If{$r{-}1+\ell-\ell'$ consecutive layers shifted exactly $\ell{-}\ell'$}
+\State Remove empty layers $L[\ell'{+}1], \dots, L[\ell]$
+\Statex \Comment Shift higher layers down
+\State \Return
+\EndIf
+\EndFor
+\EndFunction
+\end{algorithmic}
+\end{algorithm}

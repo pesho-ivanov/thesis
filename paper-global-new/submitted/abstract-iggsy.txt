@@ -1,0 +1,26 @@
+Exact pairwise alignment using ordered seed heuristic for A*
+P. Ivanov, R. Groot Koerkamp
+
+We present a novel algorithm to compute the global pairwise sequence alignment of
+long sequences with uniform mutations,
+based on a novel \emph{ordered seed heuristic} for running A* on the edit graph.
+
+The heuristic partitions the first sequence into short seeds and finds all
+matches in the second sequence.
+From this we infer a lower bound on the cost of aligning suffixes of the two
+sequences based on the cost of aligning each of the remaining seeds in order.
+
+We reduce the number of states explored during the A* using the general
+observation called \emph{multiple-path pruning} that once a shortest path to a
+node is found, no other paths to that node can improve the global solution. This
+allows us to use a \emph{dynamic heuristic} that improves as the A* progresses.
+
+We test our method on pairs of random sequences with uniform error rate $e$.
+For $e=0.1$, we demonstrate that our method scales with $O(n^{1.3})$ for lengths from
+$10^4$ to $10^7$, and outperforms single-threaded algorithms Edlib and WFA for
+sequences longer than $10^4$. For $e=0.01$ our method scales with
+$O(n^{1.2})$ and outperforms WFA for sequences longer than $2\cdot 10^5$.
+Furthermore, evaluations show that the number of states explored by the A* is within a
+constant factor of the theoretical lower bound in this regime.
+
+Code is available at: https://github.com/RagnarGrootKoerkamp/astar-pairwise-aligner

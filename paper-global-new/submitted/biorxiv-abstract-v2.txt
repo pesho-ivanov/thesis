@@ -1,0 +1,25 @@
+<B>Motivation.</B> Sequence alignment has been a core problem in computational
+biology for the last half-century. It is an open problem whether exact pairwise
+alignment is possible in linear time for related sequences (Medvedev, 2022b).
+&#13;&#10;
+<B>Methods.</B> We solve exact global pairwise alignment with respect to edit
+distance by using the A* shortest path algorithm on the edit graph. In order to
+efficiently align long sequences with high error rate, we extend the <I>seed
+heuristic</I> for A* (Ivanov et al., 2022) with <I>match chaining</I>,
+<I>inexact matches</I>, and the novel <I>match pruning</I> optimization. We
+prove the correctness of our algorithm and provide an efficient implementation
+in A*PA.
+&#13;&#10;
+<B>Results.</B> We evaluate A*PA on synthetic data (random sequences of length n
+with uniform mutations with error rate e) and on real long ONT reads of human
+data. On the synthetic data with e=5% and n&#8804;10^7 bp, A*PA exhibits a
+near-linear empirical runtime scaling of n^1.08 and achieves >250x speedup
+compared to the leading exact aligners EDLIB and BIWFA. Even for a high error
+rate of e=15%, the empirical scaling is n^1.28 for n&#8804;1.07 bp. On two real
+datasets, A*PA is the fastest aligner for 58% of the alignments when the reads
+contain only sequencing errors, and for 17% of the alignments when the reads
+also include biological variation.
+&#13;&#10;
+<B>Availability.</B> github.com/RagnarGrootKoerkamp/astar-pairwise-aligner
+&#13;&#10;
+<B>Contact.</B> ragnar.grootkoerkamp@inf.ethz.ch, pesho@inf.ethz.ch

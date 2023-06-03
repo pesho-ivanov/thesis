@@ -1,0 +1,57 @@
+\subsection{Implementation notes}\label{sec:impl}
+
+Here we list implementation details on performance and correctness.
+
+\paragraph{Bucket queue}
+We use a hashmap to store all computed values of $g$ in the \A~algorithm. Since
+the edit costs are bounded integers, we implement the priority queue using a
+\emph{bucket queue}~\citep{bertsekas1991linear}. Unlike heaps, this data
+structure has amortized constant time push and pop operations since the value
+difference between consecutive pop operations is bounded.
+
+\paragraph{Greedy matching of letters}
+From a state $\st ij$ where $a_i = b_j$, it is sufficient to only consider the
+matching edge to $\st
+{i{+}1}{j{+}1}$~\citep{allison_lazy_1992,ivanov2020astarix}, and ignore the
+insertion and deletion edges to $\st i{j{+}1}$ and $\st {i{+}1}j$. During
+alignment, we greedily match as many letters as possible within the current seed
+before inserting only the last open state in the priority queue, but we do not
+cross seed boundaries in order to not interfere with match pruning. This
+optimization is superseded by the DT-optimization. We include greedily matched
+states in the reported number of expanded states.
+
+\paragraph{Priority queue offset}
+Pruning the last remaining match in a layer may cause an increase of the
+heuristic in all states preceding the start $u$ of the match. This invalidates
+$f$ values in the priority queue and causes reordering. We skip most of the
+update operations by storing a global offset to the $f$-values in the priority
+queue, which we update when all states in the priority queue precede $u$.
+
+\paragraph{Split vector for layers}
+Pruning a match may trigger the removal of one or more layers of matches in $L$, and the
+shifting down of higher layers. To efficiently remove layers, we use a
+\emph{split vector} data structure consisting of two stacks. In the first stack
+we store the layers before the last deleted layer, and in the second stack the
+remaining layers in reverse order. Before deleting a layer, we move layers from
+the top of one of the stacks to the top of the other, until the layer to be
+deleted is at the top of one of the stacks. Removing layers in decreasing order
+of $\ell$ takes linear total time.
+
+\paragraph{Binary search speedup}
+Instead of using binary search to determine the layer/score
+$S_p(u)$~(\cref{alg:heuristic}), we first try a linear search around either the
+score of the parent of $u$ or a known previous score at $u$. This linear search
+usually finds the correct layer in a few iterations, or otherwise we fall back
+to binary search.
+
+In practice, most pruning happens near the tip of the search, and the number of
+layers between the start $v_s$ and an open state $u$ rarely changes. Thus, to
+account for changing scores, we store a \emph{hint} of value ${S_p(v_s) -
+S_p(u)}$ in a hashmap and start the search at $S_p(v_s) - hint$.
+
+\paragraph{Code correctness}
+Our implementation \astarpa is written in Rust, contains many assertions testing
+e.g. the correctness of our \A and layers data structure implementation,
+and is tested for correctness and performance on randomly-generated sequences.
+Correctness is checked against simpler algorithms (Needleman-Wunsch) and other
+aligners (\edlib, \wfa).

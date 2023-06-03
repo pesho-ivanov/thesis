@@ -9,7 +9,7 @@ parallel.
 
 \paragraph{Compared aligners}
 %
-We compare the novel \seedh to \prefixh (both heuristics are implemented in
+We compare the novel \sh to \prefixh (both heuristics are implemented in
 \astarix), \graphaligner, \pasgal, and \vargas. We provide the versions and
 commands used to run all aligners and read simulators
 in~\cref{sec:commands}. 
@@ -24,7 +24,7 @@ with AVX2 support. We execute the \prefixh with the default lookup depth $d=5$.
 
 \paragraph{Seed heuristic parameters}
 %
-The choice of parameters for the \seedh influences its performance.
+The choice of parameters for the \sh influences its performance.
 %
 Increasing the trie depth increases its number of nodes, but decreases the
 average out-degree of its leaves. We set the trie depth for all experiments to
@@ -52,9 +52,9 @@ Additionally, we extracted a path from MHC in order to create a linear reference
 MHC-linear of length \numprint{4956648}bp which covers approx. 93\% of the
 original graph. Because of input graph format restrictions, we execute
 \graphaligner, \vargas and \pasgal only on linear references in FASTA format
-(\textit{E.~coli} and the MHC-linear), while we execute the \seedh and the
+(\textit{E.~coli} and the MHC-linear), while we execute the \sh and the
 \prefixh on the original references (\textit{E.~coli} and MHC). This yields an
-underestimation of the speedup of the \seedh, as we expect the performance on
+underestimation of the speedup of the \sh, as we expect the performance on
 MHC-linear to be strictly better than on the whole MHC graph.
 
 To generate both short Illumina and long HiFi reads, we relied on two tools. We

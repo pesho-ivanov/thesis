@@ -1,0 +1,47 @@
+\paragraph{Our heuristics are \wa}\label{sec:weak-admissible-h}
+
+A \emph{consistent} heuristic finds the correct distance to each vertex as soon
+as it is expanded. While our heuristics are not consistent, this property is
+true for states \emph{at the starts of seeds} (when~$i$ is a multiple of the
+seed length $k$, or when~$i=n$).
+
+\begin{lem}\label{lem:fixed}% i
+  For $\hh \in \{\hshS$\,, $\hcshS$\,, $\hgchS\}$, every state at the start of a
+  seed becomes fixed immediately when \A expands it.
+\end{lem}
+\begin{proof}
+  We use a proof by contradiction: suppose that $v$ is a state at the start of some
+  seed that is expanded but not fixed. In other words, $f(v)$ is minimal among
+  all open states, but the shortest path $\pi^*$ from $v_s$ to $v$ has strictly
+  smaller length ${\g(v) < g(v)}$.
+
+  Let $n^*$ be the last fixed state on $\Path$ before~$v$, and let~$u \in \Path$
+  be the successor of $n^*$. State $u$ is open because its predecessor $n^*$ is
+  fixed and on a shortest path to $u$. Let the chain of all matches of cost less
+  than $r$ on $\Path$ between $u$ and $v$ be ${u\preceq m_1 \preceq \dots
+  \preceq m_l \preceq v}$. Since $n^*$ is the last fixed state on $\Path$, none
+  of these matches has been pruned, and they are all in $\prunedmatches$ as
+  well. This means we can apply \cref{lem:weakconsistency} to get $h(u) \leq
+  \d(u, v) + h(v)$, so
+  \begin{align*}
+    f(u) &= g(u)+h(u)
+         = \g(u)+h(u) && \text{$\Path$ is a shortest path} \\
+         &\leq \g(u)+\d(u,v)+h(v) && \text{shown above} \\
+         &= \g(v) + h(v) &&\text{$\Path$ is a shortest path} \\
+         &< g(v)+h(v) = f(v) && \text{by assumption.}
+  \end{align*}
+  This proves that $f(u) < f(v)$, resulting in a
+  contradiction with the assumption that $u$ is an open state with minimal $f$.
+\end{proof}
+
+\thmpartialadmissibleh*
+\begin{proof}
+  Let $\Path$ be a shortest path from $v_s$ to $v_t$. At any point during the \A
+  search, let~$n^*$ be the farthest expanded state on $\Path$ that is at the
+  start of a seed. By \cref{lem:fixed}, $n^*$ is fixed. By the choice of $n^*$,
+  no states on~$\pi^*$ after $n^*$ that are at the start of a seed are expanded,
+  so no matches on $\pi^*$ following~$n^*$ are pruned. Now the proof
+  of \cref{thm:admissible} applies to the part of~$\Path$ after~$n^*$ without
+  changes, implying that $\hh(u) \leq \h(u)$ for all $u$ on $\Path$
+  following~$n^*$, for any ${\hh \in \{\hshS, \hcshS, \hgchS\}}$.
+\end{proof}

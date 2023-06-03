@@ -1,0 +1,77 @@
+\subsection{\A~algorithm for match pruning} \label{sec:astar-code}
+
+We present our variant of \A~\citep{hart1968formal} that supports match
+pruning~(\cref{alg:astar}). All computed values of $g$ are stored in a hash map,
+and all \emph{open} states are stored in a bucket queue of tuples ${(v, g(v),
+f(v))}$ ordered by increasing~$f$. Line~\ref{alg:astar:prune} prunes (removes) a
+match and thereby increases some heuristic values before that match. As a
+result, some \mbox{$f$-values} in the priority queue may become outdated.
+Line~\ref{alg:astar:reorder1} solves this problem by checking if the
+\mbox{$f$-value} of the state about to be expanded was changed, and if so,
+line~\ref{alg:astar:reorder2} pushes the updated state to the queue, and
+proceeds by choosing a next best state. This way, we guarantee that the expanded
+state has minimal updated $f$. To reconstruct the best alignment we traceback
+from the target state using the hash map $g$ (not shown).
+
+\newcommand{\bolditem}{\refstepcounter{enumi}\item[\textbf{\theenumi.}]}
+\newcommand{\boldsubitem}{\refstepcounter{enumii}\item[\textbf{\theenumii.}]}
+
+% Use \boldnext to make a line number bold.
+\newif\ifboldnumber
+\newcommand{\boldnext}{\global\boldnumbertrue}
+\algrenewcommand\alglinenumber[1]{%
+  \footnotesize\ifboldnumber\bfseries\fi\global\boldnumberfalse#1:}
+
+\begin{algorithm}[b]
+  \caption{
+    \A algorithm with match pruning.\\
+    Lines added for pruning
+    (\ref{alg:astar:reorder1}, \ref{alg:astar:reorder2}, and \ref{alg:astar:prune})
+    are marked in \textbf{bold}.
+  }\label{alg:astar}
+\fontfamily{\sfdefault}\selectfont
+\begin{algorithmic}[1]
+\State \textbf{Input:} Sequences $A$ and $B$ and pruning heuristic $h$
+\State \textbf{Output:} Edit distance between $A$ and $B$
+\Function{astar}{$A$, $B$, $h$}
+\State $g(v_s) \gets 0$
+\Comment{Hashmap of distances; default $+\infty$}
+\State $q \gets BucketQueue()$
+\Comment{Bucket queue of open states}
+\State $q.push((v_s, g{=}0, f{=}0))$
+\Repeat
+  \State $(u, g_u, f_u) \gets q.pop()$
+  \Comment{Pop $u$ with minimal $f$}
+  \If{$g_u > g(u)$}
+    \State \textbf{continue}
+    \Comment{$u$ was already expanded}
+  \boldnext
+  \ElsIf{$f_u < g(u) + h(u)$}
+    \Comment{$h(u)$ has increased}
+    \label{alg:astar:reorder1}
+  \boldnext
+    \State $q.push((u, g_u, g(u) + h(u)))$
+    \Comment{\emph{Reorder} $u$}
+    \label{alg:astar:reorder2}
+  \Else
+  \Comment{\emph{Expand} $u$}
+  \boldnext
+  \State $Prune(u)$
+    \label{alg:astar:prune}
+   \For{successors $v$ of $u$}
+     \State $g_v \gets g_u + \d(u, v)$
+     \State $v \gets Extend(v)$
+     \Comment{Greedy matching within seed}
+     \If{$g_v < g(v)$}
+       \label{alg:astar:open}
+       \Comment{\emph{Open} $v$}
+       \State $g(v) \gets g_v$
+       \State $q.push((v, g_v, g_v + h(v)))$
+     \EndIf
+   \EndFor
+   \EndIf
+\Until{$v_t$ is expanded}
+\State \Return{$g(v_t)$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}

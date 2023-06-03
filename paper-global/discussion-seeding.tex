@@ -1,0 +1,8 @@
+\paragraph{Seeds are necessary, matches are optional}\label{sec:seeding}
+
+Unlike the seed-and-extend paradigm which reconstructs good alignments by
+connecting seed matches, we use the lack of matches to penalize alignments.
+Given the admissibility of our heuristics, the more seeds without matches, the
+higher the penalty for alignments and the easier it is to dismiss suboptimal
+ones. In the extreme, not having any matches can be sufficient for finding an
+optimal alignment in linear time~(\cref{app:no-matches}).

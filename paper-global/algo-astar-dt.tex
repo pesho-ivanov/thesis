@@ -1,0 +1,57 @@
+\begin{algorithm}[b]
+  \caption{
+    \A-DT algorithm with match pruning.\\
+    Lines changed for diagonal transition
+    (\ref{astardt:init}, \ref{astardt:check}, \ref{astardt:checkopen}, and
+    \ref{astardt:update})
+    are in \textbf{bold}.
+  }%
+  \label{alg:astardt}
+\fontfamily{\sfdefault}\selectfont
+\begin{algorithmic}[1]
+\State \textbf{Input:} Sequences $A$, $B$ and
+pruning heuristic $h$
+\State \textbf{Output:} Edit distance between $A$ and $B$
+\Function{astar-dt}{$A$, $B$, $h$}
+\boldnext
+\State $\fr_{0,0} \gets 0$
+\Comment{Hashmap of f.r. point per $g$ and $k$; default $-\infty$}
+\label{astardt:init}
+\State $q \gets BucketQueue()$
+\Comment{Bucket queue of open states}
+\State $q.push((v_s, g{=}0, f{=}0))$
+\Repeat
+  \State $(u, g_u, f_u) \gets q.pop()$
+  \Comment{Pop $u$ with minimal $f$}
+\boldnext
+  \If{$i_u{+}j_u < \fr_{g_u,i_u{-}j_u}$}
+    \label{astardt:check}
+    \State \textbf{continue}
+    \Comment{$u$ is not farthest reaching}
+  \ElsIf{$f_u < g(u) + h(u)$}
+    \Comment{$h(u)$ has increased}
+    \State $q.push((u, g_u, g(u) + h(u)))$
+    \Comment{\emph{Reorder} $u$}
+  \Else
+  \Comment{\emph{Expand} $u$}
+  \State $Prune(u)$
+   \For{successors $v$ of $u$}
+     \State $g_v \gets g_u + \d(u, v)$
+     \State $v \gets Extend(v)$
+     \Comment{Greedy matching in seed}
+\boldnext
+     \If{$i_v{+}j_v > \fr_{g_v,i_v{-}j_v}$}
+       \label{astardt:checkopen}
+       \Comment{\emph{Open} $v$}
+\boldnext
+       \State $\fr_{g_v,i_v{-}j_v} \gets i_v{+}j_v$
+       \label{astardt:update}
+       \State $q.push((v, g_v, g_v + h(v)))$
+     \EndIf
+   \EndFor
+   \EndIf
+\Until{$v_t$ is expanded}
+\State \Return{$g(v_t)$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}

@@ -1,14 +1,17 @@
-\label{GLOBALsec:methods}
+\section{Methods} \label{sec:methods}
 
-\section{Methods}
+We intuitively motivate our \A heuristics and its improvements
+in~\cref{sec:intuition}. Then we formally define the general chaining seed
+heuristic~(\cref{sec:heuristic}) that encompases \emph{inexact matches},
+\emph{chaining}, and \emph{gap costs}~(\cref{fig:heuristics}). Next, we
+introduce the \emph{match pruning}~(\cref{sec:pruning}) improvement and
+integrate our \A algorithm with the \emph{diagonal-transition}
+optimization~(\cref{sec:dt}). We present a practical
+algorithm~(\cref{sec:computation}), implementation~(\cref{sec:impl}) and
+proofs of correctness~(\cref{sec:proofs}).
 
-In this section we define the \emph{\sh} with \emph{inexact matches} and \emph{chaining},
-and \emph{match pruning} (see~\cref{GLOBALfig:heuristics}). We motivate each of
-these extensions intuitively, define them formally, and prove that \A is
-guaranteed to find a shortest path. We end with a reformulation of our
-heuristic definitions that allows for more efficient computation.
-
+\input{\dir/fig-heuristics}
 \input{\dir/methods-intuition}
 \input{\dir/methods-heuristic}
-\input{\dir/methods-computing}
 \input{\dir/methods-pruning}
+\input{\dir/methods-computation}

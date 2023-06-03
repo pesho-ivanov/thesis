@@ -1,0 +1,38 @@
+\subsection{Diagonal transition for \A}\label{sec:dt}
+
+For a given distance $g$, the diagonal transition method only considers the
+\emph{farthest-reaching}~(f.r.) state $u{=}\st ij$ on each diagonal $k{=}i{-}j$
+at distance~$g$. We use $\fr_{gk} := i{+}j$ to indicate the antidiagonal%
+\footnote{Previous works indicate the column $i$ of $u$, but using the
+antidiagonal~$i{+}j$ keeps the symmetry between insertions and deletions.}
+of the farthest reaching state. Let $\x_{gk}$ be the farthest state
+on diagonal $k$ adjacent to a state at distance $g{-}1$, which is then
+\emph{extended} into $\fr_{gk}$ by following as many matches as possible. The
+edit distance is the lowest $g$ such that $\fr_{g,n{-}m} \geq n+m$, and we have
+the recursion
+\begin{align}
+  \x_{gk} &:= \max(\fr_{g{-}1, k{-}1}{+}1, \fr_{g{-}1, k}{+}2, \fr_{g{-}1, k{+}1}{+}1),\label{eq:dt-x}\\
+  \fr_{gk} &= \x_{gk} + \LCP\left(A_{\geq (\x_{gk}+k)/2}, B_{\geq (\x_{gk}-k)/2}\right).\label{eq:dt-fr}
+\end{align}
+The base case is $\x_{0,0} {=} 0$ with default value $\fr_{gk}{=}{-}\infty$ for
+$k {>} \abs{g}$, and $\LCP$ is the length of the longest common prefix of two
+strings. Each edge in a traceback path is either a match created by an
+extension~\eqref{eq:dt-fr}, or a mismatch starting in a f.r.
+state~\eqref{eq:dt-x}. We call such a path an \emph{{f.r. path}}.
+
+\paragraph{Implementation}
+In~\cref{alg:astardt} we further modify the \A algorithm to only consider f.r.
+paths.  We replace the map $g$ that tracks the best distance by a map~$\fr_{gk}$
+that tracks f.r. states (lines~\ref{astardt:init}, \ref{astardt:checkopen}, and
+\ref{astardt:update}).  Instead of $g(u)$ decreasing over time, we now ensure
+that $F_{g,k}$ increases over time.  Each time a state $u$ is opened or
+expanded, the check whether $g(u)$ decreases is replaced by a check whether
+$\fr_{gk}$ increases~(line~\ref{astardt:check}).  This causes the search to skip
+states that are known to not be farthest reaching. The proof of
+correctness~(\cref{thm:weak-admissible-dfn}) still applies.
+
+Alternatively, it is also possible to implement \A directly in the
+diagonal-transition state-space by pushing states $\fr_{gk}$ to the priority
+queue, but for simplicity we keep the similarity with the original \A.
+
+\input{\dir/algo-astar-dt}

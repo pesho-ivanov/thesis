@@ -1,0 +1,51 @@
+\subsection{Contributions} \label{sec:contributions}
+
+We solve global pairwise alignment exactly and efficiently using the \A shortest
+path algorithm. In order to handle long and divergent sequences, we generalize
+the existing seed heuristic to a novel \csh which includes chaining, inexact
+matches, and gap costs. Then we improve the heuristic using a novel \emph{match
+pruning} technique and optimize the \A search using the existing diagonal
+transition technique. We prove that all our heuristics guarantee that \A finds a
+shortest path.
+
+\paragraph{\Csh} The \emph{\sh}~\citep{ivanov2022fast} penalizes missing seed
+matches. Our \csh requires matches to be chained in order, which reduces the
+negative effect of spurious (off-track)
+matches~\citep{wilbur1984context,benson2016lcsk}, and improves performance for
+highly divergent sequences. To handle long indels, we introduce the \emph{\gch}
+which uses a \emph{gap cost} for indels between consecutive matches.
+
+\paragraph{Inexact matches} We match seeds \emph{inexactly} by aligning each
+seed with up to $1$ edit, enabling our heuristics to potentially double in value and
+cope with up to twice higher divergence.
+
+\paragraph{Match pruning}
+In order to further improve our heuristics, we apply the \emph{multiple-path pruning}
+observation of \citet{poole2017artificial}: once a shortest path to a vertex has
+been found, no other paths through this vertex can improve the global shortest
+path. When \A expands the start or end of a match, we remove (\emph{prune}) this
+match from further consideration, thus improving (increasing) the heuristic for
+the states preceeding the match. The incremental nature of our heuristic search is
+remotely related to Real-Time Adaptive~\A~\citep{koenig2006real}. Match pruning
+enables near-linear runtime scaling with length~(\cref{fig1-astar}).
+
+\paragraph{Diagonal transition \A}
+We speed up our algorithm by combining it with the diagonal transition
+optimization that skips states where a farther state along the same diagonal
+has already been reached with the same distance~(\cref{fig1-wfa}).
+
+\paragraph{Implementation}
+We implement our algorithm in \astarpa (\A Pairwise Aligner). The efficiency of
+our implementation relies on contours, which enables near-constant time
+evaluation of the heuristic.
+
+\paragraph{Scaling and performance}
+We compare the absolute runtime, memory, and runtime scaling of \astarpa to
+other exact aligners on synthetic data, consisting of random genetic sequences
+(length $n{\leq}10^7\bp$, uniform divergence $d{\leq}12\%$). For $d{=}4\%$ and
+$n{=}10^7\bp$, \astarpa is up to $300\times$ faster than the fastest aligners
+\edlib~\citep{vsovsic2017edlib} and \wfa~\citep{marco2022optimal}. Our real
+dataset experiments involve ${>}500\kbp$ long Oxford Nanopore (ONT) reads with
+$d{<}19.8\%$. When only sequencing errors are present, \astarpa is $2\times$
+faster (in median) than the second fastest, and when genetic variation is also
+present, it is $1.4\times$ faster.

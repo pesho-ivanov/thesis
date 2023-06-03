@@ -1,0 +1,16 @@
+\paragraph{Limitations} \phantom{x}
+\nopagebreaklist
+
+\begin{enumerate}
+  \item \emph{Limited divergence.} %
+        Our heuristics can estimate the remaining edit distance up to about
+        $d{\leq}10\%$~(on human data). Higher divergence triggers a slow
+        quadratic search.
+  \item \emph{Complex regions.} %
+        Regions with high divergence, long indels, or many matches trigger
+        quadratic runtime~(\cref{app:complex-cases,app:comparison}).
+  \item \emph{Computational overhead of \A.} %
+        Graph algorithms are ${\gg} 100\times$ less efficient than DP~(compare
+        \dijkstra and \edlib in \cref{fig:scaling-n}). Despite the near-linear
+        scaling of \astarpa, it is only faster than \edlib and \wfa for $n \geq 30\kbp$.
+\end{enumerate}

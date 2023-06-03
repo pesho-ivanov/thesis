@@ -1,0 +1,28 @@
+% Problem, applications
+The problem of aligning one biological sequence to another is known as
+\emph{global pairwise alignment}~\citep{navarro2001guided}. Among others, it is
+applied to genome assembly, read mapping, variant detection, and multiple
+sequence alignment~\citep{prjibelski2018sequence}. Despite the centrality and
+age of \pa~\citep{needleman1970general}, ``a major open problem is to implement
+an algorithm with linear-like empirical scaling on inputs where the edit
+distance is linear in~$n$''~\citep{medvedev2022theoretical}.
+
+% Near-quadratic worst case
+Alignment accuracy affects subsequent analyses, so a common goal is to find a
+shortest sequence of edit operations (single letter insertions, deletions, and
+substitutions) that transforms one sequence into the other. The length of such a
+sequence is known as \emph{Levenshtein distance}~\citep{levenshtein1966binary}
+and \emph{edit distance}. It has recently been proven that edit distance can not
+be computed in strongly subquadratic time, unless SETH is
+false~\citep{backurs2015edit}. When the number of sequencing errors is
+proportional to the length, existing exact aligners scale quadratically both in
+the theoretical worst case and in practice. Given the increasing amounts of
+biological data and increasing read lengths, this is a computational
+bottleneck~\citep{kucherov2019evolution}.
+
+% Our goal
+Our aim is to solve the global alignment problem provably correct and
+empirically fast. More specifically, we target near-linear scaling up to long
+sequences with high divergence. In contrast with approximate aligners that aim
+to find a good alignment, our algorithm proves that all other possible
+alignments are not better than the one we reconstruct.

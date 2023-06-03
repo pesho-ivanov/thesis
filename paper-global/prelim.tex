@@ -1,0 +1,99 @@
+\section{Preliminaries}\label{sec:preliminaries}
+
+This section provides background definitions which are used throughout the
+paper. A summary of notation is included in~\cref{sec:notation}.
+
+\paragraph{Sequences}
+The input sequences~$A = \overline{a_0a_1\dots a_i \dots a_{n-1}}$ and~$B =
+\overline{b_0b_1 \dots b_j \dots b_{m-1}}$ are over an alphabet $\Sigma$ with
+$4$ letters. We refer to substrings $\overline{a_i \dots a_{i'-1}}$ as
+$\substr Ai{i'}$, to prefixes $\overline{a_0 \dots a_{i-1}}$ as~$A_{<i}$, and to
+suffixes $\overline{a_i \dots a_{n-1}}$ as~$A_{\geq i}$. The \emph{edit
+distance} $\ed(A,B)$ is the minimum number of insertions, deletions, and
+substitutions of single letters needed to convert~$A$ into~$B$.  The
+\emph{divergence} is the observed number of errors per letter, $d:=\ed(A,B)/n$,
+whereas the \emph{error rate} $e$ is the number of errors per letter \emph{applied}
+to a sequence.
+
+\paragraph{Alignment graph}
+Let \emph{state} $\st{i}{j}$ denote the subtask of aligning the prefix~$A_{<i}$
+to the prefix~$B_{<j}$. The \emph{alignment graph} (also called \emph{edit
+graph}) $G(V,E)$ is a weighted directed graph with vertices $V = \{\st ij \mid
+{0\leq i \leq n}, {0\leq j\leq m}\}$ corresponding to all states, and edges
+connecting subtasks: edge ${\st ij \to \st{i{+}1}{j{+}1}}$ has cost $0$ if ${a_i
+= b_j}$ (match) and $1$ otherwise (substitution), and edges ${\st ij \to
+\st{i{+}1}{j}}$ (deletion) and ${\st ij \to\st{i}{j{+}1}}$ (insertion) have cost
+$1$. We denote the starting state $\st 00$ by $v_s$, the target state $\st nm$ by
+$v_t$, and the distance between states $u$ and $v$ by $\d(u,v)$. For brevity we
+write $f \st ij$ instead of $f(\st ij)$.
+
+\paragraph{Paths and alignments}
+A path $\pi$ from $\st ij$ to $\st{i'}{j'}$ in the alignment graph~$G$
+corresponds to a \emph{(pairwise) alignment} of the substrings~$A_{i \dots i'}$
+and~$B_{j \dots j'}$ with cost $\pathcost(\pi)$. A shortest path $\pi^*$ from
+$v_s$ to $v_t$ corresponds to an optimal alignment, thus $\pathcost(\pi^*) =
+\d(v_s, v_t) = \ed(A, B)$. We write $\g(u) := \d(v_s, u)$ for the distance from
+the start to a state $u$ and $\h(u) := \d(u, v_t)$ for the distance from $u$ to
+the target.
+
+\paragraph{Seeds and matches}
+We split the sequence~$A$ into a set of consecutive non-overlapping
+substrings~(\emph{seeds}) $\seeds=\{s_0, s_1, s_2, \dots, s_{\lfloor n/k
+\rfloor-1}\}$, such that each seed $s_l {=} \substr A{lk}{lk{+}k}$ has length
+$k$. After aligning the first $i$~letters of~$A$, our heuristics will only
+depend on the \emph{remaining} seeds ${\seeds_{\geq i} := \{s_l \in \seeds \mid
+lk \geq i\}}$ contained in the suffix~$A_{\geq i}$. We denote the set of seeds
+between $u{=}\st ij$ and $v{=}\st{i'}{j'}$ by $\substr \seeds uv = \substr
+\seeds i{i'} = {\{s_l\in \seeds \mid i\leq lk, \, lk+k \leq i'\}}$ and an
+\emph{alignment} of $s$ to a subsequence of $B$ by $\pi_s$. The alignments of
+seed $s$ with sufficiently low cost~(\cref{sec:heuristic}) form the set
+$\matches_s$ of \emph{matches}.
+
+\paragraph{\dijkstra and \A}
+\dijkstra's algorithm \citep{dijkstra1959note} finds a shortest path from $v_s$
+to~$v_t$ by \emph{expanding} (generating all successors) vertices in order of
+increasing distance $\g(u)$ from the start. Each vertex to be expanded is chosen
+from a set of \emph{open} vertices. The
+\A~algorithm~\citep{hart1968formal,pearl1984heuristics}, instead directs the
+search towards a target by expanding vertices in order of increasing ${f(u) :=
+g(u) + h(u)}$, where $h(u)$ is a heuristic function that estimates the distance
+$\h(u)$ to the end and $g(u)$ is the shortest length of a path from $v_s$ to $u$
+found so far. A heuristic is \emph{admissible} if it is a lower bound on the
+remaining distance, $h(u) \leq \h(u)$, which guarantees that \A has found a
+shortest path as soon as it expands $v_t$. Heuristic $h_1$ \emph{dominates} (is
+\emph{more accurate} than) another heuristic $h_2$ when $h_1(u) \ge h_2(u)$ for
+all vertices $u$. A dominant heuristic will usually, but not
+always~\citep{holte2010common}, expand less vertices. Note that Dijkstra's
+algorithm is equivalent to \A using a heuristic that is always $0$, and that
+both algorithms require non-negative edge costs. Our variant of the \A~algorithm
+is provided in~\cref{sec:astar-code}.
+
+\paragraph{Chains}
+A state $u=\st ij\in V$ \emph{precedes} a state $v=\st {i'}{j'}\in V$, denoted
+$u\preceq v$, when $i\leq i'$ and $j\leq j'$. Similarly, a match $m$ precedes a
+match $m'$, denoted $m\preceq m'$, when the end of $m$ precedes the start of
+$m'$. This makes the set of matches a partially ordered set.
+A state $u$ precedes a match $m$, denoted $u\preceq m$, when it precedes
+the start of the match. A \emph{chain} of matches is a (possibly empty) sequence
+of matches $m_1 \preceq \dots \preceq m_l$.
+
+\paragraph{Gap cost}
+The number of indels to align substrings $\substr Ai{i'}$ and
+$\substr Bj{j'}$ is at least their difference in length: $\gapcost(\st ij,
+\st{i'}{j'}):=\abs{(i'{-}i) {-} (j'{-}j)}$. For $u\preceq v\preceq w$, the gap cost
+satisfies the triangle inequalities $\gapcost(u, w) \leq \gapcost(u, v) +
+\gapcost(v, w)$.
+
+\paragraph{Contours}
+To efficiently calculate maximal chains of matches, \emph{contours} are used.
+Given a set of matches $\matches$, $\statescore(u)$ is the number of matches in
+the longest chain $u\preceq m_0 \preceq \dots$, starting at $u$. The function
+$\statescore\st ij$ is non-increasing in both $i$ and $j$. \emph{Contours} are
+the boundaries between regions of states with $\statescore(u) = \ell$ and
+$\statescore(u)<\ell$~(\cref{fig:contours}). Note that contour $\ell$ is
+completely determined by the set of matches $m\in \matches$ for which
+${\statescore(\start(m)) = \ell}$~\citep{hirschberg1977algorithms}.
+\citet{hunt1977fast} give an algorithm to efficiently compute $\statescore$ when
+$\matches$ is the set of single-letter matches between~$A$ and~$B$, and
+\citet{deorowicz2014efficient} give an algorithm when $\matches$ is the set of
+$k$-mer exact matches.

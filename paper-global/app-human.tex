@@ -1,23 +1,27 @@
-\subsection{Performance variation on human genome}\label{GLOBALsec:variation-human-results}
+\subsection{Human data results}\label{app:human}
 
-\begin{figure}[t]
+\input{\dir/tab-human-data}
+
+\begin{figure*}[t]
   \centering
-  \subfloat[CHM13]{\includegraphics[width=0.48\linewidth]{imgs/fig7/human_chm13.pdf}}
-  \hfill
-  \subfloat[NA12878]{\includegraphics[width=0.48\linewidth]{imgs/fig7/human_na12878.pdf}}
-  \caption[Runtime scaling with alignment cost]{Log-log plots of the runtime for aligning \textbf{real sequences}
-  from two datasets of varying error distance. The sequence length varies
-  between $500\kbp$ and $840\kbp$ for the CHM13 reads, and between $502\kbp$ and
-  $1\ 053\kbp$ for the NA12878 reads. Alignments that timed out after $100$
-  seconds are shown at $\qty{100}{s}$. Parameters used for SH and CSH are
-  $k{=}15$ and $r{=}2$.}
-  \label{GLOBALfig:human-results-unsorted}
-\end{figure}
+  \includegraphics[scale=0.55]{plots/real_full.pdf}%
+  \caption{\textbf{Runtime on long reads of human data} (logarithmic, $\geq
+    500\kbp$). Each dot corresponds to an alignment of a sequence pair. The ONT reads
+    are without (left) and with (right) genetic variation. Runtime is
+    capped at $\qty{100}{s}$.}
+  \label{fig:human-full}
+\end{figure*}
 
-% biwfa and edlib
-Note that the \wfa data points lie on a line, corresponding to the
-expected runtime of \wfa of $\Oh(s^2)$. Furthermore, the runtime of \edlib can be
-seen to jump up around powers of two ($2^{14} {=} 16\,384$, $2^{15} {=} 32\,768$,
-$2^{16} {=} 65\,536$), corresponding to the exponential search of the edit
-distance. \edlib has a runtime complexity of $\Oh(ns)$, and hence is slower than
-\wfa for small edit distances, but faster than \wfa for large edit distances.
+Statistics on our human data are presented in~\cref{tab:hg}. We compare all our
+heuristics in~\cref{fig:human-full}.
+
+For ONT reads without genetic variation, \SH is faster than other methods in
+median, but slower for sequences with high divergence and larger gaps.
+\CSH is slightly slower than \SH due to additional bookkeeping without
+significant benefit for the heuristic. Penalizing indels with \GCH improves
+performance several times.
+
+When genetic variation is included, \SH and \CSH do not sufficiently penalize
+long gaps, and \A with \GCH estimates the remaining edit distance significantly
+better. The diagonal transition optimization considerably speeds up the
+alignment of long indels where the search regresses to quadratic.

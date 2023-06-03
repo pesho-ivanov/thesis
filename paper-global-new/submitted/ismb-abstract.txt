@@ -1,0 +1,20 @@
+We present a fast exact algorithm for global pairwise alignment between related
+sequences with unit edit costs. It instantiates the A* shortest path algorithm
+with a novel chained-seeds heuristic that improves as the search progresses.
+
+Chained-seeds heuristic. We partition the first sequence into short seeds, and
+find their matches in the second sequence. The heuristic is defined as the
+lowest cost of a chain of remaining matches. It combines the seed costs of
+skipped remaining seeds, and the gap costs between consecutive matches in a
+chain. To efficiently compute the heuristic, we introduce a contours data
+structure.
+
+Match pruning. To further reduce the number of states that the A* explores, we
+ignore (prune) already expanded matches in the heuristic computation. We prove
+that pruning preserves a shortest path.
+
+Results. Our aligner, A*PA, demonstrates near-linear runtime (best fit: n^1.09)
+on random related genetic sequences with e = 5% uniform error rate and length n
+≤ 10^7 bp. Compared to the leading exact aligners Edlib and BiWFA, A*PA reaches
+> 400x speedup for n = 10^7 bp and e = 5%, and 2.5x speedup for simulated ONT
+reads from a human genome (n ≈ 10^6 bp, e ≈ 10% errors).

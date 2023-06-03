@@ -1,51 +1,25 @@
-\subsection{Comparison on synthetic data} \label{GLOBALsec:evals-comparison-synthetic}
+\subsection{Comparison on synthetic data} \label{sec:evals-comparison-synthetic}
 
-Here we compare the runtime scaling and performance of the exact optimal
-aligners on synthetic data.
-\cref{GLOBALsec:techniques} compares the effects of pruning and inexact matches,
-whereas~\cref{GLOBALsec:expanded} compares \SH and \CSH in terms of the number of
-expanded states.
+\paragraph{Runtime scaling with length}
+We compare our \A heuristics with \edlib and \wfa in terms of runtime scaling
+with $n$ and $d$~(\cref{fig:synthetic}, extended comparison in~\cref{app:synthetic}).
+%
+As theoretically predicted, \edlib and \wfa scale quadratically. For small edit
+distance, \edlib is subquadratic due to the bit-parallel optimization. The
+empirical scaling of \astarpa is subquadratic for~$d{\leq}12$ and~$n{\le}10^7$,
+making it the fastest aligner for long sequences~($n{>}30\kbp$).
+%
+For low divergence~($d{\leq}4\%$) even the simplest \SH scales near-linearly
+with length~(best fit~$n^{1.05}$ for $n{\le}10^7$).
+%
+For high divergence~($d{=}12\%$) we need inexact matches, and the runtime of \SH
+sharply degrades for long sequences~($n{>}10^6\bp$) due to spurious matches.
+This is countered by chaining the matches in \CSH and \GCH, which
+expand linearly many states~(\cref{app:expanded}).
+\GCH with DT is not exactly linear due to state reordering and high
+memory usage~(\cref{app:timing}).
 
-\paragraph{Scaling with sequence length}
-% figs: better scaling => faster for long
-First, we compare the aligners by runtime scaling with sequence length $n$ for
-various error rates $e$ (\cref{GLOBALfig:scaling-n}). As expected from the theoretical
-analysis, \edlib and \wfa scale approximately quadratically regardless of the
-error rate. Unlike them, \SH and \CSH scale subquadratically which explains why
-they are faster for long enough sequences.
-
-% for low error rates
-More specifically, for low error rates ($e{=}1\%$ and $e{=}5\%$), both \SH and
-\CSH with exact matches scale near-linearly with sequence length (best
-fit~$n^{1.08}$ for \mbox{$n{\le}10^7$}), and the benefit from chaining is
-negligible.
-
-% for high error rates
-For high error rates ($e{\geq}10\%$) and large $n$, the need to match the seeds
-inexactly causes a significant number of off-path matches. These off-path
-matches lower the value of the heuristics and prevent the punishment of
-suboptimal paths. This causes \SH to expand a super-linear number of states
-(\cref{GLOBALsec:expanded}). Chaining the matches enforces them
-to follow the order of the seeds, which greatly reduces the negative effects of
-the off-path matches, leading to only linearly many expanded states.
-Nevertheless, the runtime scaling of \CSH
-is super-linear as a result of the increasing fraction of time (up to $93\%$ for
-$n{=}10^7$) spent on reordering states because of outdated $f$ values after
-pruning.
-
-%(TODO: high variance; more seqs needed)
 \paragraph{Performance}
-\cref{GLOBALtab:evals} compares the runtime and memory of \astarpa with match
-pruning to \edlib (based on banding, exponential search, bit-parallel) and \wfa
-(based on diagonal transition and divide \& conquer) for aligning a single pair
-of sequences of length $n{=}10^7$. \A with \CSH (\cshsymbol~\cshsymbolsq) is
-more than $250$ times faster than \edlib and \wfa at $e{=}5\%$. For low error
-rate ($e{\leq}5\%$), there is no significant performance difference between \SH
-(\shsymbol~\shsymbolsq) and \CSH. The memory usage of \astarpa for $e{\leq}5\%$
-is less than $\qty{600}{MB}$ for any $n$. At $e{=}15\%$, \CSH uses at most
-$\qty{4.7}{GB}$ while \SH goes out of memory ($\geq\qty{30}{GB}$) because there
-are too many expanded states to store.
-
-   
-%& \A, match-pruning, \sh                      
-%& \A, match-pruning, \csh                     
+\astarpa is ${>}300\times$ faster than \edlib and \wfa for $d{=}4\%$ and
+$n{=}10^7$~(\cref{fig:scaling-n}). For $n{=}10^6$ and $d{\leq}
+12\%$, memory usage is less than $500\mb$ for all heuristics~(\cref{app:memory}).

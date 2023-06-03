@@ -5,10 +5,10 @@
 	% (short and long reads; linear and graph references)
 	]{Runtime and memory comparison of
 	optimal aligners. Simulated Illumina and HiFi reads are aligned to linear
-	\textit{E.~coli} and graph MHC references. The runtime of the \seedh is
+	\textit{E.~coli} and graph MHC references. The runtime of the \sh is
 	expressed as absolute time per aligned kbp, while the other aligners are
-	compared to the \seedh at a fold change. Additionally, the fraction of
-	explored states is shown for the \seedh and the \prefixh.}
+	compared to the \sh at a fold change. Additionally, the fraction of
+	explored states is shown for the \sh and the \prefixh.}
 	\label{SEEDtab:illumina table}
 	\sffamily
 
@@ -54,16 +54,16 @@
 
 \subsection{Speedup of the seed heuristic}
 %
-\cref{SEEDtab:illumina table} shows that the \seedh achieves a speedup of at least
+\cref{SEEDtab:illumina table} shows that the \sh achieves a speedup of at least
 60 times compared to all considered aligners, across all regimes of operation:
 both Illumina and HiFi reads aligned on \textit{E.~coli} and MHC references.
 
-In the Illumina experiments, the \seedh is given 100k reads, while the other
-tools are given 1000 reads. In the HiFi experiments, the \seedh is given reads
+In the Illumina experiments, the \sh is given 100k reads, while the other
+tools are given 1000 reads. In the HiFi experiments, the \sh is given reads
 that cover the reference 10 times, and the other tools are given reads of
 coverage 0.1.
 
-The key reason for the speedup of the \seedh is that on all four experiments, it
+The key reason for the speedup of the \sh is that on all four experiments, it
 skips $\geq 99.99\%$ of the $Nm$ states computed by the DP approaches of
 \graphaligner, \pasgal, and \vargas. This fraction accounts for both the
 explored states during the \A algorithm, and the number of crumbs added to nodes

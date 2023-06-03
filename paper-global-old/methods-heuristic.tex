@@ -1,0 +1,117 @@
+\subsection{\Sh and \csh}\label{GLOBALsec:seedh}
+
+We start with the formal definitions of seeds and matches that are the basis of
+our heuristic functions and algorithms.
+
+\paragraph{Seeds} We split the sequence $A$ into a set of consecutive
+non-overlapping substrings~(\emph{seeds}) $\seeds=\{s_0, s_1, s_2, \dots
+s_{\lfloor n/k \rfloor-1}\}$, such that each seed $s_l = \substr A{lk}{lk{+}k}$
+has length $k$. After aligning the first $i$ letters of $A$, the information for
+the heuristic will come from the \emph{remaining} seeds ${\seeds_{\geq i} :=
+\{s_l \in \seeds \mid lk \geq i\}}$ contained in the suffix $A_{\geq i}$.
+
+\paragraph{Seed alignment} An \emph{alignment} of a seed $s = \substr A{i}{i+k}$
+is a path $\pi_s$ in the alignment graph $G$ from a state $u{=}\st ij$ to a state
+$v{=}\st{i{+}k}{j'}$, where $i$ is the start and $i{+}k$ is the end of $s$. We refer
+to the cost of the alignment $\pi_s$ as $\cost(\pi_s)$.
+
+\paragraph{Matches}
+In order to only consider good alignments of seeds, we fix a threshold cost $r$
+called the \emph{seed potential}. We define a \emph{match} $m$ as an alignment of
+a seed with cost ${\cost(m) < r}$. For each seed $s$, the set of all of its
+matches is $\matches_s$. The inequality is strict so that $\matches_s=\emptyset$
+implies that aligning the seed will incur cost at least $r$. Let $\matches =
+\bigcup_s \matches_s$ denote the set of all matches. With $\spot{=}1$ we allow only
+\emph{exact} matches, while for $\spot{=}2$ we allow both exact and
+\emph{inexact} matches with one edit. In this paper we do not consider larger
+$\spot$.
+
+Next, we define two heuristic functions: 
+
+\begin{definition}[\Sh]
+  Given a set of matches $\matches$ with costs less than $r$, the \emph{\sh} $\hshM$\, in
+  a state $u{=}\st ij$ is the minimal total cost to independently align all remaining
+  seeds: each seed is either matched or incurs cost $r$ if it cannot be matched in
+  $\matches$:
+  \begin{equation}
+    \hshM(u) := \sum_{s\in \seeds_{\geq i}} \begin{cases}
+    \min_{m\in \matches_s} \cost(m) &\text{if $\matches_s \neq \emptyset$}, \\
+    r &\text{otherwise.}
+    \end{cases}
+    \label{GLOBALeq:sh}
+  \end{equation}
+\end{definition}
+
+\begin{definition}[\Csh]
+  Given a set of matches $\matches$ of costs less than $r$, the \emph{\csh} $\hcshM$\,
+  in a state $u{=}\st ij$ is the minimal cost to jointly align each remaining
+  seed on a single path in the alignment graph:
+  \begin{equation}
+    \hcshM(u) := \min_{\pi \in G \path u{v_t}}  \sum_{s\in \seeds_{\geq i}}
+    \begin{cases}
+    \cost(\pi_s) &\text{if $\pi_s \in \matches_s$}, \\
+    r &\text{otherwise.}
+    \end{cases}
+    \label{GLOBALeq:csh}
+  \end{equation}
+  where $\pi$ runs over all paths from $u$ to $v_t$, and $\pi_s$ is the shortest
+  part of the path $\pi$ that is an alignment of the seed $s$.
+\end{definition}
+
+We abbreviate $\hsh := \hshM$ and $\hcsh := \hcshM$ when $\matches$ is the set of all
+matches of cost strictly less than $r$. For such $\matches$, both heuristics guarantee
+finding an optimal alignment.
+
+%% ADMISSIBLE
+\begin{thm}\label{GLOBALthm:admissible}
+  The \sh $\hsh$\, and the \csh $\hcsh$\, are \emph{admissible}.
+\end{thm}
+\begin{proof}
+  Let $u{=}\st ij$ be any state in the alignment graph $G(V,E)$, and let $\pi$ be any
+  path from $u$ to the target $t$. A heuristic $h$ is admissible if $h(u) \leq
+  \cost(\pi)$ for all $u\in V$ and for all paths $\pi$.
+
+  We first show that $\hcsh$ is admissible. Each remaining seed in $\seeds_{\geq i}$
+  is aligned somewhere by the path $\pi$. Since the seeds do not overlap, their
+  shortest alignments in $\pi$ do not have overlapping edges. Each edge in
+  $\pi$ has a non-negative cost, and hence $\sum_{s\in \seeds_i} \cost(\pi_s) \leq \cost(\pi)$.
+  The alignment $\pi_s$ of each seed either has cost less than $\spot$ and
+  equals a match in $\matches_s$, or it has cost at least $\spot$ otherwise. Together
+  this implies that $\hcshM$ is a lower bound on the remaining cost $\h(u)$:
+  \begin{equation}
+    \begin{split}
+    &\hcshM(u) = \min_{\pi \in G \path ut}  \sum_{s\in \seeds_{\geq i}}
+    \begin{cases}
+    \cost(\pi_s) &\text{if $\pi_s \in \matches_s$}, \\
+    r &\text{otherwise.}
+    \end{cases}\\
+    &\leq \min_{\pi \in G \path ut}  \sum_{s\in \seeds_{\geq i}} \cost(\pi_s)
+    \leq \min_{\pi \in G \path ut}  \cost(\pi) = \h(u).
+    \end{split}
+  \end{equation}
+  We now show that the \sh $\hshM(u)$ is bounded above by $\hcshM(u)$, so that
+  it is also admissible:
+  \begin{align*}
+    \hshM(u) &= \sum_{s\in \seeds_{\geq i}}
+      \begin{cases}
+      \min_{m\in \matches_s}\cost(m) &\text{if $\matches_s\neq \emptyset$}, \\
+      r &\text{otherwise.}
+      \end{cases}\\
+    &\leq  \sum_{s\in \seeds_{\geq i}} \min_{\pi \in G \path ut}
+      \begin{cases}
+      \cost(\pi_s) &\text{if $\pi_s \in \matches_s$}, \\
+      r &\text{otherwise.}
+      \end{cases}\\
+    &\leq \min_{\pi \in G \path ut}  \sum_{s\in \seeds_{\geq i}}
+      \begin{cases}
+      \cost(\pi_s) &\text{if $\pi_s \in \matches_s$}, \\
+      r &\text{otherwise.}
+      \end{cases} 
+    = \hcshM(u).
+  \end{align*}
+\end{proof}
+
+As a consequence of the proof,
+$\hcsh(u)$ dominates $\hsh(u)$, that is, ${\hcsh(u) \geq \hsh(u)}$ for all $u$.
+Hence $\hcsh(u)$ usually expands fewer states, at the cost of
+being more complex to compute.

@@ -1,0 +1,34 @@
+\abstract{
+\paragraph{Motivation}
+Sequence alignment has been at the core of computational biology for half a
+century. Still, it is an open problem to design a practical algorithm for exact
+alignment of a pair of related sequences in linear-like
+time~\citep{medvedev2022theoretical}.
+\paragraph{Methods}
+We solve exact global pairwise alignment with respect to edit distance by using
+the \A~shortest path algorithm. In order to efficiently align long sequences
+with high divergence, we extend the recently proposed
+\emph{seed~heuristic}~\citep{ivanov2022fast} with \emph{match~chaining},
+\emph{gap~costs}, and \emph{inexact~matches}. We additionally integrate the novel
+\emph{match~pruning} technique and
+diagonal~transition~\citep{ukkonen1985algorithms} to improve the \A search. We
+prove the correctness of our algorithm, implement it in the \astarpa aligner,
+and justify our extensions intuitively and empirically.
+\paragraph{Results}
+On random sequences of divergence $d{=}4\%$ and length $n$, the empirical
+runtime of \astarpa scales near-linearly (best~fit~$n^{1.05}$, $n{\leq}10^7\bp$).
+A similar scaling remains up to $d{=}12\%$ (best~fit~$n^{1.24}$,
+$n{\leq}10^7\bp$). For $n{=}10^7\bp$ and $d{=}4\%$, \astarpa reaches ${>}300\times$
+speedup compared to the leading exact aligners \edlib and \wfa. 
+%
+The performance of \astarpa is highly influenced by long gaps.
+On long ($n{>}500\kbp$) ONT reads of a human sample it efficiently aligns
+sequences with $d{<}10\%$, leading to $2\times$ median speedup compared to \edlib
+and \wfa. When the sequences come from different human samples, \astarpa
+performs $1.4\times$ faster than \edlib and \wfa.
+\paragraph{Availability}
+\href{https://github.com/RagnarGrootKoerkamp/astar-pairwise-aligner}{github.com/RagnarGrootKoerkamp/astar-pairwise-aligner}
+\paragraph{Contact}
+\href{ragnar.grootkoerkamp@inf.ethz.ch}{ragnar.grootkoerkamp@inf.ethz.ch},
+\href{pesho@inf.ethz.ch}{pesho@inf.ethz.ch}
+}

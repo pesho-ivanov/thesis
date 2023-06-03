@@ -1,0 +1,45 @@
+\begin{table}[t]
+  \centering
+  \sffamily
+  \small
+  \tabcolsep=0.11cm
+  \begin{tabular}{
+    @{}
+    l
+    S[table-format=2]
+    S[table-format=3]
+    S[table-format=3]
+    S[table-format=3]
+    S[table-format=1.1]
+    S[table-format=1.1]
+    S[table-format=2.1]
+    S[table-format=1.2]
+    S[table-format=1.1]
+    S[table-format=2]
+    @{}
+    }
+    \toprule
+    &
+    & \multicolumn{3}{c}{\textbf{Length} [\kbp]}
+    & \multicolumn{3}{c}{\textbf{Divergence} [$\%$]}
+    & \multicolumn{3}{c}{\textbf{Max gap} [\kbp]}
+    \\
+    \cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11}
+    \textbf{Dataset}
+    & {\!\!\textbf{Cnt}} &
+    {\small min} & {\small \!mean} & {\small max} &
+    {\small min} & {\small \!mean\!} & {\small max} &
+    {\small min} & {\small \!mean\!} & {\small max} \\
+    \midrule
+    ONT & 50
+     & 500 & 594 & 849 & 2.7 & 6.3 & 18.0 & 0.02 & 0.1 & 1 \\
+    ONT+gen.var.\!\! & 48
+     & 502 & 632 & 1053 & 4.4 & 7.4 & 19.8 & 0.05 & $\mathbf{1.9}$ & $\mathbf{42}$ \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{Human datasets statistics.} ONT reads only include short
+    gaps, while genetic variation also includes long gaps. \textbf{Cnt}: number of
+    sequence pairs. \textbf{\mbox{Max gap}}: longest gap in the reconstructed
+    alignment.}
+  \label{tab:hg}
+\end{table}

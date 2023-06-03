@@ -1,0 +1,104 @@
+\newcommand*{\tabindent}{\hspace{2mm}}
+
+\section{Notation}\label{sec:notation}
+
+\begin{minipage}[t]{\columnwidth}
+\begin{tabular}[t]{ll}
+  \toprule
+  \textbf{Object}	         & \textbf{Notation}\\
+  \midrule
+  \textbf{Sequences}  & \\
+  \tabindent Alphabet            	&
+									$\Sigma = \{\mathtt A,\mathtt C,\mathtt G,\mathtt T\}$ \\
+  \tabindent Sequences            &
+									$A = \overline{a_0a_1 \dots a_i \dots a_{n-1}}\in \Sigma^*$\\
+							 & $B = \overline{b_0b_1 \dots b_j \dots b_{m-1}} \in \Sigma^*$ \\
+  \tabindent Substring          & $A_{i..i'} = \overline{a_i \dots a_{i'-1}}$ \\
+  \tabindent Prefix & $A_{< i} = \overline{a_0 \dots a_{i-1}}$ \\
+  \tabindent Suffix & $A_{\geq i} = \overline{a_i \dots a_{n-1}}$ \\
+  \tabindent Edit distance        & $\ed(A,B)$\\
+  \tabindent Divergence        & $d = \ed(A,B) / n$\\
+  \tabindent Error rate        & $e$\\
+  \midrule
+  \textbf{Alignment graph} & \\
+  \tabindent Graph& $G=(V,E)$\\
+  \tabindent Vertices (states) & $u,v \in V=\{\st ij \mid 0\leq i\leq n, 0\leq j
+								 \leq m\}$\\
+  \tabindent Edges& match/substitution $\st ij \to \st {i{+}1}{j{+}1}$\\
+							 & deletion $\st ij \to \st {i{+}1}{j}$\\
+							 & insertion $\st ij \to \st {i}{j{+}1}$\\
+  \tabindent Distance & $\d(u, v)$\\
+  \tabindent Path, shortest path & $\pi$, $\pi^*$\\
+  \tabindent Cost & $\pathcost(\pi)$\\
+  \midrule
+  \textbf{Diagonal transition} & \\
+  \tabindent Farthest-reaching state & $\fr_{gk} = i{+}j$ on diagonal $k{=}i{-}j$ \\
+  \midrule
+  \textbf{\A} & \\
+  \tabindent Start and target state & $v_s = \st 00$, $v_t = \st nm$ \\
+  \tabindent Distance from $v_s$ & $\g = \d(v_s, \cdot)$\\
+  \tabindent Distance to $v_t$& $\h = \d(\cdot, v_t)$\\
+  % \tabindent Distance $v_s$ to $v_t$ via $u$& $\f = \g + \h$\\
+  \tabindent Heuristic & $h$\\
+  \tabindent Best distance from start & $g$  \\
+  \tabindent Estimated distance & $f = g + h$\\
+  \tabindent Admissible heuristic & $h \leq \h$\\
+  \tabindent Consistent heuristic & $h(u) \leq \d(u,v) + h(v)$\\
+  \tabindent Expanded states & $\Expanded$\\
+  \bottomrule
+\end{tabular}
+\end{minipage}%\hfill % maximize the horizontal separation
+\begin{minipage}[t]{\columnwidth}
+\begin{tabular}[t]{ll}
+  \toprule
+  \textbf{Object}	         & \textbf{Notation}\\
+  \midrule
+  \multicolumn{2}{l}{\textbf{Seeds and matches}} \\
+  \tabindent Seed length & $k$ \\
+  \tabindent Seed potential & $r$ \\
+  \tabindent Seeds & $s\in \seeds$, $s_l = A_{l k..lk + k}$ \\
+  \tabindent Seeds in suffix & $\seeds_{\geq i} = \{s_l \in \seeds \mid lk \geq i\}$ \\
+  \tabindent Alignment of seed & $\pi_s$ \\
+  \tabindent Matches (per seed) & $m \in \matches$, $\matches_s$\\
+  \tabindent Terminal match & $m_\omega$ from $v_t$ to $v_t$ \\
+  \tabindent Cost of match & $0 \leq \matchcost(m) < r$\\
+  \tabindent Score of match & $0 < \matchscore(m) = r - \matchcost(m) \leq r$\\
+  \tabindent Score of seed & $\seedscore(s) = \max_{m\in \matches_s} \matchscore(m)$\\
+  \midrule
+  \textbf{Chains} & \\
+  \tabindent Preceding states & $\st ij \preceq \st {i'}{j'}$ when $i\leq i'$
+								and $j\leq j'$ \\
+  \tabindent Preceding matches & $m\preceq m'$ when $\matchend(m) \preceq \matchstart(m')$ \\
+  \tabindent & $u\preceq m$ when $u \preceq \matchstart(m)$ \\
+  \tabindent Partial order & $u\preceq_pv$ when $p(u) \leq p(v)$ \\
+  \tabindent $i$-order & $\st ij\preceq_i \st{i'}{j'}$ when $i \leq i'$ \\
+  \tabindent $\preceq_p$-chain & $m_1 \preceq_p \dots \preceq_p m_l \preceq_p v_t$ \\
+  \midrule
+  \textbf{Chaining costs} \\
+  \tabindent Chaining cost & $\gamma(m, m')$ \\
+  \tabindent Gap cost & $\gapcost(\st ij, \st{i'}{j'}):=\abs{(i'{-}i) {-} (j'{-}j)}$ \\
+  \tabindent Seed cost & $\seedcost(u,v) = r\cdot \substr \seeds uv$ \\
+  \tabindent Gap-seed cost & $\gscost = \max(\gapcost, \seedcost)$ \\
+  \midrule
+  \textbf{Scores} \\
+  \tabindent Potential & $P\st ij  = r \cdot \abs{\seeds_{\geq i}}$ \\
+  \tabindent Chain score &
+						   $S_p(m) {=} \max_{m\preceq_p m_1\preceq_p\dots \preceq_p v_t}\matchscore(m) {+} \dots $ \\
+							 &
+							   $S_p(u) = \max_{u\preceq_p m \preceq_p v_t} S_p(m)$ \\
+  \tabindent Computation & $h_{p,\seedcost}(u) = P(u) - S_p(u)$\\
+  \midrule
+  \textbf{Heuristics} \\
+  \tabindent \SH & $\hsh(u) = P(u) - S_i(u)$\\
+  \tabindent \CSH & $\hcsh(u) = P(u) - S_{\preceq}(u)$\\
+  \tabindent \GCH & $\hgch(u) = \max(\gapcost(u, v_t), P(u) - S_{T}(u))$\\
+  & $T: \st ij \mapsto (i{-}j{-}P \st ij, j{-}i{-}P\st ij)$ \\
+  \tabindent Pruning heuristic & $\hh^\matches$ \\
+  \midrule
+  \textbf{Layers} \\
+  \tabindent Layer & $\layer_\ell = \{u \mid S_p(u) \geq \ell\}$\\
+  \tabindent Dominant state & $u\in \layer_\ell$ s.t.
+							  $\{v \in \layer_\ell \mid u\preceq v\} = \{u\}$ \\
+  \bottomrule
+\end{tabular}
+\end{minipage}
