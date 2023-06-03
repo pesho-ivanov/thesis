@@ -1,0 +1,60 @@
+\section{Task Description: Alignment to Reference Graphs} \label{sec:task}
+
+We now describe the task of aligning a query to a reference graph. To this end,
+we (i)~introduce the task of optimal alignment on a \emph{reference graph},
+(ii)~formalize this task in terms of an \emph{edit graph}, and (iii)~introduce an
+alternative formulation in terms of an \emph{alignment graph}, which is the
+basis for shortest path formulations of the optimal alignment.
+%
+\cref{fig:graph-constructions} summarizes these different graph types.
+
+\paragraph{Reference Graph}
+We encode the collection of references to which we want to align in a reference
+graph, which captures genomic variation that a linear reference cannot
+express~\cite{paten_genome_2017,garrison_variation_2018}.
+%
+We formalize a reference graph as a tuple $\RG=(\RGV,\RGE)$ of nodes $\RGV$ and
+directed, labeled edges $\RGE \subseteq \RGV \times \RGV \times \Sigma$, where
+the alphabet $\Sigma=\{\texttt{A},\texttt{C},\texttt{G},\texttt{T}\}$ represents
+the four different nucleotides.
+%
+Note that in contrast to sequence graphs~\cite{rautiainen_aligning_2017}, we
+label edges instead of nodes.
+
+\paragraph{Path, Spelling}
+Any path $\pi=(e_1,\dots,e_k) \text { in } \RG$ induces a \emph{spelling}
+$\sigma(\pi) \in \Sigma^*$ defined by $\sigma(e_1)\cdots\sigma(e_k)$, where
+$\sigma(e_i)$ is the label of edge $e_i$ and $\Sigma^* := \bigcup_{k \in
+\mathbb{N}} \Sigma^k$. We note that our approach naturally handles cyclic walks
+and does not require cycle unrolling, a feature shared with
+\bitparallel~\cite{rautiainen_bitparallel_2019} and
+\brownie~\cite{heydari_browniealigner_2018} but missing from
+\vg~\cite{garrison_variation_2018}, \pasgal~\cite{jain_accelerating_2019} and
+\valigntool~\cite{kavya_sequence_2019}.
+
+\paragraph{Alignment on Reference Graph}
+An \emph{alignment} of \emph{query} $q \in \Sigma^*$ to a reference graph
+$\RG=(\RGV,\RGE)$ consists of (i)~a path $\pi \text{ in } \RG$ and (ii)~a
+sequence of edit operations (matches, substitutions, insertions, deletions)
+transforming $\sigma(\pi)$ to~$q$.
+
+\paragraph{Optimal Alignment, Edit Distance}
+Each edit operation is associated with a real-valued cost ($\cmatch$, $\csubst$,
+$\cins$, and $\cdel$, respectively).
+An optimal alignment minimizes the total cost of the edit operations converting
+$\sigma(\pi)$ to $q$. For optimal alignments, this total cost is equal to the
+edit distance between $\sigma(\pi)$ and $q$, i.e., the cheapest sequence of edit
+operations transforming $\sigma(\pi)$ into $q$.
+
+We make the (standard) assumption that $0 \leq \cmatch \leq \csubst, \cins,
+\cdel$, which will be a prerequisite for the correctness of our approach.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1\columnwidth]{figs/edit_graph}
+	\caption{Starting from the reference graph (left), we can construct the edit graph (middle) and the alignment graph $\AG$ for query $q=``\texttt{A}"$ (right). Edges are annotated with labels and/or costs, where sets of labels represent multiple edges, one for each letter in the set (indicated by $``\text{x}3"$ and $``\text{x}4"$).}
+	\label{fig:graph-constructions}
+\end{figure}
+
+\input{\dir/task-editgraph}
+\input{\dir/task-alignmentgraph}

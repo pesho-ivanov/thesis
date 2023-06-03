@@ -1,0 +1,31 @@
+\paragraph{Edit Graph}
+Instead of representing alignments as pairs of (i)~paths in the reference graph and
+(ii)~sequences of edit operations on these paths, we introduce \textit{edit
+graphs} whose paths intrinsically capture both. This way, we can
+formally define an alignment more conveniently as a path in an edit graph.
+
+Formally, an \emph{edit graph} $\AG:=(\AGV,\AGE)$ has directed, labeled edges
+$\AGE \subseteq \AGV \times \AGV \times \Sigma_\epsilon \times \mathbb{R}_{\geq
+0}$ with associated costs that account for edits. Here, $\Sigma_\epsilon :=
+\Sigma \cup \{\epsilon\}$ extends the alphabet $\Sigma$ by $\epsilon$ to account
+for deleted characters (see \cref{fig:graph-constructions}).
+%
+The edit and reference graphs consist
+of the same vertices, i.e., $\AGV=\RGV$. However, $\AGE$ contains more edges
+than $\RGE$ to account for edits.
+%
+Concretely, for each edge $(u,v,\ell) \in \RGE$, $\AGE$ contains edges to
+account for (i)~matches, by an edge $(u,v,\ell,\cmatch)$, (ii)~substitutions, by
+edges $(u,v,\ell',\csubst)$ for each $\ell' \in \Sigma \backslash \ell$,
+(iii)~deletions, by an edge $(u,v,\epsilon,\cdel)$, and (iv)~insertions, by
+edges $(u,u,\ell',\cins)$ for each $\ell' \in \Sigma$.
+%
+The spelling $\sigma(\pi) \in \Sigma^*$ of a path $\pi \in \AG$ is defined
+analogously to reference graphs, except that deleted letters (represented by
+$\epsilon$) are ignored. The cost $\cost{\pi}$ of a path $\pi \in \AG$ is the
+sum of all its edge costs.
+
+\paragraph{Alignment on Edit Graph}
+An \emph{alignment} of query $q$ to $\RG$ is a path $\pi \text{ in } \AG$
+spelling $q$, i.e., $q=\sigma(\pi)$. An \emph{optimal alignment} is an alignment
+of minimal cost.
