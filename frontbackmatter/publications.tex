@@ -3,7 +3,6 @@
 %*******************************************************
 \pdfbookmark[1]{Thesis publications}{publications}
 \chapter*{Thesis publications}
-
 \begin{refsection}[ownpubs]
   \small%
   \nocite{*}
@@ -15,6 +14,18 @@
 \let\svthefootnote\thefootnote
 \let\thefootnote\relax\footnote{$\dagger$These authors contributed equally to this work.}
 \addtocounter{footnote}{-1}\let\thefootnote\svthefootnote
+
+\begingroup
+\let\clearpage\relax
+\pdfbookmark[1]{Other works during the PhD program}{otherworks}
+\chapter*{Other works during the PhD program}
+\begin{refsection}[sidepubs]
+  \small%
+  \nocite{*}
+  \newrefcontext[sorting=ydnt]
+  \printbibliography[heading=none]
+\end{refsection}
+\endgroup
 
 %\noindent
 %Articles in peer-reviewed journals:

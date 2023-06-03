@@ -1,0 +1,93 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{none/global//global/global}
+  \entry{he2018debin}{inproceedings}{}
+    \name{author}{5}{}{%
+      {{hash=HJ}{%
+         family={He},
+         familyi={H\bibinitperiod},
+         given={Jingxuan},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=IP}{%
+         family={Ivanov},
+         familyi={I\bibinitperiod},
+         given={Pesho},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=TP}{%
+         family={Tsankov},
+         familyi={T\bibinitperiod},
+         given={Petar},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=RV}{%
+         family={Raychev},
+         familyi={R\bibinitperiod},
+         given={Veselin},
+         giveni={V\bibinitperiod},
+      }}%
+      {{hash=VM}{%
+         family={Vechev},
+         familyi={V\bibinitperiod},
+         given={Martin},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{HJ+1}
+    \strng{fullhash}{HJIPTPRVVM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{booktitle}{Proceedings of the 2018 ACM SIGSAC Conference on Computer
+  and Communications Security}
+    \field{pages}{1667\bibrangedash 1680}
+    \field{title}{Debin: Predicting debug information in stripped binaries}
+    \field{year}{2018}
+  \endentry
+
+  \entry{Ivanov_CellDive_Gene-level_analysis_2023}{software}{}
+    \name{author}{2}{}{%
+      {{hash=IP}{%
+         family={Ivanov},
+         familyi={I\bibinitperiod},
+         given={Pesho},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=VM}{%
+         family={Vechev},
+         familyi={V\bibinitperiod},
+         given={Martin},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{IPVM1}
+    \strng{fullhash}{IPVM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{{CellDive: Gene-level analysis of lymphocyte single-cell RNA
+  data based on a clonality specification language}}
+    \verb{url}
+    \verb https://github.com/pesho-ivanov/celldive
+    \endverb
+    \field{version}{1.0.0}
+    \field{month}{03}
+    \field{year}{2018}
+  \endentry
+\enddatalist
+\endinput
