@@ -1,38 +1,18 @@
 \section*{Genomic sequences}
 \addcontentsline{toc}{section}{\protect\numberline{}{Relation to genomics}}
 
-\paragraph{DNA structure} The discovery of the structure and function of
-DNA\citep{watson1953structure} seventy years ago started a revolution in our
-understanding of the living world. The non-branching (linear or circular) DNA
-structure resembles similar the linear structure of human text and speech. This
-property is massively exploited by both \emph{sequencing} technologies used to
-digitalize genomic information, and by algorithms used to analyze the data.
+\paragraph{DNA structure}
+The discovery of the structure and function of DNA\citep{watson1953structure}
+seventy years ago started a revolution in our understanding of the living world.
+The non-branching (linear or circular) DNA structure resembles similar the
+linear structure of human text and speech. This property is massively exploited
+by both \emph{sequencing} technologies used to digitalize genomic information,
+and by algorithms used to analyze the data.
 
-\paragraph{Sequence alignment} One of the simplest operations on sequences is to
-align one to another. Sequence alignment has been a core problem in
-computational biology for more than half a century, exhibiting a multitude of
-applications, including variation analysis, de novo assembly, philogenetics, RNA
-quantification, etc. Is has been shown that sequencing alignment is a
-funamentally complex problem that requires quadratic time in the worst
-case~\citep{backurs2015edit}. Practical alignment algorithms exploit
-similarities between the sequences to speed up the computation but give up on
-optimality guarantees. Thus, a satisfactory solution that combines optimality
-guanratees with heuristic performance is yet to be
-developed~\citep{medvedev2022theoretical}.
-
-% merge
-Each sequence from a new biological sample can be compared to a reference genome
-(if such is available) in order to identify mutations, quantify expression per
-gene, and many other types of analysis. To figure out the location in the
-reference each sequence most probably originates from, it should first be
-semi-globally aligned to the reference. If the sequences of two proteins or
-viruses have been reconstructed, aligning them globally reveals the most
-probabale mutations between them.
-
-\paragraph{Goal} In this thesis I propose a novel principled approach that
-exploits information from the whole sequences to align sequences provably
-optimally and heuristically fast. We empyrically demonstrate the superior
-scaling and performance to other optimal alignment algorithms.
+\paragraph{Sequence alignment}
+Sequence alignment has been a core problem in computational biology for more
+than half a century, exhibiting a multitude of applications, including variation
+analysis, de novo assembly, philogenetics, RNA quantification, etc.
 
 \paragraph{Biological and technical variation}
 Even though our method should be applicable outside of DNA sequening and even
@@ -42,6 +22,15 @@ explained by biological variation (resulting from differences in the sequenced
 organism) and technical variation (resulting from sequencing errors). Next, we
 review the main sequencing technologies up to date and the data profile they
 produce.
+
+\paragraph{Read mapping}
+Each sequence from a new biological sample can be compared to a reference genome
+(if such is available) in order to identify mutations, quantify expression per
+gene, and many other types of analysis. To figure out the location in the
+reference each sequence most probably originates from, it should first be
+semi-globally aligned to the reference. If the sequences of two proteins or
+viruses have been reconstructed, aligning them globally reveals the most
+probabale mutations between them.
 
 \paragraph{First generation sequencing}
 Genomic (DNA, RNA) sequencing is a technology that takes genetic material and
@@ -66,30 +55,34 @@ but the limiting factor was the high error rate (up to $20\%$) and the higher
 price.
 
 \paragraph{Pangenomics and genome graphs}
-Traditionally, a single linear reference sequence has been used to represent a
-representative consensus genome. Linear references are limited in representing
-biological variation which the modern sequencing technologies are producing in
-great abundance. Thus, in the 2010s, the field started shifting from using
-linear references towards sets of reference sequences, and their compact
-representation as so called \emph{genome graphs}. A path in such a graph
-represent a species, an individual or a
-haplotype~\cite{dilthey_improved_2015,paten_genome_2017}.
+Traditionally, a single linear reference sequence has been used as a consensus
+genome. Nevertheless, linear references are limited in representing biological
+variation which the modern sequencing technologies are producing in great
+abundance. Thus, in the 2010s, the field started shifting from linear references
+towards sets of reference sequences, and their compact \emph{genome graph}
+representations. A path in such a graph may represent a specie, an individual or
+a haplotype~\cite{dilthey_improved_2015,paten_genome_2017}. Semi-global
+alignment is more accurate on reference graphs than on linear references due to
+capturing genomic variation~\citep{garrison_variation_2018}.
 
-In particular, the last decade saw the increased development of graph references
-that compactly represent a whole set of genomes (a metagenome) as paths.
+\paragraph{Practical alignment algorithms}
+Practical alignment algorithms exploit similarities between the sequences to
+speed up the computation but give up on optimality guarantees. Thus, a
+satisfactory solution that combines optimality guanratees with heuristic
+performance is yet to be developed~\citep{medvedev2022theoretical}.
 
-First attempts to include variation into the reference data structure were made
-by augmenting the local alignment method to consider alternative walks during the
-extend step~\cite{schneeberger_simultaneous_2009,palmapper}. This approach has
-since been extended from the linear reference case to graph references. To
-represent non-reference variation of multiple references during the seeding
-stage, HISAT2 uses generalized compressed suffix
-arrays~\cite{siren_indexing_2014} to index walks in an augmented reference
-sequence, forming a local genome graph~\cite{kim_graphbased_2019}.
-VG~\cite{garrison_variation_2018} uses a similar
-technique~\cite{siren_indexing_2017} to index variation graphs representing a
-population of references.
+%First attempts to include variation into the reference data structure were made
+%by augmenting the local alignment method to consider alternative walks during the
+%extend step~\cite{schneeberger_simultaneous_2009,palmapper}. This approach has
+%since been extended from the linear reference case to graph references. To
+%represent non-reference variation of multiple references during the seeding
+%stage, HISAT2 uses generalized compressed suffix
+%arrays~\cite{siren_indexing_2014} to index walks in an augmented reference
+%sequence, forming a local genome graph~\cite{kim_graphbased_2019}.
+%VG~\cite{garrison_variation_2018} uses a similar
+%technique~\cite{siren_indexing_2017} to index variation graphs representing a
+%population of references.
 
-While providing a working abstraction for most cases, rare or sub-population
-specific variation is especially hard to model in this setting, creating a
-reference allele bias~\cite{stevenson_sources_2013,brandt_mapping_2015}.
+%While providing a working abstraction for most cases, rare or sub-population
+%specific variation is especially hard to model in this setting, creating a
+%reference allele bias~\cite{stevenson_sources_2013,brandt_mapping_2015}.

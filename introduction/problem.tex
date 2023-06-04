@@ -15,7 +15,8 @@
 
 \paragraph{Sequence alignment}
 % problem statements
-We consider the problem of pairwise sequence alignment in the context of genomic
+One of the simplest operations on sequences is to align one to another. We
+consider the problem of pairwise sequence alignment in the context of genomic
 data: given two DNA sequences, one can be aligned to the other in multiple
 ways~(\cref{fig:alignment-types}). In this thesis we focus on global and
 semi-global alignment types only~(marked in green). If both sequences have to be
@@ -24,7 +25,7 @@ of edits is known as \emph{edit distance}. If we instead search for an occurance
 of a query sequence within a reference sequence, we allow the alignment to start
 and end at any reference locations in a \emph{semi-global} alignment.
 
-\paragraph{Objective}
+\paragraph{Minimizing edits}
 It would have been relatively easy to find alignments if the sequences did not
 differ from each other. Nevertheless, the real data may be subject to such
 processes as biological evolution and sequencing technologies, which result in
@@ -55,9 +56,9 @@ necessary to transform $A$ to $B$ is known as \emph{Levenshtein distance} when
 each edit operation is equally costly, and more generally as \emph{edit
 distance}, when the edit operations are weighted depending on their type.
 Clearly, finding an alignment with a minimal number of edits implies computing
-the edit distance. It is unlikely that there exists an algorithm that computes
-edit distance in strictly subquadratic time in the worst
-case~\cref{backurs2015edit}.
+the edit distance. It has recently been shown that it is unlikely that there
+exists an algorithm that computes edit distance in strictly subquadratic time in
+the worst case~\cref{backurs2015edit}.
 
 \paragraph{Semi-global alignment}
 Semi-global sequence alignment (also called approximate/fuzzy string search
@@ -66,19 +67,17 @@ to a continuous region (subsequence) of a \emph{reference} sequence. This region
 is unspecified, so semi-global alignment is a more complex problem than global
 alignment. We target semi-global alignment by again minimizing edit distance.
 Finding an alignment implies also finding a reference region where the query
-aligns, which is known as \emph{mapping}. 
+aligns, which is known as \emph{mapping}.
 
 \paragraph{Semi-global alignments on the same reference}
 If multiple queries have to be aligned on the same reference, powerful
 optimizations are applicable.
 
 \paragraph{Sequence-to-graph alignment}
-A set of reference sequences can be compactly represented as walks in a graph
+A set of reference sequences can be compactly represented as paths in a graph
 (possbly cyclic). \emph{Sequence-to-graph} alignment is a semi-global alignment
 between a query sequence and a walk in a reference
-graph~\cite{jain_complexity_2019}. In contrast to linear references, reference
-graphs capture genomic variation and therefore enable more accurate semi-global
-alignments~\citep{garrison_variation_2018}.
+graph~\cite{jain_complexity_2019}.
 
 \paragraph{Alignment as shortest path}
 An alignment of two sequences is a letter-to-letter correspondence between the
