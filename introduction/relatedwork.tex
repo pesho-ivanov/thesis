@@ -1,12 +1,13 @@
 \section*{Related work}
 \addcontentsline{toc}{section}{\protect\numberline{}{Related work}}
 
-With the increasing quantity of genomic data, the need for fast and accurate
-algorithms has been steadily increasing~\cite{alser2021technology}. There are
-multiple directions in which the sequence alignment algorithms are being
-developed: developing scalable algorithms, generalizing the optimization metric,
-emplying heuristics for approximate solutions, adapting existing algorithms to
-novel types of data, exploiting parallelizing hardware, implementing fast and
+There have been many solutions to alignment~\citep{navarro2001guided}. With the
+increasing quantity of genomic data, the need for fast and accurate algorithms
+has been steadily increasing~\cite{alser2021technology}. There are multiple
+directions in which the sequence alignment algorithms are being developed:
+developing scalable algorithms, generalizing the optimization metric, emplying
+heuristics for approximate solutions, adapting existing algorithms to novel
+types of data, exploiting parallelizing hardware, implementing fast and
 memory-efficient tools (aligners). This thesis focuses on algorithmic approaches
 to sequence alignment so here outline the main existing optimal algorithms, some
 practical but suboptimal heuristics, and the \A shortest path algorithm which is
@@ -69,12 +70,32 @@ aligning sequences to cyclic graphs using algorithms reliant on directed acyclic
 graphs involves the computationally expensive ``DAG-ification'' of graph
 regions~\cite{kavya_sequence_2019,garrison_variation_2018}.
 
-\paragraph{Suboptimal heuristics}
+\paragraph{Suboptimal heuristic algorithms}
 On the other hand all optimal solutions are near-quadratic and the theoretical
 limit is near-quadratic. To spead up beyond this near-quadratic barrier, current
 practical algorithms break the optimality guarantee hoping that the produced
 alignments are accurate enough. 
-% sketches
+
+% Heuristics for alignment
+Both for sequence-to-sequence alignment and sequence-to-graph alignment,
+heuristics are employed to keep alignment
+tractable~\cite{altschul_basic_1990,langmead_fast_2012,garrison_variation_2018},
+especially for large populations of human-sized genomes.
+%
+%
+In the last decades, approximate and alignment-free methods satisfied the demand
+for faster algorithms which process huge volumes of genomic
+data~\citep{kucherov2019evolution}. 
+%
+\emph{Seed-and-extend} is arguably the most popular paradigm in read
+alignment~\citep{altschul_basic_1990,langmead_fast_2012,li_fast_2009}. First,
+substrings (called \emph{seeds} or \emph{kmers}) of the read are extracted, then
+aligned to the reference, and finally prospective matching locations are
+\emph{extended} on both sides to align the full read.
+
+While such a heuristic may produce acceptable alignments in many cases, it
+fundamentally does not provide quality guarantees, resulting in suboptimal
+alignment accuracy.
 
 \paragraph{Seed-and-extend}
 Since optimal alignment is often intractable, many aligners use heuristics, most
@@ -108,3 +129,16 @@ practice.
 
 We employ the \A informed search algorithm in order to design an
 optimal algorithm that scales subquadratically for related sequences.
+
+\paragraph{Graph references}
+First attempts to include variation into the reference data structure were made
+by augmenting the local alignment method to consider alternative walks during the
+extend step~\cite{schneeberger_simultaneous_2009,palmapper}. This approach has
+since been extended from the linear reference case to graph references. To
+represent non-reference variation of multiple references during the seeding
+stage, HISAT2 uses generalized compressed suffix
+arrays~\cite{siren_indexing_2014} to index walks in an augmented reference
+sequence, forming a local genome graph~\cite{kim_graphbased_2019}.
+VG~\cite{garrison_variation_2018} uses a similar
+technique~\cite{siren_indexing_2017} to index variation graphs representing a
+population of references.

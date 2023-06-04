@@ -18,6 +18,9 @@ exploits information from the whole sequences to align sequences provably
 optimally and heuristically fast. We empyrically demonstrate the superior
 scaling and performance to other optimal alignment algorithms.
 
+We take an approach of preserving the optimality guarantee while exploiting
+substantially more information for the sake of performance.
+
 We borrow the existing concept of seeds but apply it in a novel way: instead of
 finding alignments around seed matches, we use the lack of matches to penalize
 alignments by desigining the \emph{seed heuristic} that drive the \A search.
@@ -94,3 +97,36 @@ As it turns out, when the error rate is limited, our optimal solutions
 empirically scale near-linearly up to very long sequences. This translates to
 many orders of magnitude of runtime speedup compared to state-of-the-art optimal
 aligners.
+
+% \A context 
+An optimal alignment can naturally be represented as a shortest path in an
+alignment graph (equivalent to the DP table). In order to find such a shortest
+path with minimal exploration, we instantiate the \A algorithm with a novel
+heuristic function based on the unaligned parts of the sequences. This
+additional information is a problem-specific heuristic function and it heavily
+determines the efficiency of the search. For any explored state by \A, this
+heuristic function should compute a lower bound on the remaining path length, or
+more specifically, the minimal cost of edit operations needed to align the
+remaining sequences.
+
+In contrast, here we demonstrate that seeds can benefit optimal alignment as
+well.
+
+In contrast, we follow the promising direction of using a heuristic to avoid
+worst-case runtime on realistic data. To this end, \astarix rephrases the task
+of alignment as a shortest-path problem in an \emph{alignment graph} extended by
+a \emph{trie index}, and solves it using the \A~algorithm instantiated with a
+problem-specific \prefixh. Importantly, its choice of heuristic only affects
+performance, not optimality.
+%
+Unlike DP-based algorithms, this \prefixh allows scaling sublinearly with the
+reference size, substantially increasing performance on large genomes. However,
+it can only efficiently align reads of limited length.
+
+Most of the techniques this thesis builds upon have been known for many decades
+and have also been heavily motivated by applications in molecular biology. 
+
+The specifics with semi-global alignment requires a trie-like index which is
+well-used in the fields, and known since
+\citeyear{thue1912gegenseitige}~\cite{thue1912gegenseitige} and used in
+informatics since~\citeyear{de1959file}~\cite{de1959file}.
