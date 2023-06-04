@@ -1,11 +1,16 @@
 \section*{Related work}
 \addcontentsline{toc}{section}{\protect\numberline{}{Related work}}
 
-With the advance of the sequencing technology, the need for fast and accurate
-algorithms has been steadily increasing~\cite{alser2021technology}. One possible
-reason is the combination of massive new data and advancement in computation
-hardware allowing for various kinds of parallelization.
-%Thus the advancements with bit-parallel algorithms (CITE Myears, Mikko).
+With the increasing quantity of genomic data, the need for fast and accurate
+algorithms has been steadily increasing~\cite{alser2021technology}. There are
+multiple directions in which the sequence alignment algorithms are being
+developed: developing scalable algorithms, generalizing the optimization metric,
+emplying heuristics for approximate solutions, adapting existing algorithms to
+novel types of data, exploiting parallelizing hardware, implementing fast and
+memory-efficient tools (aligners). This thesis focuses on algorithmic approaches
+to sequence alignment so here outline the main existing optimal algorithms, some
+practical but suboptimal heuristics, and the \A shortest path algorithm which is
+the framework for our provably optimal and heuristically fast algorithm.
 
 \paragraph{Approaches to sequence alignment}
 
@@ -13,31 +18,24 @@ hardware allowing for various kinds of parallelization.
 The first efficient solution for global alignment, known as the Needleman-Wunsch
 algorithm, got developed around~\citeyear{vintsyuk1968speech}~
 \cite{vintsyuk1968speech,needleman1970general}. This algorithm is based on the
-novel dynamic programming~(DP) technique~\cite{bellman1954theory} of splitting a
-task into overlapping subtasks~(or \emph{states}) which can be solved once and
-then reused. Each state corresponds to aligning a prefix of the first sequence
-to a prefix of the second sequence. Each subtask can be solved by reducing it to
-already solved alignments of shorter prefixes, and extending them by a last
-operation of matching or mismatching the last letters from the prefixes,
-inserting one, or inserting the other (equivalent to deleting from the first
-sequence). Each subtask is solved for $\Oh(1)$ so the quadratic number of prefix
-pairs is solved for quadratic overall time, even though the number of possible
-alignments is exponential.
-
-% TODO: merge
-\paragraph{Dynamic programming} The standard approach to sequence alignment is
-by successively aligning prefixes of the first sequence to prefixes of the
-second. \citet{vintsyuk1968speech} was the first to introduce this $\Oh(nm)$
-dynamic programming (DP) approach for a comparing a pair speech signals with $n$
-and $m$ elements. Independently, it was applied to compute edit distance for
-biological
+dynamic programming~(DP) technique~\cite{bellman1954theory} of splitting a task
+into overlapping subtasks~(or \emph{states}) each of which can be solved once
+and then being reused. Each node of the alignment graph (aligning a prefix of
+the first sequence to a prefix of the second sequence) is a state in the DP.
+Each subtask can be solved by reducing it to already solved alignments of
+shorter prefixes, and extending them by a last operation of matching or
+mismatching the last letters from the prefixes, inserting one, or inserting the
+other (equivalent to deleting from the first sequence). Each subtask is solved
+for $\Oh(1)$ so the quadratic number of prefix pairs is solved for quadratic
+overall time, even though the number of possible alignments is exponential.
+Independently, it was applied to compute edit distance for biological
 sequences~\citep{needleman1970general,sankoff1972matching,sellers1974theory,wagner1974string}.
 This well-known algorithm is implemented in modern aligners  like
 \seqan~\citep{reinert2017seqan} and \parasail~\citep{daily2016parasail}.
 Improving the performance of these quadratic algorithms has been a central goal
 in later works.
 
-\paragraph{DP for semi-global alignment}
+\paragraph{Dynamic programming for semi-global alignment}
 Semi-global alignment is a related problem to global alignment but in addition
 to the need to align letter-to-letter, it also requires determining a starting
 position in the reference. This task has also been efficiently solved using a
@@ -48,11 +46,6 @@ various data structures were suggested that can be precomputed to index the
 reference, and then reuse this index to quickly align multiple query sequences
 ~\citeyear{pearson1988improved}~\cite{pearson1988improved} and has become
 central to read alignment of high-throughput sequencing.
-
-\paragraph{Suboptimal alignment}
-There are 
-% parallelization
-% sketches
 
 % Optimal DP-based approaches
 \paragraph{Optimal alignment}
@@ -76,6 +69,13 @@ aligning sequences to cyclic graphs using algorithms reliant on directed acyclic
 graphs involves the computationally expensive ``DAG-ification'' of graph
 regions~\cite{kavya_sequence_2019,garrison_variation_2018}.
 
+\paragraph{Suboptimal heuristics}
+On the other hand all optimal solutions are near-quadratic and the theoretical
+limit is near-quadratic. To spead up beyond this near-quadratic barrier, current
+practical algorithms break the optimality guarantee hoping that the produced
+alignments are accurate enough. 
+% sketches
+
 \paragraph{Seed-and-extend}
 Since optimal alignment is often intractable, many aligners use heuristics, most
 commonly the \emph{seed-and-extend}
@@ -96,8 +96,7 @@ only for the length of the remaining query sequence to be aligned. However, it
 does not significantly outperform \dijkstra (in fact, it is equivalent for a
 zero matching cost).
 % TODO: MSA
-
-\paragraph{Informed search for sequence alignment}
+Informed search for sequence alignment
 
 \paragraph{Known limitations}
 
@@ -105,5 +104,7 @@ Quadratic optimal for semi-global
 
 In its general case, it is not solvable for strictly subquadratic time which is
 often prohibitively slow. Faster approximate algorithms are instead used in
-practice. We employ the \A informed search algorithm in order to design an
+practice.
+
+We employ the \A informed search algorithm in order to design an
 optimal algorithm that scales subquadratically for related sequences.

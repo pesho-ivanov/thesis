@@ -1,99 +1,67 @@
 \section*{Motivation and goal}
 \addcontentsline{toc}{section}{\protect\numberline{}{Motivation and goal}}
 
-\paragraph{Goal} In this thesis we consider a novel principled approach that
-exploits information from the whole sequences to align sequences provably
-optimally and heuristically fast. We empyrically demonstrate the superior
-scaling and performance to other optimal alignment algorithms.
-
-We borrow the existing concept of seeds but apply it in a novel way: instead of
-finding alignments around seed matches, we use the lack of matches to penalize
-alignments by desigining the \emph{seed heuristic} that drive the \A search.
-Seeds are cousins of kmers which are popular in sequence alignment since de
-Bruijn Graphs were applied for genome assembly. Further kmers are cousins of
-ngrams which are popular in computational linguistics since .
-
-It may be surprising that a novel approach to alignment appears 60 years after
-the problem was first efficiently solved. Nevertheless, 
-
-Here we speculate about the possible
-reasons for it: focus on new technology and data, not believing that optimal
-solutions could be efficient.
-
-%combining several existing ideas new (\A, trie, seeds)
-
-All optimal algorithms for semi-global alignment have to iterate over the whole
-reference for each query. We should be able to optimize this by precomputation.
+\paragraph{Observations}
 
 \begin{observation}
     The output of the alignment problem is linear in the input size.
 \end{observation}
 
 \begin{observation}
-    The approximate aligners scale much better in practice than optimal
-    aligners.
+    Optimal global alignment under Hamming distance takes linear time.
 \end{observation}
 
 \begin{observation}
-    The approximate aligners scale much better in practice than optimal
-    aligners.
+    In practice, approximate aligners scale much better than optimal aligners.
+\end{observation}
+
+It is unknown how the error rate influences the expected runtime.
+
+\begin{observation}
+    The quadratic DP to global alignment (Needleman-Wunsch) also solves the more
+    complex semi-global and local alignment (Smith-Waterman), so it does not
+    exploit the available information fuly.
 \end{observation}
 
 \begin{observation}
-    The same quadratic dynamic programming approach to global alignment
-    (Needleman-Wunsch) also solves semi-global and local alignment
-    (Smith-Waterman) without additional runtime expenses.
+    The existing optimal aligners choose next step based only on
+    previous~(prefix) information and ignore the remaining~(suffix).
 \end{observation}
 
-This observation hints to the potential 
+These observations hint to an open direction for research:
 
 \begin{problem}
-    What is the computational complexity of global and semi-global alignment of
-    related sequences under edit distance?
+    Are there more performant algorithms for aligning \emph{related} sequences
+    under edit distance?
 \end{problem}
 
-The runtime of global alignment scales near-quadratically in general, but
-linearly when there there are no errors. It is unknown how the error rate
-influences the expected runtime.
-
-Global alignment is still considered an open problem since it is still not known
-whether exact pairwise alignment is possible in linear time for related
+Global alignment is still considered an open problem since it is unknown whether
+exact pairwise alignment is computable subquadratically for related
 sequences~\citep{medvedev2022theoretical}. 
 
-On the other hand all optimal solutions are near-quadratic and the theoretical
-limit is near-quadratic. To spead up beyond this near-quadratic barrier, current
-practical algorithms break the optimality guarantee hoping that the produced
-alignments are accurate enough. 
+\begin{observation}
+    All optimal algorithms for semi-global alignment have to iterate over the
+    whole reference for each query.
+\end{observation}
 
-%But it is possible to be fast and accurate in the same time?
-We take another approach: we preserve the optimality guarantee and use
-substantially more information with the hope to be fast enough. As it turns out,
-when the error rate is limited, our optimal solutions empirically scale
-near-linearly up to very long sequences. This translates to many orders of
-magnitude of runtime speedup compared to state-of-the-art optimal aligners.
+We should be able to optimize this by precomputation.
 
-% Problem, applications
-The problem of aligning one biological sequence to another has been formulated
-over half a century ago~\citep{needleman1970general} and is known as
-\emph{global pairwise alignment}~\citep{navarro2001guided}. Pairwise alignment
-has numerous applications in computational biology, such as genome assembly,
-read alignment, variant detection, multiple sequence alignment, and differential
-expression~\citep{prjibelski2018sequence}. Despite the centrality and age of
-pairwise alignment, ``a major open problem is to implement an algorithm with linear-like
-empirical scaling on inputs where the edit distance is linear
-in~$n$''~\citep{medvedev2022theoretical}.
+We take an approach of preserving the optimality guarantee while exploiting
+substantially more information for the sake of performance.
+
+Despite the centrality and age of pairwise alignment, ``a major open problem is
+to implement an algorithm with linear-like empirical scaling on inputs where the
+edit distance is linear in~$n$''~\citep{medvedev2022theoretical}.
 
 % Near-quadratic worst case
-Alignment accuracy affects the subsequent analyses, so a common goal
-is to find a shortest sequence of edit operations (insertions, deletions, and
-substitutions of single letters) that transforms one sequence into the other.
-Finding such a sequence of operations is at least as hard as computing the \emph{edit
-distance}, which has recently been proven to not be computable in strongly
-subquadratic time, unless SETH is false~\citep{backurs2015edit}. Given that
-the number of sequencing errors is proportional to the length, existing exact aligners are
-limited by quadratic scaling not only in the worst case but also in practice.
-This is a computational bottleneck given the growing amounts of biological data
-and the increasing sequence lengths~\citep{kucherov2019evolution}.
+Finding such a sequence of operations is at least as hard as computing the
+\emph{edit distance}, which has recently been proven to not be computable in
+strongly subquadratic time, unless SETH is false~\citep{backurs2015edit}. Given
+that the number of sequencing errors is proportional to the length, existing
+exact aligners are limited by quadratic scaling not only in the worst case but
+also in practice. This is a computational bottleneck given the growing amounts
+of biological data and the increasing sequence
+lengths~\citep{kucherov2019evolution}.
 
 Sequence alignment is a class of combinatorial problems that is of primary
 importance for analysis of genomic data. Algorithms and tools for alignment have

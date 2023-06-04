@@ -14,16 +14,18 @@
 \end{figure}
 
 \paragraph{Sequence alignment}
-% problem statements
 One of the simplest operations on sequences is to align one to another. We
 consider the problem of pairwise sequence alignment in the context of genomic
 data: given two DNA sequences, one can be aligned to the other in multiple
-ways~(\cref{fig:alignment-types}). In this thesis we focus on global and
-semi-global alignment types only~(marked in green). If both sequences have to be
-aligned end to end, we look for a \emph{global alignment} whose minimal number
-of edits is known as \emph{edit distance}. If we instead search for an occurance
-of a query sequence within a reference sequence, we allow the alignment to start
-and end at any reference locations in a \emph{semi-global} alignment.
+ways~(\cref{fig:alignment-types})~\citep{navarro2001guided}. In this thesis we
+focus on global and semi-global alignment types only.
+
+%If both sequences have to
+%be aligned end-to-end, we look for a \emph{global alignment} whose minimal
+%number of edits is known as \emph{edit distance}. If we instead search for an
+%occurance of a query sequence within a reference sequence, we allow the
+%alignment to start and end at any reference locations in a \emph{semi-global}
+%alignment.
 
 \paragraph{Minimizing edits}
 It would have been relatively easy to find alignments if the sequences did not

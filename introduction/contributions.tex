@@ -1,6 +1,8 @@
 \section*{Contributions}
 \addcontentsline{toc}{section}{\protect\numberline{}Main results}
 
+%combining several existing ideas new (\A, trie, seeds)
+
 \dictum{%
    Provably optimal and heuristically fast.}
 \vskip 1em
@@ -10,6 +12,18 @@
   \caption{Overview of the publications.}
   \label{tab:ownpubs}
 \end{figure}
+
+In this thesis we consider a novel principled approach that
+exploits information from the whole sequences to align sequences provably
+optimally and heuristically fast. We empyrically demonstrate the superior
+scaling and performance to other optimal alignment algorithms.
+
+We borrow the existing concept of seeds but apply it in a novel way: instead of
+finding alignments around seed matches, we use the lack of matches to penalize
+alignments by desigining the \emph{seed heuristic} that drive the \A search.
+Seeds are cousins of kmers which are popular in sequence alignment since de
+Bruijn Graphs were applied for genome assembly. Further kmers are cousins of
+ngrams which are popular in computational linguistics since .
 
 We have effectively applied the \A algorithm to optimal sequence alignment. We
 demontrated that the additional information from the whole sequence can improve
@@ -74,3 +88,9 @@ to $15\%$ uniform errors, the runtime of \astarpa scales near-linearly to very
 long sequences ($10^7\bp$) and outperforms other exact aligners. We demonstrate
 that on real ONT reads from a human genome, \astarpa is faster than other
 aligners on only a limited portion of the reads.
+
+%%%%%%
+As it turns out, when the error rate is limited, our optimal solutions
+empirically scale near-linearly up to very long sequences. This translates to
+many orders of magnitude of runtime speedup compared to state-of-the-art optimal
+aligners.
