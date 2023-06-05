@@ -2,8 +2,8 @@
 In the following, we provide details on how we executed the newest versions of
 the tools discussed in \cref{sec:eval}:
 
-\paragraph{Executing \astarix}
-Obtained from \astarixurl \\
+\paragraph{Executing \astarix} Obtained from \astarixurl \\
+
 \begin{tabular}{lp{9.5cm}}
 	\textbf{Seed heuristic} & \\
 	\quad Command & \texttt{astarix align-optimal -D 14 -a astar-seeds --seeds\_len l -f reads.fq -g graph.gfa >output} \\
@@ -17,7 +17,8 @@ For aligning Illumina reads, \texttt{astarix} is used with additional \texttt{-M
 0 -S 1 -G 5} and for HiFi reads with \texttt{-M 0 -S 1 -G 1} which better match
 the error rate profiles for these technologies.
 
-\paragraph{Executing other tools}
+\paragraph{Executing other tools}. \\
+
 \begin{tabular}{lp{9.5cm}}
 	\textbf{\vargas} & \\
 	\quad Obtained from & \url{https://github.com/langmead-lab/vargas} (v0.2, commit \texttt{b1ad5d9}) \\
@@ -38,7 +39,8 @@ the error rate profiles for these technologies.
 	optimal alignment according to the author and developer of the tool.\\
 \end{tabular}\\
 
-\paragraph{Simulating reads}
+\paragraph{Simulating reads}. \\
+
 \begin{tabular}{lp{9.5cm}}
 	\textbf{Illumina} & \\
 	\quad & \texttt{art\_illumina -ss MSv3 -sam -i graph.fasta -c N -l 200 -o dir --rnd\_seed 42} \\
