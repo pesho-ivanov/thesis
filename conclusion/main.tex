@@ -13,7 +13,7 @@ that all our heuristics and optimizations are guaranteed to find an alignment
 with minimal edit distance.
 
 % paper-prefix
-\section{Scaling with reference size}
+\paragraph{Scaling with reference size}
 
 In \cref{ch:trie} we presented \astarix, a sequence-to-graph optimal alignment
 tool based on the \A algorithm with a simple admissible heuristic and enhanced
@@ -28,7 +28,7 @@ both \astarix and \dijkstra scale better and outperform current state-of-the-art
 optimal aligners with increasing genome graph size.
 
 % paper-seeds
-\section{Scaling with sequence length}
+\paragraph{Scaling with sequence length}
 
 In \cref{ch:seed} we upgraded our sequence-to-graph aligner \astarix with a
 novel admissible \emph{\sh} which guides the search based on seed matches
@@ -40,7 +40,7 @@ reference size, the \sh alloed subquadratic scaling with the query length, which
 enabled the optimal alignment of long reads. 
 
 % paper-global
-\section{Scaling with error rate}
+\paragraph{Scaling with error rate}
 
 In \cref{ch:global} we introduced \astarpa which solves global alignment. To
 this end, we extended the existing \sh for \A with inexact matches, match

@@ -76,9 +76,6 @@
          giveni={M\bibinitperiod},
       }}%
     }
-    \list{publisher}{1}{%
-      {GitHub}%
-    }
     \strng{namehash}{IPVM1}
     \strng{fullhash}{IPVM1}
     \field{labelnamesource}{author}
@@ -99,9 +96,6 @@
          given={Pesho},
          giveni={P\bibinitperiod},
       }}%
-    }
-    \list{publisher}{1}{%
-      {GitHub}%
     }
     \strng{namehash}{IP1}
     \strng{fullhash}{IP1}
