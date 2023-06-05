@@ -62,7 +62,7 @@
     \field{labeltitlesource}{title}
     \field{booktitle}{RECOMB}
     \field{title}{\textbf{{AStarix}: {F}ast and {O}ptimal {S}equence-to-{G}raph
-  {A}lignment}}
+  {A}lignment}\footnote{\url{https://github.com/eth-sri/astarix}}}
     \field{year}{2020}
   \endentry
 
@@ -120,7 +120,8 @@
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
     \field{title}{\textbf{Exact global alignment using A* with seed heuristic
-  and match pruning}}
+  and match
+  pruning}\footnote{\url{https://github.com/RagnarGrootKoerkamp/astar-pairwise-aligner}}}
     \field{journaltitle}{submitted to Oxford Bioinformatics}
     \field{year}{2022}
   \endentry

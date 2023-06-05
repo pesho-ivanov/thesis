@@ -56,11 +56,12 @@
     \field{labeltitlesource}{title}
     \field{booktitle}{Proceedings of the 2018 ACM SIGSAC Conference on Computer
   and Communications Security}
-    \field{title}{Debin: Predicting debug information in stripped binaries}
+    \field{title}{\textbf{Debin: Predicting debug information in stripped
+  binaries}}
     \field{year}{2018}
   \endentry
 
-  \entry{Ivanov_CellDive_Gene-level_analysis_2023}{software}{}
+  \entry{Ivanov_CellDive_Gene-level_analysis_2023}{misc}{}
     \name{author}{2}{}{%
       {{hash=IP}{%
          family={Ivanov},
@@ -82,17 +83,15 @@
     \strng{fullhash}{IPVM1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
-    \field{title}{{CellDive: Gene-level analysis of lymphocyte single-cell RNA
-  data based on a clonality specification language}}
-    \verb{url}
-    \verb https://github.com/pesho-ivanov/celldive
-    \endverb
-    \field{journaltitle}{GitHub repository}
+    \field{note}{GitHub repository}
+    \field{title}{\textbf{CellDive: Gene-level analysis of lymphocyte
+  single-cell RNA data based on a clonality specification
+  language\footnote{\url{https://github.com/pesho-ivanov/celldive}}}}
     \field{month}{03}
-    \field{year}{2018}
+    \field{year}{(2018)}
   \endentry
 
-  \entry{Ivanov_minSH_2023}{software}{}
+  \entry{Ivanov_minSH_2023}{misc}{}
     \name{author}{1}{}{%
       {{hash=IP}{%
          family={Ivanov},
@@ -108,13 +107,11 @@
     \strng{fullhash}{IP1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
-    \field{title}{{minSH: Minimal re-implementation of A* with seed heuristic}}
-    \verb{url}
-    \verb https://github.com/pesho-ivanov/minSH
-    \endverb
-    \field{journaltitle}{GitHub repository}
+    \field{note}{GitHub repository}
+    \field{title}{\textbf{minSH: Minimal re-implementation of A* with seed
+  heuristic\footnote{\url{https://github.com/pesho-ivanov/minSH}}}}
     \field{month}{06}
-    \field{year}{2023}
+    \field{year}{(2023)}
   \endentry
 \enddatalist
 \endinput
