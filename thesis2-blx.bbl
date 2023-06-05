@@ -56,7 +56,6 @@
     \field{labeltitlesource}{title}
     \field{booktitle}{Proceedings of the 2018 ACM SIGSAC Conference on Computer
   and Communications Security}
-    \field{pages}{1667\bibrangedash 1680}
     \field{title}{Debin: Predicting debug information in stripped binaries}
     \field{year}{2018}
   \endentry
@@ -76,6 +75,9 @@
          giveni={M\bibinitperiod},
       }}%
     }
+    \list{publisher}{1}{%
+      {GitHub}%
+    }
     \strng{namehash}{IPVM1}
     \strng{fullhash}{IPVM1}
     \field{labelnamesource}{author}
@@ -85,9 +87,34 @@
     \verb{url}
     \verb https://github.com/pesho-ivanov/celldive
     \endverb
-    \field{version}{1.0.0}
+    \field{journaltitle}{GitHub repository}
     \field{month}{03}
     \field{year}{2018}
+  \endentry
+
+  \entry{Ivanov_minSH_2023}{software}{}
+    \name{author}{1}{}{%
+      {{hash=IP}{%
+         family={Ivanov},
+         familyi={I\bibinitperiod},
+         given={Pesho},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {GitHub}%
+    }
+    \strng{namehash}{IP1}
+    \strng{fullhash}{IP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{{minSH: Minimal re-implementation of A* with seed heuristic}}
+    \verb{url}
+    \verb https://github.com/pesho-ivanov/minSH
+    \endverb
+    \field{journaltitle}{GitHub repository}
+    \field{month}{06}
+    \field{year}{2023}
   \endentry
 \enddatalist
 \endinput
