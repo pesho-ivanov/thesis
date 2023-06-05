@@ -83,7 +83,7 @@ The procedure \mbox{\textsc{BacktrackPath}} traces the best alignment back to th
 \cref{alg:astar} also shows a simple implementation of \dijkstra in terms of \A.
 We omit the implementation of \textsc{BacktrackPath} for simplicity.
 
-\begin{algorithm}[t]
+\begin{algorithm}[H]
 	\caption{\A~algorithm} \label{alg:astar}
 	\begin{algorithmic}[1]
 		\Function{\A}{$G\colon \text{Graph}$,
@@ -326,7 +326,7 @@ prerequisite for the correctness of our heuristic.
 
 We note that our approach naturally works for cyclic reference graphs.
 
-\begin{figure}[t]
+\begin{figure}[H]
 	\begin{alignat*}{20}
 		(
 			&\langle&& u &,& i   &\rangle&,
@@ -459,7 +459,7 @@ operations transforming $\sigma(\pi)$ into $q$.
 We make the (standard) assumption that $0 \leq \cmatch \leq \csubst, \cins,
 \cdel$, which will be a prerequisite for the correctness of our approach.
 
-\begin{figure}[t]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\columnwidth]{edit_graph}
 	\caption[Constructing the alignment graph]{Starting from the reference graph
