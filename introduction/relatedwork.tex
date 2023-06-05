@@ -1,19 +1,18 @@
 \section*{Related work}
 \addcontentsline{toc}{section}{\protect\numberline{}{Related work}}
 
-There have been many solutions to alignment~\citep{navarro2001guided}. With the
-increasing quantity of genomic data, the need for fast and accurate algorithms
-has been steadily increasing~\cite{alser2021technology}. There are multiple
-directions in which the sequence alignment algorithms are being developed:
-developing scalable algorithms, generalizing the optimization metric, emplying
-heuristics for approximate solutions, adapting existing algorithms to novel
-types of data, exploiting parallelizing hardware, implementing fast and
-memory-efficient tools (aligners). This thesis focuses on algorithmic approaches
-to sequence alignment so here outline the main existing optimal algorithms, some
-practical but suboptimal heuristics, and the \A shortest path algorithm which is
-the framework for our provably optimal and heuristically fast algorithm.
-
-\paragraph{Approaches to sequence alignment}
+Over the last half-century, many algorithms have been developed for sequence
+alignment~\citep{navarro2001guided}. With the increasing quantity and length of
+genomic sequences, the need for fast and accurate algorithms is steadily
+increasing~\cite{alser2021technology}. There are multiple directions in which
+the sequence alignment algorithms are being developed: scalable algorithms,
+generalizing the optimization metric, employing heuristics for approximate
+solutions, adapting existing algorithms to novel types of data, exploiting
+parallel computing, implementing fast and memory-efficient software. This thesis
+focuses on algorithmic approaches to sequence alignment so here we outline the
+leading existing optimal algorithms, the suboptimal seeding heuristics that we
+will will use in an optimal way, and the \A shortest path algorithm which will
+be the base for our provably optimal and heuristically fast approach.
 
 \paragraph{Dynamic programming for global alignment}
 The first efficient solution for global alignment, known as the Needleman-Wunsch
@@ -49,7 +48,7 @@ reference, and then reuse this index to quickly align multiple query sequences
 central to read alignment of high-throughput sequencing.
 
 % Optimal DP-based approaches
-\paragraph{Optimal alignment}
+\paragraph{Optimal semi-global alignment}
 Current optimal alignment algorithms reach the impractical $\Oh(nm)$ runtime
 that has been shown to be a lower bound for the worst-case edit distance
 computation~\cite{backurs2015edit}. In this light, approaches for improving the
@@ -71,29 +70,21 @@ graphs involves the computationally expensive ``DAG-ification'' of graph
 regions~\cite{kavya_sequence_2019,garrison_variation_2018}.
 
 \paragraph{Suboptimal heuristic algorithms}
-On the other hand all optimal solutions are near-quadratic and the theoretical
-limit is near-quadratic. To spead up beyond this near-quadratic barrier, current
-practical algorithms break the optimality guarantee hoping that the produced
-alignments are accurate enough. 
+All optimal solutions are near-quadratic and this is justified by the
+theoretical lower bound. To spead up beyond this near-quadratic barrier, current
+practical algorithms break the optimality guarantee with the hope that the
+produced alignments are accurate enough. 
 
 % Heuristics for alignment
-Both for sequence-to-sequence alignment and sequence-to-graph alignment,
-heuristics are employed to keep alignment
+Heuristics are employed for both sequence-to-sequence alignment and
+sequence-to-graph alignment, to keep the computation
 tractable~\cite{altschul_basic_1990,langmead_fast_2012,garrison_variation_2018},
-especially for large populations of human-sized genomes.
-%
-%
-In the last decades, approximate and alignment-free methods satisfied the demand
-for faster algorithms which process huge volumes of genomic
+especially for large populations of human-sized genomes. In the last decades,
+approximate and alignment-free methods satisfied the demand for faster
+algorithms which process huge volumes of genomic
 data~\citep{kucherov2019evolution}. 
-%
-\emph{Seed-and-extend} is arguably the most popular paradigm in read
-alignment~\citep{altschul_basic_1990,langmead_fast_2012,li_fast_2009}. First,
-substrings (called \emph{seeds} or \emph{kmers}) of the read are extracted, then
-aligned to the reference, and finally prospective matching locations are
-\emph{extended} on both sides to align the full read.
 
-While such a heuristic may produce acceptable alignments in many cases, it
+While heuristics may produce acceptable alignments in many cases, it
 fundamentally does not provide quality guarantees, resulting in suboptimal
 alignment accuracy.
 
@@ -111,30 +102,20 @@ variability, the seeding phase may even fail to find an appropriate seed from
 which to extend.
 
 \paragraph{\A for sequence alignment}
-There has been one attempt to apply \A for optimal pairwise
-alignment~\cite{dox2018efficient} which uses a heuristic function that accounts
-only for the length of the remaining query sequence to be aligned. However, it
-does not significantly outperform \dijkstra (in fact, it is equivalent for a
-zero matching cost).
-% TODO: MSA
-Informed search for sequence alignment
-
-\paragraph{Known limitations}
-
-Quadratic optimal for semi-global
-
-In its general case, it is not solvable for strictly subquadratic time which is
-often prohibitively slow. Faster approximate algorithms are instead used in
-practice.
-
-We employ the \A informed search algorithm in order to design an
-optimal algorithm that scales subquadratically for related sequences.
+\A is a shortest path algorithm that generalizes \dijkstra by estimating the
+remaining distance from each explored vertex to the target.
+%There has been one attempt to apply \A for optimal pairwise
+%alignment~\cite{dox2018efficient} which uses a heuristic function that accounts
+%only for the length of the remaining query sequence to be aligned. However, it
+%does not significantly outperform \dijkstra (in fact, it is equivalent for a
+%zero matching cost). TODO: MSA
+%Informed search for sequence alignment
 
 \paragraph{Graph references}
 First attempts to include variation into the reference data structure were made
-by augmenting the local alignment method to consider alternative walks during the
-extend step~\cite{schneeberger_simultaneous_2009,palmapper}. This approach has
-since been extended from the linear reference case to graph references. To
+by augmenting the local alignment method to consider alternative walks during
+the extend step~\cite{schneeberger_simultaneous_2009,palmapper}. This approach
+has since been extended from the linear reference case to graph references. To
 represent non-reference variation of multiple references during the seeding
 stage, HISAT2 uses generalized compressed suffix
 arrays~\cite{siren_indexing_2014} to index walks in an augmented reference

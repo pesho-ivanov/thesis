@@ -1,19 +1,13 @@
 \section*{Motivation}
 \addcontentsline{toc}{section}{\protect\numberline{}{Motivation}}
 
-In this section we will provide arguments for the impor
+We motivate the topic of this thesis by the importance of optimality guarantees,
+the existence of unused information can significantly improve scaling, and the
+existance of an informed search algorithms that could be heuristically fast
+while guaranteed optimal. Such alignment algorithms would also be useful in are
+modern pangenomics setting.
 
 \paragraph{Approximate algorithms}
-
-Algorithm correctness is arguably a useful property which is often not simple to
-guarantee. It can undoubtedly improve accuracy, especially in the case of
-complex data, but still be wrong from biological point of view. This is because
-of  This Nevertheless, since biology is a natural science, its  optimality
-guarantees must have an additional impact on the development of the field. It
-not only but allows to enjoy being wrong rather than vague. Moreove, often
-problems in computational biology are ill-stated andalgorithms that approximate
-algorithms that. But many algorithms in computational biology do not even have a
-formal statement 
 
 Importantly, these cases can be of specific clinical or biological interest, and
 incorrect alignment can cause severe biases for downstream analyses. For
@@ -35,7 +29,18 @@ optimizing its objective function or because it was aiming at a poor objective
 function. Requiring the solutions to be optimal leaves us with only the latter
 issue.
 
-\paragraph{Guaranteeing optimality}
+\paragraph{Optimality guarantees}
+
+Algorithm correctness is arguably a useful property which is often not simple to
+guarantee. It can undoubtedly improve accuracy, especially in the case of
+complex data, but still be wrong from biological point of view. This is because
+of  This Nevertheless, since biology is a natural science, its  optimality
+guarantees must have an additional impact on the development of the field. It
+not only but allows to enjoy being wrong rather than vague. Moreove, often
+problems in computational biology are ill-stated andalgorithms that approximate
+algorithms that. But many algorithms in computational biology do not even have a
+formal statement 
+
 
 Finding an optimal alignment requires a conceptually different approach than
 finding an approximate alignment. Instead of finding \emph{one} good alignment,
