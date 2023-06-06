@@ -9,118 +9,72 @@ its ability to use any available information to quickly direct the search and
 yet, to guarantee optimality. In order to efficiently apply \A to semi-global
 and global alignment, we complement the reference with a trie index, design a
 powerful \emph{seed heuristic}, and implement a number of algorithmic
-optimizations.
+optimizations. We formally prove the optimality of all algorithms, data
+structures, and optimizations.
 
-\paragraph{Trie index for scaling with reference size}
+\paragraph{Implicit constructiong of the alignment graph}
+The alignment graph is defined as a Cartesian product of the reference and the
+query. The structure of the alignment graph is thus regular, and we do not have
+to build it explicitly but to only constuct it locally at the node we are
+exploring. This optimization is crucial for the overall performance of \A which
+spends time only at explored nodes before terminating at the target.
+
+\paragraph{Sequence-to-graph alignment}
+Unlike most dynamic programming solutions, we are not bound to acyclic graphs
+due to using the general \A shortest path algorithm. Thus, our reference is not
+limited to being a linear sequence but can as well be any genome graph. All
+semi-global alignment algorithms in this thesis are applicable to general graphs
+(possibly including cycles).
+
+\paragraph{Scaling with reference size using a trie index}
 In~\cref{ch:trie} we suggest how to exploit that many query sequences are
 semi-globally aligned to the same reference. As a preprocessing step, we
-complement the reference with a trie index so that any kmer from the reference
-appears as a path from the trie root to a trie leaf, and then links to the
-reference. This way, any substring in the trie is a spell of a path from the
-trie root.
+complement the reference with a trie index (similar to a suffix tree) so that
+any kmer from the reference appears as a path from the trie root to a trie leaf,
+and then links to the reference. This way, any substring in the trie is a spell
+of a path from the trie root. With an accurate heuristic function (i.e.
+estimating the remaining edit distance well), this trie complement allows to
+ignore most of the reference.
 
-\paragraph{General graph references}
-For semi-global alignment of many query sequences to the same reference
+\paragraph{Scaling with query length using seed heuristic}
+In~\cref{ch:seed} we introduce a powerful \emph{seed heuristic} for \A. It
+estimates the remaining edit distance based on information from the whole
+reference and query, we prove its admissibility, and present an algorithm for
+its efficient computation.
 
-\paragraph{Seed heuristic for scaling with query length}
-The seed heuristic To this end, we design an admissible heuristic function which
-quickly and accurately estimates a lower bound on the remaining shortest path
-(i.e. the edit distance to align the unaligned suffix of one of the sequences). 
+In order to quickly compute the seed heuristic for any explored state by \A, we
+first precompute.
 
-For any explored state by \A, this heuristic function should compute a lower
-bound on the remaining path length.
-
-we introduce a novel
-\emph{seed heuristic} to scale with sequence subquadratically with length, and
-chaining to scale with error rate.
-In addition to the trie index to scale with reference size, 
-%
 We borrow the existing concept of seeds but apply it in a novel way: instead of
 finding alignments around seed matches, we use the lack of matches to penalize
 alignments by desigining the \emph{seed heuristic} that drive the \A search.
-%
-We have effectively applied the \A algorithm to optimal sequence alignment. We
-demontrate that the additional information from the whole sequence can improve
-the scaling with query length, reference size and error rate, substantially
-decrease the necessary computations, and result in algorithms that are orders of
-magnitude faster than existing optimal algorithms. We apply the \A approach to
-two types of alignment: semi-global (alignment) and global.
 
-%\section{Reconceptualizing seeds for optimal alignment}
-\paragraph{Beyond \emph{seed-(chain)-extend} paradigm}
-%\addcontentsline{toc}{subsection}{\protect\numberline{}{Beyond \emph{seed-(chain)-extend} paradigm}}
+In addition to the trie index to scale with reference size, 
 
-As we saw in \cref{ch:trie,ch:seed}, all optimal read aligners compute the whole
-dynamic programming table, thus reaching the prohibitively slow quadratic
-runtime. On the other side, all current production aligners rely on the
-\emph{seed-extend} paradigm (and its \emph{seed-chain-extend} variants for long
-reads).
-%
-This paradigm requires similar short \emph{seed} patches to be found
-between the sequences (\AG by hashed kmers, minimiziers, maximum exact matching,
-etc.), and then to \emph{extend} the alignment of the whole query around these
-\emph{seeded} similar patches. This is a very intuitiv approach if the goal is
-to find a \emph{good alignment}.
-%
-If we instead seek not good but provably \emph{best} alignments, we are required
-to at least implicitly refute all the exponentially-many competing alignments.
-%
-Instead, to find optimal alignments, we do not need to choose the seeds to be
-long and similar with the reference buare not required to be similar.
-%
-\begin{observation}[Seeds without matches]
-    To efficiently find an optimal alignment using \A with the seed heuristic,
-    seeds are not required to match (even on the resulting alignment).
-\end{observation}
-%
-Nevertheless, each seed can penalize potential alignment by not more than its
-\emph{potential} (\ie the number of plus $1$, for the case of exact matching
-with unit costs). Any additional errors will require more states to be expanded.
-%
-This is an interesting observation was made by Ragnar while playing with the
-seed heursitic. It looks Indeed, of finding a good alignment but to prove that all
-alternative alignments are no better, the seed heuristic for \A search does not
-really need matches to be efficient.
-%
-This novel usage of seeds carrie different problems and different possibilities.
-
-\paragraph{Optimality guarantees}
 To ensure that our algorithms are practical, we introduce a number of
 algorithmic optimizations which increase performance and decrease memory
 footprint.
 %
-We also prove that all optimizations (greedy matching, ) are preserving the optimality.
 
-\paragraph{Implementations}
-
-
-
-
-%%%%%%
-As it turns out, when the error rate is limited, our optimal solutions
-empirically scale near-linearly up to very long sequences. This translates to
-many orders of magnitude of runtime speedup compared to state-of-the-art optimal
-aligners.
-
-
-In contrast, here we demonstrate that seeds can benefit optimal alignment as
-well.
-
-In contrast, we follow the promising direction of using a heuristic to avoid
-worst-case runtime on realistic data. To this end, \astarix rephrases the task
-of alignment as a shortest-path problem in an \emph{alignment graph} extended by
-a \emph{trie index}, and solves it using the \A~algorithm instantiated with a
-problem-specific \prefixh. Importantly, its choice of heuristic only affects
-performance, not optimality.
-%
-Unlike DP-based algorithms, this \prefixh allows scaling sublinearly with the
-reference size, substantially increasing performance on large genomes. However,
-it can only efficiently align reads of limited length.
-
-Most of the techniques this thesis builds upon have been known for many decades
-and have also been heavily motivated by applications in molecular biology. 
-
-The specifics with semi-global alignment requires a trie-like index which is
-well-used in the fields, and known since
+\paragraph{Scaling with error rate using chaining, inexact matching and gap costs}
+In~\cref{ch:global} we. The specifics with semi-global alignment requires a
+trie-like index which is well-used in the fields, and known since
 \citeyear{thue1912gegenseitige}~\cite{thue1912gegenseitige} and used in
 informatics since~\citeyear{de1959file}~\cite{de1959file}.
+
+\paragraph{Optimizations} Greedy matching
+
+\paragraph{Implementations}
+\astarix and \astarpa, minSH
+
+Minimalistic: 
+
+def build_seedh(A, B, k):
+    seeds = [ A[i:i+k] for i in range(0, len(A)-k+1, k) ]           # O(n)   
+    kmers = { B[j:j+k] for j in range(len(B)-k+1) }                 # O(nk), O(n) with rolling hash (Rabin-Karp)
+    is_seed_missing = [ s not in kmers for s in seeds ] + [False]*2 # O(n)
+    suffix_sum = np.cumsum(is_seed_missing[::-1])[::-1]             # O(n)
+    return lambda ij, k=k: suffix_sum[ ceildiv(ij[0], k) ]          # O(1)
+
+h_seed = build_seed_heuristic(A, B, k=log(len(A)))
+astar(A, B, h_seed)

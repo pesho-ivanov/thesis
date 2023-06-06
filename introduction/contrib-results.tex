@@ -81,3 +81,18 @@ to $15\%$ uniform errors, the runtime of \astarpa scales near-linearly to very
 long sequences ($10^7\bp$) and outperforms other exact aligners. We demonstrate
 that on real ONT reads from a human genome, \astarpa is faster than other
 aligners on only a limited portion of the reads.
+
+subquadratically with length, and chaining to scale with error rate.
+We
+demontrate that the additional information from the whole sequence can improve
+the scaling with query length, reference size and error rate, substantially
+decrease the necessary computations, and result in algorithms that are orders of
+magnitude faster than existing optimal algorithms.
+
+As it turns out, when the error rate is limited, our optimal solutions
+empirically scale near-linearly up to very long sequences. This translates to
+many orders of magnitude of runtime speedup compared to state-of-the-art optimal
+aligners.
+
+The trie index allows scaling sublinearly with the
+reference size, substantially increasing performance on large genomes.
