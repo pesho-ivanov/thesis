@@ -1,0 +1,132 @@
+\subsection*{Methods}
+
+\paragraph{Shortest paths and \A}
+We consider the shortest path formulation of sequence alignment for its
+principled and powerful graph representation. It allows to choose any shortest
+path algorithm, and we select \A for its capacity direct the search using a
+custom heuristic function that can capture any amount of available information
+and yet, guaranteeing optimality via the admissibility property.
+
+\paragraph{General graph references}
+
+% Trie Additional construction
+\paragraph{Trie index for scaling with reference size}
+We presented in~\cref{ch:trie} how to exploit that many query sequences are
+aligned semi-globally to the same reference by complementing the reference by a
+trie index. This way, we find an optimal alignment by always starting at the
+trie root, instead of anywhere in the reference.
+%
+consider the we c is to
+direct the search for a best alignment based not only on information from the
+aligned parts of the sequences (as existing optimal algorithms do), but also
+from the unaligned parts. 
+
+\paragraph{Seed heuristic for scaling with query length}
+To this end, we use a trie index to scale with reference size, a novel
+\emph{seed heuristic} to scale with sequence subquadratically with length, and
+chaining to scale with error rate.
+%
+We borrow the existing concept of seeds but apply it in a novel way: instead of
+finding alignments around seed matches, we use the lack of matches to penalize
+alignments by desigining the \emph{seed heuristic} that drive the \A search.
+Seeds are cousins of kmers which are popular in sequence alignment since de
+Bruijn Graphs were applied for genome assembly. Further kmers are cousins of
+ngrams which are popular in computational linguistics since .
+%
+We have effectively applied the \A algorithm to optimal sequence alignment. We
+demontrate that the additional information from the whole sequence can improve
+the scaling with query length, reference size and error rate, substantially
+decrease the necessary computations, and result in algorithms that are orders of
+magnitude faster than existing optimal algorithms. We apply the \A approach to
+two types of alignment: semi-global (alignment) and global.
+
+%\section{Reconceptualizing seeds for optimal alignment}
+\paragraph{Beyond \emph{seed-(chain)-extend} paradigm}
+%\addcontentsline{toc}{subsection}{\protect\numberline{}{Beyond \emph{seed-(chain)-extend} paradigm}}
+
+As we saw in \cref{ch:trie,ch:seed}, all optimal read aligners compute the whole
+dynamic programming table, thus reaching the prohibitively slow quadratic
+runtime. On the other side, all current production aligners rely on the
+\emph{seed-extend} paradigm (and its \emph{seed-chain-extend} variants for long
+reads).
+%
+This paradigm requires similar short \emph{seed} patches to be found
+between the sequences (\AG by hashed kmers, minimiziers, maximum exact matching,
+etc.), and then to \emph{extend} the alignment of the whole query around these
+\emph{seeded} similar patches. This is a very intuitiv approach if the goal is
+to find a \emph{good alignment}.
+%
+If we instead seek not good but provably \emph{best} alignments, we are required
+to at least implicitly refute all the exponentially-many competing alignments.
+%
+Instead, to find optimal alignments, we do not need to choose the seeds to be
+long and similar with the reference buare not required to be similar.
+%
+\begin{observation}[Seeds without matches]
+    To efficiently find an optimal alignment using \A with the seed heuristic,
+    seeds are not required to match (even on the resulting alignment).
+\end{observation}
+%
+Nevertheless, each seed can penalize potential alignment by not more than its
+\emph{potential} (\ie the number of plus $1$, for the case of exact matching
+with unit costs). Any additional errors will require more states to be expanded.
+%
+This is an interesting observation was made by Ragnar while playing with the
+seed heursitic. It looks Indeed, of finding a good alignment but to prove that all
+alternative alignments are no better, the seed heuristic for \A search does not
+really need matches to be efficient.
+%
+This novel usage of seeds carrie different problems and different possibilities.
+
+\paragraph{Optimality guarantees}
+To ensure that our algorithms are practical, we introduce a number of
+algorithmic optimizations which increase performance and decrease memory
+footprint.
+%
+We also prove that all optimizations (greedy matching, ) are preserving the optimality.
+
+\paragraph{Aligning to general graph references}
+
+\paragraph{Implementations}
+
+
+
+
+%%%%%%
+As it turns out, when the error rate is limited, our optimal solutions
+empirically scale near-linearly up to very long sequences. This translates to
+many orders of magnitude of runtime speedup compared to state-of-the-art optimal
+aligners.
+
+% \A context 
+An optimal alignment can naturally be represented as a shortest path in an
+alignment graph (equivalent to the DP table). In order to find such a shortest
+path with minimal exploration, we instantiate the \A algorithm with a novel
+heuristic function based on the unaligned parts of the sequences. This
+additional information is a problem-specific heuristic function and it heavily
+determines the efficiency of the search. For any explored state by \A, this
+heuristic function should compute a lower bound on the remaining path length, or
+more specifically, the minimal cost of edit operations needed to align the
+remaining sequences.
+
+In contrast, here we demonstrate that seeds can benefit optimal alignment as
+well.
+
+In contrast, we follow the promising direction of using a heuristic to avoid
+worst-case runtime on realistic data. To this end, \astarix rephrases the task
+of alignment as a shortest-path problem in an \emph{alignment graph} extended by
+a \emph{trie index}, and solves it using the \A~algorithm instantiated with a
+problem-specific \prefixh. Importantly, its choice of heuristic only affects
+performance, not optimality.
+%
+Unlike DP-based algorithms, this \prefixh allows scaling sublinearly with the
+reference size, substantially increasing performance on large genomes. However,
+it can only efficiently align reads of limited length.
+
+Most of the techniques this thesis builds upon have been known for many decades
+and have also been heavily motivated by applications in molecular biology. 
+
+The specifics with semi-global alignment requires a trie-like index which is
+well-used in the fields, and known since
+\citeyear{thue1912gegenseitige}~\cite{thue1912gegenseitige} and used in
+informatics since~\citeyear{de1959file}~\cite{de1959file}.

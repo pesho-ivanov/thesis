@@ -1,5 +1,7 @@
-\section*{Analysis of scaling}
-%\addcontentsline{toc}{section}{\protect\numberline{}{Analysis of scaling}}
+\subsection*{Results}
+
+We empirically demonstrate the superior scaling and performance to other optimal
+alignment algorithms.
 
 \paragraph{Scaling with reference size using a trie index}
 \paragraph{Scaling with query length using a seed heuristic}
@@ -49,3 +51,33 @@ near-linearly, can be exponentially increased by lowering the error rate. For
 the semi-global alignment, any unit of alignment cost that is not compensated by
 the potential of the seed heuristic, leads to a deeper exploration of the trie,
 which is grows exponentially until it saturate to quadratic.
+
+\paragraph{Scaling with reference size}
+In~\cref{ch:trie} we present the tool \astarix which applies the \A algorithm to
+find optimal alignments, based on a domain-specific heuristic and enhanced by
+multiple algorithmic optimizations. Importantly, our approach allows for both
+cyclic and acyclic graphs including variation and de Bruijn graphs. We
+demonstrate that using a trie index we can achieve sublinear scaling of aligning
+runtime with reference size, and that \A can scale exponentially better than
+\dijkstra with increasing (but small) number of errors in the reads. Moreover,
+for short reads, both \astarix and \dijkstra scale better and outperform current
+state-of-the-art optimal aligners with increasing genome graph size.
+Nevertheless, scaling optimal alignment of long reads on big graphs remained an
+open problem.
+
+\paragraph{Scaling with query length}
+In~\cref{ch:seed} we upgrade \astarix with a novel \sh which guides the \A
+search by preferring crumbs on nodes that lead towards optimal alignments even
+for long reads. This approach enables the scaling of semi-global alignment with
+read length.
+
+\paragraph{Scaling with error rate}
+In~\cref{ch:global} we resolve the third major bottleneck -- handling high error
+rates. We presented an algorithm with an implementation in \astarpa solving
+pairwise alignment between two sequences. The algorithm is based on \A with a
+\sh, inexact matching, match chaining, and match pruning, which we proved to
+find an exact solution according to edit distance. For random sequences with up
+to $15\%$ uniform errors, the runtime of \astarpa scales near-linearly to very
+long sequences ($10^7\bp$) and outperforms other exact aligners. We demonstrate
+that on real ONT reads from a human genome, \astarpa is faster than other
+aligners on only a limited portion of the reads.

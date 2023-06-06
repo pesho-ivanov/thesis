@@ -7,7 +7,7 @@ existance of an informed search algorithms that could be heuristically fast
 while guaranteed optimal. Such alignment algorithms would also be useful in are
 modern pangenomics setting.
 
-\paragraph{Approximate algorithms}
+\subsection*{Approximate algorithms}
 
 Importantly, these cases can be of specific clinical or biological interest, and
 incorrect alignment can cause severe biases for downstream analyses. For
@@ -29,7 +29,7 @@ optimizing its objective function or because it was aiming at a poor objective
 function. Requiring the solutions to be optimal leaves us with only the latter
 issue.
 
-\paragraph{Optimality guarantees}
+\subsection*{Optimality guarantees}
 
 Algorithm correctness is arguably a useful property which is often not simple to
 guarantee. It can undoubtedly improve accuracy, especially in the case of
@@ -40,7 +40,6 @@ not only but allows to enjoy being wrong rather than vague. Moreove, often
 problems in computational biology are ill-stated andalgorithms that approximate
 algorithms that. But many algorithms in computational biology do not even have a
 formal statement 
-
 
 Finding an optimal alignment requires a conceptually different approach than
 finding an approximate alignment. Instead of finding \emph{one} good alignment,
@@ -74,7 +73,7 @@ Such aligners include \vargas~\citep{darby2020vargas},
 which use bit-level optimizations and parallelization to increase their
 throughput.
 
-\paragraph{Expected subquadratic scaling}
+\subsection*{Expected subquadratic scaling}
 
 Given that the number of sequencing errors is proportional to the length,
 existing exact aligners are limited by quadratic scaling not only in the worst
@@ -146,7 +145,7 @@ Unlike the practical approximate algorithms, the existing optimal algorithms do
 not exploit this information. As a result, all state-of-the-art optimal
 algorithms take longer to map a longer query to a reference. 
 
-\paragraph{Informed search and \A}
+\subsection*{Informed search and \A}
 
 The optimal algorithms used in computational biology explore the search space of
 possible alignments in an uninformed fashion: by aligning a prefix of one
@@ -168,7 +167,8 @@ scaling on inputs where the edit distance is linear in n” (Medvedev, 2022a).
 Algorithms such as \A that are aware of the ``future''~(suffix) are called
 \emph{informed search} algorithms.
 
-\paragraph{Shift towards graph references}
+\subsection{Shift towards graph references}
+
 The interest towards genome graphs keeps increasing with the first International
 Genome Graph Symposium being held this year in Ascona, Switzerland (2022). The
 benefits of using graph references representing biological variation has been
