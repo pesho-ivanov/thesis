@@ -37,7 +37,7 @@ path.
 \paragraph{Match pruning}
 In order to reduce the number of states expanded by \A we apply the
 \emph{multiple-path pruning} observation of \citet{poole2017artificial}: once a
-shortest path to a vertex has been found, no other paths to this vertex can
+shortest path to a node has been found, no other paths to this node can
 improve the global shortest path. We prove that when a state at the start of a
 match is expanded, a shortest path to this state has been found. Since no other
 path to this state can be shorter, we show that we can \emph{prune} (remove) the

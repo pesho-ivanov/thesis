@@ -3,23 +3,27 @@
 
 %combining several existing ideas new (\A, trie, seeds)
 
-\dictum{%
-   Provably optimal and heuristically fast.}
-\vskip 1em
-
 \begin{figure}[h]
   \includegraphics[width=1.0\linewidth]{media/ownpubs-table.png}
-  \caption{Overview of the publications.}
+  \caption{Overview of the contributions by publication. \cref{ch:trie}
+  corresponds to \citep{ivanov2020astarix}, \cref{ch:seed} to
+  \citep{ivanov2022fast}, \cref{ch:global} to \citep{koerkamp2022exact}}
   \label{tab:ownpubs}
 \end{figure}
 
-In this thesis we consider a novel principled approach that
-exploits information from the whole sequences to align sequences provably
-optimally and heuristically fast. We empyrically demonstrate the superior
-scaling and performance to other optimal alignment algorithms.
-
-We take an approach of preserving the optimality guarantee while exploiting
-substantially more information for the sake of performance.
+% Everything in one paragraph
+In this thesis we introduce a novel principled approach for provably optimally
+and heuristically fast sequence alignment. Our basic idea is to direct the
+search for a best alignment based not only on information from the aligned parts
+of the sequences (as existing optimal algorithms do), but also from the
+unaligned parts. We find the shortest path formulation of sequence alignment to
+be more natural and powerful than the classic dynamic programming formulation
+which already implies a specific solution. We choose the \A shortest path
+algorithm since it can direct the search using a custom heuristic function that
+estimates the remaining distance from any node to using the additional information from the whole sequences.
+The \A framework allows for constructions We take an approach of preserving the
+optimality guarantee while exploiting substantially more information for the
+sake of performance.
 
 We borrow the existing concept of seeds but apply it in a novel way: instead of
 finding alignments around seed matches, we use the lack of matches to penalize
@@ -29,7 +33,7 @@ Bruijn Graphs were applied for genome assembly. Further kmers are cousins of
 ngrams which are popular in computational linguistics since .
 
 We have effectively applied the \A algorithm to optimal sequence alignment. We
-demontrated that the additional information from the whole sequence can improve
+demontrate that the additional information from the whole sequence can improve
 the scaling with query length, reference size and error rate, substantially
 decrease the necessary computations, and result in algorithms that are orders of
 magnitude faster than existing optimal algorithms. We apply the \A approach to
@@ -37,8 +41,10 @@ two types of alignment: semi-global (alignment) and global.
 
 \subsection*{Principled approach by shortest paths}
 shortest paths,
-
 A*, admissibility
+Informed search: Two-stage algorithm, similar to Aho-Corasick, increasingly more information (length, prefix, seeds, chaining seeds, chaining seeds + gaps)
+
+\input{\dir/seed-and-extend}
 
 \subsection*{Optimality guarantees}
 To ensure that our algorithms are practical, we introduce a number of
@@ -47,21 +53,14 @@ footprint.
 
 We also prove that all optimizations (greedy matching, ) are preserving the optimality.
 
-\subsection*{Scaling with reference size using a trie index}
-
-\input{\dir/seed-and-extend}
 \input{\dir/scaling}
-
-\subsection*{Scaling with query length using a seed heuristic}
-
-\subsection*{Scaling with error rate using inexact matching and chaining}
-
-Informed search: Two-stage algorithm, similar to Aho-Corasick, increasingly more information (length, prefix, seeds, chaining seeds, chaining seeds + gaps)
 
 \subsection*{Aligning to general graph references}
 
 \subsection*{Implementations}
 
+We empirically demonstrate the superior scaling and performance to other optimal
+alignment algorithms.
 
 \paragraph{Scaling with reference size}
 In~\cref{ch:trie} we present the tool \astarix which applies the \A algorithm to
@@ -76,12 +75,13 @@ state-of-the-art optimal aligners with increasing genome graph size.
 Nevertheless, scaling optimal alignment of long reads on big graphs remained an
 open problem.
 
-\paragraph{Scaling with reference size}
+\paragraph{Scaling with query length}
 In~\cref{ch:seed} we upgrade \astarix with a novel \sh which guides the \A
 search by preferring crumbs on nodes that lead towards optimal alignments even
 for long reads. This approach enables the scaling of semi-global alignment with
 read length.
 
+\paragraph{Scaling with error rate}
 In~\cref{ch:global} we resolve the third major bottleneck -- handling high error
 rates. We presented an algorithm with an implementation in \astarpa solving
 pairwise alignment between two sequences. The algorithm is based on \A with a

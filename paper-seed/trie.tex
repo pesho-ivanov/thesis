@@ -9,7 +9,7 @@ which immediately induces a high overhead of $\lvert \RGV \rvert$.
 In line with the previous section, we avoid this overhead by complementing the
 reference graph with a trie index to produce a new graph $\TG = (\TGV, \TGE)$,
 where $\TGV$ is the union of the reference graph nodes $\RGV$ and the new trie
-vertices, and $\TGE$ is the union of $\RGE$, the trie edges, and edges
+nodes, and $\TGE$ is the union of $\RGE$, the trie edges, and edges
 connecting the trie leafs with reference nodes. Note that constructing this trie
 index is a one-time pre-processing step that can be reused for multiple queries.
 

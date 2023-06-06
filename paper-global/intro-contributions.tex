@@ -21,8 +21,8 @@ cope with up to twice higher divergence.
 
 \paragraph{Match pruning}
 In order to further improve our heuristics, we apply the \emph{multiple-path pruning}
-observation of \citet{poole2017artificial}: once a shortest path to a vertex has
-been found, no other paths through this vertex can improve the global shortest
+observation of \citet{poole2017artificial}: once a shortest path to a node has
+been found, no other paths through this node can improve the global shortest
 path. When \A expands the start or end of a match, we remove (\emph{prune}) this
 match from further consideration, thus improving (increasing) the heuristic for
 the states preceeding the match. The incremental nature of our heuristic search is

@@ -2,20 +2,20 @@
 
 Here, we generalize the concept of an \emph{admissible} heuristic to that of a
 \emph{partially admissible heuristic} that may change value as the \A
-progresses, and even become inadmissible in some vertices.
+progresses, and even become inadmissible in some nodes.
 In \cref{GLOBALthm:partial-admissible} we show that \A still finds a shortest path
 when used with a partial admissible heuristic.
 
-\begin{definition}[Fixed vertex]
-  A \emph{fixed} vertex is a closed vertex $u$ to which \A has found a shortest path,
+\begin{definition}[Fixed node]
+  A \emph{fixed} node is a closed node $u$ to which \A has found a shortest path,
   that is, $g(u) = \g(u)$.
 \end{definition}
-A fixed vertex is never opened, and hence remains fixed.
+A fixed node is never opened, and hence remains fixed.
 
 \begin{definition}[Partial admissible]
   A heuristic $\hh$ is \emph{partially admissible} when there exists a shortest
   path $\pi^*$ from  $v_s$ to $v_t$ for which at any point during the \A and for
-  any non-fixed vertex $u\in \pi^*$, the heuristic in $u$ is a lower bound on
+  any non-fixed node $u\in \pi^*$, the heuristic in $u$ is a lower bound on
   the remaining distance $\h(u)$: $\hh(u) \leq \h(u)$.
 \end{definition}
 
@@ -23,11 +23,11 @@ We follow the structure and notation of \citet{hart1968formal} to prove that \A
 finds a shortest path when used with a partially admissible heuristic.
 \begin{lem}[Generalization of \citet{hart1968formal}, Lemma 1]\label{GLOBALlemma1}
   Assuming $v_t$ is not fixed,
-  there exists an open vertex $n'$ on $\Path$ with $g(n') = \g(n')$ such that
-  all vertices in $\pi^*$ following $n'$ are not fixed.
+  there exists an open node $n'$ on $\Path$ with $g(n') = \g(n')$ such that
+  all nodes in $\pi^*$ following $n'$ are not fixed.
 \end{lem}
 \begin{proof}
-  Let $n^*$ be the last fixed vertex in $\Path$, and let
+  Let $n^*$ be the last fixed node in $\Path$, and let
   $n'$ be its successor on $\Path$. We have $g(n') = \g(n')$ since $\Path$ is a
   shortest path and $n^*$ was expanded, and $n'$ is open by our choice of $n^*$.
 \end{proof}
@@ -38,7 +38,7 @@ finds a shortest path when used with a partially admissible heuristic.
 \end{cor}
 \begin{proof}
   By definition of $f$ we have $f(n') = g(n') + \hh(n')$. Since $n'\in \Path$ and
-  $\Path$ does not contain any fixed vertices after $n'$, the partial admissibility of $\hh$
+  $\Path$ does not contain any fixed nodes after $n'$, the partial admissibility of $\hh$
   implies $\hh(n') \leq \h(n')$.
   Thus,
   $f(n') = g(n') + \hh(n') = \g(n') + \hh(n') \leq \g(n') + \h(n') = \g(v_t)$.
@@ -48,17 +48,17 @@ finds a shortest path when used with a partially admissible heuristic.
 \end{thm}
 \begin{proof}
   The proof of Theorem 1 in \citet{hart1968formal} applies, with the remark that we use the
-  specific path $\Path$ and the specific vertex $n'$ from \cref{GLOBALcor:cor}, instead
+  specific path $\Path$ and the specific node $n'$ from \cref{GLOBALcor:cor}, instead
   of an arbitrary shortest path $P$.
 \end{proof}
 
 \begin{remark}[Monotone heuristic]\label{GLOBALremark:monotone}
   We call $\hh(u)$ \emph{monotone} when it does not decrease as the \A
-  progresses. To find the vertex $u$ with minimal $f(u)$, we add
+  progresses. To find the node $u$ with minimal $f(u)$, we add
   step \cref{GLOBALastar:pruning-check} to the \A algorithm in \cref{GLOBALsec:astar} to check
   whether the value of $f$ in the priority queue is still up to date.
-  If $f=f(u)$, we know that for each vertex $(v, g_v, f_v)$ in the queue we have
+  If $f=f(u)$, we know that for each node $(v, g_v, f_v)$ in the queue we have
   $f(u)\leq f_v\leq f(v)$ for
-  all other open vertices $v$ in the queue with stored value $f_v$, ensuring that
-  $u$ indeed has the minimal value of $f$ value of all open vertices.
+  all other open nodes $v$ in the queue with stored value $f_v$, ensuring that
+  $u$ indeed has the minimal value of $f$ value of all open nodes.
 \end{remark}

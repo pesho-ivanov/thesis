@@ -9,17 +9,17 @@
 
 \paragraph{\dijkstra and \A}
 \dijkstra's algorithm \citep{dijkstra1959note} finds a shortest path from $v_s$
-to~$v_t$ by \emph{expanding} vertices in order of increasing distance $\g(u)$
+to~$v_t$ by \emph{expanding} nodes in order of increasing distance $\g(u)$
 from the start. The \A algorithm~\citep{hart1968formal,pearl1984heuristics},
-instead, directs the search towards a target by expanding vertices in order of
+instead, directs the search towards a target by expanding nodes in order of
 increasing ${f(u) := g(u) + h(u)}$, where $h(u)$ is a heuristic function that
 estimates the distance $\h(u)$ to the end and $g(u)$ is the shortest length of a
 path from $v_s$ to $u$ found so far. A heuristic is \emph{admissible} if it is a
 lower bound on the remaining distance, $h(u) \leq \h(u)$, which guarantees that
 \A has found a shortest path as soon as it expands $v_t$. Heuristic $h_1$
-\emph{dominates} another heuristic $h_2$ when $h_1(u) \ge h_2(u)$ for all vertices $u$.
+\emph{dominates} another heuristic $h_2$ when $h_1(u) \ge h_2(u)$ for all nodes $u$.
 A dominant heuristic will usually, but not always~\citep{holte2010common},
-expand less vertices. Note that \dijkstra's algorithm is
+expand less nodes. Note that \dijkstra's algorithm is
 equivalent to \A using a heuristic that is always $0$, and that both algorithms
 require non-negative edge costs. Our variant of the \A algorithm is provided
 in~\cref{GLOBALsec:astar}.
@@ -401,7 +401,7 @@ single letters needed to convert $A$ into $B$.
 \paragraph{Alignment graph}
 Let \emph{state} $\st{i}{j}$ denote the subtask of aligning the prefix $A_{<i}$
 to the prefix $B_{<j}$. The \emph{alignment graph} (also called \emph{edit
-graph}) $G(V,E)$ is a weighted directed graph with vertices $V = \{\st ij \vert
+graph}) $G(V,E)$ is a weighted directed graph with nodes $V = \{\st ij \vert
 {0\leq i \leq n}, {0\leq j\leq m}\}$ corresponding to all states, and edges
 connecting tasks to subtasks: edge ${\st ij \to \st{i{+}1}{j{+}1}}$ has cost $0$
 if ${a_i = b_j}$ (match) and $1$ otherwise (substitution), and edges ${\st ij
@@ -484,7 +484,7 @@ We make the (standard) assumption that $0 \leq \cmatch \leq \csubst, \cins,
 %for deleted characters (see \cref{TRIEfig:graph-constructions}).
 %%
 %The edit and reference graphs consist
-%of the same vertices, \ie, $\AGV=\RGV$. However, $\AGE$ contains more edges
+%of the same nodes, \ie, $\AGV=\RGV$. However, $\AGE$ contains more edges
 %than $\RGE$ to account for edits.
 %%
 %Concretely, for each edge $(u,v,\ell) \in \RGE$, $\AGE$ contains edges to
@@ -509,7 +509,7 @@ must ensure that only paths spelling $q$ are considered. To this end, we
 introduce an alternative but equivalent formulation of alignments in terms of an
 \emph{alignment graph} $\AG=(\AGV,\AGE)$.
 
-Here, each \emph{state} $\langle v,i \rangle \in \AGV$ consists of a vertex $v \in
+Here, each \emph{state} $\langle v,i \rangle \in \AGV$ consists of a node $v \in
 \RGV$ and a query position $i \in \{0,\dots,|q|\}$ (equivalent
 to~\cite{rautiainen_aligning_2017}). Traversing a state $\langle v,i \rangle \in
 \AGV$ represents the alignment of the first $i$ query characters ending at node $v$.

@@ -18,7 +18,7 @@ to a sequence.
 \paragraph{Alignment graph}
 Let \emph{state} $\st{i}{j}$ denote the subtask of aligning the prefix~$A_{<i}$
 to the prefix~$B_{<j}$. The \emph{alignment graph} (also called \emph{edit
-graph}) $G(V,E)$ is a weighted directed graph with vertices $V = \{\st ij \mid
+graph}) $G(V,E)$ is a weighted directed graph with nodes $V = \{\st ij \mid
 {0\leq i \leq n}, {0\leq j\leq m}\}$ corresponding to all states, and edges
 connecting subtasks: edge ${\st ij \to \st{i{+}1}{j{+}1}}$ has cost $0$ if ${a_i
 = b_j}$ (match) and $1$ otherwise (substitution), and edges ${\st ij \to
@@ -51,19 +51,19 @@ $\matches_s$ of \emph{matches}.
 
 \paragraph{\dijkstra and \A}
 \dijkstra's algorithm \citep{dijkstra1959note} finds a shortest path from $v_s$
-to~$v_t$ by \emph{expanding} (generating all successors) vertices in order of
-increasing distance $\g(u)$ from the start. Each vertex to be expanded is chosen
-from a set of \emph{open} vertices. The
+to~$v_t$ by \emph{expanding} (generating all successors) nodes in order of
+increasing distance $\g(u)$ from the start. Each node to be expanded is chosen
+from a set of \emph{open} nodes. The
 \A~algorithm~\citep{hart1968formal,pearl1984heuristics}, instead directs the
-search towards a target by expanding vertices in order of increasing ${f(u) :=
+search towards a target by expanding nodes in order of increasing ${f(u) :=
 g(u) + h(u)}$, where $h(u)$ is a heuristic function that estimates the distance
 $\h(u)$ to the end and $g(u)$ is the shortest length of a path from $v_s$ to $u$
 found so far. A heuristic is \emph{admissible} if it is a lower bound on the
 remaining distance, $h(u) \leq \h(u)$, which guarantees that \A has found a
 shortest path as soon as it expands $v_t$. Heuristic $h_1$ \emph{dominates} (is
 \emph{more accurate} than) another heuristic $h_2$ when $h_1(u) \ge h_2(u)$ for
-all vertices $u$. A dominant heuristic will usually, but not
-always~\citep{holte2010common}, expand less vertices. Note that Dijkstra's
+all nodes $u$. A dominant heuristic will usually, but not
+always~\citep{holte2010common}, expand less nodes. Note that Dijkstra's
 algorithm is equivalent to \A using a heuristic that is always $0$, and that
 both algorithms require non-negative edge costs. Our variant of the \A~algorithm
 is provided in~\cref{sec:astar-code}.

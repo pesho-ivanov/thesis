@@ -21,7 +21,7 @@ used. Our modified \A algorithm~(\cref{sec:astar-code})
 works for pruning heuristics by ensuring that the $f$-value of a state is
 up-to-date before expanding it, and otherwise \emph{reorders} it in the priority
 queue. Even though match pruning violates the admissibility of our heuristics
-for some vertices, we prove that \A is sill guaranteed to find a shortest
+for some nodes, we prove that \A is sill guaranteed to find a shortest
 path~(\cref{sec:pruning-proof}). To this end, we show that our pruning
 heuristics are \emph{\wah{}s}~(\cref{dfn:weak-admissible}) in the sense that
 they are admissible on at least one path from $v_s$ to $v_t$.

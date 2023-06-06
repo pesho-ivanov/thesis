@@ -1,17 +1,17 @@
 \paragraph{\A with a \wah finds a shortest path}
 \label{sec:weak-admissible-dfn}
 
-\begin{definition}[Fixed vertex]
-  A vertex $u$ is \emph{fixed} if it is expanded and \A has found a shortest path
+\begin{definition}[Fixed node]
+  A node $u$ is \emph{fixed} if it is expanded and \A has found a shortest path
   to it, that is, $g(u) = \g(u)$.
 \end{definition}
-A fixed vertex cannot be opened again (\cref{alg:astar}, line~$\ref{alg:astar:open}$),
+A fixed node cannot be opened again (\cref{alg:astar}, line~$\ref{alg:astar:open}$),
 and hence remains fixed.
 
 \begin{definition}[\Wa]\label{dfn:weak-admissible}%
   A heuristic $\hh$ is \emph{\wa} if at any moment during the \A search there
-  exists a shortest path~$\pi^*$ from~$v_s$~to~$v_t$ in which all vertices $u
-  \in \pi^*$ after its last fixed vertex $n^*$ satisfy $\hh(u) \leq \h(u)$.
+  exists a shortest path~$\pi^*$ from~$v_s$~to~$v_t$ in which all nodes $u
+  \in \pi^*$ after its last fixed node $n^*$ satisfy $\hh(u) \leq \h(u)$.
 \end{definition}
 
 To prove that \A finds a shortest path when used with a \wah, we follow the
@@ -20,9 +20,9 @@ notation with a slightly stronger conclusion that follows directly from
 their proof.
 
 \begin{lem}[Lemma 1 of \citet{hart1968formal}]\label{lemma1}
-  For any unfixed vertex $n$ and for any shortest path $\Path$ from $v_s$ to $n$,
-  there exists an open vertex $n'$ on $\Path$ with $g(n') = \g(n')$ such that
-  $\Path$ does not contain fixed vertices after $n'$.
+  For any unfixed node $n$ and for any shortest path $\Path$ from $v_s$ to $n$,
+  there exists an open node $n'$ on $\Path$ with $g(n') = \g(n')$ such that
+  $\Path$ does not contain fixed nodes after $n'$.
 \end{lem}
 
 Next, we prove that in each step the \A algorithm can proceed along a shortest path
@@ -30,16 +30,16 @@ to the target:
 
 \begin{cor}[Generalization of Corollary to Lemma 1 of \citet{hart1968formal}]\label{cor:cor}
   Suppose that $\hh$ is \wa, and that \A has not terminated. Then, there exists
-  an open vertex $n'$ on a shortest path from $v_s$ to $v_t$ with $f(n') \leq
+  an open node $n'$ on a shortest path from $v_s$ to $v_t$ with $f(n') \leq
   \g(v_t)$.
 \end{cor}
 \begin{proof}
   Let $\Path$ be the shortest path from $v_s$ to $v_t$ given by the \way of $\hh$ (\cref{dfn:weak-admissible}).
   Since \A has not terminated, $v_t$ is not fixed.
   Substitute ${n=v_t}$ in \cref{lemma1} to derive that
-  there exists an open vertex $n'$ on $\Path$ with $g(n') = \g(n')$. By
+  there exists an open node $n'$ on $\Path$ with $g(n') = \g(n')$. By
   definition of $f$ we have $f(n') = g(n') + \hh(n')$. Since $\Path$ does not
-  contain any fixed vertices after $n'$, the \way of $\hh$ implies $\hh(n')
+  contain any fixed nodes after $n'$, the \way of $\hh$ implies $\hh(n')
   \leq \h(n')$. Thus, ${f(n') = g(n') + \hh(n') \leq \g(n') + \h(n') = \g(v_t)}$.
 \end{proof}
 
@@ -47,5 +47,5 @@ to the target:
 \begin{proof}
   The proof of Theorem~1 in \citet{hart1968formal} applies, with the remark that
   instead of an arbitrary shortest path, we use the specific path $\Path$
-  given by the \way and the specific vertex $n'$ given by \cref{cor:cor}.
+  given by the \way and the specific node $n'$ given by \cref{cor:cor}.
 \end{proof}
