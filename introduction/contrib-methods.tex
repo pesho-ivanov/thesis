@@ -89,6 +89,7 @@ MinSH\footnote{\url{https://github.com/pesho-ivanov/minSH}} is a minimalistic
 implementation of the seed heuristic for global alignment. Here is a working
 5-line implementation of the seed heuristic that captures its basic idea:
 
+\begin{samepage}
 \begin{minted}[fontsize=\footnotesize, frame=lines]{python}
 def build_seedh(A, B, k):
     seeds = [ A[i:i+k] for i in range(0, len(A)-k+1, k) ]
@@ -100,3 +101,4 @@ def build_seedh(A, B, k):
 h_seed = build_seed_heuristic(A, B, k=log(len(A)))
 astar(A, B, h_seed)
 \end{minted}
+\end{samepage}
