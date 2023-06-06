@@ -11,19 +11,41 @@
   \label{tab:ownpubs}
 \end{figure}
 
-% Everything in one paragraph
-In this thesis we introduce a novel principled approach for provably optimally
-and heuristically fast sequence alignment. Our basic idea is to direct the
-search for a best alignment based not only on information from the aligned parts
-of the sequences (as existing optimal algorithms do), but also from the
-unaligned parts. We find the shortest path formulation of sequence alignment to
-be more natural and powerful than the classic dynamic programming formulation
-which already implies a specific solution. We choose the \A shortest path
-algorithm since it can direct the search using a custom heuristic function that
-estimates the remaining distance from any node to using the additional information from the whole sequences.
-The \A framework allows for constructions We take an approach of preserving the
-optimality guarantee while exploiting substantially more information for the
-sake of performance.
+% Optimality, heuristic speed
+In this thesis we introduce a novel principled approach for provably optimal and
+heuristically fast sequence alignment. The underlying idea of this thesis is to
+speed up the search of an optimal alignment using information from the whole
+sequences, and not only from the aligned parts as existing algorithms do. We
+apply our approach to semi-global (read mapping) and global alignment. The
+question that we target is how general can the input sequences be while we could
+still efficiently compute provably-optimal alignments. To this end, we introduce
+novel algorithmic and data structure techniques, prove their correctness, and
+implement them as free and open source tools. Our evaluations demonstrate that
+remarkable performance scaling up to huge references, very long
+queries/sequences and high error rates. In absolute terms, we demontrate orders
+of magnitude of speedup compared to existing optimal algorithm on synthetic and
+real data.
+
+\section*{Methods}
+
+% Shortest path, A*
+\paragraph{Principled approach by shortest paths}
+
+We consider the shortest path formulation of sequence alignment for its
+principled and powerful graph representation. It allows to choose any shortest
+path algorithm, and we select \A for its capacity direct the search using a
+custom heuristic function that can capture any amount of available information
+and yet, guaranteeing optimality.
+
+% Trie Additional construction
+ is to direct the search for a best alignment based not only on information
+from the aligned parts of the sequences (as existing optimal algorithms do), but
+also from the unaligned parts. 
+
+% Seed heuristic
+To this end, we use a trie index to scale with reference size, a novel
+\emph{seed heuristic} to scale with sequence subquadratically with length, and
+chaining to scale with error rate.
 
 We borrow the existing concept of seeds but apply it in a novel way: instead of
 finding alignments around seed matches, we use the lack of matches to penalize
@@ -39,11 +61,6 @@ decrease the necessary computations, and result in algorithms that are orders of
 magnitude faster than existing optimal algorithms. We apply the \A approach to
 two types of alignment: semi-global (alignment) and global.
 
-\subsection*{Principled approach by shortest paths}
-shortest paths,
-A*, admissibility
-Informed search: Two-stage algorithm, similar to Aho-Corasick, increasingly more information (length, prefix, seeds, chaining seeds, chaining seeds + gaps)
-
 \input{\dir/seed-and-extend}
 
 \subsection*{Optimality guarantees}
@@ -58,6 +75,8 @@ We also prove that all optimizations (greedy matching, ) are preserving the opti
 \subsection*{Aligning to general graph references}
 
 \subsection*{Implementations}
+
+\subsection*{Evaluations}
 
 We empirically demonstrate the superior scaling and performance to other optimal
 alignment algorithms.
