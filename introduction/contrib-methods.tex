@@ -1,5 +1,11 @@
 \subsection*{Methods}
 
+All our methods we combine and build upon textbook informatics algorithms and
+data structures which have been known for many decades. These include the
+formulation of sequence alignment as a shortest path problem, the \A algorithm,
+the trie data structure, as well as trivial optimizations, such as hashing
+substring, greedily matching equal letters, topological sorting.
+
 \paragraph{\A for sequence alignment}
 We consider the sequence alignment problem in its principled and powerful graph
 formulation: an alignment minimizing edit distance is equivalent to a shortest
@@ -34,42 +40,54 @@ any kmer from the reference appears as a path from the trie root to a trie leaf,
 and then links to the reference. This way, any substring in the trie is a spell
 of a path from the trie root. With an accurate heuristic function (i.e.
 estimating the remaining edit distance well), this trie complement allows to
-ignore most of the reference.
+ignore most of the reference, setting the base for sublinear runtime scaling
+with the reference size.
 
 \paragraph{Scaling with query length using seed heuristic}
-In~\cref{ch:seed} we introduce a powerful \emph{seed heuristic} for \A. It
-estimates the remaining edit distance based on information from the whole
-reference and query, we prove its admissibility, and present an algorithm for
-its efficient computation.
+In~\cref{ch:seed} we introduce a powerful \emph{seed heuristic} for \A for
+semi-global alignment. It estimates the remaining edit distance based on
+information from the whole reference and query, we prove its admissibility, and
+present an algorithm for its efficient computation even for the case of a trie
+index. We borrow the existing concept of seeds but apply it in a novel way:
+instead of searching for good alignments around seed matches, we negate the
+logic in order to prove that no alignment is better than the one we find. For
+each query, we do the following precomputation: split the query into
+non-overlapping seeds of equal length, find all exact matches of each seed in
+the reference, and mark all preceding reference nodes with \emph{crumbs} that
+signify that follows a match of a specific seed. If \A explores a state, we can
+then compute the heuristic as the number of remaining seeds to be aligned that
+we do not see a crumb of -- this is, each seed that has to be aligned but cannot
+be matched, will require at least 1 edit (assuming Levenshtein distance). Note
+that the lack of a match does not require any work but helps us penalize all
+mismatching seeds for all paths from all states. We call \emph{potential} of the
+seed heuristic the maximal cost it can penalize (e.g. the number of seeds in
+case of Levenshtein distance), and we note that the potential grows linearly
+with the query length, providing the base for near-linear scaling with length.
+In order to precompute the crumbs for the seed heuristic in the case of a trie
+index over a potentially-cyclic graph reference, we introduce a linear algorithm
+based on topological sort.
 
-In order to quickly compute the seed heuristic for any explored state by \A, we
-first precompute.
-
-We borrow the existing concept of seeds but apply it in a novel way: instead of
-finding alignments around seed matches, we use the lack of matches to penalize
-alignments by desigining the \emph{seed heuristic} that drive the \A search.
-
-In addition to the trie index to scale with reference size, 
-
-To ensure that our algorithms are practical, we introduce a number of
-algorithmic optimizations which increase performance and decrease memory
-footprint.
-
-Negation
-
-\paragraph{Scaling with error rate using chaining, inexact matching and gap costs}
-In~\cref{ch:global} we. The specifics with semi-global alignment requires a
-trie-like index which is well-used in the fields, and known since
-\citeyear{thue1912gegenseitige}~\cite{thue1912gegenseitige} and used in
-informatics since~\citeyear{de1959file}~\cite{de1959file}.
-
-\paragraph{Optimizations} Greedy matching
+\paragraph{Scaling with error rate using inexact matching, chaining and gap costs}
+In~\cref{ch:global} on the task of global alignment we demonstrate how to extend
+the seed heuristic in order scale to high error rates. Our general
+\emph{chaining seed heuristic} includes inexact matching, chaining, and gap
+costs. Allowing a single error to match a seed leads to the guarantee of
+requiring at least 2 edits to align that seed, which increases the seed
+heuristic potential twice. Chaining the seed matches exploits the order of the
+seeds in the query, which mitigates the effect of spurious matches. Accounting
+for the gap between consequitive matches in a chain allows to penalize more or
+longer insertions and deletions. The combination of these extensions enables the
+efficient alignment of extremely long sequences with up to 30\% errors. 
 
 \paragraph{Implementations}
-\astarix\footnote{\url{https://github.com/eth-sri/astarix}} and \astarpa\footnote{\url{https://github.com/RagnarGrootKoerkamp/astar-pairwise-aligner}}, minSH
-
-MinSH\footnote{\url{https://github.com/pesho-ivanov/minSH}}: Minimalistic Python
-implementation of the seed heuristic for global alignment.
+All presented algorithms are available as free and open source tools.
+\astarix\footnote{\url{https://github.com/eth-sri/astarix}} is our semi-global
+sequence-to-graph aligner,
+\astarpa\footnote{\url{https://github.com/RagnarGrootKoerkamp/astar-pairwise-aligner}}
+is our global sequence-to-sequence aligner,
+MinSH\footnote{\url{https://github.com/pesho-ivanov/minSH}} is a minimalistic
+implementation of the seed heuristic for global alignment. Here is a working
+5-line implementation of the seed heuristic that captures its basic idea:
 
 \begin{minted}[fontsize=\footnotesize, frame=lines]{python}
 def build_seedh(A, B, k):
