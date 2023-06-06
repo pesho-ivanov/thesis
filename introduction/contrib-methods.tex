@@ -54,7 +54,8 @@ In addition to the trie index to scale with reference size,
 To ensure that our algorithms are practical, we introduce a number of
 algorithmic optimizations which increase performance and decrease memory
 footprint.
-%
+
+Negation
 
 \paragraph{Scaling with error rate using chaining, inexact matching and gap costs}
 In~\cref{ch:global} we. The specifics with semi-global alignment requires a
@@ -65,16 +66,19 @@ informatics since~\citeyear{de1959file}~\cite{de1959file}.
 \paragraph{Optimizations} Greedy matching
 
 \paragraph{Implementations}
-\astarix and \astarpa, minSH
+\astarix\footnote{\url{https://github.com/eth-sri/astarix}} and \astarpa\footnote{\url{https://github.com/RagnarGrootKoerkamp/astar-pairwise-aligner}}, minSH
 
-Minimalistic: 
+MinSH\footnote{\url{https://github.com/pesho-ivanov/minSH}}: Minimalistic Python
+implementation of the seed heuristic for global alignment.
 
+\begin{minted}[fontsize=\footnotesize, frame=lines]{python}
 def build_seedh(A, B, k):
-    seeds = [ A[i:i+k] for i in range(0, len(A)-k+1, k) ]           # O(n)   
-    kmers = { B[j:j+k] for j in range(len(B)-k+1) }                 # O(nk), O(n) with rolling hash (Rabin-Karp)
-    is_seed_missing = [ s not in kmers for s in seeds ] + [False]*2 # O(n)
-    suffix_sum = np.cumsum(is_seed_missing[::-1])[::-1]             # O(n)
-    return lambda ij, k=k: suffix_sum[ ceildiv(ij[0], k) ]          # O(1)
+    seeds = [ A[i:i+k] for i in range(0, len(A)-k+1, k) ]
+    kmers = { B[j:j+k] for j in range(len(B)-k+1) }
+    is_seed_missing = [ s not in kmers for s in seeds ]
+    suffix_sum = np.cumsum(is_seed_missing[::-1])[::-1]
+    return lambda ij, k=k: suffix_sum[ ceildiv(ij[0], k) ]
 
 h_seed = build_seed_heuristic(A, B, k=log(len(A)))
 astar(A, B, h_seed)
+\end{minted}
