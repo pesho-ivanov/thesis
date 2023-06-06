@@ -1,37 +1,43 @@
 \subsection*{Methods}
 
-\paragraph{Shortest paths and \A}
-We consider the shortest path formulation of sequence alignment for its
-principled and powerful graph representation. It allows to choose any shortest
-path algorithm, and we select \A for its capacity direct the search using a
-custom heuristic function that can capture any amount of available information
-and yet, guaranteeing optimality via the admissibility property.
+\paragraph{\A for sequence alignment}
+We consider the sequence alignment problem in its principled and powerful graph
+formulation: an alignment minimizing edit distance is equivalent to a shortest
+path in an \emph{alignment graph}. It allows to choose any shortest path
+algorithm, and, assuming non-negative edit costs, we select the \A algorithm for
+its ability to use any available information to quickly direct the search and
+yet, to guarantee optimality. In order to efficiently apply \A to semi-global
+and global alignment, we complement the reference with a trie index, design a
+powerful \emph{seed heuristic}, and implement a number of algorithmic
+optimizations.
+
+\paragraph{Trie index for scaling with reference size}
+In~\cref{ch:trie} we suggest how to exploit that many query sequences are
+semi-globally aligned to the same reference. As a preprocessing step, we
+complement the reference with a trie index so that any kmer from the reference
+appears as a path from the trie root to a trie leaf, and then links to the
+reference. This way, any substring in the trie is a spell of a path from the
+trie root.
 
 \paragraph{General graph references}
-
-% Trie Additional construction
-\paragraph{Trie index for scaling with reference size}
-We presented in~\cref{ch:trie} how to exploit that many query sequences are
-aligned semi-globally to the same reference by complementing the reference by a
-trie index. This way, we find an optimal alignment by always starting at the
-trie root, instead of anywhere in the reference.
-%
-consider the we c is to
-direct the search for a best alignment based not only on information from the
-aligned parts of the sequences (as existing optimal algorithms do), but also
-from the unaligned parts. 
+For semi-global alignment of many query sequences to the same reference
 
 \paragraph{Seed heuristic for scaling with query length}
-To this end, we use a trie index to scale with reference size, a novel
+The seed heuristic To this end, we design an admissible heuristic function which
+quickly and accurately estimates a lower bound on the remaining shortest path
+(i.e. the edit distance to align the unaligned suffix of one of the sequences). 
+
+For any explored state by \A, this heuristic function should compute a lower
+bound on the remaining path length.
+
+we introduce a novel
 \emph{seed heuristic} to scale with sequence subquadratically with length, and
 chaining to scale with error rate.
+In addition to the trie index to scale with reference size, 
 %
 We borrow the existing concept of seeds but apply it in a novel way: instead of
 finding alignments around seed matches, we use the lack of matches to penalize
 alignments by desigining the \emph{seed heuristic} that drive the \A search.
-Seeds are cousins of kmers which are popular in sequence alignment since de
-Bruijn Graphs were applied for genome assembly. Further kmers are cousins of
-ngrams which are popular in computational linguistics since .
 %
 We have effectively applied the \A algorithm to optimal sequence alignment. We
 demontrate that the additional information from the whole sequence can improve
@@ -85,8 +91,6 @@ footprint.
 %
 We also prove that all optimizations (greedy matching, ) are preserving the optimality.
 
-\paragraph{Aligning to general graph references}
-
 \paragraph{Implementations}
 
 
@@ -98,16 +102,6 @@ empirically scale near-linearly up to very long sequences. This translates to
 many orders of magnitude of runtime speedup compared to state-of-the-art optimal
 aligners.
 
-% \A context 
-An optimal alignment can naturally be represented as a shortest path in an
-alignment graph (equivalent to the DP table). In order to find such a shortest
-path with minimal exploration, we instantiate the \A algorithm with a novel
-heuristic function based on the unaligned parts of the sequences. This
-additional information is a problem-specific heuristic function and it heavily
-determines the efficiency of the search. For any explored state by \A, this
-heuristic function should compute a lower bound on the remaining path length, or
-more specifically, the minimal cost of edit operations needed to align the
-remaining sequences.
 
 In contrast, here we demonstrate that seeds can benefit optimal alignment as
 well.
