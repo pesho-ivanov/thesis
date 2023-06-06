@@ -28,19 +28,26 @@ real data.
 
 \section*{Methods}
 
-% Shortest path, A*
-\paragraph{Principled approach by shortest paths}
-
+\paragraph{Shortest paths and \A}
 We consider the shortest path formulation of sequence alignment for its
 principled and powerful graph representation. It allows to choose any shortest
 path algorithm, and we select \A for its capacity direct the search using a
 custom heuristic function that can capture any amount of available information
-and yet, guaranteeing optimality.
+and yet, guaranteeing optimality via the admissibility property.
+
+% add graph references and cycles
 
 % Trie Additional construction
- is to direct the search for a best alignment based not only on information
-from the aligned parts of the sequences (as existing optimal algorithms do), but
-also from the unaligned parts. 
+\paragraph{Trie index for scaling with reference size}
+We presented in~\cref{ch:trie} how to exploit that many query sequences are
+aligned semi-globally to the same reference by complementing the reference by a
+trie index. This way, we find an optimal alignment by always starting at the
+trie root, instead of anywhere in the reference.
+
+consider the we c is to
+direct the search for a best alignment based not only on information from the
+aligned parts of the sequences (as existing optimal algorithms do), but also
+from the unaligned parts. 
 
 % Seed heuristic
 To this end, we use a trie index to scale with reference size, a novel
