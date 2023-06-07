@@ -1,64 +1,50 @@
 \section*{Final thoughts}
 \addcontentsline{toc}{section}{\protect\numberline{}{Final thoughts}}
 
-It may be surprising that a novel approach to alignment appears 60 years after
-the problem was first efficiently solved. Nevertheless, 
+\subsection*{Knowledge gap}
 
-Here we speculate about the possible
-reasons for it: focus on new technology and data, not believing that optimal
-solutions could be efficient.
+It comes as a surprise that a novel approach to alignment appears 60 years after
+the problem was first efficiently solved. Without the intuition that we do not
+exploit all available information, it would have been an academical mistake to
+work on such a problem. Neglecting the suffix information for faster alignment
+may have resulted from the immense focus on new genomic data and sequencing
+technology and parallel computing, not believing that optimal solutions could be
+more efficient as a result of the near-quadratic worst case.
 
-% paper:global
-Our graph-based approach to alignment differs considerably from dynamic
-programming approaches, mainly because of the ability to use information from the
-entire sequences. This additional information enables radically more focused
-path-finding at the cost of more complex algorithms.
-
-%\section{Reconceptualizing seeds for optimal alignment}
-\subsection*{Beyond \emph{seed-(chain)-extend} paradigm}
+\subsection*{Challenging the \emph{seed-(chain)-extend} paradigm}
 %\addcontentsline{toc}{subsection}{\protect\numberline{}{Beyond \emph{seed-(chain)-extend} paradigm}}
 
-As we saw in \cref{ch:trie,ch:seed}, all optimal read aligners compute the whole
-dynamic programming table, thus reaching the prohibitively slow quadratic
-runtime. On the other side, all current production aligners rely on the
-\emph{seed-extend} paradigm (and its \emph{seed-chain-extend} variants for long
-reads).
-%
-This paradigm requires similar short \emph{seed} patches to be found
-between the sequences (by hashed kmers, minimiziers, maximum exact matching,
-etc.), and then to \emph{extend} the alignment of the whole query around these
-\emph{seeded} similar patches. This is a very intuitiv approach if the goal is
-to find a \emph{good alignment}.
-%
+As we saw in \cref{ch:trie,ch:seed}, previous optimal semi-global aligners
+compute the whole dynamic programming table, thus reaching the prohibitively
+slow quadratic runtime. On the other side, all current production-level aligners
+rely on the \emph{seed-extend} paradigm or its \emph{seed-chain-extend} variants
+for long reads. This paradigm searches for long alignments around shorts
+matches, which is a very intuitive idea if we look for a good alignment.
+
 If we instead seek not good but provably \emph{best} alignments, we are required
-to at least implicitly refute all the exponentially-many competing alignments.
-%
-Instead, to find optimal alignments, we do not need to choose the seeds to be
-long and similar with the reference buare not required to be similar.
-%
+to refute all the exponentially-many competing alignments as not being better.
+According to our seed heuristic, any seed match not seen is an inevitable edit
+in the future. Thus, we do not need to choose the seeds to support the best
+alignment but to refute the suboptimal alignment. Instead of long and good
+matches, we prefer many short seeds with hardly any matches. This novel usage of
+seeds carrie different problems and different possibilities.
+
 \begin{observation}[Seeds without matches]
     To efficiently find an optimal alignment using \A with the seed heuristic,
     seeds are not required to match (even on the resulting alignment).
 \end{observation}
-%
-Nevertheless, each seed can penalize potential alignment by not more than its
-\emph{potential} (\ie the number of plus $1$, for the case of exact matching
-with unit costs). Any additional errors will require more states to be expanded.
-%
-This is an interesting observation was made by Ragnar while playing with the
-seed heursitic. It looks Indeed, of finding a good alignment but to prove that all
-alternative alignments are no better, the seed heuristic for \A search does not
-really need matches to be efficient.
-%
-This novel usage of seeds carrie different problems and different possibilities.
 
-Most of the techniques this thesis builds upon have been known for many decades
-and have also been heavily motivated by applications in molecular biology. 
+This \emph{negated seeding} strategy has mostly opposing goals to the current
+seeding approaches. Studying it deeper may be beneficial for the futher
+developments of optimal sequence algorithms.
 
-In contrast, here we demonstrate that seeds can benefit optimal alignment as
-well.
+% In order to improve the \sh each seed can penalize
+%potential alignment by not more than its
+%\emph{potential} (\ie the number of plus $1$, for the case of exact matching
+%with unit costs). Any additional errors will require more states to be expanded.
 
-\subsection*{Pedagogy}
+\subsection*{Education}
+
 The potential adoption of the \A approach to sequencing (incl. the usage of
 \astarix aligner and the A*PA global aligner) may hugely alleviate the
 decades-long conflict between alignment optimality and computational costs. This
