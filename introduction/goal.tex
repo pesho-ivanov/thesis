@@ -1,48 +1,48 @@
 \section*{Motivation}
 \addcontentsline{toc}{section}{\protect\numberline{}{Motivation}}
 
-We motivate the topic of this thesis by the importance of optimality guarantees,
-the existence of unused information can significantly improve scaling, and the
-existance of an informed search algorithms that could be heuristically fast
-while guaranteed optimal. Such alignment algorithms would also be useful in are
-modern pangenomics setting.
+We motivate this thesis by the importance of optimality guarantees, the
+existence of unused information for scaling improvements, and the existance of
+informed search algorithms that can be heuristically fast and provably optimal.
+Additionally, novel alignment algorithms are useful in the modern pangenomics
+setting.
 
-\subsection*{Approximate algorithms}
+\subsection*{Practical read aligners are approximate}
 
-Most practical semi-global aligners are not guaranteed to be exact. An
+Curerent practical semi-global aligners are either vague about the metrics they
+optimize or they do not guarantee optimality~\cite{alser2021technology}. An
 approximate algorithm can produce wrong results either because it did not
 succeed in optimizing its objective function or because it was aiming at a poor
 objective function. Requiring the solutions to be optimal according the an
-objective, eliminates the former issue and lets us focus on the latter.
+objective, would eliminate the former issue and focus the research on the
+latter.
 
 Sequence alignment is an early step in most bioinformatics pipelines, so
 incorrect alignments can cause biases in downstream analyses. For instance, the
 combination of high variability of MHC sequences in humans and small differences
 between alleles~\cite{buhler_hla_2011} leads to a risk of misclassifications due
 to suboptimal alignment. Guaranteeing optimal alignment against all variations
-represented in a graph is a major step towards alleviating those biases.
+represented in a graph would be a major step towards alleviating those biases.
 
-While such heuristics find the correct alignment for simple references, they
-often perform poorly in regions of very high complexity, such as in the human
-major histocompatibility complex (MHC)~\cite{dilthey_improved_2015}, in complex
-but rare genotypes arising from somatic-subclones in tumor sequencing
-data~\cite{harismendy_detection_2011}, or in the presence of frequent sequencing
-errors~\cite{salmela_lordec_2014}.
+While heuristic algorithms usually find the correct alignment for simple
+references, they often perform poorly in regions of very high complexity, such
+as in the human major histocompatibility complex
+(MHC)~\cite{dilthey_improved_2015}, in complex but rare genotypes arising from
+somatic-subclones in tumor sequencing data~\cite{harismendy_detection_2011}, or
+in the presence of frequent sequencing errors~\cite{salmela_lordec_2014}. Thus,
+the produced results are doubted.
 
-\subsection*{Optimality guarantees}
+\subsection*{Optimal aligners are slow}
 
-Algorithm correctness is arguably a useful property which is often not simple to
-guarantee. It can undoubtedly improve accuracy, especially in the case of
-complex data. But finding an optimal alignment requires a conceptually different
-approach than finding an approximate alignment. Instead of finding \emph{one}
-good alignment, finding an optimal alignment requires proving that \emph{all}
-other exponentially-many alignments are not better.
+There is a fundamental trade-off between perforamance and optimality guarantees:
+an algorithm that is allowed suboptimality may exploit the lesser restrictions
+for better performance. Given the worst-case analysis requiring near-quadratic
+runtime even to compute edit distance exactly~\citep{backurs2015edit}, it is
+understandable why most scholars are skeptical about faster optimal algorithms.
 
-\subsection*{Practical aligners are either slow or suboptimal}
-
-For semi-global alignment, a common consensus is that optimal algorithms are
-infeasible for read alignment, especially for long reads. All production read
-aligners following the approximate seed-extend
+For semi-global sequence-to-sequence alignment, a common consensus seems to be
+that optimal algorithms are infeasible for read alignment, especially for long
+reads. All production read aligners following the approximate seed-extend
 paradigm~\cite{alser2021technology}\footnote{This study examines 107 aligners.}.
 
 Existing optimal sequence-to-graph aligners rely on dynamic programming (DP) and
@@ -51,49 +51,36 @@ Such aligners include \vargas~\citep{darby2020vargas},
 \pasgal~\citep{jain_accelerating_2019},
 \graphaligner~\citep{rautiainen_bitparallel_2019},
 \hga~\citep{feng2021accelerating}, and \vg~\citep{garrison_variation_2018},
-which use bit-level optimizations and parallelization to increase their
-throughput.
+which focus on bit-level optimizations and parallelization to futher increase
+their throughput.
 
-In the direction of global alignment, optimal algorithms are commonly used in
-practice, despite of their quadratic scaling. The ongoing competition between
-the optimal aligners employs both algorithmic advancements and implementation
-optimizations on caching, bit-parallelization, GPU.~(\cref{ch:global}).
+For global alignment, optimal algorithms are nevertheless used in practice,
+despite of their quadratic scaling. The ongoing competition between the optimal
+aligners employs both algorithmic advancements and implementation optimizations
+on caching, bit-parallelization, GPU.~(\cref{ch:global}).
 
-Even for related sequences of lengths n and m and edit distance s, the fastest
-optimal global (Marco-Sola et al., 2021; Šošic and Šikic, 2017)) and semi-global
-aligners (Rautiainen et al., 2017) scale quadratically when the edit distance
-increases with the length, which is the case for sequencing errors and
-biological variation: O(s*min(n,m))=O(enm) and O(nm), respectively, where e is
-the error rate (Navarro, 2001). In the age of big data and long reads (e.g.
-PacBio, ONP), this quadratic scaling with length is prohibitive, so the
-algorithms with practical usage (e.g. minimap2, bwt, kallisto) do not guarantee
-optimality but run in subquadratic time (Kucherov, 2019). The gap between fast
-and optimal global alignment has been recognized but no optimal algorithms are
-known that run subquadratically for related sequences (Medvedev, 2022a).
+Even for related sequences, the fastest optimal
+global~\citep{marco2021fast,vsovsic2017edlib} and semi-global
+aligners~\citep{rautiainen_bitparallel_2019} scale quadratically when the edit
+distance increases with the length, which is the case for sequencing errors and
+biological variation. In the age of big data and long reads (e.g. PacBio, ONP),
+this quadratic scaling with length is prohibitive, so the algorithms with
+practical usage (e.g. minimap2, bwt, kallisto) do not guarantee optimality but
+run in subquadratic time~\citep{kucherov2019evolution}. This is a computational
+bottleneck given the growing amounts of biological data and the increasing
+sequence lengths~\citep{kucherov2019evolution}. For each type of sequence
+alignment (e.g. global and semi-global), a tradeoff exists between amount of
+computation and the alignment accuracy.
 
-\subsection*{Average case instead of worst case}
+The gap between fast and optimal global alignment has been recognized but no
+optimal algorithms are known that run subquadratically for related
+sequences~\citep{medvedev2022theoretical}.
 
-There is a fundamental trade-off between perforamance and optimality guarantees:
-an algorithm which is allowed to be suboptimal may exploit the lesser
-restrictions for greater performance. Especially given the worst-case analysis
-requiring near-quadratic runtime even to compute edit distance exactly, it is
-understandable why most scholars are skeptical about faster optimal algorithms.
-With our \A approach offers a to exploits another dimensions: average case or
-expected case analysis.
+\subsection*{Room for performance improvement for optimal alignment}
 
-It has recently been shown that it is unlikely that there exists an algorithm
-that computes edit distance in strongly subquadratic time in (unless SETH is
-false)~\citep{backurs2015edit}.
-
-Given that the number of sequencing errors is proportional to the length,
-existing exact aligners are limited by quadratic scaling not only in the worst
-case but also in practice. This is a computational bottleneck given the growing
-amounts of biological data and the increasing sequence
-lengths~\citep{kucherov2019evolution}. For each type of sequence alignment (e.g.
-global and semi-global), a tradeoff exists between amount of computation and the
-alignment accuracy.
-
-Room for improvement
+The following observations demonstrate room for improvement for the expected
+runtime for optimal semi-global and global alignment. Moreover they hint towards
+information that is currently not harnessed for the average case:
 
 \begin{observation}
     The output of the alignment problem is linear in the input size.
@@ -104,34 +91,18 @@ Room for improvement
 \end{observation}
 
 \begin{observation}
-    Approximate aligners scale much better than optimal aligners.
+    Approximate aligners scale better and run faster than optimal.
 \end{observation}
 
-It is unknown how the error rate influences the expected runtime.
+\begin{observation}
+    Existing optimal algorithms for semi-global alignment are near-quadratic not
+    only in the worst case but also for related sequences.
+\end{observation}
 
 \begin{observation}
     The quadratic DP to global alignment (Needleman-Wunsch) also solves the more
-    complex semi-global and local alignment (Smith-Waterman), so it does not
-    exploit the available information fuly.
+    complex semi-global and local alignment (Smith-Waterman).
 \end{observation}
-
-These observations hint to an open direction for research:
-
-\begin{problem}
-    Are there more performant algorithms for optimal alignment of \emph{related}
-    sequences?
-\end{problem}
-
-Despite the centrality and age of pairwise alignment, ``a major open problem is
-to implement an algorithm with linear-like empirical scaling on inputs where the
-edit distance is linear in~$n$''~\citep{medvedev2022theoretical}.
-
-\begin{observation}
-    All optimal algorithms for semi-global alignment are quadratic.
-\end{observation}
-
-We should be able to optimize this by precomputation so we may not even need to
-iterating over the whole reference for each query.
 
 \begin{paradox}
     A long query has more information that may hint towards the best semi-global
@@ -139,37 +110,46 @@ iterating over the whole reference for each query.
     slower for longer sequences.
 \end{paradox}
 
-Unlike the practical approximate algorithms, the existing optimal algorithms do
-not exploit this information. As a result, all state-of-the-art optimal
-algorithms take longer to map a longer query to a reference. 
-
-\subsection*{Informed search and \A}
-
-The optimal algorithms used in computational biology explore the search space of
-possible alignments in an uninformed fashion: by aligning a prefix of one
-sequence to a prefix of the other. This contrasts with the informed search
-algorithms such as the algorithm by Hunt and Szymanski (1977) solving the
-longest common subsequence (LCS) problem (a special case of the edit distance
-alignment). Sequence alignment can naturally be formulated as a shortest path
-problem solvable by Dijkstra's algorithm (Ukkonen, 1985). \A is an informed
-generalization of Dijkstra's algorithm (Hart, 1968) but it has not been
-successfully applied to sequence alignment. \A may be the missing piece in the
-“a major open problem to implement an algorithm with linear-like empirical
-scaling on inputs where the edit distance is linear in n” (Medvedev, 2022a).
-
 \begin{observation}
     The existing optimal aligners choose next step based only on
     previous~(prefix) information and ignore the remaining~(suffix).
 \end{observation}
 
-Algorithms such as \A that are aware of the ``future''~(suffix) are called
-\emph{informed search} algorithms.
+These observations and paradoxes shape the main question of this thesis:
 
-\subsection*{Shift towards graph references}
+\begin{problem}
+    Can we design more scalable and faster algorithms for optimal alignment of
+    \emph{related} sequences?
+\end{problem}
 
-The interest towards genome graphs keeps increasing with the first International
-Genome Graph Symposium being held this year in Ascona, Switzerland (2022). The
-benefits of using graph references representing biological variation has been
-demonstrated to increase the alignment quality~\citep{garrison_variation_2018}.
-The transition towards graph references only aggravates the computational issues
-owing to the potentially complex graph topology~\citep{equi_complexity_2019}.
+\subsection*{\A can harness the heuristic speed and provable optimality}
+
+Algorithm correctness is arguably a useful property which is often not simple to
+guarantee. It can undoubtedly improve accuracy, especially in the case of
+complex data. But finding an optimal alignment requires a conceptually different
+approach than finding an approximate alignment. Instead of finding \emph{one}
+good alignment, finding an optimal alignment requires proving that \emph{all}
+other exponentially-many alignments are not better.
+
+The optimal algorithms used in computational biology explore the search space of
+possible alignments in an uninformed fashion: by aligning a prefix of one
+sequence to a prefix of the other. This contrasts with the informed search
+algorithms such as the algorithm by~\citet{hunt1977fast} solving the longest
+common subsequence (LCS) problem (a special case of the edit distance
+alignment). Sequence alignment can naturally be formulated as a shortest path
+problem solvable by Dijkstra's algorithm~\citep{ukkonen1985algorithms}. \A is an
+\emph{informed search} algorithm that generalizes Dijkstra's
+algorithm~\citep{hart1968formal}. \A has not been successfully applied to
+sequence alignment but it may to “a major open problem to implement an algorithm
+with linear-like empirical scaling on inputs where the edit distance is linear
+in n”~\citep{medvedev2022theoretical}.
+
+\subsection*{Alignment shifts towards pangenomics}
+
+The benefits of using graph references representing biological variation have
+been demonstrated to increase the alignment
+quality~\citep{garrison_variation_2018}. The transition towards graph references
+only aggravates the computational issues owing to the potentially complex graph
+topology~\citep{equi_complexity_2019}. The interest towards genome graphs keeps
+increasing with the first International Genome Graph Symposium being held this
+year in Ascona, Switzerland (2022).
