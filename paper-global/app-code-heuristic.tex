@@ -5,7 +5,7 @@ $h(u)$ are computed, and how matches are pruned.
 \algnewcommand{\AND}{\textbf{ and }}
 \algnewcommand{\OR}{\textbf{ or }}
 
-\begin{algorithm}[h]
+\begin{algorithm}[t]
   \caption{Computation of the heuristic.} \label{alg:heuristic}
 %\fontfamily{\sfdefault}\selectfont
 \begin{algorithmic}[1]\footnotesize
@@ -53,13 +53,11 @@ $h(u)$ are computed, and how matches are pruned.
 \State\Return $P(u) - S_i(u)$
 \EndFunction
 
-\Statex
 \Function{$\hcsh$}{$u$}
 \Comment{\CSH}
 \State\Return $P(u) - S_\preceq(u)$
 \EndFunction
 
-\Statex
 \Function{$\hgch$}{$u$}
 \Comment{\GCH}
 \State\Return $\max(P(u) - S_T(u), \gapcost(u, v_t))$
@@ -88,7 +86,7 @@ $h(u)$ are computed, and how matches are pruned.
 \EndIf
 \If{$r{-}1+\ell-\ell'$ consecutive layers shifted exactly $\ell{-}\ell'$}
 \State Remove empty layers $L[\ell'{+}1], \dots, L[\ell]$
-\Statex \Comment Shift higher layers down
+\Comment Shift higher layers down
 \State \Return
 \EndIf
 \EndFor
