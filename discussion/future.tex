@@ -20,11 +20,6 @@ Moreover, we suppose that due to incorporating fuller information for its
 informed search, \A could become the default framework for sequence alignment,
 useful for computational biology, bioinformatics and general informatics.
 
-Approximate relaxations
-Practical: \astarix2, lowering the \A constant
-Pangenomics: The non-linear structure are additional dimensions of data complexity. And
-another challenge for the scalability which is good.
-
 \begin{enumerate}
     \item \emph{Performance.} The practical performance of our \A approach could
         be improved using multiple existing ideas from the alignment domain:
@@ -33,8 +28,15 @@ another challenge for the scalability which is good.
         matches in a chain~\citep{ukkonen1985algorithms,wilbur1984context}, more
         aggressive pruning, and better parameter tuning. More efficient
         implementations may be possible by using computational
-        domains~\citep{spouge1989speeding}, bit-parallelization~\citep{myers1999fast},
-        and SIMD~\citep{marco2021fast}, lowering the \A constant.
+        domains~\citep{spouge1989speeding},
+        bit-parallelization~\citep{myers1999fast}, and
+        SIMD~\citep{marco2021fast}, lowering the \A constant. The efficiency of
+        the presented algorithm has high variability on real
+        data~(\cref{GLOBALsec:evals-comparison-hg}) due to high error rates,
+        long indels, and multiple repeats. Further optimizations are needed to
+        align complex data. More accurate heuristics lead to better \A
+        performance~\cite{pearl_discovery_1983}, so machine learning may be
+        useful for tuning seed heuristic parameters.
     \item \emph{Generalizations.} Our method can be generalized to more
         expressive cost models (non-unit costs, affine costs) and different alignment
         types (semi-global, ends-free, and possibly local alignment).
@@ -48,47 +50,22 @@ another challenge for the scalability which is good.
         errors can be tolerated while still scaling near-linearly with the
         sequence length?} We expect both theoretical and practical contributions
         to this question.
-    \item \emph{Scaling with the alphabet size} For proteomics, general
-        language, compressed low-enthropy text.
-    \item \emph{Scaling with the reference text complexity} Repeats, multiple
-        best alignments
-    \item \emph{Scaling with the reference graph complexity} Bubbles, cycles
+    \item \emph{Applicability.} More dimensions of data complexity could be
+        explored: scaling to larger alphabet size, general language, compressed
+        low-enthropy text, higher reference complexity (repeats, multiple best
+        alignments, bubbles, cycles).
     \item \emph{Optimality verification} Verify the optimality of a given alignment.
-    \item \emph{Real data.} The efficiency of the presented algorithm has high
-        variability on real data~(\cref{GLOBALsec:evals-comparison-hg}) due to
-        high error rates, long indels, and multiple repeats. Further
-        optimizations are needed to align complex data.
-    \item There is a class of seed heuristics which are equally optimal but
-        different heuristics have different accuracy, leading to different \A
-        scaling and performance. ML
 \end{enumerate}
 
-multiple paths
-outside of biology
-general framework for optimization
-MSA
-
-For \dijkstra and \astarix, the runtime complexity depends not only on the data
-size, but also on the data content, including edit costs. More accurate
-heuristics lead to better \A performance~\cite{pearl_discovery_1983}
-
-% paper-trie; Scaling difficulties.
-We expect that \astarix can be scaled further, to both (i)~bigger graphs and
-(ii)~longer and noisier reads. Scaling \astarix may require a combination of
-(i)~the development of more clever heuristic functions (by leveraging existing
-work on \A and edit distance) and (ii)~algorithmic optimizations. We note that
-if desired, a (sub-optimal) seeding step could speed up \astarix by
-pre-filtering the starting positions, analogously to other practical aligners.
-
 % paper-seed
-The memory usage is currently limiting the application of \astarix for bigger
-references due to the size of the trie index. A remaining challenge is designing
-a heuristic function able to handle not only long but also noisier reads, such
-as the uncorrected PacBio reads that may reach 20\% of mistakes. Possible
-improvements of the seed heuristic may include inexact matching of seeds,
-careful choice of seed positions, and accounting for the seeds order.
+%The memory usage is currently limiting the application of \astarix for bigger
+%references due to the size of the trie index. A remaining challenge is designing
+%a heuristic function able to handle not only long but also noisier reads, such
+%as the uncorrected PacBio reads that may reach 20\% of mistakes. Possible
+%improvements of the seed heuristic may include inexact matching of seeds,
+%careful choice of seed positions, and accounting for the seeds order.
 
-\subsection{Planned work packages}
+\subsection*{Planned work packages}
 
 \paragraph{Practical sequence-to-graph aligner}
 Develop the \astarix sequence-to-graph aligner from prototype to production As
