@@ -8,19 +8,18 @@ Our presented method has several limitations:
         that edit distance in general can be solved in strongly subquadratic
         time, it is inevitable that there are inputs for which our approach
         requires quadratic time.  In particular, regions with high error rate,
-        long indels, and too many matches~(\cref{GLOBALsec:limitations}) are
-        challenging and trigger quadratic exploration.
+        long indels, and too many matches are challenging and trigger quadratic
+        exploration.
   \item \emph{High constant in runtime complexity.} Despite the near-linear
-        scaling of the number of expanded states~(\cref{GLOBALsec:expanded}),
-        \astarpa only outperforms \edlib and \wfa for sufficiently long sequences
-        (~\cref{GLOBALfig:scaling-n}) due to the relatively high computational constant
-        that the \A search induces.
-  \item \emph{Complex parameter tuning.} The performance of our approach
-        depends heavily on the sequences to be aligned and the corresponding choice of
-        parameters (whether to use chaining, the seed length $k$, and whether to use
-        inexact matches $\spot$). The parameter tuning (currently
-        very simple~(\cref{GLOBALsec:evals-setup}) may require a more comprehensive
-        framework when introducing additional optimizations.
+        scaling of the number of expanded states, \astarpa only outperforms
+        \edlib and \wfa for sufficiently long sequences due to the relatively
+        high computational constant that the \A search induces.
+  \item \emph{Complex parameter tuning.} The performance of our approach depends
+        heavily on the sequences to be aligned and the corresponding choice of
+        parameters (whether to use chaining, the seed length $k$, and whether to
+        use inexact matches $\spot$). The parameter tuning (currently very
+        simple may require a more comprehensive framework when introducing
+        additional optimizations.
 \end{enumerate}
 
 % issue

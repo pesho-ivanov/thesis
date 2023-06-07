@@ -1,6 +1,6 @@
 \subsection{Proofs} \label{app:proof}
 
-In the following, we provide proofs for \cref{the:admissible} and
+In the following, we provide proofs for \cref{SEEDthe:admissible} and
 \cref{lem:trie-optimization}, restated here for convenience.
 
 \admissibility*
@@ -12,9 +12,9 @@ In the following, we provide proofs for \cref{the:admissible} and
 	If $A$ contains at least $\maxdel$ deletions, its cost is at least $\maxdel
 	\cdot \cdel$, which is at least $|q| \cdot \cmatch + |\seeds| \cdot
 	\delta_{\mli{min}}$ by plugging in $\maxdel$ from
-	\cref{eq:maximum-deletions}. This is an upper bound for $h\st{v}{i}$, which
+	\cref{SEEDeq:maximum-deletions}. This is an upper bound for $h\st{v}{i}$, which
 	we observe after maximizing $h\st{v}{i}$ by substituting $i=1$ and
-	$\mli{misses}=|\seeds|$ into~\cref{eq:heuristic}, which concludes the proof
+	$\mli{misses}=|\seeds|$ into~\cref{SEEDeq:heuristic}, which concludes the proof
 	in this case.
 
 	Otherwise, $A$ contains less than $\maxdel$ deletions.
