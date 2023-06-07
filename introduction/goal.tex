@@ -9,13 +9,18 @@ modern pangenomics setting.
 
 \subsection*{Approximate algorithms}
 
-Importantly, these cases can be of specific clinical or biological interest, and
-incorrect alignment can cause severe biases for downstream analyses. For
-instance, the combination of high variability of MHC sequences in humans and
-small differences between alleles~\cite{buhler_hla_2011} leads to a risk of
-misclassifications due to suboptimal alignment. Guaranteeing optimal alignment
-against all variations represented in a graph is a major step towards
-alleviating those biases.
+Most practical semi-global aligners are not guaranteed to be exact. An
+approximate algorithm can produce wrong results either because it did not
+succeed in optimizing its objective function or because it was aiming at a poor
+objective function. Requiring the solutions to be optimal according the an
+objective, eliminates the former issue and lets us focus on the latter.
+
+Sequence alignment is an early step in most bioinformatics pipelines, so
+incorrect alignments can cause biases in downstream analyses. For instance, the
+combination of high variability of MHC sequences in humans and small differences
+between alleles~\cite{buhler_hla_2011} leads to a risk of misclassifications due
+to suboptimal alignment. Guaranteeing optimal alignment against all variations
+represented in a graph is a major step towards alleviating those biases.
 
 While such heuristics find the correct alignment for simple references, they
 often perform poorly in regions of very high complexity, such as in the human
@@ -24,44 +29,20 @@ but rare genotypes arising from somatic-subclones in tumor sequencing
 data~\cite{harismendy_detection_2011}, or in the presence of frequent sequencing
 errors~\cite{salmela_lordec_2014}.
 
-An approximate algorithm can be wrong either because it did not succeed in
-optimizing its objective function or because it was aiming at a poor objective
-function. Requiring the solutions to be optimal leaves us with only the latter
-issue.
-
 \subsection*{Optimality guarantees}
 
 Algorithm correctness is arguably a useful property which is often not simple to
 guarantee. It can undoubtedly improve accuracy, especially in the case of
-complex data, but still be wrong from biological point of view. This is because
-of  This Nevertheless, since biology is a natural science, its  optimality
-guarantees must have an additional impact on the development of the field. It
-not only but allows to enjoy being wrong rather than vague. Moreove, often
-problems in computational biology are ill-stated andalgorithms that approximate
-algorithms that. But many algorithms in computational biology do not even have a
-formal statement 
+complex data. But finding an optimal alignment requires a conceptually different
+approach than finding an approximate alignment. Instead of finding \emph{one}
+good alignment, finding an optimal alignment requires proving that \emph{all}
+other exponentially-many alignments are not better.
 
-Finding an optimal alignment requires a conceptually different approach than
-finding an approximate alignment. Instead of finding \emph{one} good alignment,
-finding an optimal alignment requires proving that \emph{all} other
-exponentially-many alignments are not better.
+\subsection*{Practical aligners are either slow or suboptimal}
 
-There is a fundamental trade-off between perforamance and optimality guarantees:
-an algorithm which is allowed to be suboptimal may exploit the lesser
-restrictions for greater performance. Especially given the worst-case analysis
-requiring near-quadratic runtime even to compute edit distance exactly, it is
-understandable why most scholars are skeptical about faster optimal algorithms.
-With our \A approach offers a to exploits another dimensions: average case or
-expected case analysis.
-
-In the direction of global alignment, optimal algorithms are commonly used in
-practice, despite of their quadratic scaling. The ongoing competition between
-the optimal aligners employs both algorithmic advancements and implementation
-optimizations on caching, bit-parallelization, GPU.~(\cref{ch:global}).
-
-For semi-global alignment (read alignment), common belief is that optimal
-algorithms are infeasible for read alignment, especially when reads are long.
-All production read aligners following the approximate seed-extend
+For semi-global alignment, a common consensus is that optimal algorithms are
+infeasible for read alignment, especially for long reads. All production read
+aligners following the approximate seed-extend
 paradigm~\cite{alser2021technology}\footnote{This study examines 107 aligners.}.
 
 Existing optimal sequence-to-graph aligners rely on dynamic programming (DP) and
@@ -73,15 +54,10 @@ Such aligners include \vargas~\citep{darby2020vargas},
 which use bit-level optimizations and parallelization to increase their
 throughput.
 
-\subsection*{Expected subquadratic scaling}
-
-Given that the number of sequencing errors is proportional to the length,
-existing exact aligners are limited by quadratic scaling not only in the worst
-case but also in practice. This is a computational bottleneck given the growing
-amounts of biological data and the increasing sequence
-lengths~\citep{kucherov2019evolution}. For each type of sequence alignment (e.g.
-global and semi-global), a tradeoff exists between amount of computation and the
-alignment accuracy.
+In the direction of global alignment, optimal algorithms are commonly used in
+practice, despite of their quadratic scaling. The ongoing competition between
+the optimal aligners employs both algorithmic advancements and implementation
+optimizations on caching, bit-parallelization, GPU.~(\cref{ch:global}).
 
 Even for related sequences of lengths n and m and edit distance s, the fastest
 optimal global (Marco-Sola et al., 2021; Šošic and Šikic, 2017)) and semi-global
@@ -94,6 +70,28 @@ algorithms with practical usage (e.g. minimap2, bwt, kallisto) do not guarantee
 optimality but run in subquadratic time (Kucherov, 2019). The gap between fast
 and optimal global alignment has been recognized but no optimal algorithms are
 known that run subquadratically for related sequences (Medvedev, 2022a).
+
+\subsection*{Average case instead of worst case}
+
+There is a fundamental trade-off between perforamance and optimality guarantees:
+an algorithm which is allowed to be suboptimal may exploit the lesser
+restrictions for greater performance. Especially given the worst-case analysis
+requiring near-quadratic runtime even to compute edit distance exactly, it is
+understandable why most scholars are skeptical about faster optimal algorithms.
+With our \A approach offers a to exploits another dimensions: average case or
+expected case analysis.
+
+It has recently been shown that it is unlikely that there exists an algorithm
+that computes edit distance in strongly subquadratic time in (unless SETH is
+false)~\cref{backurs2015edit}.
+
+Given that the number of sequencing errors is proportional to the length,
+existing exact aligners are limited by quadratic scaling not only in the worst
+case but also in practice. This is a computational bottleneck given the growing
+amounts of biological data and the increasing sequence
+lengths~\citep{kucherov2019evolution}. For each type of sequence alignment (e.g.
+global and semi-global), a tradeoff exists between amount of computation and the
+alignment accuracy.
 
 Room for improvement
 
@@ -172,6 +170,6 @@ Algorithms such as \A that are aware of the ``future''~(suffix) are called
 The interest towards genome graphs keeps increasing with the first International
 Genome Graph Symposium being held this year in Ascona, Switzerland (2022). The
 benefits of using graph references representing biological variation has been
-demonstrated to increase the alignment quality (Garrison et al., 2018). The
-transition towards graph references only aggravates the computational issues
-owing to the potentially complex graph topology (Equi et al., 2019).
+demonstrated to increase the alignment quality~\citep{garrison_variation_2018}.
+The transition towards graph references only aggravates the computational issues
+owing to the potentially complex graph topology~\citep{equi_complexity_2019}.
