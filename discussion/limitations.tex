@@ -22,3 +22,21 @@ Our presented method has several limitations:
         very simple~(\cref{GLOBALsec:evals-setup}) may require a more comprehensive
         framework when introducing additional optimizations.
 \end{enumerate}
+
+% issue
+The seed heuristic, which is in the core of our \A algorithm, is admissible
+(optimistic) but not consistent (monotone). As a consequence, any of the
+quadratic number of state can be expanded multiple times, which could
+theoretically lead to over-quadratic scaling. In practice, repeated expansions
+happen but the empyrical scaling is preserved near-linear as long as the number
+of seed matches is near-linear and the seed heuristic is capable of compensating
+for the errors.
+
+% theory
+An alternative theoretical analysis would consider the average case (expected)
+scaling of our algorithms under a data model. An imaginable result would look
+like a connection between the sequence lengths, error rate, and the algorithm
+steps (mostly dependant on the number of seed matches and the number of expanded
+states). To construct such a connection, a heuristic function will have to be
+chosen among a class of seed heuristics (\AG with certain seed length, allowed
+number of errors in seed matches, etc.).

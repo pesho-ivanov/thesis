@@ -1,44 +1,27 @@
 \subsection*{Results}
 
-We empirically demonstrate the superior scaling and performance to other optimal
+We empirically demonstrate the superior scaling and performance of the
+semi-global aligner \astarix and the global aligner \astarpa to other optimal
 alignment algorithms.
 
-\paragraph{Scaling with reference size using a trie index}
-\paragraph{Scaling with query length using a seed heuristic}
-\paragraph{Scaling with error rate using inexact matching and chaining}
-
-% background
+\paragraph{Worst case vs related sequence}
 Traditionally, the runtime and memory have been analysed for the worst case
 asymptotic behavior of the algorithm. Since the near quadratic worst case
 asymptotics is likely to be tight for both global~\citep{backurs2015edit} and
-semi-global alignment, we targeted related sequences (by limiting their
-per-letter error rate), and estimated their empyric runtime and memory scaling.
+semi-global alignment, we targete related sequences (by limiting their
+per-letter error rate), and estimate their empyric runtime and memory scaling.
 
-% issue
-The seed heuristic, which is in the core of our \A algorithm, is admissible
-(optimistic) but not consistent (monotone). As a consequence, any of the
-quadratic number of state can be expanded multiple times, which could
-theoretically lead to over-quadratic scaling. In practice, repeated expansions
-happen but the empyrical scaling is preserved near-linear as long as the number
-of seed matches is near-linear and the seed heuristic is capable of compensating
-for the errors.
-
-% empyrical
-Our empyrical analysis of scaling is done by repeatedly running the same
-algorithm on increasingly more complex input data (\AG longer sequences, higher
-error rate). This approach is useful to get a sense of the scaling of the
-algorithm and its implementation but it is not asymptotical, includes noise (of
-measurements and best-fit estimations), is not trivially applicable to more than
-1 dimensions.
-
-% theory
-An alternative theoretical analysis would consider the average case (expected)
-scaling of our algorithms under a data model. An imaginable result would look
-like a connection between the sequence lengths, error rate, and the algorithm
-steps (mostly dependant on the number of seed matches and the number of expanded
-states). To construct such a connection, a heuristic function will have to be
-chosen among a class of seed heuristics (\AG with certain seed length, allowed
-number of errors in seed matches, etc.).
+\paragraph{Setting}
+We demontrate that the additional information from the whole sequence can
+improve the scaling with query length, reference size and error rate,
+substantially decrease the necessary computations, and result in algorithms that
+are orders of magnitude faster than existing optimal algorithms. Our empyrical
+analysis of scaling is done by repeatedly running the same algorithm on
+increasingly more complex input data (longer sequences, higher error rate). This
+approach is useful to estimate the scaling of the algorithm and its
+implementation. Note that these scaling analyses are not asymptotical, includes
+noise (of measurements and best-fit estimations), is not trivially applicable to
+more than 1 dimensions.
 
 % regimes
 Our algorithms seem to follow any of the scaling regimes, based on the
@@ -68,8 +51,9 @@ open problem.
 \paragraph{Scaling with query length}
 In~\cref{ch:seed} we upgrade \astarix with a novel \sh which guides the \A
 search by preferring crumbs on nodes that lead towards optimal alignments even
-for long reads. This approach enables the scaling of semi-global alignment with
-read length.
+for long reads. This approach enables the near-linear scaling of semi-global
+alignment with read length. On our linear and variation graph datasets, 99.99\%
+of the states are skipped due to the accurate heuristic function.
 
 \paragraph{Scaling with error rate}
 In~\cref{ch:global} we resolve the third major bottleneck---handling high error
@@ -82,17 +66,10 @@ long sequences ($10^7\bp$) and outperforms other exact aligners. We demonstrate
 that on real ONT reads from a human genome, \astarpa is faster than other
 aligners on only a limited portion of the reads.
 
-We demontrate that the additional information from the whole sequence can
-improve the scaling with query length, reference size and error rate,
-substantially decrease the necessary computations, and result in algorithms that
-are orders of magnitude faster than existing optimal algorithms.
-
 As it turns out, when the error rate is limited, our optimal solutions
 empirically scale near-linearly up to very long sequences. This translates to
 many orders of magnitude of runtime speedup compared to state-of-the-art optimal
 aligners.
 
-The trie index allows scaling sublinearly with the
-reference size, substantially increasing performance on large genomes.
-
-% no matches are needed
+Interestingly, no matches are required for the near-linear behavior of the seed
+heuristic.
