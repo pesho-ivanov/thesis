@@ -1,13 +1,14 @@
-\begin{figure*}[H]
+\begin{figure}[H]
     \centering
+%    \includegraphics[width=0.24\linewidth]{imgs/heuristic-diagrams/sh.pdf}
 
-    \subfloat[\Sh]{\includegraphics[width=0.24\linewidth]{imgs/heuristic-diagrams/sh.pdf}\label{fig:sh}}
+    \subfloat[\Sh]{\includegraphics[width=0.4\linewidth]{imgs/heuristic-diagrams/sh.pdf}\label{fig:sh}}
     \hfill
-    \subfloat[\Csh]{\includegraphics[width=0.24\linewidth]{imgs/heuristic-diagrams/csh.pdf}\label{fig:csh}}
+    \subfloat[\Csh]{\includegraphics[width=0.4\linewidth]{imgs/heuristic-diagrams/csh.pdf}\label{fig:csh}}
+    \\ %\hfill
+    \subfloat[\Gch]{\includegraphics[width=0.4\linewidth]{imgs/heuristic-diagrams/gch.pdf}\label{fig:gch}}
     \hfill
-    \subfloat[\Gch]{\includegraphics[width=0.24\linewidth]{imgs/heuristic-diagrams/gch.pdf}\label{fig:gch}}
-    \hfill
-    \subfloat[\CSH + match pruning]{\includegraphics[width=0.24\linewidth]{imgs/heuristic-diagrams/pruning.pdf}\label{fig:pruning}}
+    \subfloat[\CSH + match pruning]{\includegraphics[width=0.4\linewidth]{imgs/heuristic-diagrams/pruning.pdf}\label{fig:pruning}}
 
     \caption[Family of chaining seed heuristics]{\textbf{Demonstration of \sh, \csh, \gch, and match pruning.}
       Sequence $A$ is split into $5$ seeds (horizontal black segments \seed) on
@@ -34,6 +35,6 @@
       (green circles \greencircle), the match is \emph{pruned} (red cross
       \cross), and future computations of the heuristic ignore it. $s_1$ is
       removed from the maximum chain of matches starting at $u$ so $\hcshS(u)$
-      increases by $1$.}
+      increases by~$1$.}
     \label{fig:heuristics}
-\end{figure*}
+\end{figure}
