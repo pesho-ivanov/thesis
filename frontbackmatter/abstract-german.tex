@@ -1,54 +1,59 @@
-Sequenzalignment ist die Aufgabe, Ähnlichkeiten zwischen Sequenzen zu finden.
-Seit vor einem halben Jahrhundert die ersten DNA-, RNA- und Proteinsequenzen
-gewonnen wurden, ist Sequenzalignment ein zentraler Baustein in der
-Molekularbiologie. Seine Anwendungen umfassen Evolutionsbiologie,
-Genomassemblierung, Variationserkennung und andere. Die Vielfalt der Anwendungen
-und die wachsende Menge genetischer Daten erfordern von den
-Alignment-Algorithmen eine hohe Genauigkeit und Geschwindigkeit. Darüber hinaus
-motiviert der fortschreitende Übergang von der Verwendung einzelner
-Genomreferenzen zur Verwendung von Pangenomen zu einem Überdenken der
-klassischen Alignment-Algorithmen.
+Beim Sequenzabgleich geht es darum, Ähnlichkeiten zwischen Sequenzen zu finden. Sie ist
+Sie ist ein zentraler Baustein der Molekularbiologie, seit vor einem halben Jahrhundert erstmals DNA-, RNA- und Protein
+Sequenzen vor einem halben Jahrhundert erstmals gewonnen wurden. Sequenzabgleich wird angewandt
+der Forschung und der Medizin, mit Anwendungen in der Evolutionsbiologie, der Genom
+Genomzusammensetzung, Onkologie und vielen anderen Bereichen. Die Analyse der wachsenden Mengen an
+genomischer Daten erfordert Algorithmen mit hoher Genauigkeit und Geschwindigkeit. Außerdem ist der
+Übergang von Einzelgenomreferenzen zu Pangenomen (repräsentativ für eine ganze
+für eine ganze Population) motiviert neuartige Algorithmen zum Alignment.
 
-Wir betrachten zwei Arten von paarweisen Alignment-Problemen: semi-globales
-alignment eines Satzes von DNA-Lesevorgängen auf eine allgemeine Graphreferenz,
-die ein Pangenom darstellt, und globales (oder Ende-zu-Ende) Alignment von zwei
-Sequenzen. Frühere Algorithmen führen eine uninformierte Suche durch – ihre
-Alignmentprozesse vernachlässigen Informationen aus den nicht ausgerichteten
-Teilen der Sequenzen. Dadurch steigen ihre Laufzeit und ihr Speicherbedarf
-nahezu quadratisch mit der Sequenzlänge, was im allgemeinen Fall ebenfalls eine
-grundsätzliche Einschränkung darstellen dürfte. Wir beschleunigen das Alignment
-verwandter Sequenzen, indem wir Informationen aus den gesamten Sequenzen nutzen.
+Wir betrachten die beiden Probleme: \emph{semi-global} Alignment eines Satzes von DNA-Reads
+an eine Pangenom-Graphenreferenz (die möglicherweise Zyklen enthält), und \emph{global}
+(Ende-zu-Ende) Abgleich zweier Sequenzen. Jüngste theoretische Ergebnisse zeigen
+dass stark subquadratische Algorithmen für den schlimmsten Fall unwahrscheinlich sind.
+Außerdem skalieren die Laufzeit und der Speicherplatz der vorhandenen optimalen Algorithmen
+selbst für ähnliche Sequenzen quadratisch. Ein offenes Problem ist die Entwicklung eines
+Algorithmus mit linear-ähnlicher empirischer Skalierung für Eingaben zu entwickeln, bei denen die Fehler
+linear in $n$ sind. In der vorliegenden Arbeit stellen wir einen Ansatz vor, der darauf abzielt
+dieses Problem zu lösen, um praktische optimale Alignment-Algorithmen zu entwickeln.
 
-\A ist ein klassischer Kürzester-Pfad-Algorithmus, der explizit Heuristiken
-nutzt, um die Suche zu lenken und zu beschleunigen, und dennoch Garantien für
-das Finden eines kürzesten Pfads bietet. Seltsamerweise wurde \A bisher nicht
-für paarweises Sequenzalignment übernommen, und in der vorliegenden Arbeit
-untersuchen wir, wie dies zu bewerkstelligen ist. Wir (i) formulieren das
-Alignmentproblem als Kürzester-Pfad-Problem, (ii) schlagen eine Heuristik vor,
-um die \A-Suche zu steuern, (iii) entwerfen effiziente Algorithmen und
-Datenstrukturen zur Berechnung der Heuristik, (iv) beweisen ihre Optimalität,
-(v) implementieren die vorgestellten Algorithmen und (vi) vergleichen ihre
-Leistung und Skalierung mit anderen optimalen Algorithmen. Unser Ansatz ist
-nachweislich optimal in Bezug auf die Bearbeitungsentfernung, seine Laufzeit
-skaliert empirisch stark subquadratisch (und manchmal sogar nahezu linear), was
-zu einer Beschleunigung um Größenordnungen im Vergleich zu modernen optimalen
-Algorithmen führt.
+Moderne optimale Aligner führen eine uninformierte Suche durch - sie vernachlässigen Informationen
+aus den noch nicht alignierten Teilen der Sequenzen. Wir nutzen diese Informationen in einem
+einem prinzipiellen Rahmen, in dem ein Alignment mit minimalem Editierabstand
+einem kürzesten Pfad in einem Alignment-Graphen entspricht, und die verbleibende
+Informationen über die Sequenzen werden in einer heuristischen Funktion erfasst, die
+die die Länge eines verbleibenden kürzesten Pfades schätzt. Der klassische kürzeste Weg
+Algorithmus \A verwendet eine solche Heuristik, um die Suche zu lenken, und er findet dennoch
+nachweislich kürzeste Pfade, wenn die Heuristik \emph{zulässig} ist, d.h. er
+immer eine untere Schranke für die Edit-Distanz der verbleibenden Suffixe liefert.
+Seltsamerweise haben frühere Versuche, \A auf das Multiple Sequence Alignment (MSA) anzuwenden,
+nicht einmal für paarweises Alignment zu praktischen Algorithmen geführt. In dieser
+vorliegenden Arbeit untersuchen wir, wie dies möglich ist. In der Formulierung des kürzesten Weges,
+schlagen wir (i) eine neue, hochinformierte zulässige Heuristik vor, (ii) entwerfen
+effiziente Algorithmen und Datenstrukturen für die Berechnung der Heuristik, (iii)
+beweisen ihre Optimalität, (iv) implementieren die vorgestellten Algorithmen und (v) vergleichen
+ihre Leistung und Skalierung mit anderen optimalen Algorithmen. Unser Ansatz ist
+nachweislich optimal nach der Edit-Distanz, seine Laufzeit skaliert empirisch
+subquadratisch (und manchmal sogar nahezu linear) mit der Ausgabegröße, was
+was zu einer Beschleunigung um Größenordnungen im Vergleich zu
+optimalen Algorithmen.
 
-In der gesamten Arbeit demonstrieren wir, wie verschiedene Dimensionen der
-Eingabekomplexität erfasst werden können, während die Geschwindigkeit und
-Optimalität erhalten bleiben. Zuerst demonstrieren wir, wie man einen Trie-Index
-anwendet, um die alignment-Laufzeit sublinear mit der Referenzgröße zu skalieren.
-Dann führen wir eine neuartige Seed-Heuristik für \A ein, die zusätzlich eine
-nahezu lineare Ausrichtung langer Sequenzen (bis zu Millionen von Basenpaaren)
-mit ihrer Länge ermöglicht. Zuletzt erweitern wir die Seed-Heuristik mit
-ungenauem Matching und Match-Chaining, um die tolerierte Fehlerrate zu erhöhen
-(bis zu 30 \%). Zusammenfassend zeigen wir, wie man lange und fehlerhafte
-Sequenzen optimal ausrichtet.
+In dieser Arbeit zeigen wir, wie man verschiedene Dimensionen der
+der Eingabekomplexität unter Beibehaltung der Geschwindigkeit und Optimalität. Zunächst zeigen wir
+demonstrieren wir, wie man einen Trie-Index anwendet, um die Laufzeit des Alignments sublinear
+mit der Referenzgröße skaliert. Dann führen wir eine neue Seed-Heuristik für \A ein, die
+das Alignment von langen Sequenzen (bis zu 100 Mbp) nahezu linear mit deren
+Länge ermöglicht. Schließlich erweitern wir die Seed-Heuristik zu einer allgemeinen Chaining-Seed-Heuristik
+die ungenaue Übereinstimmung, Verkettung von Übereinstimmungen und Lückenkosten einschließt, um die
+tolerierte Fehlerrate zu erhöhen (auf 30\% für synthetische Daten und 10\% für reale Daten).
+Interessanterweise stellt unsere Seed-Heuristik das allgegenwärtige Seed-(Chain)-Extend
+Paradigma des Sequenzalignments heraus, das darauf abzielt, lange und hochwertige Seed
+Übereinstimmungen. Wir nutzen stattdessen die Information, dass es keine Übereinstimmungen gibt, um
+um suboptimale Alignments auszuschließen, was dazu führt, dass die Seeds daraufhin optimiert werden, kurz zu sein und nicht
+viele Übereinstimmungen haben.
 
-Der \A-Ansatz zum Sequenzalignment steckt noch in den Kinderschuhen, aber eine
-Reihe von Forschungsrichtungen gehen bereits davon aus: andere Alignment-Typen,
-allgemeinere Optimierungsmetriken, gelockerte Optimalitätsgarantien,
-Leistungsanalysen, verbesserte Heuristiken, Anwendungen außerhalb der Biologie
-und leistungsfähigere Algorithmen und Implementierungen. Vielleicht wird der
-\A-Ansatz für die Ausrichtung eines Tages ausgereift genug sein, um die Leistung
-suboptimaler Algorithmen zu erreichen.
+Diese ersten Schritte zu einem skalierbaren optimalen Alignment mit \A geben Anlass zu einer Reihe von
+Forschungsrichtungen: Annäherung an andere Alignment-Typen, allgemeinere
+Optimierungsmetriken, entspannte Optimalitätsgarantien, Leistungsanalysen,
+verbesserte Heuristiken, Anwendungen außerhalb der Biologie und leistungsfähigere
+Algorithmen und Implementierungen.
