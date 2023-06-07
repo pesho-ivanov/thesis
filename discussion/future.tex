@@ -14,12 +14,11 @@ competitive in runtime and memory even to suboptimal aligners. In order to
 fulfill this aim, work in several directions will be needed: 1) rigorous
 development of the seed heuristic theory, 2) theoretical analysis of the
 expected runtime, 3) implementation optimized for runtime, memory,
-parallelization and use-cases. Our vision is that \A could become the default
-approach for sequence alignment, useful to the computational biology,
-bioinformatics and the more general algorithmic community.
-
-We foresee a multitude of extensions and optimizations that may lead to
-efficient global aligning for production usage.
+parallelization and use-cases. We foresee a multitude of extensions and
+optimizations that may lead to efficient sequence aligning for production usage.
+Moreover, we suppose that due to incorporating fuller information for its
+informed search, \A could become the default framework for sequence alignment,
+useful for computational biology, bioinformatics and general informatics.
 
 Approximate relaxations
 Practical: \astarix2, lowering the \A constant
@@ -54,8 +53,7 @@ another challenge for the scalability which is good.
     \item \emph{Scaling with the reference text complexity} Repeats, multiple
         best alignments
     \item \emph{Scaling with the reference graph complexity} Bubbles, cycles
-    \item \emph{Optimality verification} Verify given an alignment.
-%    \item \emph{Combining \A with DT} (Ragnar's idea).
+    \item \emph{Optimality verification} Verify the optimality of a given alignment.
     \item \emph{Real data.} The efficiency of the presented algorithm has high
         variability on real data~(\cref{GLOBALsec:evals-comparison-hg}) due to
         high error rates, long indels, and multiple repeats. Further
@@ -90,12 +88,15 @@ as the uncorrected PacBio reads that may reach 20\% of mistakes. Possible
 improvements of the seed heuristic may include inexact matching of seeds,
 careful choice of seed positions, and accounting for the seeds order.
 
-P1: Develop the \astarix sequence-to-graph aligner from prototype to production As
+\subsection{Planned work packages}
+
+\paragraph{Practical sequence-to-graph aligner}
+Develop the \astarix sequence-to-graph aligner from prototype to production As
 our previous work demonstrates, scaling optimal \A alignment to long sequences
 and high error rates relies on various non-trivial algorithms, data structures
 and optimizations. In order for \astarix to become of practical importance, it
-must be comparable to not only optimal aligners but to approximate ones as well –
-this includes tolerating more errors, lowering the runtime and memory
+must be comparable to not only optimal aligners but to approximate ones as well
+– this includes tolerating more errors, lowering the runtime and memory
 consumption, and supporting features. Tolerating errors. We observe two
 qualitatively-different modes in which the \A explores the state space: linear
 and quadratic. The mode of exploration is mainly determined by the ability of
@@ -151,60 +152,60 @@ paradigm that other aligners follow. Evaluation. The dataset for evaluation
 ideally includes bigger graphs, noisy long reads (e.g. ONP, PacBio), reads with
 bigger indels. The comparison should be not only to optimal aligners but also to
 approximate oces. Potential risks. The preliminary experiments demonstrate
-sublinear scaling (n0.2) with the reference size but since this is an empirical
-result, it may also deteriorate for bigger graphs. Some of the optimizations may
-not provide the full expected effect or the bottleneck they would resolve may
-not yet be current. M1: Usage of \astarix by at least one bioinformatics group
-with novel data This milestone is crucial for the adoption of \astarix by the
-broader community. The milestone does not depend on the full completion of P1.
+sublinear scaling with the reference size but since this is an empirical result,
+it may also deteriorate for bigger graphs. Some of the optimizations may not
+provide the full expected effect or the bottleneck they would resolve may not
+yet be current. Usage of \astarix by bioinformaticians is crucial for the
+adoption of \astarix by the broader community.
 
-P2: Derive theoretical guarantees for the runtime scaling of \A alignment Two
-equal sequences can be aligned for linear time, whereas two general sequences
-cannot be aligned strongly-faster than quadratically (Backurs and Indyk, 2015).
-There is a knowledge gap for the computational limitations of related sequences
-(Medvedev, 2022a) which may benefit for various statistical approaches different
-from the worst case asymptotic analysis and the empirical investigation
-(Medvedev, 2022b). Our strong empirical results on scaling with increasing
-sequence length and error rates, together with our intuition from the internals
-of our \A algorithms, hint towards much stricter theoretical bounds on the
-expected computational costs. Such theoretical results may also be of general
-interest outside of the computational biology community. Our approach to proving
-theoretical bounds is likely to be tightly related to the term potential (of a
-seed heuristic function) which is a measure of the ability of a specific seed
-heuristic instantiation (i.e. for fixed seed length, etc) to punish for future
-errors before exploring them. The analysis should also account for the cost for
-computing the heuristic (including amortized precomputation and querying) since
-infinite resources on it can result in an oracle but also destroy the total
-performance. The risks of such analyses include the potential inability to
-account for data and error models (random reference sequence and uniform error
-model) that are realistic enough. Global alignment. Our intuition on the scaling
-of the explored states includes several parameters: the seed heuristic potential
-and the number of errors. Informally speaking, for each error that is not
-compensated by the potential, the \A search will explore another layer of states
-that are 1 more distant from the diagonal. This is also theoretically and
-practically true for the special case of \A, Dijkstra, which has potential 0 and
-thus reaches O(ns) where s is the overall number of errors. Our empirical
-results demonstrate that a near-linear runtime scaling is practically possible
-up to very long sequences (100 Mbp) for error rates of 10\%. In
-addition to the computational costs for aligning a sequence to another sequence,
-alignment has the burden of localization of the best alignment. Our intuition behind
-his localization cost is related to to usage of \A on the trie: for each error
-that the \A potential does not compensate for, the exploration would get one
-lever deeper in the trie, thus exploring expected 4x more states. This is an
-interesting observation since it hints to an exponential scaling with error
-rate, which is not asymptotically possible because of the quadratic worst case,
-but may be the case near the best-case. In such a case, a type of a sigmoid
-would possibly describe the number of explored states as a function of the
-number of errors.
+\paragraph{Theoretical guarantees}
+Derive theoretical guarantees for the runtime scaling of \A alignment Two equal
+sequences can be aligned for linear time, whereas two general sequences cannot
+be aligned strongly-faster than quadratically~\citep{backurs2015edit}. There is
+a knowledge gap for the computational limitations of related
+sequences~\citep{medvedev2022limitations} which may benefit for various
+statistical approaches different from the worst case asymptotic analysis and the
+empirical investigation~\citep{medvedev2022theoretical}. Our strong empirical
+results on scaling with increasing sequence length and error rates, together
+with our intuition from the internals of our \A algorithms, hint towards much
+stricter theoretical bounds on the expected computational costs. Such
+theoretical results may also be of general interest outside of the computational
+biology community. Our approach to proving theoretical bounds is likely to be
+tightly related to the term potential (of a seed heuristic function) which is a
+measure of the ability of a specific seed heuristic instantiation (i.e. for
+fixed seed length, etc) to punish for future errors before exploring them. The
+analysis should also account for the cost for computing the heuristic (including
+amortized precomputation and querying) since infinite resources on it can result
+in an oracle but also destroy the total performance. The risks of such analyses
+include the potential inability to account for data and error models (random
+reference sequence and uniform error model) that are realistic enough. Global
+alignment. Our intuition on the scaling of the explored states includes several
+parameters: the seed heuristic potential and the number of errors. Informally
+speaking, for each error that is not compensated by the potential, the \A search
+will explore another layer of states that are 1 more distant from the diagonal.
+This is also theoretically and practically true for the special case of \A,
+Dijkstra, which has potential 0 and thus reaches O(ns) where s is the overall
+number of errors. Our empirical results demonstrate that a near-linear runtime
+scaling is practically possible up to very long sequences (100 Mbp) for error
+rates of 10\%. In addition to the computational costs for aligning a sequence to
+another sequence, alignment has the burden of localization of the best
+alignment. Our intuition behind his localization cost is related to to usage of
+\A on the trie: for each error that the \A potential does not compensate for,
+the exploration would get one lever deeper in the trie, thus exploring expected
+4x more states. This is an interesting observation since it hints to an
+exponential scaling with error rate, which is not asymptotically possible
+because of the quadratic worst case, but may be the case near the best-case. In
+such a case, a type of a sigmoid would possibly describe the number of explored
+states as a function of the number of errors.
 
-P3: Extend graph references to probabilistic framework Probabilistic
-interpretations arise in different places among the alignment problems. Phred
-values. Sequencing machines report a standardized score per nucleotide that
-estimates the probability of that nucleotide being wrong. This information is
-currently largely ignored and very valuable for highly erroneous sequencing
-technologies. Extending the edit distance metric to account for phred values
-should be directly applicable and may even benefit the performance of the \A
-algorithm due to the better correspondence between the scores and the error
+\paragraph{Alignment on a probabilistic graph references}
+Probabilistic interpretations arise in different places among the alignment
+problems. Phred values. Sequencing machines report a standardized score per
+nucleotide that estimates the probability of that nucleotide being wrong. This
+information is currently largely ignored and very valuable for highly erroneous
+sequencing technologies. Extending the edit distance metric to account for phred
+values should be directly applicable and may even benefit the performance of the
+\A algorithm due to the better correspondence between the scores and the error
 model. Weighted genome reference. A topic for current discussions in the
 pangenomics field is whether to add more genomes to the reference graph or to
 keep the reference unbiased (by unbalanced number of entries for different
@@ -212,29 +213,32 @@ variations, or by adding genomes from other populations). One reason for such
 discussions are the memory and runtime limitations, but the accuracy of
 alignment is not less important. A weighting of the graph may be useful as a
 soft tradeoff. HMM. HMM queries have been useful in the context of microbial
-sequencing (Shlemov and Korobeynikov, 2019). Possibly, \A can be extended to
-handle HMM queries instead of linear sequences. The current solutions are
-prohibitively slow and \astarix is expected to greatly accelerate the optimal
-alignment after being generalized to probabilistic queries. MAPQ. The mapq value
-may be calculated more precisely if accounting for the probability estimates.
+sequencing. Possibly, \A can be extended to handle HMM queries instead of linear
+sequences. The current solutions are prohibitively slow and \astarix is expected
+to greatly accelerate the optimal alignment after being generalized to
+probabilistic queries. The mapq value~\citep{li2008mapping} may be calculated
+more precisely if accounting for the probability estimates.
 
-P4: Explore the applicability of \A to local alignment Our previous work has
-been focusing on semi-global alignment (alignment) and global alignment (and
+\paragraph{Apply \A to local alignment}
+Explore the applicability of \A to local alignment Our previous work has been
+focusing on semi-global alignment (alignment) and global alignment (and
 extension). The issue with extending the \A approach to local alignment is
 two-fold: The search for the best local alignment is being reset when the
 current score becomes negative – in other words, negative scores are crucial for
 local alignment but not directly applicable to Dijkstra and \A. A potential
-solution may follow the approach of Jonson’s algorithm which reweights the graph
-to only non-negative edges as long as there are no negative cycles (Johnson,
-1977). For semi-global and global alignments, the whole query is being aligned,
-which is a useful property for the admissibility of the seed heuristic, since
-each seed is guaranteed to be aligned eventually. In the case of local
-alignment, some seeds may not be aligned. Possible workarounds have to be
-explored. A solution to local alignment may as well be applicable to the split
-alignment mode when “teleportations” are allowed. Another application of local
-alignment is to align reads without trimming their ends from adapters first.
+solution may follow the approach of Jonson's
+algorithm~\citep{johnson1977efficient} which reweights the graph to only
+non-negative edges as long as there are no negative cycles. For semi-global and
+global alignments, the whole query is being aligned, which is a useful property
+for the admissibility of the seed heuristic, since each seed is guaranteed to be
+aligned eventually. In the case of local alignment, some seeds may not be
+aligned. Possible workarounds have to be explored. A solution to local alignment
+may as well be applicable to the split alignment mode when ``teleportations''
+are allowed. Another application of local alignment is to align reads without
+trimming their ends from adapters first.
 
-P5: Explore the applications of machine learning to generating better admissible
+\paragraph{Machine learning for tuning the seed heuristic}
+Explore the applications of machine learning to generating better admissible
 heuristics Tuning parameters is generally hard and it has been problematic for
 the seed heuristic as well. One potential place for runtime improvement is to
 carefully choose the seed heuristic parameters: seed length and allowed number
@@ -243,18 +247,19 @@ guarantees about the produced results. Nevertheless, since the parametrization
 of the seed heuristics influences only its performance and not its admissibility
 and optimality of the results. Additionally, the seed heuristic parameters could
 be chosen or modified dynamically, during the \A search. Reinforcement learning
-may provide a reasonable method to tuning the parameters in real-time. My
-expected visit to Prof. Šikić group may result in substantial progress on this
-work package.
+may provide a reasonable method to tuning the parameters in real-time.
 
-P6. Explore the applications of finding K-best alignments which is trivially
+\paragraph{K-best paths}
+Explore the applications of finding K-best alignments which is trivially
 achievable in \A framework. A natural extension of the shortest path algorithms
 is to find not one shortest path, but K-shortest paths. One application of the
-K-best alignments is the computation of the MAPQ mapping score which is based on
-the alignment costs of the K-best alignments and provides an estimation on the
-certainty of the best alignment. Potentially, there may be other applications.
+K-best alignments is the computation of the mapq mapping
+score~\citep{li2008mapping} which is based on the alignment costs of the K-best
+alignments and provides an estimation on the certainty of the best alignment.
+Potentially, there may be other applications.
 
-P7: Explore joint alignment of a set of sequence to a graph The reads to be mapped
+\paragraph{Jointly align a set of reads}
+Explore joint alignment of a set of sequence to a graph. The reads to be mapped
 to a reference genome are highly correlated since they usually come from the
 same biological sample. On the other hand, they can be biased according to the
 reference genome, due to biological variation. Ideally, a clever alignment
@@ -264,26 +269,25 @@ to develop a theory/metric. Another complication is computational: aligning even
 a single query to a graph that is allowed to change may require exponential time
 with the query length.
 
-P8: Explore \A for multiple sequence alignment (MSA) Existing approaches to MSA
+\paragraph{Generalize the seed heuristic to multiple sequences}
+Explore \A for multiple sequence alignment (MSA) Existing approaches to MSA
 using \A consider pairwise edit distances, which do not considerably accelerate
 the alignment. A simultaneous seed match (anchor) within several sequences may
 provide much bigger penalties for suboptimal paths.
 
-P9: Explore suboptimal relaxations for performance gain Various relaxations of
-the heuristic admissibility, variants of \A, windowing the search (dropping
-expanded states that are too far behind the exploration head), have the
-potential to greatly increase the performance at the price of alignment
-optimality. This work package may be useful for the performance and thus the
+\paragraph{Relax the \A optimality guarantees for performance gain}
+Various relaxations of the heuristic admissibility, variants of \A, windowing
+the search (dropping expanded states that are too far behind the exploration
+head), have the potential to greatly increase the performance at the price of
+alignment optimality. This may be useful for the performance and thus the
 practical adoption of the algorithm but we prefer first gaining the performance
 from the obvious promising optimality-preserving optimizations.
 
-\paragraph{Generalizing the distance metric}
+%\paragraph{Generalizing the distance metric}
 %\dictum[Freeman Dyson]{%
 %   It is better to be wrong than to be vague.}
 %\vskip 1em
-
-In this thesis we were optimizing edit distance. 
-Big gaps (indels) in biological sequences motivate affine and concave costs. Local alignment is
-\cite{arslan2001new}.
-
-Verification of optimality.
+%
+%In this thesis we were optimizing edit distance. Big gaps (indels) in biological
+%sequences motivate affine and concave costs. Local alignment is
+%\cite{arslan2001new}.
