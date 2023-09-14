@@ -5,8 +5,8 @@
 \begin{figure}[t]  %\begin{floatingfigure}[l]{0.5\textwidth}
     \includegraphics[width=\textwidth]{alignment-types-thesis.pdf}
 	\caption[Main alignment types]{Names, alignment and paths of main alignment
-    types. Synonims of the alignment names are shown in grey. The alignments are
-    simplistically shows without edits. Paths corresponding to the alignments
+    types. Synonyms of the alignment names are shown in grey. The alignments are
+    simplistically shown without edits. Paths corresponding to the alignments
     are shown as paths on an alignment graph. All paths start at green nodes and
     finish at red nodes. With green background are shown the two alignment types
     considered in this thesis.}
@@ -21,10 +21,10 @@ parts of the sequences that are being aligned, we differentiate types of
 alignment~(\cref{fig:alignment-types}) and focus on global and semi-global.
 
 There are generalizations to sequence-to-sequence alignment, including aligning
-to nonlinear structures, such as directed acyclic graphs, DAGs, general graphs
+to nonlinear structures, such as directed acyclic graphs, DAGs, general graphs,
 and others. These structures are nowadays becoming more common as a compressed
 form of representing a set of references to which a sequence can be aligned.
-Often, one best alignment is suefficient but finding several best (top-K)
+Often, one best alignment is sufficient but finding several best (top-K)
 alignments. In the context of read alignment, a set of reads is aligned to the
 same reference sequence so an indexing procedure is often useful for the
 performance.
@@ -32,7 +32,7 @@ performance.
 %If both sequences have to
 %be aligned end-to-end, we look for a \emph{global alignment} whose minimal
 %number of edits is known as \emph{edit distance}. If we instead search for an
-%occurance of a query sequence within a reference sequence, we allow the
+% occurrence of a query sequence within a reference sequence, we allow the
 %alignment to start and end at any reference locations in a \emph{semi-global}
 %alignment.
 
@@ -40,14 +40,14 @@ performance.
 It would have been relatively easy to find alignments if the sequences did not
 differ from each other. Nevertheless, the real data may be subject to such
 processes as biological evolution and sequencing technologies, which result in
-differences between compared sequences. Commonly, the most probable explaination
+differences between compared sequences. Commonly, the most probable explanation
 of these differences is to be reconstructed. If we assume an \emph{error model}
 which repeatedly applies a random single-letter edit (substitutions, insertions
 and deletions), then the most probable sequence of edits would be one with a
 minimal number of edits (possibly weighting different types of edits with
 different costs). Throughout this thesis we consider this most widespread
 objective---it provides a tradeoff between expressivity and computability---it
-reasonably estimates the real world sequences while disregarding any memory in
+reasonably estimates the real-world sequences while disregarding any memory in
 the error model.
 
 \paragraph{Global alignment}
@@ -65,9 +65,9 @@ mismatching a letter in $B$). Note that the number of edits is equal to the
 number of mismatches in the corresponding alignment. The minimal number of edits
 necessary to transform $A$ to $B$ is known as \emph{Levenshtein distance} when
 each edit operation is equally costly, and more generally as \emph{edit
-distance}, when the edit operations are weighted depending on their type.
-Clearly, finding an alignment with a minimal number of edits implies computing
-the edit distance.
+distance} when the edit operations are weighted depending on their type. Finding
+an alignment with a minimal number of edits implies also computing the edit
+distance.
 
 \paragraph{Semi-global alignment}
 Semi-global sequence alignment (also called approximate/fuzzy string search
@@ -85,7 +85,7 @@ optimizations are applicable.
 
 \paragraph{Sequence-to-graph alignment}
 A set of reference sequences can be compactly represented as paths in a graph
-(possbly cyclic). \emph{Sequence-to-graph} alignment is a semi-global alignment
+(possibly cyclic). \emph{Sequence-to-graph} alignment is a semi-global alignment
 between a query sequence and a path in a reference
 graph~\cite{jain_complexity_2019}.
 
@@ -99,15 +99,15 @@ letters). If we define an \emph{alignment graph} to contain all pairs of
 prefixes as nodes, and all edits as edges, then any alignment will correspond to
 a path. Moreover, if the edges are weighted by the edit costs, any alignment
 with a minimal edit distance will correspond to a shortest path. Thus, we will
-find best alignments as shortest paths in an alignment graph.
+find the best alignments as shortest paths in an alignment graph.
 
 \paragraph{Objective functions}
-Assuming that two sequences alignment have no errors is reasonable only for very
-short sequences. Othewise, for sequences of equal length we can calculate
-\emph{Hamming distance} -- the number of neccessary substitution operations to
-transform one to the other. Within this thesis we assume the edit distance and
-Levenshtein distance, which also allows for gaps. They can further be
+Assuming that two sequences align without errors is reasonable only for very
+short sequences. Otherwise, for sequences of equal length, we can calculate
+their \emph{Hamming distance} -- the number of necessary substitution operations
+to transform one to the other. Within this thesis, we assume the edit distance
+and Levenshtein distance, which also allows for gaps. They can further be
 generalized to \emph{affine costs} (starting a gap is more expensive than
 extending it), \emph{convex} and \emph{concave} costs (extending the gaps gets
-cheaper or more expensive with length) and others. The strive is for a ballance
-between optimization metric and the computational efficiency.
+cheaper or more expensive with length), and others. The strive is for a balance
+between a realistic optimization metric and computational efficiency.
