@@ -5,7 +5,7 @@
 
 It comes as a surprise that a novel approach to alignment appears 60 years after
 the problem was first efficiently solved. Without the intuition that we do not
-exploit all available information, it would have been an academical mistake to
+exploit all available information, it would have been an academic mistake to
 work on such a problem. Neglecting the suffix information for faster alignment
 may have resulted from the immense focus on new genomic data and sequencing
 technology and parallel computing, not believing that optimal solutions could be
@@ -18,16 +18,16 @@ As we saw in \cref{ch:trie,ch:seed}, previous optimal semi-global aligners
 compute the whole dynamic programming table, thus reaching the prohibitively
 slow quadratic runtime. On the other side, all current production-level aligners
 rely on the \emph{seed-extend} paradigm or its \emph{seed-chain-extend} variants
-for long reads. This paradigm searches for long alignments around shorts
-matches, which is a very intuitive idea if we look for a good alignment.
+for long reads. This paradigm searches for long alignments around short matches,
+which is a very intuitive idea if we look for a good alignment.
 
 If we instead seek not good but provably \emph{best} alignments, we are required
-to refute all the exponentially-many competing alignments as not being better.
+to refute all the exponentially many competing alignments as not being better.
 According to our seed heuristic, any seed match not seen is an inevitable edit
 in the future. Thus, we do not need to choose the seeds to support the best
 alignment but to refute the suboptimal alignment. Instead of long and good
 matches, we prefer many short seeds with hardly any matches. This novel usage of
-seeds carrie different problems and different possibilities.
+seeds carries different problems and different possibilities.
 
 \begin{observation}[Seeds without matches]
     To efficiently find an optimal alignment using \A with the seed heuristic,
@@ -35,8 +35,8 @@ seeds carrie different problems and different possibilities.
 \end{observation}
 
 This \emph{negated seeding} strategy has mostly opposing goals to the current
-seeding approaches. Studying it deeper may be beneficial for the futher
-developments of optimal sequence algorithms.
+seeding approaches. Studying it deeper may be beneficial for the further
+development of optimal sequence algorithms.
 
 % In order to improve the \sh each seed can penalize
 %potential alignment by not more than its
@@ -52,17 +52,17 @@ basic task is an extremely common element in the upstream pipelines and other
 high-level tools like assemblers. Possibly, many alignment tools can be
 outcompeted (similar to the Parasail aligner) and become outdated. The general
 impact of guaranteed optimality is increased trust in the tools by
-bioinformaticians, ability to explain any alignment, reduced number of
-misalignments, applicability to both linear and graph references. A risky
-high-stake problem we plan to explore is the multiple sequence alignment (MSA)
-since it has many resemblances to pairwise alignment but suffers from the
+bioinformaticians, the ability to explain any alignment, the reduced number of
+misalignments, and the applicability to both linear and graph references. A
+risky high-stake problem we plan to explore is the multiple sequence alignment
+(MSA) since it has many resemblances to pairwise alignment but suffers from the
 combinatorial explosion with the number of sequences. Even with relaxed
-optimality-guarantees, a novel approach to this general problem may have a
+optimality guarantees, a novel approach to this general problem may have a
 direct impact on comparative genomics, including protein folding. Our experience
-with presenting the \A approach convinced us that it is not a common knowledge
-in the computation biology community, even though most conference attendants
-with technical background are familiar with the name and the general usage. Our
+with presenting the \A approach convinced us that it is not common knowledge in
+the computation biology community, even though most conference attendants with
+technical backgrounds are familiar with the name and the general usage. Our
 conviction is that \A is a powerful instrument that has fallen out of focus in
 our community but that may prove useful for other algorithmic biology problems
-as well. Potentially, it could become a standard topic in the education in
+as well. Potentially, it could become a standard topic in the education of
 computational biology.

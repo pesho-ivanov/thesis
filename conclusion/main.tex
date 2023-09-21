@@ -18,7 +18,7 @@ this last mastodon has been written fully on human intelligence.
 \paragraph{Scaling with reference size}
 In \cref{ch:trie} we presented \astarix, a sequence-to-graph optimal alignment
 tool based on the \A algorithm with a simple admissible heuristic and enhanced
-by multiple algorithmic optimizations. We complemented the refernece with a trie
+by multiple algorithmic optimizations. We complemented the reference with a trie
 index to allow a shortest path from the trie root to be found for sublinear time
 with the reference size. Our approach allows for general graph references that
 may include cycles. We demonstrated that \astarix scales exponentially better
@@ -30,12 +30,12 @@ outperform current state-of-the-art optimal aligners in orders of magnitude.
 \paragraph{Scaling with sequence length}
 In \cref{ch:seed} we upgraded our sequence-to-graph aligner \astarix with a
 novel admissible \emph{\sh} which guides the search based on seed matches
-between the query and the reference. In order to compute the \sh efficiently for
-each explored node, for each query, we split it to seeds, precompute the seed
+between the query and the reference. To compute the \sh efficiently for each
+explored node, for each query, we split it into seeds, precompute the seed
 matches in the reference, and place \emph{crumbs} on the nodes before the match
-in order to mark an upcoming match. In addition to the sublinear scaling with
-reference size, the \sh allowed subquadratic scaling with the query length.
-\astarix outpeformed existing optimal aligners on long reads.
+to mark an upcoming match. In addition to the sublinear scaling with reference
+size, the \sh allowed subquadratic scaling with the query length. \astarix
+outperformed existing optimal aligners on long reads.
 
 % paper-global
 \paragraph{Scaling with error rate}
