@@ -4,10 +4,10 @@
 Our presented method has several limitations:
 \begin{enumerate}
   \item \emph{Complex regions trigger quadratic search.} Since it is unlikely
-        that edit distance in general can be solved in strongly subquadratic
-        time, it is inevitable that there are inputs for which our approach
-        requires quadratic time. In particular, regions with high error rates,
-        long indels, and too many matches are challenging and trigger quadratic
+        that edit distance in general could be solved in strongly subquadratic
+        time, it is inevitable that for some inputs our approach will require
+        quadratic time. In particular, regions with high error rates, long
+        indels, and too many matches are challenging and trigger quadratic
         exploration.
   \item \emph{High constant in runtime complexity.} Despite the near-linear
         scaling of the number of expanded states, \astarpa only outperforms
@@ -20,8 +20,8 @@ Our presented method has several limitations:
         simple may require a more comprehensive framework when introducing
         additional optimizations.
   \item \emph{Consistency.} The seed heuristic, which is at the core of our \A
-        algorithm, is admissible (optimistic) but not consistent (monotone). As
-        a consequence, any of the quadratic number of states can be expanded
+        algorithm, is admissible (optimistic) but not consistent (not monotone).
+        As a consequence, any of the quadratic number of states can be expanded
         multiple times, which could theoretically lead to over-quadratic
         scaling. In practice, repeated expansions happen but the empirical
         scaling is preserved near-linear as long as the number of seed matches
