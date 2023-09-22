@@ -9,10 +9,10 @@ the sequence alignment algorithms are being developed: scalable algorithms,
 generalizing the optimization metric, employing heuristics for approximate
 solutions, adapting existing algorithms to novel types of data, exploiting
 parallel computing, implementing fast and memory-efficient software. This thesis
-focuses on algorithmic approaches to sequence alignment so here we outline the
+focuses on algorithmic approaches to sequence alignment, so here we outline the
 leading existing optimal algorithms, the suboptimal seeding heuristics that we
-use in an optimal way, and the \A shortest path algorithm which will be the base
-for our provably optimal and heuristically fast approach.
+use in an optimal way, and the \A shortest path algorithm, which will be the
+base for our provably optimal and heuristically fast approach.
 
 \paragraph{Dynamic programming for global alignment}
 The first efficient solution for global alignment, known as the Needleman-Wunsch
@@ -23,8 +23,8 @@ into overlapping subtasks~(or \emph{states}) each of which can be solved once
 and then reused. Each node of the alignment graph (aligning a prefix of the
 first sequence to a prefix of the second sequence) is a state in the DP. Each
 subtask can be solved by reducing it to already solved alignments of shorter
-prefixes, and extending them by a last operation of matching or mismatching the
-last letters from the prefixes, inserting one, or inserting the other
+prefixes and extending them by a last operation of matching or mismatching the
+last letters from the prefixes, inserting one or inserting the other
 (equivalent to deleting from the first sequence). Each subtask is solved for
 $\Oh(1)$ so the quadratic number of prefix pairs is solved for quadratic overall
 time, even though the number of possible alignments is exponential.
@@ -36,7 +36,7 @@ Improving the performance of these quadratic algorithms has been a central goal
 in later works.
 
 \paragraph{Dynamic programming for semi-global alignment}
-Semi-global alignment is a related problem to global alignment but in addition
+Semi-global alignment is a related problem to global alignment, but in addition
 to the need to align letter-to-letter, it also requires determining a starting
 position in the reference. This task has also been efficiently solved using a
 similar DP approach~\cite{sellers1980theory,smith1981identification} taking
