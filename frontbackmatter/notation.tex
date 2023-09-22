@@ -32,31 +32,31 @@
     \section*{Frequently used symbols}%
     \vskip -2em
     \begin{tabularx}{\textwidth}{lX}
-		$\Sigma = \{A,C,G,T\}$ 			& alphabet \\
-		$A, B \in \Sigma^*$				& sequences \\
-		$q \in \Sigma^m$				& query/read \\
+		$\Sigma = \{A,C,G,T\}$ 			& Alphabet \\
+		$A, B \in \Sigma^*$				& Sequences \\
+		$q \in \Sigma^m$				& Query/Read \\
 %    	edit operation		& insertion, deletion or substitution of a single letter \\
-		$\cmatch, \csubst, \cins, \cdel \geq 0$ & edit costs for match, insertion, deletion and substitution of a single letter \\[5pt]
-		$ed(A,B)$						& edit distance \\
-		$\RG=(\RGV,\RGE)$               & reference graph \\[5pt]
+		$\cmatch, \csubst, \cins, \cdel \geq 0$ & Edit costs for match, insertion, deletion and substitution of a single letter \\[5pt]
+		$ed(A,B)$						& Edit distance \\
+		$\RG=(\RGV,\RGE)$               & Reference graph \\[5pt]
 %	Position in read & $q[i] \in \Sigma$, $i \in \{0,\dots,m-1\}$\\	
-		$\st{u}{i}$ 					& state (subalignment of $A$)\\
-		$\AG=(\AGV,\AGE)$ 				& alignment graph on states $\AGV$\\
-		$D$								& trie depth \\
-		$g$								& best distance from start \\
-		$h\colon V \to \Costs$ 			& heuristic function \\
-		$f = g + h$						& estimated total distance \\
-		$h\st{u}{i}$					& seed heuristic \\
-		$s\in \seeds$					& seeds \\
-		$k$ 							& seed length \\
-		$r$								& seed potential \\
-		$P\st ij = r \cdot \abs{\seeds_{\geq i}}$ & state potential \\
-		$m \in \matches_s$				& matches of seed $s$ \\
-		$\matchcost(m) \in [0, r)$ 		& cost of match $m$ \\
-		$\gamma(m, m')$ 				& chaining cost \\
-		$\gapcost(\st ij, \st{i'}{j'}):=\abs{(i'{-}i) {-} (j'{-}j)}$ & gap cost \\
-		$\seedcost(u,v) = r\cdot \substr \seeds uv$ & seed cost \\
-		$\gscost = \max(\gapcost, \seedcost)$ & gap-seed cost \\
-		$\bluecrumb{}, \yellowcrumb{}, \violetcrumb{}, \greencrumb{}$ & crumbs on nodes for match $m$ \\
+		$\st{u}{i}$ 					& State (subalignment of $A$)\\
+		$\AG=(\AGV,\AGE)$ 				& Alignment graph on states $\AGV$\\
+		$D$								& Trie depth \\
+		$g$								& Best distance from start \\
+		$h\colon V \to \Costs$ 			& Heuristic function \\
+		$f = g + h$						& Estimated total distance \\
+		$h\st{u}{i}$					& Seed heuristic \\
+		$s\in \seeds$					& Seeds \\
+		$k$ 							& Seed length \\
+		$r$								& Seed potential \\
+		$P\st ij = r \cdot \abs{\seeds_{\geq i}}$ & State potential \\
+		$m \in \matches_s$				& Matches of seed $s$ \\
+		$\matchcost(m) \in [0, r)$ 		& Cost of match $m$ \\
+		$\gamma(m, m')$ 				& Chaining cost \\
+		$\gapcost(\st ij, \st{i'}{j'}):=\abs{(i'{-}i) {-} (j'{-}j)}$ & Gap cost \\
+		$\seedcost(u,v) = r\cdot \substr \seeds uv$ & Seed cost \\
+		$\gscost = \max(\gapcost, \seedcost)$ & Gap-seed cost \\
+		$\bluecrumb{}, \yellowcrumb{}, \violetcrumb{}, \greencrumb{}$ & Crumbs on nodes for match $m$ \\
     \end{tabularx}
 \endgroup
