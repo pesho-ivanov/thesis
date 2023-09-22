@@ -63,7 +63,7 @@ bioinformatics and general informatics.
 %a heuristic function able to handle not only long but also noisier reads, such
 %as the uncorrected PacBio reads that may reach 20\% of mistakes. Possible
 %improvements of the seed heuristic may include inexact matching of seeds,
-%careful choice of seed positions, and accounting for the seeds order.
+%careful choice of seed positions, and accounting for the seeds' order.
 
 \subsection*{Planned work packages}
 
@@ -103,8 +103,8 @@ together the reference location reachable with the same prefix. The first
 function is efficiently solvable by using the positional Burrows-Wheeler
 transform (gBWT) to find exact seed matches and, in the case of inexact matches,
 to pre-generate all kmers at distance 1 from the seeds and invoke gBWT
-separately for each. The second function requires a trie but if possibly not a
-over the whole graph, only pointing to those reference locations which hold at
+separately for each. The second function requires a trie but if possibly not 
+over the whole graph, only pointing to those reference locations that hold at
 least one crumb: otherwise the \A search will surely be quadratic in which case
 the fallback options are to either refuse to align the read (which is still
 optimal but incomplete), or find an alignment by explicitly considering all
@@ -118,8 +118,8 @@ additional order of magnitude. Runtime optimization. For a small error rate
 crumbs. To effectively skip the work of placing most of the crumbs, the
 placement of different seeds could be done together in one backward traversal –
 this is expected to eliminate most of the work for placing crumbs on the optimal
-path.  Another approach is to also “jump over unitigs” when placing crumbs in
-the backward traversal, and “carry” crumbs in the forwards \A search to
+path.  Another approach is to also ``jump over unitigs'' when placing crumbs in
+the backward traversal, and ``carry'' crumbs in the forwards \A search to
 compensate for the skipped ones. A major optimization in the case of a high
 error rate is to adapt the match pruning that we have developed for the global
 alignment case. Features. By discussing \astarix on conferences, we have figured
@@ -193,7 +193,7 @@ tradeoff. HMM. HMM queries have been useful in the context of microbial
 sequencing. Possibly, \A can be extended to handle HMM queries instead of linear
 sequences. The current solutions are prohibitively slow and \astarix is expected
 to greatly accelerate the optimal alignment after being generalized to
-probabilistic queries. The mapq value~\citep{li2008mapping} may be calculated
+probabilistic queries. The \textit{mapq} value~\citep{li2008mapping} may be calculated
 more precisely if accounting for the probability estimates.
 
 \paragraph{Apply \A to local alignment}
@@ -205,13 +205,13 @@ score becomes negative – in other words, negative scores are crucial for local
 alignment but not directly applicable to Dijkstra and \A. A potential solution
 may follow the approach of Jonson's algorithm~\citep{johnson1977efficient} which
 reweights the graph to only non-negative edges as long as there are no negative
-cycles. For semi-global and global alignments, the whole query is being aligned,
-which is a useful property for the admissibility of the seed heuristic, since
-each seed is guaranteed to be aligned eventually. In the case of local
-alignment, some seeds may not be aligned. Possible workarounds have to be
-explored. A solution to local alignment may as well apply to the split alignment
-mode when ``teleportations'' are allowed. Another application of local alignment
-is to align reads without trimming their ends from adapters first.
+cycles. For semi-global and global alignments, the whole query is aligned, which
+is a useful property for the admissibility of the seed heuristic, since each
+seed is guaranteed to be aligned eventually. In the case of local alignment,
+some seeds may not be aligned. Possible workarounds have to be explored. A
+solution to local alignment may as well apply to the split alignment mode when
+``teleportations'' are allowed. Another application of local alignment is to
+align reads without trimming their ends from adapters first.
 
 \paragraph{Machine learning for tuning the seed heuristic}
 Explore the applications of machine learning to generate better admissible
@@ -229,7 +229,7 @@ may provide a reasonable method for tuning the parameters in real time.
 Explore the applications of finding K-best alignments which is trivially
 achievable in \A framework. A natural extension of the shortest path algorithms
 is to find not one shortest path, but K-shortest paths. One application of the
-K-best alignments is the computation of the mapq mapping
+K-best alignments are the computation of the \textit{mapq} mapping
 score~\citep{li2008mapping} which is based on the alignment costs of the K-best
 alignments and provides an estimation of the certainty of the best alignment.
 Potentially, there may be other applications.

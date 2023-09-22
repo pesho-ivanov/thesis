@@ -1,13 +1,13 @@
 \chapter{Scaling with reference size} \label{ch:trie}
 \graphicspath{{\dir/}}
 
-In this chapter we consider the problem of semi-global alignment of a set of
+In this chapter, we consider the problem of semi-global alignment of a set of
 reads to a general graph reference. We supplement the reference graph with a
 trie index and run shortest path algorithms (Dijkstra and \A with a very simple
 heuristic) that start aligning from the trie root. We demonstrate that using a
 trie index enables sublinear scaling of the alignment time with the reference
-size. Even for moderate size references, we rearch orders of magnitude of
-speedup compared to other optimal algorithms.
+size. Even for moderate-size references, we reach orders of magnitude of speedup
+compared to other optimal algorithms.
 
 \input{\dir/overview}
 \input{\dir/task}
