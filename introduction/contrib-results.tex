@@ -2,24 +2,24 @@
 
 Since all our algorithms are provably correct, we only test the equivalence of
 the produced edit distance between in order to lower the risk of programming
-mistakes. Empirically, on a single-thread, we compare to existing optimal
+mistakes. Empirically, on a single thread, we compare the existing optimal
 aligners the scaling, runtime and memory usage of our implementations: the
 semi-global aligner \astarix and the global aligner \astarpa.
 
 \paragraph{Worst case vs related sequence}
-Traditionally, the runtime and memory have been analysed for the worst case
+Traditionally, the runtime and memory have been analyzed for the worst case
 asymptotic behavior of the algorithm. Since the near quadratic worst case
 asymptotics is likely to be tight for both global~\citep{backurs2015edit} and
 semi-global alignment, we target related sequences with limited edit distance,
 and estimate their empiric runtime and memory scaling.
 
 \paragraph{Setting}
-We demontrate that the additional information we use from the whole sequence can
-improve the scaling with query length, reference size and error rate,
+We demonstrate that the additional information we use from the whole sequence
+can improve the scaling with query length, reference size and error rate,
 substantially decrease the necessary computations (by more than 99.99\%), and
-result in algorithms that are orders of magnitude faster than existing optimal
-algorithms. Our empirical analysis of scaling is based on running the same
-algorithm on increasingly more complex input data (longer sequences, higher
+result in algorithms that are orders of magnitude faster than the existing
+optimal algorithms. Our empirical analysis of scaling is based on running the
+same algorithm on increasingly more complex input data (longer sequences, higher
 error rate), measuring its runtime and memory usage, and fitting a function to
 explain the correlation between the input parameter and the measurement. This
 approach is useful to estimate the scaling of the algorithm and its
@@ -27,8 +27,8 @@ implementation. Note that these scaling analyses are not asymptotical, include
 noise, and we limit the fitting to only 1 parameter at a time.
 
 \paragraph{Scaling with reference size}
-In~\cref{ch:trie} we present the tool \astarix which applies the \A algorithm to
-find optimal alignments, based on a simple heuristic and enhanced by multiple
+In~\cref{ch:trie}, we present the tool \astarix, which applies the \A algorithm
+to find optimal alignments, based on a simple heuristic and enhanced by multiple
 algorithmic optimizations. We demonstrate that using a trie index we can achieve
 sublinear runtime scaling with reference size, and that \A can scale
 exponentially better than \dijkstra with increasing (but small) number of errors
@@ -37,7 +37,7 @@ better and outperform current state-of-the-art optimal aligners with increasing
 genome graph size.
 
 \paragraph{Scaling with query length}
-In~\cref{ch:seed} we upgrade \astarix with a novel \sh which guides the \A
+In~\cref{ch:seed}, we upgrade \astarix with a novel \sh which guides the \A
 search by preferring crumbs on nodes that lead towards optimal alignments even
 for long reads. This approach enables the near-linear scaling of semi-global
 alignment with read length. On our linear and variation graph datasets, 99.99\%
@@ -47,7 +47,7 @@ reads and long low-error reads from linear and variant graph references, \A with
 \graphaligner, \vargas, \pasgal by more than 60 times.
 
 \paragraph{Scaling with error rate}
-In~\cref{ch:global} we resolve the third major bottleneck---handling high error
+In~\cref{ch:global}, we resolve the third major bottleneck---handling high error
 rates. We presented an algorithm with an implementation in \astarpa solving
 pairwise alignment between two sequences. The algorithm is based on \A with a
 \sh, inexact matching, match chaining, and match pruning, which we proved to
@@ -60,18 +60,18 @@ aligners on only a limited portion of the reads.
 \paragraph{Seed heuristic modes of operation}
 The performance of \A with the seed heuristic follows one of two distinguishable
 patterns based on the capability of the seed heuristic to compensate for all the
-errors. If the heuristic potential is sufficiently higher than the resulting
-edit distance between the sequences, the heuristic punishes suboptimal paths
-very strongly, leading to a very directed \A exploration, which grows
-linear-like with the sequence length. Otherwise, if the error rate is too high,
-each unit of difference that the seed heuristic does not account for, is a unit
-of extended search to the side, leading to a quadratic-like exploration of the
-search space. Note that the total runtime may grow quadratically for other
-reasons too: due to preprocessing of dense seed matches (which is very data
-dependent), or due to slow heuristic computation (which has not been a
-bottleneck for us). Interestingly, since the seed heuristic improves not from
-having a match but from punishing lacks of matches, no matches are required for
-the near-linear behavior of the seed heuristic.
+errors. Suppose the heuristic potential is sufficiently higher than the
+resulting edit distance between the sequences. In that case, the heuristic
+punishes suboptimal paths strongly, leading to a very directed \A exploration,
+which grows linear-like with the sequence length. Otherwise, if the error rate
+is too high, each unit of difference that the seed heuristic does not account
+for, is a unit of extended search to the side, leading to a quadratic-like
+exploration of the search space. Note that the total runtime may grow
+quadratically for other reasons too: due to the preprocessing of dense seed
+matches (which is very data dependent) or slow heuristic computation (which has
+not been a bottleneck for us). Interestingly, since the seed heuristic improves
+not from having a match but from punishing lacks of matches, no matches are
+required for the near-linear behavior of the seed heuristic.
 
 % speculations
 %Based on the empitical evaluations and the intuition behind the algorithms, we
