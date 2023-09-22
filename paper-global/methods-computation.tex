@@ -135,5 +135,11 @@ that would break the consistency of $\matches$.
 \end{equation*}
 \end{restatable}
 
+\paragraph{Asymptotic scaling}
 Using the transformation of the match coordinates, we can now reduce $\gscost$
-to $\seedcost$ and efficiently compute \GCH in any explored state.
+to $\seedcost$ and efficiently compute \GCH in any explored state. The worst
+case preprocessing time is $\Oh(n+r\log r)$ and the worst case query of the
+heuristic is $\Oh(\log^2 r) = \Oh(\log^2 n)$ when implemented with binary search
+to find a layer and a search tree within each layer. In practice, optimizations
+for the empirical runtime bring the worst case for querying to potentially
+looking up each match: $\Oh(r) = \Oh(n^2)$.

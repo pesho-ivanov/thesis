@@ -47,8 +47,9 @@ The longest common subsequence (LCS) problem is a special case of edit distance,
 in which gaps are allowed but substitutions are forbidden. \emph{Contours}
 partition the state-space into regions with the same remaining answer of the LCS
 subtask~(\cref{fig:contours}). The contours can be computed in log-linear
-time in the number of matching elements between the two sequences which is
-practical for large alphabets~\citep{hirschberg1977algorithms,hunt1977fast}.
+$\Oh(n\log^2 n)$ time in the number of matching elements between the two
+sequences which is practical for large
+alphabets~\citep{hirschberg1977algorithms,hunt1977fast}.
 
 % Shortest paths, A* for MSA and semi-global alignment (AStarix), gaps
 \paragraph{Shortest paths and heuristic search using \A}
