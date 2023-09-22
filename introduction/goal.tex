@@ -10,19 +10,20 @@ setting.
 \subsection*{Practical read aligners are approximate}
 
 Current practical semi-global aligners are either vague about the metrics they
-optimize or they do not guarantee optimality~\cite{alser2021technology}. An
+optimize or do not guarantee optimality~\cite{alser2021technology}. An
 approximate algorithm can produce wrong results either because it did not
 succeed in optimizing its objective function or because it was aiming at a poor
-objective function. Requiring the solutions to be optimal according the an
-objective, would eliminate the former issue and focus the research on the
+objective function. Requiring the solutions to be optimal according to an
+objective would eliminate the former issue and focus the research on the
 latter.
 
-Sequence alignment is an early step in most bioinformatics pipelines, so
+Sequence alignment is an early step in most bioinformatics pipelines, so that
 incorrect alignments can cause biases in downstream analyses. For instance, the
-combination of high variability of MHC sequences in humans and small differences
-between alleles~\cite{buhler_hla_2011} leads to a risk of misclassifications due
-to suboptimal alignment. Guaranteeing optimal alignment against all variations
-represented in a graph would be a major step towards alleviating those biases.
+combination of high variability of MHC sequences in humans and slight
+differences between alleles~\cite{buhler_hla_2011} leads to a risk of
+misclassifications due to suboptimal alignment. Guaranteeing optimal alignment
+against all variations represented in a graph would be a significant step
+toward alleviating those biases.
 
 While heuristic algorithms usually find the correct alignment for simple
 references, they often perform poorly in regions of very high complexity, such
@@ -34,15 +35,15 @@ the produced results are doubted.
 
 \subsection*{Optimal aligners are slow}
 
-There is a fundamental trade-off between perforamance and optimality guarantees:
+There is a fundamental trade-off between performance and optimality guarantees:
 an algorithm that is allowed suboptimality may exploit the lesser restrictions
 for better performance. Given the worst-case analysis requiring near-quadratic
 runtime even to compute edit distance exactly~\citep{backurs2015edit}, it is
 understandable why most scholars are skeptical about faster optimal algorithms.
 
-For semi-global sequence-to-sequence alignment, a common consensus seems to be
-that optimal algorithms are infeasible for read alignment, especially for long
-reads. All production read aligners following the approximate seed-extend
+For semi-global sequence-to-sequence alignment, a common consensus seems that
+optimal algorithms are infeasible for read alignment, especially for long reads.
+All production read aligners following the approximate seed-extend
 paradigm~\cite{alser2021technology}\footnote{This study examines 107 aligners.}.
 
 Existing optimal sequence-to-graph aligners rely on dynamic programming (DP) and
@@ -51,11 +52,11 @@ Such aligners include \vargas~\citep{darby2020vargas},
 \pasgal~\citep{jain_accelerating_2019},
 \graphaligner~\citep{rautiainen_bitparallel_2019},
 \hga~\citep{feng2021accelerating}, and \vg~\citep{garrison_variation_2018},
-which focus on bit-level optimizations and parallelization to futher increase
+which focus on bit-level optimizations and parallelization to further increase
 their throughput.
 
-For global alignment, optimal algorithms are nevertheless used in practice,
-despite of their quadratic scaling. The ongoing competition between the optimal
+Optimal algorithms are nevertheless used in practice for global alignment
+despite their quadratic scaling. The ongoing competition between the optimal
 aligners employs both algorithmic advancements and implementation optimizations
 on caching, bit-parallelization, GPU.~(\cref{ch:global}).
 
@@ -67,10 +68,10 @@ biological variation. In the age of big data and long reads (e.g. PacBio, ONP),
 this quadratic scaling with length is prohibitive, so the algorithms with
 practical usage (e.g. minimap2, bwt, kallisto) do not guarantee optimality but
 run in subquadratic time~\citep{kucherov2019evolution}. This is a computational
-bottleneck given the growing amounts of biological data and the increasing
+bottleneck, given the growing amounts of biological data and the increasing
 sequence lengths~\citep{kucherov2019evolution}. For each type of sequence
-alignment (e.g. global and semi-global), a tradeoff exists between amount of
-computation and the alignment accuracy.
+alignment (e.g. global and semi-global), a tradeoff exists between the amount of
+computation and alignment accuracy.
 
 The gap between fast and optimal global alignment has been recognized but no
 optimal algorithms are known that run subquadratically for related
@@ -78,8 +79,8 @@ sequences~\citep{medvedev2022theoretical}.
 
 \subsection*{Room for performance improvement for optimal alignment}
 
-The following observations demonstrate room for improvement for the expected
-runtime for optimal semi-global and global alignment. Moreover they hint towards
+The following observations demonstrate room for improvement in the expected
+runtime for optimal semi-global and global alignment. Moreover, they hint towards
 information that is currently not harnessed for the average case:
 
 \begin{observation}
@@ -95,8 +96,8 @@ information that is currently not harnessed for the average case:
 \end{observation}
 
 \begin{observation}
-    Existing optimal algorithms for semi-global alignment are near-quadratic not
-    only in the worst case but also for related sequences.
+    Existing optimal algorithms for semi-global alignment are near-quadratic in
+    both the worst case and for related sequences.
 \end{observation}
 
 \begin{observation}
@@ -106,12 +107,12 @@ information that is currently not harnessed for the average case:
 
 \begin{paradox}
     A long query has more information that may hint towards the best semi-global
-    alignment position in a reference but all optimal algorithms are strictly
+    alignment position in a reference, but all optimal algorithms are strictly
     slower for longer sequences.
 \end{paradox}
 
 \begin{observation}
-    The existing optimal aligners choose next step based only on
+    The existing optimal aligners choose the next step based only on
     previous~(prefix) information and ignore the remaining~(suffix).
 \end{observation}
 
@@ -124,12 +125,12 @@ These observations and paradoxes shape the main question of this thesis:
 
 \subsection*{\A can harness the heuristic speed and provable optimality}
 
-Algorithm correctness is arguably a useful property which is often not simple to
+Algorithm correctness is arguably a useful property that is often not simple to
 guarantee. It can undoubtedly improve accuracy, especially in the case of
-complex data. But finding an optimal alignment requires a conceptually different
-approach than finding an approximate alignment. Instead of finding \emph{one}
-good alignment, finding an optimal alignment requires proving that \emph{all}
-other exponentially-many alignments are not better.
+complex data. But, finding an optimal alignment requires a conceptually
+different approach than finding an approximate alignment. Instead of finding
+\emph{one} good alignment, finding an optimal alignment requires proving that
+\emph{all} other exponentially many alignments are not better.
 
 The optimal algorithms used in computational biology explore the search space of
 possible alignments in an uninformed fashion: by aligning a prefix of one
@@ -150,6 +151,6 @@ The benefits of using graph references representing biological variation have
 been demonstrated to increase the alignment
 quality~\citep{garrison_variation_2018}. The transition towards graph references
 only aggravates the computational issues owing to the potentially complex graph
-topology~\citep{equi_complexity_2019}. The interest towards genome graphs keeps
+topology~\citep{equi_complexity_2019}. The interest in genome graphs keeps
 increasing with the first International Genome Graph Symposium being held this
 year in Ascona, Switzerland (2022).
