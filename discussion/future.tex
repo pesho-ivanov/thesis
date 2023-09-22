@@ -72,76 +72,73 @@ Develop the \astarix sequence-to-graph aligner from prototype to production As
 our previous work demonstrates, scaling optimal \A alignment to long sequences
 and high error rates relies on various non-trivial algorithms, data structures
 and optimizations. For \astarix to become of practical importance, it must be
-comparable to not only optimal aligners but to approximate ones as well – this
+comparable to not only optimal aligners but to approximate ones as well -- this
 includes tolerating more errors, lowering the runtime and memory consumption,
-and supporting features. Tolerating errors. We observe two qualitatively
-different modes in which the \A explores the state space: linear and quadratic.
-The mode of exploration is mainly determined by the ability of the seed
-heuristic to “compensate” for the type and amount of errors. When the heuristic
-cannot cope with the errors, \A has to continue exploring without the aid of the
-heuristic (similar to Dijkstra): for long indels, the exploration becomes
-locally quadratic (around the indel), and for too high error rate it becomes
-globally-quadratic (because of the accumulating insufficiency of the seeds). By
-tolerating errors, we mean the ability of the exploration to stay linear or
-near-linear. Currently, \astarix supports 2-4\% errors on short reads and only
-0.3\% on HiFi reads, whereas our recent developments on global alignment
-demonstrated the potential to tolerate error rates up to 25\% using match
-pruning, inexact matching, and seed chaining. Developing these features in the
-semi-global setting is not trivial because of the added complexity of crumbs and
-the trie index but we do not envision any fundamental reasons against adopting
-them. A natural approach to tolerating long indels, well known in the
-bioinformatics community, is to generalize the edit distance metric to affine
-costs to match the error model more closely. This extension is algorithmically
-simple and consists of or there are longer indels. affine costs for, inexact
-matches Memory optimization. The main memory bottleneck is currently the trie
-index (which would take >90\% of the memory given a standard compressed genome
-graph representation) so our primary priority is to algorithmically reduce the
-number of nodes in the trie and then implement it efficiently. Currently, it is
-used with two separate functions: 1) to find all seed matches, and 2) to allow
-the search \A to explore the whole reference only implicitly by abstracting
-together the reference location reachable with the same prefix. The first
-function is efficiently solvable by using the positional Burrows-Wheeler
-transform (gBWT) to find exact seed matches and, in the case of inexact matches,
-to pre-generate all kmers at distance 1 from the seeds and invoke gBWT
-separately for each. The second function requires a trie but if possibly not 
-over the whole graph, only pointing to those reference locations that hold at
-least one crumb: otherwise the \A search will surely be quadratic in which case
-the fallback options are to either refuse to align the read (which is still
-optimal but incomplete), or find an alignment by explicitly considering all
-starting locations (which could be done faster using another tool). We foresee
-that building a separate “slim” trie per query will bring orders of magnitude of
-shrinkage of the trie, making it proportional only to the query length, and not
-the reference size. Additionally, a compressed implementation of the trie and
-the reference graph has the potential to lower the current memory usage by an
-additional order of magnitude. Runtime optimization. For a small error rate
-(0.3\%) and long reads (30 kbp), the bottleneck for the runtime is the amount of
-crumbs. To effectively skip the work of placing most of the crumbs, the
-placement of different seeds could be done together in one backward traversal –
-this is expected to eliminate most of the work for placing crumbs on the optimal
-path.  Another approach is to also ``jump over unitigs'' when placing crumbs in
-the backward traversal, and ``carry'' crumbs in the forwards \A search to
-compensate for the skipped ones. A major optimization in the case of a high
-error rate is to adapt the match pruning that we have developed for the global
-alignment case. Features. By discussing \astarix on conferences, we have figured
-out that extension alignment (very similar in the approach to global alignment)
-is of great interest for its reusability in the seed-and-extend paradigm that
-other aligners follow. Evaluation. The dataset for evaluation ideally includes
-bigger graphs, noisy long reads (e.g. ONP, PacBio), and reads with bigger
-indels. The comparison should be not only to optimal aligners but also to
-approximate ones. Potential risks. The preliminary experiments demonstrate
-sublinear scaling with the reference size but since this is an empirical result,
-it may also deteriorate for bigger graphs. Some of the optimizations may not
-provide the full expected effect or the bottleneck they would resolve may not
-yet be current. Usage of \astarix by bioinformaticians is crucial for the
-adoption of \astarix by the broader community.
+and supporting features. We observe two qualitatively different modes in which
+the \A explores the state space: linear and quadratic. The mode of exploration
+is mainly determined by the ability of the seed heuristic to ``compensate'' for
+the type and amount of errors. When the heuristic cannot cope with the errors,
+\A has to continue exploring without the aid of the heuristic (similar to
+Dijkstra): for long indels, the exploration becomes locally quadratic (around
+the indel), and for too high error rate it becomes globally-quadratic (because
+of the accumulating insufficiency of the seeds). By tolerating errors, we mean
+the ability of the exploration to stay linear or near-linear. Currently,
+\astarix supports 2-4\% errors on short reads and only 0.3\% on HiFi reads,
+whereas our recent developments on global alignment demonstrated the potential
+to tolerate error rates up to 25\% using match pruning, inexact matching, and
+seed chaining. Developing these features in the semi-global setting is not
+trivial because of the added complexity of crumbs and the trie index but we do
+not envision any fundamental reasons against adopting them. A natural approach
+to tolerating long indels, well known in the bioinformatics community, is to
+generalize the edit distance metric to affine costs to match the error model
+more closely. The main memory bottleneck is currently the trie index (which
+would take >90\% of the memory given a standard compressed genome graph
+representation) so our primary priority is to algorithmically reduce the number
+of nodes in the trie and then implement it efficiently. Currently, it is used
+with two separate functions: 1) to find all seed matches, and 2) to allow the
+search \A to explore the whole reference only implicitly by abstracting together
+the reference location reachable with the same prefix. The first function is
+efficiently solvable by using the positional Burrows-Wheeler transform (gBWT) to
+find exact seed matches and, in the case of inexact matches, to pre-generate all
+kmers at distance 1 from the seeds and invoke gBWT separately for each. The
+second function requires a trie but, if possible, not over the whole graph, only
+pointing to those reference locations that hold at least one crumb: otherwise
+the \A search will surely be quadratic in which case the fallback options are to
+either refuse to align the read (which is still optimal but incomplete), or find
+an alignment by explicitly considering all starting locations (which could be
+done faster using another tool). We foresee that building a separate “slim” trie
+per query will bring orders of magnitude of shrinkage of the trie, making it
+proportional only to the query length, and not the reference size. Additionally,
+a compressed implementation of the trie and the reference graph has the
+potential to lower the current memory usage by an additional order of magnitude.
+For a small error rate (0.3\%) and long reads (30 kbp), the bottleneck for the
+runtime is the amount of crumbs. To effectively skip the work of placing most of
+the crumbs, the placement of different seeds could be done together in one
+backward traversal == this is expected to eliminate most of the work for placing
+crumbs on the optimal path.  Another approach is to also ``jump over unitigs''
+when placing crumbs in the backward traversal, and ``carry'' crumbs in the
+forwards \A search to compensate for the skipped ones. A major optimization in
+the case of a high error rate is to adapt the match pruning that we have
+developed for the global alignment case. Features. By discussing \astarix on
+conferences, we have figured out that extension alignment (very similar in the
+approach to global alignment) is of great interest for its reusability in the
+seed-and-extend paradigm that other aligners follow. The dataset for evaluation
+ideally includes bigger graphs, noisy long reads (e.g. ONP, PacBio), and reads
+with bigger indels. The comparison should be not only to optimal aligners but
+also to approximate ones. The preliminary experiments demonstrate sublinear
+scaling with the reference size but since this is an empirical result, it may
+also deteriorate for bigger graphs. Some of the optimizations may not provide
+the full expected effect or the bottleneck they would resolve may not yet be
+current. Usage of \astarix by bioinformaticians is crucial for the adoption of
+\astarix by the broader community.
 
 \paragraph{Theoretical guarantees}
-Derive theoretical guarantees for the runtime scaling of \A alignment Two equal
-sequences can be aligned for linear time, whereas two general sequences cannot
-be aligned strongly faster than quadratically~\cite{backurs2015edit}. There is a
-knowledge gap for the computational limitations of related
-sequences~\citep{medvedev2022limitations} which may benefit various statistical
-approaches different from the worst-case asymptotic analysis and the empirical
+Two equal sequences can be aligned for linear time, whereas two general
+sequences cannot be aligned strongly faster than
+quadratically~\cite{backurs2015edit}. There is a knowledge gap for the
+computational limitations of related sequences~\citep{medvedev2022limitations}
+which may benefit various statistical approaches different from the worst-case
+asymptotic analysis and the empirical
 investigation~\citep{medvedev2022theoretical}. Our strong empirical results on
 scaling with increasing sequence length and error rates, together with our
 intuition from the internals of our \A algorithms, hint towards much stricter
@@ -155,46 +152,46 @@ also account for the cost of computing the heuristic (including amortized
 precomputation and querying) since infinite resources on it can result in an
 oracle but also destroy the total performance. The risks of such analyses
 include the potential inability to account for data and error models (random
-reference sequence and uniform error model) that are realistic enough. Global
-alignment. Our intuition on the scaling of the explored states includes several
-parameters: the seed heuristic potential and the number of errors. Informally
-speaking, for each error that is not compensated by the potential, the \A search
-will explore another layer of states that are 1 more distant from the diagonal.
-This is also theoretically and practically true for the special case of \A,
-Dijkstra, which has a potential 0 and thus reaches O(ns) where s is the overall
-number of errors. Our empirical results demonstrate that a near-linear runtime
-scaling is practically possible up to very long sequences (100 Mbp) for error
-rates of 10\%. In addition to the computational costs for aligning a sequence to
-another sequence, alignment has the burden of localization of the best
-alignment. Our intuition behind his localization cost is related to to usage of
-\A on the trie: for each error that the \A potential does not compensate for,
-the exploration would get one lever deeper in the trie, thus exploring the
-expected 4x more states. This is an interesting observation since it hints at an
-exponential scaling with an error rate, which is not asymptotically possible
-because of the quadratic worst case but may be the case near the best case. In
-such a case, a type of sigmoid would possibly describe the number of explored
-states as a function of the number of errors.
+reference sequence and uniform error model) that are realistic enough. Our
+intuition on the scaling of the explored states includes several parameters: the
+seed heuristic potential and the number of errors. Informally speaking, for each
+error that is not compensated by the potential, the \A search will explore
+another layer of states that are 1 more distant from the diagonal. This is also
+theoretically and practically true for the special case of \A, Dijkstra, which
+has a potential 0 and thus reaches O(ns) where s is the overall number of
+errors. Our empirical results demonstrate that a near-linear runtime scaling is
+practically possible up to very long sequences (100 Mbp) for error rates of
+10\%. In addition to the computational costs for aligning a sequence to another
+sequence, alignment has the burden of localization of the best alignment. Our
+intuition behind his localization cost is related to to usage of \A on the trie:
+for each error that the \A potential does not compensate for, the exploration
+would get one lever deeper in the trie, thus exploring the expected 4x more
+states. This is an interesting observation since it hints at an exponential
+scaling with an error rate, which is not asymptotically possible because of the
+quadratic worst case but may be the case near the best case. In such a case, a
+type of sigmoid would possibly describe the number of explored states as a
+function of the number of errors.
 
 \paragraph{Alignment on a probabilistic graph references}
 Probabilistic interpretations arise in different places among the alignment
-problems. Phred values. Sequencing machines report a standardized score per
-nucleotide that estimates the probability of that nucleotide being wrong. This
-information is currently largely ignored and very valuable for highly erroneous
-sequencing technologies. Extending the edit distance metric to account for phred
-values should be directly applicable and may even benefit the performance of the
-\A algorithm due to the better correspondence between the scores and the error
-model. Weighted genome reference. A topic for current discussions in the
-pangenomics field is whether to add more genomes to the reference graph or to
-keep the reference unbiased (by unbalanced number of entries for different
-variations, or by adding genomes from other populations). One reason for such
-discussions is the memory and runtime limitations, but the accuracy of alignment
-is not less important. A weighting of the graph may be useful as a soft
-tradeoff. HMM. HMM queries have been useful in the context of microbial
-sequencing. Possibly, \A can be extended to handle HMM queries instead of linear
-sequences. The current solutions are prohibitively slow and \astarix is expected
-to greatly accelerate the optimal alignment after being generalized to
-probabilistic queries. The \textit{mapq} value~\citep{li2008mapping} may be calculated
-more precisely if accounting for the probability estimates.
+problems. Sequencing machines report a standardized score per nucleotide that
+estimates the probability of that nucleotide being wrong. This information is
+currently largely ignored and very valuable for highly erroneous sequencing
+technologies. Extending the edit distance metric to account for phred values
+should be directly applicable and may even benefit the performance of the \A
+algorithm due to the better correspondence between the scores and the error
+model. A topic for current discussions in the pangenomics field is whether to
+add more genomes to the reference graph or to keep the reference unbiased (by
+unbalanced number of entries for different variations, or by adding genomes from
+other populations). One reason for such discussions is the memory and runtime
+limitations, but the accuracy of alignment is not less important. A weighting of
+the graph may be useful as a soft tradeoff. Hidden Markov model (HMM) queries
+have been useful in the context of microbial sequencing. Possibly, \A can be
+extended to handle HMM queries instead of linear sequences. The current
+solutions are prohibitively slow and \astarix is expected to greatly accelerate
+the optimal alignment after being generalized to probabilistic queries. The
+\textit{mapq} value~\citep{li2008mapping} may be calculated more precisely if
+accounting for the probability estimates.
 
 \paragraph{Apply \A to local alignment}
 Explore the applicability of \A to local alignment Our previous work has been
@@ -246,10 +243,9 @@ a single query to a graph that is allowed to change may require exponential time
 with the query length.
 
 \paragraph{Generalize the seed heuristic to multiple sequences}
-Explore \A for multiple sequence alignment (MSA) Existing approaches to MSA
-using \A consider pairwise edit distances, which do not considerably accelerate
-the alignment. A simultaneous seed match (anchor) within several sequences may
-provide much bigger penalties for suboptimal paths.
+Existing approaches to MSA using \A consider pairwise edit distances, and do not
+considerably accelerate the alignment. A simultaneous seed match (anchor) within
+several sequences may provide much bigger penalties for suboptimal paths.
 
 \paragraph{Relax the \A optimality guarantees for performance gain}
 Various relaxations of the heuristic admissibility, variants of \A, windowing
