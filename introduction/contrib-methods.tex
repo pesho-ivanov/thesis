@@ -1,39 +1,39 @@
 \subsection*{Methods}
 
-All our methods we combine and build upon textbook informatics algorithms and
-data structures which have been known for many decades. These include the
-formulation of sequence alignment as a shortest path problem, the \A algorithm,
-the trie data structure, as well as trivial optimizations, such as hashing
-substring, greedily matching equal letters, topological sorting.
+All our methods combine and build upon textbook informatics algorithms and data
+structures that have been known for many decades. These include the formulation
+of sequence alignment as a shortest path problem, the \A algorithm, the trie
+data structure, as well as trivial optimizations, such as hashing substring,
+greedily matching equal letters, topological sorting.
 
 \paragraph{\A for sequence alignment}
 We consider the sequence alignment problem in its principled and powerful graph
 formulation: an alignment minimizing edit distance is equivalent to a shortest
-path in an \emph{alignment graph}. It allows to choose any shortest path
+path in an \emph{alignment graph}. It allows us to choose any shortest path
 algorithm, and, assuming non-negative edit costs, we select the \A algorithm for
-its ability to use any available information to quickly direct the search and
-yet, to guarantee optimality. In order to efficiently apply \A to semi-global
-and global alignment, we complement the reference with a trie index, design a
-powerful \emph{seed heuristic}, and implement a number of algorithmic
-optimizations. We formally prove the optimality of all algorithms, data
-structures, and optimizations.
+its ability to use any available information to direct the search quickly and to
+guarantee optimality. In order to efficiently apply \A to semi-global and global
+alignment, we complement the reference with a trie index, design a powerful
+\emph{seed heuristic}, and implement several algorithmic optimizations. We
+formally prove the optimality of all algorithms, data structures, and
+optimizations.
 
 \paragraph{Implicit constructing of the alignment graph}
 The alignment graph is defined as a Cartesian product of the reference and the
-query. The structure of the alignment graph is thus regular, and we do not have
-to build it explicitly but to only constuct it locally at the node we are
-exploring. This optimization is crucial for the overall performance of \A which
+query. The alignment graph structure is thus regular, and we do not have to
+build it explicitly but only construct it locally at the node we are
+exploring. This optimization is crucial for the overall performance of \A, which
 spends time only at explored nodes before terminating at the target.
 
 \paragraph{Sequence-to-graph alignment}
 Unlike most dynamic programming solutions, we are not bound to acyclic graphs
 due to using the general \A shortest path algorithm. Thus, our reference is not
-limited to being a linear sequence but can as well be any genome graph. All
-semi-global alignment algorithms in this thesis are applicable to general graphs
-(possibly including cycles).
+limited to a linear sequence but can also be any genome graph. All semi-global
+alignment algorithms in this thesis apply to general graphs (possibly including
+cycles).
 
 \paragraph{Scaling with reference size using a trie index}
-In~\cref{ch:trie} we suggest how to exploit that many query sequences are
+In~\cref{ch:trie}, we suggest exploiting that many query sequences are
 semi-globally aligned to the same reference. As a preprocessing step, we
 complement the reference with a trie index (similar to a suffix tree) so that
 any short substring from the reference appears as a path from the trie root to a
@@ -44,39 +44,38 @@ to ignore most of the reference, setting the base for sublinear runtime scaling
 with the reference size.
 
 \paragraph{Scaling with query length using seed heuristic}
-In~\cref{ch:seed} we introduce a powerful \emph{seed heuristic} for \A for
-semi-global alignment. It estimates the remaining edit distance based on
-information from the whole reference and query. We prove its admissibility, and
-present an algorithm for its efficient computation even for the case of a trie
-index. We borrow the existing concept of seeds but apply it in a novel way:
-instead of searching for good alignments around seed matches, we negate this
-logic in order to prove that no alignment is better than the one we find. For
-each query, we do the following precomputation: split the query into
-non-overlapping seeds of equal length, find all exact matches of each seed in
-the reference, and mark all preceding reference nodes with \emph{crumbs} that
-signify a following seed match. If \A explores a state, we can then compute the
-heuristic as the number of remaining seeds to be aligned that we do not see a
-crumb of -- this is, each seed that has to be aligned but cannot be matched,
-will require at least 1 edit (assuming Levenshtein distance). Note that the lack
-of a match does not require any work but helps us penalize all mismatching seeds
-for all paths from all states. We call \emph{potential} of the seed heuristic
-the maximal cost it can penalize (e.g. the number of seeds in case of
-Levenshtein distance), and we note that the potential grows linearly with the
-query length, providing the base for near-linear scaling with length. In order
-to precompute the crumbs for the seed heuristic in the case of a trie index over
-a potentially-cyclic graph reference, we introduce a linear algorithm based on
-topological sort.
+In~\cref{ch:seed}, we introduce a powerful \emph{seed heuristic} for \A for
+semi-global alignment. It estimates the remaining edit distance based on the
+whole reference and query information. We prove its admissibility, and present
+an algorithm for its efficient computation even for the case of a trie index. We
+borrow the existing concept of seeds but apply it in a novel way: instead of
+searching for good alignments around seed matches, we negate this logic to prove
+that no alignment is better than the one we find. For each query, we do the
+following precomputation: split the query into non-overlapping seeds of equal
+length, find all exact matches of each seed in the reference, and mark all
+preceding reference nodes with \emph{crumbs} that signify a following seed
+match. If \A explores a state, we can then compute the heuristic as the number
+of remaining seeds to be aligned that we do not see a crumb of -- this is, each
+seed that has to be aligned but cannot be matched, will require at least 1 edit
+(assuming Levenshtein distance). Note that the lack of a match does not require
+any work but helps us penalize all mismatching seeds for all paths from all
+states. We call \emph{potential} of the seed heuristic the maximal cost it can
+penalize (e.g. the number of seeds in case of Levenshtein distance), and we note
+that the potential grows linearly with the query length, providing the base for
+near-linear scaling with length. In order to precompute the crumbs for the seed
+heuristic in the case of a trie index over a potentially cyclic graph reference,
+we introduce a linear algorithm based on topological sort.
 
 \paragraph{Scaling with error rate using inexact matching, chaining and gap costs}
-In~\cref{ch:global} on the task of global alignment we demonstrate how to extend
-the seed heuristic in order scale to high error rates. Our general
+In~\cref{ch:global}, on the task of global alignment we demonstrate how to
+extend the seed heuristic in order scale to high error rates. Our general
 \emph{chaining seed heuristic} includes inexact matching, chaining, and gap
 costs. Allowing a single error to match a seed leads to the guarantee of
 requiring at least 2 edits to align that seed, which increases the seed
 heuristic potential twice. Chaining the seed matches exploits the order of the
 seeds in the query, which mitigates the effect of spurious matches. Accounting
 for the gap between consecutive matches in a chain allows to penalize more or
-longer insertions and deletions. The combination of these extensions enables the
+longer insertions and deletions. Combining these extensions enables the
 efficient alignment of extremely long sequences with up to 30\% errors. 
 
 \paragraph{Implementations}
