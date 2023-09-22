@@ -56,41 +56,40 @@ programming (DP) algorithm~\cite{smith_comparison_1981} considering all possible
 starting nodes.
 
 \paragraph{Suboptimal heuristic algorithms}
-All optimal solutions are near-quadratic and this is justified by the
-theoretical lower bound. To speed up beyond this near-quadratic barrier, current
-practical algorithms break the optimality guarantee with the hope that the
-produced alignments are accurate enough or give up on alignment altogether.
-Heuristics are employed for both sequence-to-sequence alignment and
-sequence-to-graph alignment, to keep the computation
+All optimal solutions are near-quadratic, and the theoretical lower bound
+justifies this. Current practical algorithms break the optimality guarantee to
+speed up beyond this near-quadratic barrier, hoping the produced alignments are
+accurate enough. Heuristics are employed for both sequence-to-sequence alignment
+and sequence-to-graph alignment, to keep the computation
 tractable~\cite{altschul_basic_1990,langmead_fast_2012,garrison_variation_2018},
-especially for large populations of human-sized genomes. In the last decades,
-approximate and alignment-free methods satisfied the demand for faster
+especially for large populations of human-sized genomes. In recent decades,
+approximate and alignment-free methods have satisfied the demand for faster
 algorithms that process huge volumes of genomic
-data~\cite{kucherov2019evolution}. While heuristics may produce acceptable
-alignments in many cases, it fundamentally does not provide quality guarantees,
-resulting in suboptimal alignment accuracy.
+data~\cite{kucherov2019evolution}. Existing heuristics methods often produce
+acceptable alignments but do not guarantee optimality, which results in
+suboptimal alignment accuracy.
 
 \paragraph{Seed-and-extend}
 Since optimal alignment is often intractable, many aligners use heuristics, most
 commonly the \emph{seed-and-extend}
 paradigm~\cite{altschul_basic_1990,langmead_fast_2012,li_fast_2009}. In this
 approach, alignment initiation sites (\emph{seeds}) are determined, which are
-then \emph{extended} to form the \emph{alignments} of the query sequence. The
-fundamental issue with this approach, however, is that the seeding and extension
-phases are mostly decoupled during alignment. Thus, an algorithm with a provably
-optimal extension phase may not result in optimal alignments due to the
-selection of a suboptimal seed in the first phase. In cases of high sequence
+then \emph{extended} to form the \emph{alignments} of the query sequence.
+However, the fundamental issue with this approach is that the seeding and
+extension phases are mostly decoupled during alignment. Thus, an algorithm with
+a provably optimal extension phase may not achieve optimal alignments due to
+selecting a suboptimal seed in the first phase. In cases of high sequence
 variability, the seeding phase may even fail to find an appropriate seed from
 which to extend.
 
 \paragraph{Shortest path formulation and \A for sequence alignment}
 \A is a shortest path algorithm that generalizes \dijkstra by directing the
 search towards the target~\citep{hart1968formal}. \A is an \emph{informed}
-search algorithm -- it relies on a problem-specific heuristic function that
+search algorithm that relies on a problem-specific heuristic function that
 estimates the remaining distance from each explored node to the target. If this
 heuristic is \emph{admissible}, i.e. it never overestimates the actual distance
 to the target, \A is guaranteed to find an optimal path. If the heuristic is
-accurate -- similar to the actual remaining distance, then \A finds the path
+accurate -- similar to the remaining distance, then \A finds the path
 with minimal exploration. If the heuristic can be computed efficiently, the
 overall runtime stays low. Designing a heuristic function with all of these
 properties has been challenging in the context of sequence alignment. Attempts
@@ -124,7 +123,7 @@ involves the computationally expensive ``DAG-ification'' of graph
 regions~\cite{kavya_sequence_2019,garrison_variation_2018}.
 
 \paragraph{Trie index}
-The specifics with semi-global alignment require a trie-like index which is
-well-used in the fields, and known since
-\citeyear{thue1912gegenseitige}~\cite{thue1912gegenseitige} and used in
-informatics since~\citeyear{de1959file}~\cite{de1959file}.
+To perform multiple semi-global alignments to the same reference, an index is
+often used. We will be using a trie index (similar to suffix array), which is
+known since \citeyear{thue1912gegenseitige}~\cite{thue1912gegenseitige} and used
+in informatics since~\citeyear{de1959file}~\cite{de1959file}.
