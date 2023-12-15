@@ -3,19 +3,18 @@ In the following, we provide details on how we executed the approaches
 discussed in \cref{TRIEsec:eval}:
 
 \noindent
-\begin{tabular}{lp{9.5cm}}
-	\textbf{\pasgal} & \\
-	\quad Obtained from & \url{https://github.com/ParBLiSS/PaSGAL} (Commit \texttt{50ad80c}) \\
-	\quad Command & \texttt{PaSGAL -q reads.fq -r graph.vg -m vg -o output -t 1} \\
-	\textbf{\bitparallel} & \\
-	\quad Obtained from &
+\begin{tabular}{p{10cm}}
+	\textbf{\pasgal} \\
+	\url{https://github.com/ParBLiSS/PaSGAL} (Commit \texttt{50ad80c}) \\
+	\texttt{PaSGAL -q reads.fq -r graph.vg -m vg -o output -t 1} \\
+	\textbf{\bitparallel} \\
 	\url{https://github.com/maickrau/GraphAligner/tree/WabiExperiments}
 	(Commit \texttt{241565c}) \\
-	\quad Command & \texttt{Aligner -f reads.fq -g graph.gfa >output} \\
-	\textbf{\astarix} & \\
-	\quad Obtained from & \astarixurlwithbranch \\
-	\quad Command & \texttt{astarix align-optimal -f reads.fq -g graph.gfa >output} \\
-	\textbf{\dijkstra} & \\
-	\quad Obtained from & \astarixurlwithbranch \\
-	\quad Command & \texttt{astarix align-optimal -f reads.fq -g graph.gfa -a dijkstra >output}
+	\texttt{Aligner -f reads.fq -g graph.gfa >output} \\
+	\textbf{\astarix} \\
+	\astarixurlwithbranch \\
+	\texttt{astarix align-optimal -f reads.fq -g graph.gfa >output} \\
+	\textbf{\dijkstra} \\
+	\astarixurlwithbranch \\
+	\texttt{astarix align-optimal -f reads.fq -g graph.gfa -a dijkstra >output}
 \end{tabular}

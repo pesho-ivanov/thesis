@@ -6,16 +6,16 @@
 %the tools discussed in \cref{SEEDsec:eval}:
 
 \paragraph{Executing \astarix}\mbox{}\\
-\noindent Obtained from \astarixurl \\
+\noindent Source \astarixurl \\
 %\noindent
-\begin{tabular}{lp{9.5cm}}
-	\textbf{Seed heuristic} & \\
-	\quad Command & \texttt{astarix align-optimal -D 14 -a astar-seeds --seeds\_len l -f reads.fq -g graph.gfa >output} \\
-	\textbf{Prefix heuristic} & \\
-	\quad Command & \texttt{astarix align-optimal -D 14 -a astar-prefix -d 5 -f reads.fq -g graph.gfa >output} \\
-	\textbf{\dijkstra} & \\
-	\quad Obtained from & \astarixurlwithbranch \\
-	\quad Command & \texttt{astarix align-optimal -f reads.fq -g graph.gfa -a dijkstra >output}
+\begin{tabular}{p{10cm}}
+	\textbf{Seed heuristic} \\
+	\texttt{astarix align-optimal -D 14 -a astar-seeds --seeds\_len l -f reads.fq -g graph.gfa >output} \\
+	\textbf{Prefix heuristic} \\
+	\texttt{astarix align-optimal -D 14 -a astar-prefix -d 5 -f reads.fq -g graph.gfa >output} \\
+	\textbf{\dijkstra} \\
+	\astarixurlwithbranch \\
+	\texttt{astarix align-optimal -f reads.fq -g graph.gfa -a dijkstra >output}
 %	\textbf{\dijkstra} & \\
 %	\quad Command & \texttt{astarix align-optimal -D 14 -a dijkstra -f reads.fq -g graph.gfa >output}
 \end{tabular}
@@ -26,26 +26,26 @@ the error rate profiles for these technologies.
 
 \paragraph{Executing optimal sequence-to-graph aligners}\mbox{}\\
 %\noindent
-\begin{tabular}{lp{9.5cm}}
-	\textbf{\vargas} & \\
-	\quad Obtained from & \url{https://github.com/langmead-lab/vargas} (v0.2, commit \texttt{b1ad5d9}) \\
-	\quad Command & \texttt{vargas align -g graph.gdef -U reads.fq --ete} \\
-	\quad Comment & \texttt{--ete} stands for end to end alignment; default is 1 thread \\
-	\textbf{\pasgal} & \\
-	\quad Obtained from & \url{https://github.com/ParBLiSS/PaSGAL} (commit \texttt{9948629}) \\	
-	\quad Command & \texttt{PaSGAL -q reads.fq -r graph.vg -m vg -o output -t 1} \\
-	\quad Comment & Compiled with AVX2.\\
-	\textbf{\graphaligner} & \\
-	\quad Obtained from &
+\begin{tabular}{p}
+	\textbf{\vargas} \\
+	\url{https://github.com/langmead-lab/vargas} (v0.2, commit \texttt{b1ad5d9}) \\
+	\texttt{vargas align -g graph.gdef -U reads.fq --ete} \\
+	\texttt{--ete} stands for end to end alignment; default is 1 thread \\
+	\textbf{\pasgal} \\
+	\url{https://github.com/ParBLiSS/PaSGAL} (commit \texttt{9948629}) \\	
+	\texttt{PaSGAL -q reads.fq -r graph.vg -m vg -o output -t 1} \\
+	Compiled with AVX2.\\
+	\textbf{\graphaligner} \\
+	\quad Source
 	\url{https://github.com/maickrau/GraphAligner}
 	(v1.0.13, commit \texttt{02c8e26}) \\
-	\quad Command & \texttt{GraphAligner --seeds-first-full-rows 64 -b 10000 -t 1 -f reads.fq -g graph.gfa -a alignments.gaf >output} (commit \texttt{9948629})\\
-	\quad Comment & \texttt{--seeds-first-full-rows} forces the search from all
+	\texttt{GraphAligner --seeds-first-full-rows 64 -b 10000 -t 1 -f reads.fq -g graph.gfa -a alignments.gaf >output} (commit \texttt{9948629})\\
+	\texttt{--seeds-first-full-rows} forces the search from all
 	possible reference positions instead of using seeds; \texttt{-b 10000} sets
 	a high alignment bandwidth; these two parameters are necessary for an
 	optimal alignment according to the author and developer of the tool.\\
 %	\textbf{\bitparallel} & \\
-%	\quad Obtained from &
+%	\quad Source &
 %	\url{https://github.com/maickrau/GraphAligner/tree/WabiExperiments}
 %	(Commit \texttt{241565c}) \\
 %	\quad Command & \texttt{Aligner -f reads.fq -g graph.gfa >output} \\
