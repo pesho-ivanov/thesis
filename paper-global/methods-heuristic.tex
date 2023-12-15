@@ -46,8 +46,8 @@ The \emph{chaining cost} $\gamma$ is a lower bound on the path cost between two
 consecutive matches: from the end state $u$ of a match, to the start $v$ of the
 next match.
 
-For \SH and \CSH, the \emph{seed cost} is $r$ for each seed that is not matched:
-${\seedcost(u,v) := r\cdot \abs{\substr\seeds uv}}$. When $u\preceq_i v$ and $v$
+For \SH and \CSH, the \emph{seed cost} is $r$ for each non-matched seed
+${\seedcost(u,v) {:=} r{\cdot} \abs{\substr\seeds uv}}$. When $u\preceq_i v$ and $v$
 is not in the interior of a seed, then ${\seedcost(u, v) = \Pot(u) - \Pot(v)}$.
 
 For~\GCH, we also include the gap cost $\gapcost(\st ij,
@@ -61,9 +61,9 @@ Note that $\gamma{=}\seedcost{+}\gapcost$ would not give an admissible heuristic
 since indels could be counted twice, in both $\seedcost$ and $\gapcost$.
 
 For conciseness, we also define the $\gamma$, $\seedcost$, $\gapcost$, and $\gscost$ between
-matches ${\gamma(m, m') := \gamma(\matchend(m), \matchstart(m'))}$, from a
-state to a match ${\gamma(u, m') := \gamma(u, \matchstart(m'))}$, and from a
-match to a state ${\gamma(m, u) = \gamma(\matchend(m),u)}$.
+matches ${\gamma(m, m') := \gamma(\matchend(m), \matchstart(m'))}$, from
+state to match ${\gamma(u, m') {:=} \gamma(u, \matchstart(m'))}$, and from
+match to state ${\gamma(m, u) := \gamma(\matchend(m),u)}$.
 
 \paragraph{General \csh}
 We now define the general \csh that we use to instantiate \SH, \CSH and \GCH.
